@@ -1,0 +1,53 @@
+name: Peligon_Economy
+version: '${project.version}'
+main: net.peligon.PeligonEconomy.Main
+api-version: 1.18
+authors: [ darkwinged ]
+description: This is an open-source plugin.
+depend: [Vault, ProtocolLib]
+softdepend: [PlaceholderAPI]
+commands:
+  economy:
+    aliases:
+      - econ
+    description: Allows admins manage player accounts in games
+  pelecon:
+    aliases:
+      - pecon
+      - peconomy
+    description: Allows admins to reload configuration files
+  balance:
+    aliases:
+      - bal
+      - money
+      - coins
+    description: Allows users to check their balance
+  atm:
+    aliases:
+      - bank
+    description: Allows users to manage their bank accounts
+  balancetop:
+    aliases:
+      - baltop
+      - moneytop
+    description: Allow users to see who has the most money
+  bounty:
+    description: Allows users to set bounties on peoples head
+  sell:
+    aliases:
+      - sellall
+    description: Allows users to sell all items inside of their inventory
+  sellhand:
+    description: Allows users to sell all items that is in thir hand
+  autosell:
+    description: Allows users to automatically sell their items
+  chestsell:
+    description: Allows users to sell things inside of chests with a command
+  sellwand:
+    description: Allows users to sell items inside of chests with an item
+  pay:
+    description: Allows users to transfer money to each other
+  withdraw:
+    description: Allows users to withdraw money
+  bottle:
+    description: Allows users to withdraw experience

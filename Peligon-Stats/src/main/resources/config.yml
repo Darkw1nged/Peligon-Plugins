@@ -1,0 +1,83 @@
+#######################################################################################
+#
+#       Welcome to Peligon Stats's configuration, This is where you can change
+#       Basic settings that will affect how the plugin preforms.
+#       This plugin does have database support; see 'Storage' for more information.
+#
+#######################################################################################
+
+Storage:
+  # Visit 'Plugins/PeligonEconomy/Lang/' to see the supported languages.
+  Language File: "en_US"
+  database: "SQLite"
+  # Enable / Disable any skill you want.
+  skills:
+    smelting: true
+    repair: true
+    alchemy: true
+    acrobatics: true
+    mining: true
+    lumberjack: true
+    fishing: true
+    herbalism: true
+    excavation: true
+
+Stats-Leaderboard:
+  players: 10
+  format: "%position%. &e%player% &f- &e%level%|%experience%"
+
+Settings:
+  smelting:
+    max-level: 0
+    minimum-xp: 25
+    maximum-xp: 75
+    disabled-worlds:
+      - world_the_end
+  repair:
+    max-level: 0
+    minimum-xp: 25
+    maximum-xp: 75
+    disabled-worlds:
+      - world_the_end
+  alchemy:
+    max-level: 0
+    minimum-xp: 25
+    maximum-xp: 75
+    disabled-worlds:
+      - world_the_end
+  acrobatics:
+    max-level: 0
+    minimum-xp: 25
+    maximum-xp: 75
+    disabled-worlds:
+      - world_the_end
+  mining:
+    max-level: 0
+    minimum-xp: 25
+    maximum-xp: 75
+    disabled-worlds:
+      - world_the_end
+  lumberjack:
+    max-level: 0
+    minimum-xp: 25
+    maximum-xp: 75
+    disabled-worlds:
+      - world_the_end
+  fishing:
+    max-level: 0
+    minimum-xp: 25
+    maximum-xp: 75
+    disabled-worlds:
+      - world_the_end
+  herbalism:
+    max-level: 0
+    minimum-xp: 25
+    maximum-xp: 75
+    disabled-worlds:
+      - world_the_end
+  excavation:
+    max-level: 0
+    minimum-xp: 25
+    maximum-xp: 75
+    disabled-worlds:
+      - world_the_end

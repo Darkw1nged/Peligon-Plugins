@@ -1,0 +1,32 @@
+#######################################################################################
+#
+#       In here you can change what the signs will say after a player places one.
+#       All lines do support color codes check the line below for more information:
+#       [ https://www.digminecraft.com/lists/color_list_pc.php ]
+#
+#######################################################################################
+
+Cash:
+  line-1: "&eView Cash"
+  line-2: ""
+  line-3: "&8Check your"
+  line-4: "&8Balance here."
+
+Bank:
+  line-1: "&eView Bank"
+  line-2: ""
+  line-3: "&8Check your"
+  line-4: "&8Balance here."
+
+ATM:
+  line-1: "&eOpen ATM"
+  line-2: ""
+  line-3: "&8Check your"
+  line-4: "&8bank account."
+
+Chestsell:
+  line-1: "&e[!] &6Chestsell"
+  line-2: ""
+  line-3: "&8(Right Click or"
+  line-4: "&8Punch to Sell.)"
+  invalid: "&cInvalid Chestsell!"
