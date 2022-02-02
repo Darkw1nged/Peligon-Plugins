@@ -67,8 +67,7 @@ Items:
 Modules:
   sell-wand: true
   bounties: true
-  ATMs: true # TODO implement
-  tech-tree: true # TODO implement
+  ATMs: true
 
 # !! All bounties will be erased if the plugin is disabled or server is offline.
 Bounties:

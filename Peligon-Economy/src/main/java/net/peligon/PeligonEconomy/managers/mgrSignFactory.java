@@ -38,30 +38,32 @@ public class mgrSignFactory {
     }
 
     private void listen() {
-        ProtocolLibrary.getProtocolManager().addPacketListener(new PacketAdapter(this.plugin, PacketType.Play.Client.UPDATE_SIGN) {
-            @Override
-            public void onPacketReceiving(PacketEvent event) {
-                Player player = event.getPlayer();
+        try {
+            ProtocolLibrary.getProtocolManager().addPacketListener(new PacketAdapter(this.plugin, PacketType.Play.Client.UPDATE_SIGN) {
+                @Override
+                public void onPacketReceiving(PacketEvent event) {
+                    Player player = event.getPlayer();
 
-                Menu menu = inputs.remove(player);
+                    Menu menu = inputs.remove(player);
 
-                if (menu == null) {
-                    return;
-                }
-                event.setCancelled(true);
-
-                boolean success = menu.response.test(player, event.getPacket().getStringArrays().read(0));
-
-                if (!success && menu.reopenIfFail && !menu.forceClose) {
-                    Bukkit.getScheduler().runTaskLater(plugin, () -> menu.open(player), 2L);
-                }
-                Bukkit.getScheduler().runTaskLater(plugin, () -> {
-                    if (player.isOnline()) {
-                        player.sendBlockChange(menu.location, menu.location.getBlock().getBlockData());
+                    if (menu == null) {
+                        return;
                     }
-                }, 2L);
-            }
-        });
+                    event.setCancelled(true);
+
+                    boolean success = menu.response.test(player, event.getPacket().getStringArrays().read(0));
+
+                    if (!success && menu.reopenIfFail && !menu.forceClose) {
+                        Bukkit.getScheduler().runTaskLater(plugin, () -> menu.open(player), 2L);
+                    }
+                    Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                        if (player.isOnline()) {
+                            player.sendBlockChange(menu.location, menu.location.getBlock().getBlockData());
+                        }
+                    }, 2L);
+                }
+            });
+        } catch (Exception ignored) {}
     }
 
     public final class Menu {

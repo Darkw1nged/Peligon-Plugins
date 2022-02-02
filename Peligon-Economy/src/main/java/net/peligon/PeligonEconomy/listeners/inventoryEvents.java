@@ -3,7 +3,6 @@ package net.peligon.PeligonEconomy.listeners;
 import net.peligon.PeligonEconomy.Main;
 import net.peligon.PeligonEconomy.libaries.Utils;
 import net.peligon.PeligonEconomy.managers.Menu;
-import net.peligon.PeligonEconomy.managers.mgrSignFactory;
 import net.peligon.PeligonEconomy.menu.menuATM;
 import net.peligon.PeligonEconomy.menu.menuDeposit;
 import net.peligon.PeligonEconomy.menu.menuWithdraw;
@@ -14,13 +13,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 
-import java.sql.Time;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class inventoryEvents implements Listener {
@@ -35,7 +31,6 @@ public class inventoryEvents implements Listener {
 
         ItemStack item = event.getCurrentItem();
         Player player = (Player) event.getWhoClicked();
-        menuATM atm = new menuATM(player);
         menuDeposit deposit = new menuDeposit(player);
         menuWithdraw withdraw = new menuWithdraw(player);
         String inventoryName = event.getView().getTitle();
@@ -46,8 +41,8 @@ public class inventoryEvents implements Listener {
             for (String key : plugin.fileATM.getConfig().getConfigurationSection("atm-inventory.contents").getKeys(false)) {
                 if (item.getType().equals(Material.getMaterial(plugin.fileATM.getConfig().getString("atm-inventory.contents." + key + ".item").toUpperCase()))
                         && item.getItemMeta().getDisplayName().equals(Utils.chatColor(plugin.fileATM.getConfig().getString("atm-inventory.contents." + key + ".name")))) {
-                    if (plugin.fileATM.getConfig().contains("atm-inventory.contents." + key + ".type")) {
-                        switch (plugin.fileATM.getConfig().getString("atm-inventory.contents." + key + ".type").toLowerCase()) {
+                    if (plugin.fileATM.getConfig().contains("atm-inventory.contents." + key + ".event")) {
+                        switch (plugin.fileATM.getConfig().getString("atm-inventory.contents." + key + ".event").toLowerCase()) {
                             case "deposit":
                                 player.openInventory(deposit.getInventory());
                                 return;
@@ -58,7 +53,6 @@ public class inventoryEvents implements Listener {
                                 player.closeInventory();
                                 event.setCancelled(true);
                                 return;
-                            case "information":
                             case "transactions":
                                 event.setCancelled(true);
                                 return;
@@ -73,11 +67,13 @@ public class inventoryEvents implements Listener {
             for (String key : plugin.fileATM.getConfig().getConfigurationSection("deposit-inventory.contents").getKeys(false)) {
                 if (item.getType().equals(Material.getMaterial(plugin.fileATM.getConfig().getString("deposit-inventory.contents." + key + ".item").toUpperCase()))
                         && item.getItemMeta().getDisplayName().equals(Utils.chatColor((plugin.fileATM.getConfig().getString("deposit-inventory.contents." + key + ".name"))))) {
-                    if (plugin.fileATM.getConfig().contains("deposit-inventory.contents." + key + ".type")) {
+                    if (plugin.fileATM.getConfig().contains("deposit-inventory.contents." + key + ".event")) {
                         double amount;
-                        switch (plugin.fileATM.getConfig().getString("deposit-inventory.contents." + key + ".type").toLowerCase()) {
+                        switch (plugin.fileATM.getConfig().getString("deposit-inventory.contents." + key + ".event").toLowerCase()) {
                             case "depositall":
                                 amount = plugin.Economy.getAccount(player);
+                                if (amount <= 0) event.setCancelled(true);
+
                                 plugin.Economy.RemoveAccount(player, amount);
                                 plugin.Economy.AddBankAccount(player, amount);
 
@@ -89,6 +85,8 @@ public class inventoryEvents implements Listener {
                                 return;
                             case "deposithalf":
                                 amount = (plugin.Economy.getAccount(player) * (50 / 100.0f));
+                                if (amount <= 0) event.setCancelled(true);
+
                                 plugin.Economy.RemoveAccount(player, amount);
                                 plugin.Economy.AddBankAccount(player, amount);
                                 player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") + plugin.fileMessage.getConfig().getString("deposited-money"), amount));
@@ -120,11 +118,13 @@ public class inventoryEvents implements Listener {
             for (String key : plugin.fileATM.getConfig().getConfigurationSection("withdraw-inventory.contents").getKeys(false)) {
                 if (item.getType().equals(Material.getMaterial(plugin.fileATM.getConfig().getString("withdraw-inventory.contents." + key + ".item").toUpperCase()))
                         && item.getItemMeta().getDisplayName().equals(Utils.chatColor(plugin.fileATM.getConfig().getString("withdraw-inventory.contents." + key + ".name")))) {
-                    if (plugin.fileATM.getConfig().contains("withdraw-inventory.contents." + key + ".type")) {
+                    if (plugin.fileATM.getConfig().contains("withdraw-inventory.contents." + key + ".event")) {
                         double amount;
-                        switch (plugin.fileATM.getConfig().getString("withdraw-inventory.contents." + key + ".type").toLowerCase()) {
+                        switch (plugin.fileATM.getConfig().getString("withdraw-inventory.contents." + key + ".event").toLowerCase()) {
                             case "withdrawall":
                                 amount = plugin.Economy.getBank(player);
+                                if (amount <= 0) event.setCancelled(true);
+
                                 plugin.Economy.AddAccount(player, amount);
                                 plugin.Economy.RemoveBankAccount(player, amount);
                                 player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") + plugin.fileMessage.getConfig().getString("withdrawn-money"), amount));
@@ -136,6 +136,8 @@ public class inventoryEvents implements Listener {
                                 return;
                             case "withdrawhalf":
                                 amount = (plugin.Economy.getBank(player) * (50 / 100.0f));
+                                if (amount <= 0) event.setCancelled(true);
+
                                 plugin.Economy.AddAccount(player, amount);
                                 plugin.Economy.RemoveBankAccount(player, amount);
                                 player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") + plugin.fileMessage.getConfig().getString("withdrawn-money"), amount));
@@ -147,6 +149,8 @@ public class inventoryEvents implements Listener {
                                 return;
                             case "withdraw20":
                                 amount = (plugin.Economy.getBank(player) * (20 / 100.0f));
+                                if (amount <= 0) event.setCancelled(true);
+
                                 plugin.Economy.AddAccount(player, amount);
                                 plugin.Economy.RemoveBankAccount(player, amount);
                                 player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") + plugin.fileMessage.getConfig().getString("withdrawn-money"), amount));
@@ -163,8 +167,6 @@ public class inventoryEvents implements Listener {
                                 lines.add("Enter the amount");
                                 lines.add("to withdraw");
                                 Utils.openSign(player, 0, "withdraw", lines);
-
-                                player.openInventory(new menuATM(player).getInventory());
                                 event.setCancelled(true);
                                 return;
                             case "goback":

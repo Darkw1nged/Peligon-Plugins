@@ -4,17 +4,25 @@ Options:
   bank-limit: -1
   transaction-add: "&a+ &6$%amount%&7, &e%time% ago &7by &e%player%"
   transaction-remove: "&c- &6$%amount%&7, &e%time% ago &7by &e%player%"
+  interest:
+    percentage: 2
+    # The maximum amount of money the interest will affect
+    cash: 1000000
+    # Time before the interest applies
+    # !! Days - d | Hours - h | Minutes - m | Seconds - s
+    time: "24h"
+
 
 atm-inventory:
   title: "&7Bank Account"
   # !! Must be multiples of 9 | Maximum is 54
   size: 36
 
-  # There is 5 types of items: Information | Deposit | Withdraw | transactions | Close
+  # There is 4 types of item events: Deposit | Withdraw | Transactions | Close
   # If you want the item to be interacted with then please add a type to the item.
   contents:
     1:
-      item: GRAY_STAINED_GLASS_PANE
+      item: BLACK_STAINED_GLASS_PANE
       name: " "
       # See the full list here: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/inventory/ItemFlag.html
       item-flags:
@@ -32,11 +40,17 @@ atm-inventory:
         - "&7them safe while you go on"
         - "&7adventures!"
         - ""
+        - "&7You will earn &b%interest%% &7interest every"
+        - "&7day for your first &6%interest_cash%"
+        - "&7banked cash."
+        - ""
+        - "&7Until Interest: &b%raw_time%"
+        - ""
         - "&eClick to make a deposit!"
       item-flags:
         - "HIDE_ATTRIBUTES"
       slot: 12
-      type: "Deposit"
+      event: "Deposit"
     3:
       item: DROPPER
       name: "&aWithdraw Cash"
@@ -52,7 +66,7 @@ atm-inventory:
         - "HIDE_ATTRIBUTES"
         - "HIDE_ENCHANTS"
       slot: 14
-      type: "Withdraw"
+      event: "Withdraw"
     4:
       item: MAP
       name: "&aRecent Transactions"
@@ -66,7 +80,7 @@ atm-inventory:
           type: LUCK
           level: 1
       slot: 16
-      type: "Transactions"
+      event: "Transactions"
     5:
       item: BARRIER
       name: "&cClose"
@@ -74,7 +88,7 @@ atm-inventory:
         - "HIDE_ATTRIBUTES"
         - "HIDE_ENCHANTS"
       slot: 32
-      type: "Close"
+      event: "Close"
     6:
       item: REDSTONE_TORCH
       name: "&aInformation"
@@ -82,22 +96,27 @@ atm-inventory:
         - "&7Keep your cash safe in the bank!"
         - ""
         - "&7Bank limit: &6%bank_limit%"
+        - ""
+        - "&7The banker rewards you every %time%"
+        - "&7hours with interest for the cash"
+        - "&7in your bank balance."
+        - ""
+        - "&7Until Interest: &b%raw_time%"
       item-flags:
         - "HIDE_ATTRIBUTES"
         - "HIDE_ENCHANTS"
       slot: 33
-      type: "Information"
 
 deposit-inventory:
   title: "&7Bank Deposit"
   # !! Must be multiples of 9 | Maximum is 54
   size: 36
 
-  # There is 4 types of items: DepositAll | DepositHalf | DepositSpecific | GoBack
+  # There is 4 types of item events: DepositAll | DepositHalf | DepositSpecific | GoBack
   # If you want the item to be interacted with then please add a type to the item.
   contents:
     1:
-      item: GRAY_STAINED_GLASS_PANE
+      item: BLACK_STAINED_GLASS_PANE
       name: " "
       # See the full list here: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/inventory/ItemFlag.html
       item-flags:
@@ -119,7 +138,7 @@ deposit-inventory:
         - "HIDE_ATTRIBUTES"
         - "HIDE_ENCHANTS"
       slot: 12
-      type: "DepositAll"
+      event: "DepositAll"
     3:
       item: CHEST
       name: "&aHalf your cash"
@@ -135,7 +154,7 @@ deposit-inventory:
         - "HIDE_ATTRIBUTES"
         - "HIDE_ENCHANTS"
       slot: 14
-      type: "DepositHalf"
+      event: "DepositHalf"
     4:
       item: OAK_SIGN
       name: "&aSpecific amount"
@@ -148,7 +167,7 @@ deposit-inventory:
         - "HIDE_ATTRIBUTES"
         - "HIDE_ENCHANTS"
       slot: 16
-      type: "DepositSpecific"
+      event: "DepositSpecific"
     5:
       item: ARROW
       name: "&aGo Back"
@@ -158,7 +177,7 @@ deposit-inventory:
         - "HIDE_ATTRIBUTES"
         - "HIDE_ENCHANTS"
       slot: 32
-      type: "GoBack"
+      event: "GoBack"
 
 withdraw-inventory:
   title: "&7Bank Withdrawal"
@@ -169,7 +188,7 @@ withdraw-inventory:
   # If you want the item to be interacted with then please add a type to the item.
   contents:
     1:
-      item: GRAY_STAINED_GLASS_PANE
+      item: BLACK_STAINED_GLASS_PANE
       name: " "
       # See the full list here: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/inventory/ItemFlag.html
       item-flags:
@@ -191,7 +210,7 @@ withdraw-inventory:
         - "HIDE_ATTRIBUTES"
         - "HIDE_ENCHANTS"
       slot: 11
-      type: "WithdrawAll"
+      event: "WithdrawAll"
     3:
       item: DROPPER
       name: "&aHalf the account"
@@ -207,7 +226,7 @@ withdraw-inventory:
         - "HIDE_ATTRIBUTES"
         - "HIDE_ENCHANTS"
       slot: 13
-      type: "WithdrawHalf"
+      event: "WithdrawHalf"
     4:
       item: DROPPER
       name: "&aWithdraw 20%"
@@ -222,7 +241,7 @@ withdraw-inventory:
         - "HIDE_ATTRIBUTES"
         - "HIDE_ENCHANTS"
       slot: 15
-      type: "Withdraw20"
+      event: "Withdraw20"
     5:
       item: OAK_SIGN
       name: "&aSpecific amount"
@@ -235,7 +254,7 @@ withdraw-inventory:
         - "HIDE_ATTRIBUTES"
         - "HIDE_ENCHANTS"
       slot: 17
-      type: "WithdrawSpecific"
+      event: "WithdrawSpecific"
     6:
       item: ARROW
       name: "&aGo Back"
@@ -245,4 +264,4 @@ withdraw-inventory:
         - "HIDE_ATTRIBUTES"
         - "HIDE_ENCHANTS"
       slot: 32
-      type: "GoBack"
+      event: "GoBack"

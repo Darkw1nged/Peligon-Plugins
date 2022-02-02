@@ -26,6 +26,8 @@ commands:
     aliases:
       - bank
     description: Allows users to manage their bank accounts
+  pouches:
+    description: Allows users to purchase pouches
   balancetop:
     aliases:
       - baltop

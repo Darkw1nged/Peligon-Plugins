@@ -21,7 +21,7 @@ bounty-added: "&fAdded &2$%amount% &fto &e%player%'s &fbounty"
 current-bounty: "&ePeligon >> &e%player%'s &fcurrent bounty is &2$%amount%"
 sellwand-given: "&fYou have given a sellwand to %player% that has %uses% uses"
 no-bank-limit: "None"
-no-transactions: "There are no recent transactions!"
+no-transactions: "&7There are no recent transactions!"
 
 console: "&cError! You are not allowed to perform this inside of the console."
 no-permission: "&cError! You do not have permission to use this command."

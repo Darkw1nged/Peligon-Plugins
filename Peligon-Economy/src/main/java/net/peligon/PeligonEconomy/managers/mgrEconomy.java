@@ -44,7 +44,7 @@ public class mgrEconomy {
         if (hasAccount(player)) return;
         if (balance < 0) return;
         String uuid = String.valueOf(player.getUniqueId());
-        String query = "INSERT INTO plg_moneyvalues('" + uuid + "', " + balance + ", 0.0);";
+        String query = "INSERT INTO plg_money values('" + uuid + "', " + balance + ", 0.0);";
         try {
             Statement statement = SQLite.connection.createStatement();
             statement.execute(query);

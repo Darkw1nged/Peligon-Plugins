@@ -2,6 +2,7 @@ package net.peligon.PeligonEconomy;
 
 import net.peligon.PeligonEconomy.commands.*;
 import net.peligon.PeligonEconomy.libaries.CustomConfig;
+import net.peligon.PeligonEconomy.libaries.InterestTimer;
 import net.peligon.PeligonEconomy.libaries.Utils;
 import net.peligon.PeligonEconomy.libaries.storage.SQLite;
 import net.peligon.PeligonEconomy.listeners.*;
@@ -20,6 +21,7 @@ public final class Main extends JavaPlugin {
     public CustomConfig fileWorth = new CustomConfig(this, "worth", true);
     public CustomConfig fileSigns = new CustomConfig(this, "signs", true);
     public CustomConfig fileATM = new CustomConfig(this, "ATM", true);
+    public CustomConfig filePouches = new CustomConfig(this, "pouch shop", true);
     public CustomConfig fileMessage;
 
     public void onEnable() {
@@ -41,12 +43,16 @@ public final class Main extends JavaPlugin {
             new mgrPlaceholders().register();
         }
 
+        // ---- [ Calling repeating tasks ] ----
+        new InterestTimer().runTaskLater(this, 20 * 3);
+
         // ---- [ Loading Commands | Loading Events | Loading YML Files ] ----
         loadCommands();
         loadEvents();
         fileWorth.saveDefaultConfig();
         fileSigns.saveDefaultConfig();
         fileATM.saveDefaultConfig();
+        filePouches.saveDefaultConfig();
         saveDefaultConfig();
 
         // ---- [ Setting up SQLite ] ----
@@ -71,6 +77,7 @@ public final class Main extends JavaPlugin {
         getCommand("pelecon").setExecutor(new cmdReload());
         getCommand("balance").setExecutor(new cmdBalance());
         getCommand("atm").setExecutor(new cmdATM());
+        getCommand("pouches").setExecutor(new cmdPouches());
         getCommand("balancetop").setExecutor(new cmdBalanceTop());
         getCommand("pay").setExecutor(new cmdPay());
         getCommand("withdraw").setExecutor(new cmdWithdraw());
