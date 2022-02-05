@@ -1,4 +1,4 @@
-name: Peligon_Economy
+name: PeligonEconomy
 version: '${project.version}'
 main: net.peligon.PeligonEconomy.Main
 api-version: 1.18
@@ -6,6 +6,8 @@ authors: [ darkwinged ]
 description: This is an open-source plugin.
 depend: [Vault, ProtocolLib]
 softdepend: [PlaceholderAPI]
+load: STARTUP
+loadbefore: [Vault]
 commands:
   economy:
     aliases:

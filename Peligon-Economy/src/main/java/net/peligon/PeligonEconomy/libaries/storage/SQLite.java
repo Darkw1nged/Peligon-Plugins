@@ -20,10 +20,8 @@ public class SQLite {
         try {
             if (connection != null) {
                 DatabaseMetaData meta = connection.getMetaData();
-                System.out.println("The driver name is " + meta.getDriverName());
-                getServer().getConsoleSender().sendMessage(Utils.chatColor("A new database has been created."));
             }
-            getServer().getConsoleSender().sendMessage(Utils.chatColor("&bConnection to database has been successful."));
+            getServer().getConsoleSender().sendMessage(Utils.chatColor("&aConnection to database has been successful."));
         } catch (SQLException e) {
             throw new Error("Connection to database could not be made.\nPlease notify the developer of this.\n");
         }

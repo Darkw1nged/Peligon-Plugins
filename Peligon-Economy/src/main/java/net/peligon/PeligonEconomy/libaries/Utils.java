@@ -93,7 +93,6 @@ public class Utils {
         if (Utils.transactions.containsKey(player.getUniqueId())) {
             for (LocalDateTime date : Utils.transactions.get(player.getUniqueId()).keySet()) {
                 list.put(date, Utils.chatColor(Utils.transactions.get(player.getUniqueId()).get(date)));
-                System.out.println(list);
             }
         } else {
             list.put(LocalDateTime.now(), transaction);
@@ -203,5 +202,21 @@ public class Utils {
     public static Map<UUID, Integer> KillStreak = new HashMap<>();
     public static Map<UUID, Double> bounties = new HashMap<>();
     public static Map<UUID, Map<LocalDateTime, String>> transactions = new HashMap<>();
+
+    // ---- [ Global values ] ----
+    public static int RawInterestTimer;
+    static {
+        String path = plugin.fileATM.getConfig().getString("Options.interest.time");
+        if (path.contains("d")) {
+            RawInterestTimer = Integer.parseInt(Utils.formatTime(path)) * 24 * 60 * 60;
+        } else if (path.contains("h")) {
+            RawInterestTimer = Integer.parseInt(Utils.formatTime(path)) * 60 * 60;
+        } else if (path.contains("m")) {
+            RawInterestTimer = Integer.parseInt(Utils.formatTime(path)) * 60;
+        } else {
+            RawInterestTimer = Integer.parseInt(Utils.formatTime(path));
+        }
+    }
+    public static int InterestTimer = RawInterestTimer;
 
 }

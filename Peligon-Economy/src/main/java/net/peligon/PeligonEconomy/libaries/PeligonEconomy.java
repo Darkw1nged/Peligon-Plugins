@@ -147,9 +147,7 @@ public class PeligonEconomy implements Economy {
     public double getBalance(String playerName) {
         Player player = Bukkit.getPlayer(playerName);
         if (player == null) return 0;
-        if (plugin.Economy.hasAccount(player)) {
-            return plugin.Economy.getAccount(player);
-        } else return 0;
+        return plugin.Economy.getAccount(player);
     }
 
     /**
@@ -174,9 +172,7 @@ public class PeligonEconomy implements Economy {
     public double getBalance(String playerName, String world) {
         Player player = Bukkit.getPlayer(playerName);
         if (player == null) return 0;
-        if (plugin.Economy.hasAccount(player)) {
-            return plugin.Economy.getAccount(player);
-        } else return 0;
+        return plugin.Economy.getAccount(player);
     }
 
     /**
@@ -189,9 +185,7 @@ public class PeligonEconomy implements Economy {
      */
     @Override
     public double getBalance(OfflinePlayer player, String world) {
-        if (plugin.Economy.hasAccount(player)) {
-            return plugin.Economy.getAccount(player);
-        } else return 0;
+        return plugin.Economy.getAccount(player);
     }
 
     /**
