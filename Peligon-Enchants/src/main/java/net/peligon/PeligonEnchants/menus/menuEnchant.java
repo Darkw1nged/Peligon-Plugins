@@ -24,8 +24,8 @@ public class menuEnchant implements Menu {
 
     public menuEnchant(Player player) {
         this.player = player;
-        this.inventory = Bukkit.createInventory(this, plugin.fileATM.getConfig().getInt("atm-inventory.size"),
-                Utils.chatColor(plugin.fileATM.getConfig().getString("atm-inventory.title")));
+        this.inventory = Bukkit.createInventory(this, plugin.fileUI.getConfig().getInt("main.size"),
+                Utils.chatColor(plugin.fileUI.getConfig().getString("main.title")));
         
 
 

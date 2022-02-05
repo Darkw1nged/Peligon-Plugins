@@ -17,6 +17,7 @@ public class encDecapitation implements Listener {
 
     @EventHandler
     public void onEntityDamageByEntity(EntityDeathEvent event) {
+        if (!(event.getEntity() instanceof Player)) return;
         Player player = (Player) event.getEntity();
         Player target = event.getEntity().getKiller();
 

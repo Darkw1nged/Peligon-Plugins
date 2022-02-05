@@ -15,6 +15,7 @@
         <module>Peligon-Core</module>
         <module>Peligon-Chat</module>
         <module>Peligon-Economy</module>
+        <module>Peligon-Enchants</module>
         <module>Peligon-Stats</module>
         <module>Peligon-Social</module>
     </modules>
