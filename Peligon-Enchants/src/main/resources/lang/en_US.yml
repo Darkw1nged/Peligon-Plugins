@@ -1,5 +1,5 @@
-startup: "&aPeligon Economy has successfully loaded."
-shutdown: "&cPeligon Economy has successfully unloaded."
+startup: "&aPeligon Enchants has successfully loaded."
+shutdown: "&cPeligon Enchants has successfully unloaded."
 admin-reload: "&eAll configuration files have been reloaded."
 
 prefix: "&ePeligon >> "
