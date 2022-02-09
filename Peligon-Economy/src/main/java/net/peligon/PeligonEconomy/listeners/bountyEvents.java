@@ -43,7 +43,12 @@ public class bountyEvents implements Listener {
 
                 // ---- [ Adding money to players bounty if they
                 if (Utils.KillStreak.containsKey(killerUUID) && Utils.KillStreak.get(killerUUID) >= plugin.getConfig().getInt("Bounties.minimum-kill-streak")) {
-                    Utils.bounties.put(killerUUID, Utils.bounties.get(killerUUID) + plugin.getConfig().getDouble("Bounties.amount"));
+                    if (Utils.bounties != null && Utils.bounties.containsKey(killerUUID)) {
+                        Utils.bounties.put(killerUUID, Utils.bounties.get(killerUUID) + plugin.getConfig().getDouble("Bounties.amount"));
+                    } else {
+                        Utils.bounties.put(killerUUID, plugin.getConfig().getDouble("Bounties.amount"));
+                    }
+
                 }
             }
         }

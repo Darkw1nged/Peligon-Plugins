@@ -14,8 +14,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.Locale;
+import java.time.LocalDateTime;
+import java.util.*;
 
 public class menuATM implements Menu {
 
@@ -43,26 +43,34 @@ public class menuATM implements Menu {
                     limit = getBracket(plugin.fileATM.getConfig().getInt("Options.bank-limit"), 0);
                 }
 
-                if (plugin.fileATM.getConfig().getString("atm-inventory.contents." + key + ".type").equalsIgnoreCase("transactions")) {
+                if (plugin.fileATM.getConfig().contains("atm-inventory.contents." + key + ".event") &&
+                        plugin.fileATM.getConfig().getString("atm-inventory.contents." + key + ".event").equalsIgnoreCase("transactions")) {
                     if (Utils.transactions.containsKey(player.getUniqueId()) && Utils.transactions.get(player.getUniqueId()).size() > 0) {
                         for (String line : plugin.fileATM.getConfig().getStringList("atm-inventory.contents." + key + ".lore")) {
-                            if (line.contains("%transactions%")) return;
+                            if (line.contains("%transactions%")) continue;
                             lore.add(Utils.chatColor(line)
                                     .replaceAll("%cash%", formatted(plugin.Economy.getAccount(player)))
                                     .replaceAll("%bank%", formatted(plugin.Economy.getBank(player)))
                                     .replaceAll("%bank_limit%", limit));
 
                         }
-                        for (String hist : Utils.transactions.get(player.getUniqueId())) {
-                            lore.add(Utils.chatColor(hist));
+                        for (LocalDateTime date : Utils.transactions.get(player.getUniqueId()).keySet()) {
+                            System.out.println(Utils.transactions.get(player.getUniqueId()).get(date));
+                            lore.add(Utils.chatColor(Utils.transactions.get(player.getUniqueId()).get(date)
+                                    .replaceAll("%time%", Utils.formatDate(date, LocalDateTime.now()))));
                         }
+
                     } else {
                         for (String line : plugin.fileATM.getConfig().getStringList("atm-inventory.contents." + key + ".lore")) {
                             lore.add(Utils.chatColor(line)
                                     .replaceAll("%cash%", formatted(plugin.Economy.getAccount(player)))
                                     .replaceAll("%bank%", formatted(plugin.Economy.getBank(player)))
                                     .replaceAll("%bank_limit%", limit)
-                                    .replaceAll("%transactions%", Utils.chatColor(plugin.fileMessage.getConfig().getString("no-transactions"))));
+                                    .replaceAll("%transactions%", Utils.chatColor(plugin.fileMessage.getConfig().getString("no-transactions")))
+                                    .replaceAll("%interest%", "" + plugin.fileATM.getConfig().getInt("Options.interest.percentage"))
+                                    .replaceAll("%interest_cash%", Utils.formatAmount(plugin.fileATM.getConfig().getInt("Options.interest.cash")))
+                                    .replaceAll("%raw_time%", plugin.fileATM.getConfig().getString("Options.interest.time"))
+                                    .replaceAll("%time%", Utils.formatTime(plugin.fileATM.getConfig().getString("Options.interest.time"))));
 
                         }
                     }
@@ -71,7 +79,11 @@ public class menuATM implements Menu {
                         lore.add(Utils.chatColor(line)
                                 .replaceAll("%cash%", formatted(plugin.Economy.getAccount(player)))
                                 .replaceAll("%bank%", formatted(plugin.Economy.getBank(player)))
-                                .replaceAll("%bank_limit%", limit));
+                                .replaceAll("%bank_limit%", limit)
+                                .replaceAll("%interest%", "" + plugin.fileATM.getConfig().getInt("Options.interest.percentage"))
+                                .replaceAll("%interest_cash%", Utils.formatAmount(plugin.fileATM.getConfig().getInt("Options.interest.cash")))
+                                .replaceAll("%raw_time%", plugin.fileATM.getConfig().getString("Options.interest.time"))
+                                .replaceAll("%time%", Utils.formatTime(plugin.fileATM.getConfig().getString("Options.interest.time"))));
 
                     }
                 }
@@ -85,7 +97,7 @@ public class menuATM implements Menu {
             }
 
             if (plugin.fileATM.getConfig().contains("atm-inventory.contents." + key + ".enchantments")) {
-                for (String enchant : plugin.fileATM.getConfig().getStringList("atm-inventory.contents." + key + ".enchantments")) {
+                for (String enchant : plugin.fileATM.getConfig().getConfigurationSection("atm-inventory.contents." + key + ".enchantments").getKeys(false)) {
                     meta.addEnchant(Enchantment.getByName(plugin.fileATM.getConfig().getString("atm-inventory.contents." + key + ".enchantments." + enchant + ".type").toUpperCase()),
                             plugin.fileATM.getConfig().getInt("atm-inventory.contents." + key + ".enchantments." + enchant + ".type"),
                             false);

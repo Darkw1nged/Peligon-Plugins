@@ -1,9 +1,5 @@
 package net.peligon.PeligonEconomy.libaries;
 
-import com.comphenix.protocol.PacketType;
-import com.comphenix.protocol.ProtocolLibrary;
-import com.comphenix.protocol.events.PacketContainer;
-import com.comphenix.protocol.wrappers.BlockPosition;
 import net.peligon.PeligonEconomy.Main;
 import net.peligon.PeligonEconomy.managers.mgrSignFactory;
 import net.peligon.PeligonEconomy.menu.menuATM;
@@ -15,6 +11,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.text.NumberFormat;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.*;
 
 public class Utils {
@@ -84,23 +82,22 @@ public class Utils {
         return newList;
     }
 
-    // ---- [ Cached Items ] ----
-    public static Map<UUID, Integer> KillStreak = new HashMap<>();
-    public static Map<UUID, Double> bounties = new HashMap<>();
-    public static Map<UUID, List<String>> transactions = new HashMap<>();
-
-
     // ---- [ Add transactions ] ----
     public static void addTransaction(Player player, String transaction) {
-        if (transactions.containsKey(player.getUniqueId())) {
-            List<String> list = transactions.get(player.getUniqueId());
-            list.add(transaction);
-            transactions.put(player.getUniqueId(), list);
+//        Map<LocalDateTime, String> list = transactions.containsKey(player.getUniqueId()) ? transactions.get(player.getUniqueId()) : new HashMap<>();
+//        list.put(LocalDateTime.now(), transaction);
+//        transactions.put(player.getUniqueId(), list);
+
+        Map<LocalDateTime, String> list = new HashMap<>();
+
+        if (Utils.transactions.containsKey(player.getUniqueId())) {
+            for (LocalDateTime date : Utils.transactions.get(player.getUniqueId()).keySet()) {
+                list.put(date, Utils.chatColor(Utils.transactions.get(player.getUniqueId()).get(date)));
+            }
         } else {
-            List<String> temp = new ArrayList<>();
-            temp.add(transaction);
-            transactions.put(player.getUniqueId(), temp);
+            list.put(LocalDateTime.now(), transaction);
         }
+        transactions.put(player.getUniqueId(), list);
     }
 
     // ---- [ Open Sign Editor ] ----
@@ -108,7 +105,6 @@ public class Utils {
         mgrSignFactory.Menu menu = plugin.signFactory.newMenu(lines)
                 .reopenIfFail(true)
                 .response((player, strings) -> {
-                    menuATM atm = new menuATM(player);
                     if (strings[result].equals("") || strings[result].equals("0")) return true;
                     double amount;
                     try {
@@ -155,11 +151,72 @@ public class Utils {
                                 .replaceAll("%player%", player.getName()));
 
                     }
-                    player.openInventory(atm.getInventory());
+                    player.openInventory(new menuATM(player).getInventory());
                     return true;
                 });
 
         menu.open(target);
     }
+
+    /// --- [ Formatting Objects ] ----
+    public static String formatDate(LocalDateTime dateOne, LocalDateTime dateTwo) {
+        if (Duration.between(dateOne, dateTwo).getSeconds() < 60) {
+            if (Duration.between(dateOne, dateTwo).getSeconds() == 1) {
+                return Duration.between(dateOne, dateTwo).getSeconds() + " second";
+            }
+            return Duration.between(dateOne, dateTwo).getSeconds() + " seconds";
+        } else if (Duration.between(dateOne, dateTwo).toMinutes() < 60) {
+            if (Duration.between(dateOne, dateTwo).toMinutes() == 1) {
+                return Duration.between(dateOne, dateTwo).toMinutes() + " minute";
+            }
+            return Duration.between(dateOne, dateTwo).toMinutes() + " minutes";
+        } else if (Duration.between(dateOne, dateTwo).toHours() < 24) {
+            if (Duration.between(dateOne, dateTwo).toHours() == 1) {
+                return Duration.between(dateOne, dateTwo).toHours() + " hour";
+            }
+            return Duration.between(dateOne, dateTwo).toHours() + " hours";
+        } else {
+            if (Duration.between(dateOne, dateTwo).toDays() == 1) {
+                return Duration.between(dateOne, dateTwo).toDays() + " day";
+            }
+            return Duration.between(dateOne, dateTwo).toDays() + " days";
+        }
+    }
+
+    public static String formatTime(String time) {
+        return time
+                .replaceAll("d", "")
+                .replaceAll("h", "")
+                .replaceAll("m", "")
+                .replaceAll("s", "");
+    }
+
+    public static String formatAmount(int amount) {
+        return Math.abs(amount) >= 1e+9 ? String.format("%.0f", (Math.abs(amount) / 1e+9)) + " Billion"
+                : Math.abs(amount) >= 1e+6 ? String.format("%.0f", (Math.abs(amount) / 1e+6)) + " Million"
+                : Math.abs(amount) >= 1e+3 ? String.format("%.0f", (Math.abs(amount) / 1e+3)) + " Thousand"
+                : String.valueOf(Math.abs(amount));
+    }
+
+    // ---- [ Cached Items ] ----
+    public static Map<UUID, Integer> KillStreak = new HashMap<>();
+    public static Map<UUID, Double> bounties = new HashMap<>();
+    public static Map<UUID, Map<LocalDateTime, String>> transactions = new HashMap<>();
+
+    // ---- [ Global values ] ----
+    public static int RawInterestTimer;
+    static {
+        String path = plugin.fileATM.getConfig().getString("Options.interest.time");
+        if (path.contains("d")) {
+            RawInterestTimer = Integer.parseInt(Utils.formatTime(path)) * 24 * 60 * 60;
+        } else if (path.contains("h")) {
+            RawInterestTimer = Integer.parseInt(Utils.formatTime(path)) * 60 * 60;
+        } else if (path.contains("m")) {
+            RawInterestTimer = Integer.parseInt(Utils.formatTime(path)) * 60;
+        } else {
+            RawInterestTimer = Integer.parseInt(Utils.formatTime(path));
+        }
+    }
+    public static int InterestTimer = RawInterestTimer;
 
 }
