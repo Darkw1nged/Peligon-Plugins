@@ -21,6 +21,8 @@ public class encDecapitation implements Listener {
         Player player = (Player) event.getEntity();
         Player target = event.getEntity().getKiller();
 
+        if (target == null) return;
+
         if (!target.getInventory().getItemInMainHand().getItemMeta().hasEnchant(CustomEnchants.DECAPITATION)) return;
         if (target.getGameMode() == GameMode.CREATIVE || target.getGameMode() == GameMode.SPECTATOR) return;
 

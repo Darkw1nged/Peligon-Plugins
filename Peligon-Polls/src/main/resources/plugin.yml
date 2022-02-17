@@ -1,0 +1,6 @@
+name: PeligonPolls
+version: '${project.version}'
+main: net.peligon.PeligonPolls.Main
+api-version: 1.18
+authors: [ darkwinged ]
+description: This is an open-source plugin

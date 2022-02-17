@@ -27,11 +27,13 @@ public class CustomEnchants {
     public static final Enchantment POISON = new Wrapper("poison", "Poison", 3);
     public static final Enchantment TRAP = new Wrapper("trap", "Trap", 3);
     public static final Enchantment HEADLESS = new Wrapper("headless", "Headless", 3);
+    public static final Enchantment DECAPITATION = new Wrapper("decapitation", "Decapitation", 3);
 
     public static final Enchantment CONFUSION = new Wrapper("confusion", "Confusion", 3);
     public static final Enchantment LIGHTNING = new Wrapper("lightning", "Lightning", 3);
-    public static final Enchantment DECAPITATION = new Wrapper("decapitation", "Decapitation", 3);
     public static final Enchantment FEATHERWEiGHT = new Wrapper("featherweight", "Featherweight", 3);
+
+
     public static final Enchantment EXPERIENCE = new Wrapper("experience", "Experience", 5);
     public static final Enchantment OBLITERATE = new Wrapper("obliterate", "Obliterate", 5);
     public static final Enchantment OBSIDIANDESTROYER = new Wrapper("obsidiandestroyer", "Obsidian Destroyer", 5);

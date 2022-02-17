@@ -1,0 +1,17 @@
+startup: "&aRiot Polls has successfully loaded."
+shutdown: "&cRiot Polls  has successfully unloaded."
+admin-reload: "&eAll configuration files have been reloaded."
+admin-remove: "&eClick to remove a poll."
+
+prefix: "&cRiot Polls >> "
+poll-created: "&fYou have successfully created a new poll!"
+vote-status: "&fChoose from an option below to cast your vote!"
+vote-casted: "&fYou have successfully casted your vote!"
+vote-canceled: "&fYou have successfully canceled your vote!"
+poll-removed: "&fYou have successfully removed a poll!"
+
+console: "&cError! You are not allowed to perform this inside of the console."
+no-permission: "&cError! You do not have permission to use this command."
+already-voted: "&cError! You have already voted for this poll."
+
+polls-usage: "&cIncorrect Command Usage: &f/poll create [title] [comment]"
