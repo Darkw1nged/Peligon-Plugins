@@ -1,0 +1,69 @@
+#######################################################################################
+#
+#       Welcome to Peligon Polls configuration, This is where you can change
+#       Basic settings that will affect how the plugin preforms.
+#       This plugin does have database support; see 'Storage' for more information.
+#
+#######################################################################################
+
+Storage:
+  # Visit 'Plugins/PeligonPolls/Lang/' to see the supported languages.
+  Language File: "en_US"
+  # Replace with the bot client ID
+  client-token: ""
+  # Where the polls will be posted
+  text-channel-id: ""
+
+polls-inventory:
+  title: "&aPolls"
+  size: 27
+  poll-gui-item:
+    item: BOOK
+    name: "&ePoll - &6%title%"
+    # !! This will only affect %description%
+    description-word-per-line: 5
+    # !! Spacing will automatically be added under the description.
+    lore:
+      - "&7%description%"
+      - "&7Created by: &c%author%"
+      - "&7Created on: &c%created%"
+      - ""
+      - "&7Votes: &a↑%upVote% &7| &4↓%downVote%"
+      - ""
+      - "&eClick to cast vote"
+  contents:
+    1:
+      item: BLACK_STAINED_GLASS_PANE
+      name: " "
+      # -1 means all slots will be filled with this item.
+      slot: -1
+    2:
+      # !! Item will be replaced with : poll-gui-item : Which is listed above
+      slot: 11
+      type: "Poll"
+    3:
+      slot: 12
+      type: "Poll"
+    4:
+      slot: 13
+      type: "Poll"
+    5:
+      slot: 14
+      type: "Poll"
+    6:
+      slot: 15
+      type: "Poll"
+    7:
+      slot: 16
+      type: "Poll"
+    8:
+      slot: 17
+      type: "Poll"
+    9:
+      item: BARRIER
+      name: "&cClose"
+      item-flags:
+        - "HIDE_ATTRIBUTES"
+        - "HIDE_ENCHANTS"
+      slot: 23
+      type: "Close"

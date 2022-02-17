@@ -20,6 +20,8 @@ public class encHeadless implements Listener {
         Player player = (Player) event.getEntity();
         Player target = event.getEntity().getKiller();
 
+        if (target == null) return;
+
         if (!target.getInventory().getItemInMainHand().getItemMeta().hasEnchant(CustomEnchants.HEADLESS)) return;
         if (target.getGameMode() == GameMode.CREATIVE || target.getGameMode() == GameMode.SPECTATOR) return;
 

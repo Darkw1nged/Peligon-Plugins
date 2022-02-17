@@ -30,12 +30,14 @@ public class SQLite {
     public void loadTables() {
         try {
             getSQLConnection();
-            String tbl_Users = "CREATE TABLE IF NOT EXISTS plg_users(uuid PRIMARY KEY, IslandID VARCHAR(255));";
+            String tbl_Users = "CREATE TABLE IF NOT EXISTS plg_users(uuid PRIMARY KEY, islandID);";
+            String tbl_Islands = "CREATE TABLE IF NOT EXISTS plg_islands(islandID PRIMARY KEY, owner, worth DOUBLE, islandLevel INTEGER, maximum_members INTEGER, locked INTEGER);";
 
             try {
                 Statement statement = connection.createStatement();
                 {
                     statement.execute(tbl_Users);
+                    statement.execute(tbl_Islands);
                 }
                 statement.close();
             } catch (SQLException e) {
