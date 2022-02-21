@@ -17,6 +17,11 @@ import java.util.UUID;
 public class IslandManager {
 
     private final Main plugin = Main.getInstance;
+    public static IslandManager getInstance;
+
+    public IslandManager() {
+        getInstance = this;
+    }
 
     /**
      * Checking if the user has an island
@@ -48,18 +53,20 @@ public class IslandManager {
         String strID = player.getUniqueId().toString().split("-")[0] + player.getUniqueId().toString().split("-")[4];
         String islandID = String.valueOf(UUID.nameUUIDFromBytes(strID.getBytes()));
 
-        String query = "INSERT INTO plg_islands VALUES('" + islandID + "', '" + uuid + "', 0.0, 0, 10, 0, 0, 0, 0, 0, 0, 0)";
+        String createIsland = "INSERT INTO plg_islands VALUES('" + islandID + "', '" + uuid + "', 0.0, 0, 10, 1)";
+        String insertUser = "INSERT INTO plg_users VALUES('" + uuid + "', '" + islandID + "')";
         CustomConfig data = new CustomConfig(plugin, islandID, "data");
 
         try {
             Statement statement = SQLite.connection.createStatement();
-            statement.execute(query);
+            statement.execute(createIsland);
+            statement.execute(insertUser);
 
-            List<UUID> members = new ArrayList<>();
-            members.add(player.getUniqueId());
+            List<String> members = new ArrayList<>();
+            members.add(player.getUniqueId().toString());
             data.getConfig().set("Members", members);
 
-            List<UUID> banned = new ArrayList<>();
+            List<String> banned = new ArrayList<>();
             data.getConfig().set("Banned Members", banned);
 
             data.getConfig().set("Upgrades.Spawner Rates", 1);
@@ -80,7 +87,7 @@ public class IslandManager {
      *
      * @param player of the player
      */
-    public void DeleteIsland(OfflinePlayer player) {
+    public void deleteIsland(OfflinePlayer player) {
         if (!hasIsland(player)) return;
         String islandID = String.valueOf(getIslandID(player));
         String query = "DELETE FROM plg_islands WHERE islandID='" + islandID + "';";
@@ -352,7 +359,7 @@ public class IslandManager {
      * Returns the player's island Locked Status
      *
      * @param player of the player
-     * @Return Island Locked Status
+     * @return Island Locked Status
      */
     public Boolean getIslandLocked(OfflinePlayer player) {
         if (!hasIsland(player)) return true;
@@ -386,6 +393,63 @@ public class IslandManager {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Gets the island members
+     *
+     * @param player owner of the island
+     * @return a list of players on island
+     */
+    public List<UUID> getIslandMembers(OfflinePlayer player) {
+        if (!hasIsland(player)) return new ArrayList<>();
+        String islandID = String.valueOf(getIslandID(player));
+        CustomConfig data = new CustomConfig(plugin, islandID, "data");
+
+        List<UUID> members = new ArrayList<>();
+        for (String uuid : data.getConfig().getStringList("Members")) {
+            members.add(UUID.fromString(uuid));
+        }
+        return members;
+    }
+
+    /**
+     * Adds the player to an island
+     *
+     * @param owner of the island
+     * @param player to be added from island
+     */
+    public void addIslandMember(OfflinePlayer owner, OfflinePlayer player) {
+        if (!hasIsland(owner)) return;
+        String islandID = String.valueOf(getIslandID(owner));
+        CustomConfig data = new CustomConfig(plugin, islandID, "data");
+
+        List<UUID> members = getIslandMembers(owner);
+        for (String uuid : data.getConfig().getStringList("Members")) {
+            members.add(UUID.fromString(uuid));
+        }
+        members.add(player.getUniqueId());
+        data.getConfig().set("Members", members);
+    }
+
+    /**
+     * Removes the player to an island
+     *
+     * @param owner of the island
+     * @param player to be removed from island
+     */
+    public void removeIslandMember(OfflinePlayer owner, OfflinePlayer player) {
+        if (!hasIsland(owner)) return;
+        String islandID = String.valueOf(getIslandID(owner));
+        CustomConfig data = new CustomConfig(plugin, islandID, "data");
+
+        List<UUID> members = getIslandMembers(owner);
+        for (String uuid : data.getConfig().getStringList("Members")) {
+            members.add(UUID.fromString(uuid));
+        }
+        members.remove(player.getUniqueId());
+        data.getConfig().set("Members", members);
+
     }
 
 }

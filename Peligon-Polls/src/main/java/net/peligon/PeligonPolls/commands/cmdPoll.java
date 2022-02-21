@@ -23,7 +23,7 @@ public class cmdPoll implements CommandExecutor {
         if (cmd.getName().equalsIgnoreCase("poll")) {
             if (args.length >= 1 && args[0].equalsIgnoreCase("create")) {
                 if (args.length >= 3) {
-                    if (sender.hasPermission("RiotPolls.create")) {
+                    if (sender.hasPermission("Peligon.Polls.create") || sender.hasPermission("Peligon.Polls.*")) {
                         String title = args[1]
                                 .replaceAll("_", " ");
                         StringBuilder description = new StringBuilder();
@@ -57,7 +57,7 @@ public class cmdPoll implements CommandExecutor {
                     return true;
                 }
             } else if (args.length >= 1 && args[0].equalsIgnoreCase("get")) {
-                if (sender.hasPermission("RiotPolls.get")) {
+                if (sender.hasPermission("Peligon.Polls.get") || sender.hasPermission("Peligon.Polls.*")) {
                     sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("admin-remove")));
                     for (Poll poll : Utils.polls) {
                        TextComponent component = new TextComponent(Utils.chatColor("&c&l" + poll.getMessageID()));
@@ -71,7 +71,7 @@ public class cmdPoll implements CommandExecutor {
                     return true;
                 }
             } else if (args.length >= 1 && args[0].equalsIgnoreCase("remove")) {
-                if (sender.hasPermission("RiotPolls.remove")) {
+                if (sender.hasPermission("Peligon.Polls.remove") || sender.hasPermission("Peligon.Polls.*")) {
                     if (args.length != 2) {
                         sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("poll-remove-usage")));
                         return true;
@@ -115,7 +115,7 @@ public class cmdPoll implements CommandExecutor {
                     sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("console")));
                     return true;
                 }
-                if (sender.hasPermission("RiotPolls.view")) {
+                if (sender.hasPermission("Peligon.Polls.view") || sender.hasPermission("Peligon.Polls.*")) {
                     Player player = (Player)sender;
                     menuPolls polls = new menuPolls(player);
                     player.openInventory(polls.getInventory());

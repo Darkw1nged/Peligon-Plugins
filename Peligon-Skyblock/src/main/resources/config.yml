@@ -10,3 +10,6 @@ Storage:
   # Visit 'Plugins/PeligonSkyblock/Lang/' to see the supported languages.
   Language File: "en_US"
   database: "SQLite"
+
+# How long an island invitation is valid for.
+Invitation-timeout: 120

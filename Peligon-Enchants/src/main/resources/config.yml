@@ -10,3 +10,6 @@ Storage:
   # Visit 'Plugins/PeligonEnchants/Lang/' to see the supported languages.
   Language File: "en_US"
   database: "SQLite"
+
+# Allows you to set enchant levels above their normal limit;
+unsafe-enchants: false

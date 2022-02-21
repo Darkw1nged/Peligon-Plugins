@@ -41,30 +41,4 @@ public class encDecapitation implements Listener {
         }
     }
 
-    @EventHandler
-    public void onJoin(PlayerJoinEvent event) {
-        Player player = event.getPlayer();
-        ItemStack item = new ItemStack(Material.DIAMOND_AXE);
-
-        Utils.addEnchant(item, CustomEnchants.DECAPITATION, 1);
-        player.getInventory().addItem(item);
-    }
-
-    @EventHandler
-    public void onJoi2n(PlayerJoinEvent event) {
-        Player player = event.getPlayer();
-        ItemStack item = new ItemStack(Material.DIAMOND_AXE);
-
-        Utils.addEnchant(item, CustomEnchants.DECAPITATION, 2);
-        player.getInventory().addItem(item);
-    }
-
-    @EventHandler
-    public void onJoin3(PlayerJoinEvent event) {
-        Player player = event.getPlayer();
-        ItemStack item = new ItemStack(Material.DIAMOND_AXE);
-        Utils.addEnchant(item, CustomEnchants.DECAPITATION, 3);
-        player.getInventory().addItem(item);
-    }
-
 }

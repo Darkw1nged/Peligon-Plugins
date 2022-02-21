@@ -1,9 +1,9 @@
 startup: "&aPeligon Enchants has successfully loaded."
 shutdown: "&cPeligon Enchants has successfully unloaded."
 admin-reload: "&eAll configuration files have been reloaded."
+autosell-disabled: "&cError! Vault connection was unsuccessful; Autosell enchantment wont work!"
 
 prefix: "&ePeligon >> "
-level-up: "&fYou have successfully leveled up %skill% you are now (%level%)"
 
 console: "&cError! You are not allowed to perform this inside of the console."
 no-permission: "&cError! You do not have permission to use this command."
@@ -11,4 +11,4 @@ no-player-found: "&cError! %player% could not be found."
 command-disabled: "&cError! The current command is disabled on the server."
 specify-player: "&cError! Please specify a player."
 account-error: "&cError! %player% dont seem to have an account."
-autosell-disabled: "&cError! Vault connection was unsuccessful; Autosell enchantment wont work!"
+no-item: "&cError! There is no item to enchant."

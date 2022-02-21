@@ -6,7 +6,7 @@
 
     <groupId>net.peligon.PeligonEnchants</groupId>
     <artifactId>Peligon-Enchants</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
     <packaging>jar</packaging>
 
     <name>Peligon Enchants</name>

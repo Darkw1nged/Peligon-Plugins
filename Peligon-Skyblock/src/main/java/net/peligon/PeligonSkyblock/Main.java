@@ -1,9 +1,11 @@
 package net.peligon.PeligonSkyblock;
 
 import net.milkbowl.vault.economy.Economy;
+import net.peligon.PeligonSkyblock.commands.cmdIsland;
 import net.peligon.PeligonSkyblock.libaries.CustomConfig;
 import net.peligon.PeligonSkyblock.libaries.Utils;
 import net.peligon.PeligonSkyblock.libaries.storage.SQLite;
+import net.peligon.PeligonSkyblock.managers.IslandManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -11,12 +13,14 @@ public final class Main extends JavaPlugin {
 
     public static Main getInstance;
     private static Economy econ = null;
+    public IslandManager islandManager;
 
     public CustomConfig fileMessage;
 
     public void onEnable() {
         // ---- [ Initializing instance of main class | manager classes | register placeholder ] ----
         getInstance = this;
+        islandManager = new IslandManager();
 
         // ---- [ Loading Commands | Loading Events | Loading YML Files ] ----
         loadCommands();
@@ -45,7 +49,9 @@ public final class Main extends JavaPlugin {
         getServer().getConsoleSender().sendMessage(Utils.chatColor(this.fileMessage.getConfig().getString("shutdown")));
     }
 
-    public void loadCommands() { }
+    public void loadCommands() {
+        getCommand("island").setExecutor(new cmdIsland());
+    }
 
     public void loadEvents() { }
 

@@ -43,40 +43,4 @@ public class encPoison implements Listener {
         }
     }
 
-    @EventHandler
-    public void onJoin(PlayerJoinEvent event) {
-        Player player = event.getPlayer();
-        ItemStack item = new ItemStack(Material.DIAMOND_SWORD);
-        ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(Utils.chatColor("&aPOISON"));
-        item.setItemMeta(meta);
-
-        Utils.addEnchant(item, CustomEnchants.POISON, 1);
-        player.getInventory().addItem(item);
-    }
-
-    @EventHandler
-    public void onJoi2n(PlayerJoinEvent event) {
-        Player player = event.getPlayer();
-        ItemStack item = new ItemStack(Material.DIAMOND_SWORD);
-        ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(Utils.chatColor("&aPOISON"));
-        item.setItemMeta(meta);
-
-        Utils.addEnchant(item, CustomEnchants.POISON, 2);
-        player.getInventory().addItem(item);
-    }
-
-    @EventHandler
-    public void onJoin3(PlayerJoinEvent event) {
-        Player player = event.getPlayer();
-        ItemStack item = new ItemStack(Material.DIAMOND_SWORD);
-        ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(Utils.chatColor("&aPOISON"));
-        item.setItemMeta(meta);
-
-        Utils.addEnchant(item, CustomEnchants.POISON, 3);
-        player.getInventory().addItem(item);
-    }
-
 }

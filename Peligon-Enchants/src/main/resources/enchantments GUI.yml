@@ -1,5 +1,5 @@
 main:
-  size: 56
+  size: 54
   title: "&5Enchantments"
   contents:
     1:
@@ -69,15 +69,3 @@ main:
         - "HIDE_ENCHANTS"
       slot: 50
       type: "Close"
-    15:
-      item: REDSTONE_TORCH
-      name: "&aInformation"
-      lore:
-        - "&7Keep your cash safe in the bank!"
-        - ""
-        - "&7Bank limit: &6%bank_limit%"
-      item-flags:
-        - "HIDE_ATTRIBUTES"
-        - "HIDE_ENCHANTS"
-      slot: 54
-      type: "Information"

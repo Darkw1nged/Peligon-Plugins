@@ -19,7 +19,7 @@ import org.bukkit.inventory.ItemStack;
 import java.util.ArrayList;
 import java.util.List;
 
-public class inventoryEvents implements Listener {
+public class AtmEvents implements Listener {
 
     private final Main plugin = Main.getInstance;
 

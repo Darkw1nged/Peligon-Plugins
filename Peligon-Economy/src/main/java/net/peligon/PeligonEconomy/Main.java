@@ -103,7 +103,7 @@ public final class Main extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new mobDropEvents(), this);
         getServer().getPluginManager().registerEvents(new redeemEvents(), this);
         getServer().getPluginManager().registerEvents(new signEvents(), this);
-        getServer().getPluginManager().registerEvents(new inventoryEvents(), this);
+        getServer().getPluginManager().registerEvents(new AtmEvents(), this);
     }
 
 }

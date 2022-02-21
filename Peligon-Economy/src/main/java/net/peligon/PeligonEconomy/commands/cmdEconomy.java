@@ -21,8 +21,8 @@ public class cmdEconomy implements CommandExecutor {
             Player target = Bukkit.getPlayer(args[2]);
             if (target == null) {
                 sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-player-found")
-                        .replaceAll("%player%", args[1])
-                        .replaceAll("%target%", args[1])));
+                        .replaceAll("%player%", args[2])
+                        .replaceAll("%target%", args[2])));
                 return true;
             }
 

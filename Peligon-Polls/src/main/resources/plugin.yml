@@ -1,6 +1,18 @@
 name: PeligonPolls
 version: '${project.version}'
+api-version: 1.13
 main: net.peligon.PeligonPolls.Main
-api-version: 1.18
 authors: [ darkwinged ]
 description: This is an open-source plugin
+commands:
+  poll:
+    aliases:
+      - polls
+      - survey
+    description: Allows users to created and vote on polls.
+  pelpoll:
+    aliases:
+      - pelpolls
+      - ppolls
+      - peligonpolls
+    description: Allows admins to reload configuration files

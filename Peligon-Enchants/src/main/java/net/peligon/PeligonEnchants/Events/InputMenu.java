@@ -4,6 +4,7 @@ import net.peligon.PeligonEnchants.Main;
 import net.peligon.PeligonEnchants.libaries.Menu;
 import net.peligon.PeligonEnchants.libaries.Utils;
 import net.peligon.PeligonEnchants.menus.menuEnchant;
+import net.peligon.PeligonEnchants.menus.menuEnchantEquip;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -37,15 +38,44 @@ public class InputMenu implements Listener {
                         && item.getItemMeta().getDisplayName().equals(Utils.chatColor(plugin.fileUI.getConfig().getString("main.contents." + key + ".name")))) {
                     if (plugin.fileUI.getConfig().contains("main.contents." + key + ".event")) {
                         switch (plugin.fileUI.getConfig().getString("main.contents." + key + ".event").toLowerCase()) {
-                            case "deposit":
+                            case "noitem":
+                                player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-item")));
+                                event.setCancelled(true);
                                 return;
-                            case "withdraw":
+                            case "helmet":
+                                if (player.getInventory().getHelmet() == null) {
+                                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-item")));
+                                    event.setCancelled(true);
+                                    return;
+                                }
+                                player.openInventory(new menuEnchantEquip(player, player.getInventory().getHelmet()).getInventory());
+                                return;
+                            case "chestplate":
+                                if (player.getInventory().getChestplate() == null) {
+                                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-item")));
+                                    event.setCancelled(true);
+                                    return;
+                                }
+                                player.openInventory(new menuEnchantEquip(player, player.getInventory().getChestplate()).getInventory());
+                                return;
+                            case "leggings":
+                                if (player.getInventory().getLeggings() == null) {
+                                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-item")));
+                                    event.setCancelled(true);
+                                    return;
+                                }
+                                player.openInventory(new menuEnchantEquip(player, player.getInventory().getLeggings()).getInventory());
+                                return;
+                            case "boots":
+                                if (player.getInventory().getBoots() == null) {
+                                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-item")));
+                                    event.setCancelled(true);
+                                    return;
+                                }
+                                player.openInventory(new menuEnchantEquip(player, player.getInventory().getBoots()).getInventory());
                                 return;
                             case "close":
                                 player.closeInventory();
-                                event.setCancelled(true);
-                                return;
-                            case "transactions":
                                 event.setCancelled(true);
                                 return;
                         }

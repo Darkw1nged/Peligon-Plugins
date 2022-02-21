@@ -13,13 +13,13 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-public class menuEnchant implements Menu {
+public class menuEnchantEquip implements Menu {
 
     private final Main plugin = Main.getInstance;
     private final Player player;
     private final Inventory inventory;
 
-    public menuEnchant(Player player) {
+    public menuEnchantEquip(Player player, ItemStack activeItem) {
         this.player = player;
         int size = plugin.fileUI.getConfig().getInt("main.size");
         if (plugin.fileUI.getConfig().getInt("main.size") > 54) size = 54;

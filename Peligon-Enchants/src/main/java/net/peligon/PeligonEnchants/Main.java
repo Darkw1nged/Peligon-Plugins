@@ -3,6 +3,7 @@ package net.peligon.PeligonEnchants;
 import com.jeff_media.armorequipevent.ArmorEquipEvent;
 import net.milkbowl.vault.economy.Economy;
 import net.peligon.PeligonEnchants.Events.*;
+import net.peligon.PeligonEnchants.commands.cmdEnchants;
 import net.peligon.PeligonEnchants.libaries.CustomConfig;
 import net.peligon.PeligonEnchants.libaries.CustomEnchants;
 import net.peligon.PeligonEnchants.libaries.Utils;
@@ -25,6 +26,7 @@ public final class Main extends JavaPlugin {
         loadCommands();
         loadEvents();
         saveDefaultConfig();
+        fileUI.saveDefaultConfig();
 
         // ---- [ Loading lang file ] ----
         fileMessage = new CustomConfig(this, "lang/" + this.getConfig().getString("Storage.Language File"), true);
@@ -46,6 +48,7 @@ public final class Main extends JavaPlugin {
     }
 
     public void loadCommands() {
+        getCommand("enchants").setExecutor(new cmdEnchants());
     }
 
     public void loadEvents() {
