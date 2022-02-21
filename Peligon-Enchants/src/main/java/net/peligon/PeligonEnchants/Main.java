@@ -71,6 +71,9 @@ public final class Main extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new encPoison(), this);
         getServer().getPluginManager().registerEvents(new encHeadless(), this);
         getServer().getPluginManager().registerEvents(new encDecapitation(), this);
+        getServer().getPluginManager().registerEvents(new encConfusion(), this);
+        getServer().getPluginManager().registerEvents(new encFeatherweight(), this);
+        getServer().getPluginManager().registerEvents(new encLightning(), this);
         ArmorEquipEvent.registerListener(this);
     }
 

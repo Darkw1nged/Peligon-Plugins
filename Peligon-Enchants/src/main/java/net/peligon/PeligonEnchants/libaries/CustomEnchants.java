@@ -10,34 +10,34 @@ import java.util.stream.Collectors;
 public class CustomEnchants {
 
     public static final Enchantment AUTOSELL = new Wrapper("autosell", "Autosell", 1);
-    public static final Enchantment AQUATIC = new Wrapper("aquatic", "Aquatic", 1);
-    public static final Enchantment GLOWING = new Wrapper("glowing", "Glowing", 1);
-    public static final Enchantment TELEPATHY = new Wrapper("telepathy", "Telepathy", 1);
-    public static final Enchantment HASTE = new Wrapper("haste", "Haste", 3);
-    public static final Enchantment AUTOSMELT = new Wrapper("autosmelt", "Auto Smelt", 1);
-    public static final Enchantment OXYGENATE = new Wrapper("oxygenate", "Oxygenate", 3);
-    public static final Enchantment SPRINGS = new Wrapper("springs", "Springs", 3);
-    public static final Enchantment POISONED = new Wrapper("poisoned", "Poisoned", 4);
-    public static final Enchantment STORMCALLER = new Wrapper("stormcaller", "Stormcaller", 4);
-    public static final Enchantment VOODOO = new Wrapper("voodoo", "Voodoo", 6);
-    public static final Enchantment VENOM = new Wrapper("venom", "Venom", 3);
-    public static final Enchantment MOLTEN = new Wrapper("molten", "Molten", 4);
-    public static final Enchantment ENDERSHIFT = new Wrapper("endershift", "Ender Shift", 3);
-    public static final Enchantment BLIND = new Wrapper("blind", "Blind", 3);
-    public static final Enchantment POISON = new Wrapper("poison", "Poison", 3);
-    public static final Enchantment TRAP = new Wrapper("trap", "Trap", 3);
-    public static final Enchantment HEADLESS = new Wrapper("headless", "Headless", 3);
-    public static final Enchantment DECAPITATION = new Wrapper("decapitation", "Decapitation", 3);
+    public static final Enchantment AQUATIC = new Wrapper("aquatic", "Aquatic", 1); // HELMETS
+    public static final Enchantment GLOWING = new Wrapper("glowing", "Glowing", 1); // HELMETS
+    public static final Enchantment TELEPATHY = new Wrapper("telepathy", "Telepathy", 1); // ALL TOOLS
+    public static final Enchantment HASTE = new Wrapper("haste", "Haste", 3); // All Armor
+    public static final Enchantment AUTOSMELT = new Wrapper("autosmelt", "Auto Smelt", 1); // PICKAXES
+    public static final Enchantment OXYGENATE = new Wrapper("oxygenate", "Oxygenate", 3); // ALL TOOLS
+    public static final Enchantment SPRINGS = new Wrapper("springs", "Springs", 3); // BOOTS
+    public static final Enchantment POISONED = new Wrapper("poisoned", "Poisoned", 4); // ALL ARMOR
+    public static final Enchantment STORMCALLER = new Wrapper("stormcaller", "Stormcaller", 4); // ALL ARMOR
+    public static final Enchantment VOODOO = new Wrapper("voodoo", "Voodoo", 6); // ALL ARMOR
+    public static final Enchantment VENOM = new Wrapper("venom", "Venom", 3); // BOWS
+    public static final Enchantment MOLTEN = new Wrapper("molten", "Molten", 4); // ALL ARMOR
+    public static final Enchantment ENDERSHIFT = new Wrapper("endershift", "Ender Shift", 3); // HELMETS, BOOTS
+    public static final Enchantment BLIND = new Wrapper("blind", "Blind", 3); // SWORDS, BOWS
+    public static final Enchantment POISON = new Wrapper("poison", "Poison", 3); // SWORDS
+    public static final Enchantment TRAP = new Wrapper("trap", "Trap", 3); // SWORDS
+    public static final Enchantment HEADLESS = new Wrapper("headless", "Headless", 3); // SWORDS
+    public static final Enchantment DECAPITATION = new Wrapper("decapitation", "Decapitation", 3); // AXES
+    public static final Enchantment CONFUSION = new Wrapper("confusion", "Confusion", 3); // AXES
+    public static final Enchantment LIGHTNING = new Wrapper("lightning", "Lightning", 3); // BOWS
+    public static final Enchantment FEATHERWEiGHT = new Wrapper("featherweight", "Featherweight", 3); // SWORDS
 
-    public static final Enchantment CONFUSION = new Wrapper("confusion", "Confusion", 3);
-    public static final Enchantment LIGHTNING = new Wrapper("lightning", "Lightning", 3);
-    public static final Enchantment FEATHERWEiGHT = new Wrapper("featherweight", "Featherweight", 3);
+    public static final Enchantment OBSIDIANDESTROYER = new Wrapper("obsidiandestroyer", "Obsidian Destroyer", 5); // PICKAXE
+    public static final Enchantment EXPERIENCE = new Wrapper("experience", "Experience", 5); // ALL TOOLS
+    public static final Enchantment OBLITERATE = new Wrapper("obliterate", "Obliterate", 5); // ALL WEAPONS
+    public static final Enchantment EXPLOSIVE = new Wrapper("explosive", "Explosive", 5); // BOWS
+    public static final Enchantment VAMPIRE = new Wrapper("vampire", "Vampire", 3); // SWORDS
 
-
-    public static final Enchantment EXPERIENCE = new Wrapper("experience", "Experience", 5);
-    public static final Enchantment OBLITERATE = new Wrapper("obliterate", "Obliterate", 5);
-    public static final Enchantment OBSIDIANDESTROYER = new Wrapper("obsidiandestroyer", "Obsidian Destroyer", 5);
-    public static final Enchantment EXPLOSIVE = new Wrapper("explosive", "Explosive", 5);
     public static final Enchantment BERSERK = new Wrapper("berserk", "Berserk", 5);
     public static final Enchantment SELFDESTRUCT = new Wrapper("selfdestruct", "Self Destruct", 3);
     public static final Enchantment RAVENOUS = new Wrapper("ravenous", "Ravenous", 4);
@@ -46,7 +46,6 @@ public class CustomEnchants {
     public static final Enchantment CURSE = new Wrapper("curse", "Curse", 5);
     public static final Enchantment ROCKETESCAPE = new Wrapper("rocketescape", "Rocket Escape", 3);
     public static final Enchantment PUMMEL = new Wrapper("pummel", "Pummel", 3);
-    public static final Enchantment VAMPIRE = new Wrapper("vampire", "Vampire", 3);
     public static final Enchantment FROZEN = new Wrapper("frozen", "Frozen", 3);
     public static final Enchantment WITHER = new Wrapper("wither", "Wither", 5);
     public static final Enchantment SHOCKWAVE = new Wrapper("shockwave", "Shockwave", 5);
