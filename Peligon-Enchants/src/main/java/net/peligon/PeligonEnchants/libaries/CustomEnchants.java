@@ -31,16 +31,16 @@ public class CustomEnchants {
     public static final Enchantment CONFUSION = new Wrapper("confusion", "Confusion", 3); // AXES
     public static final Enchantment LIGHTNING = new Wrapper("lightning", "Lightning", 3); // BOWS
     public static final Enchantment FEATHERWEiGHT = new Wrapper("featherweight", "Featherweight", 3); // SWORDS
+    public static final Enchantment VAMPIRE = new Wrapper("vampire", "Vampire", 3); // SWORDS
+    public static final Enchantment RAVENOUS = new Wrapper("ravenous", "Ravenous", 4); // AXES
 
     public static final Enchantment OBSIDIANDESTROYER = new Wrapper("obsidiandestroyer", "Obsidian Destroyer", 5); // PICKAXE
     public static final Enchantment EXPERIENCE = new Wrapper("experience", "Experience", 5); // ALL TOOLS
     public static final Enchantment OBLITERATE = new Wrapper("obliterate", "Obliterate", 5); // ALL WEAPONS
     public static final Enchantment EXPLOSIVE = new Wrapper("explosive", "Explosive", 5); // BOWS
-    public static final Enchantment VAMPIRE = new Wrapper("vampire", "Vampire", 3); // SWORDS
 
     public static final Enchantment BERSERK = new Wrapper("berserk", "Berserk", 5);
     public static final Enchantment SELFDESTRUCT = new Wrapper("selfdestruct", "Self Destruct", 3);
-    public static final Enchantment RAVENOUS = new Wrapper("ravenous", "Ravenous", 4);
     public static final Enchantment SKILLSWIPE = new Wrapper("skillswipe", "Skill Swipe", 5);
     public static final Enchantment VIRUS = new Wrapper("virus", "Virus", 4);
     public static final Enchantment CURSE = new Wrapper("curse", "Curse", 5);

@@ -11,5 +11,55 @@ Storage:
   Language File: "en_US"
   database: "SQLite"
 
-# Allows you to set enchant levels above their normal limit;
-unsafe-enchants: false
+Enchantments:
+  # !! All enchants are enabled by default
+  Aquatic:
+    enabled: true
+    type: "Simple"
+    description:
+      - "&fGives water breathing"
+  Autosell:
+    # This hooks into one of 2 files to check for a worth.yml file.
+    # !! Vault and EssentialsX or PeligonEconomy is required for this to work.
+    enabled: true
+    type: "Unique"
+    description:
+      - "&fAutomatically sells items"
+  Autosmelt:
+    enabled: true
+    type: "Simple"
+    description:
+      - "&fAutomatically smelts items"
+  Blind:
+    description:
+      - "&fA chance to give players blindness"
+    sword:
+      enabled: true
+      level:
+        one:
+          chance: 80 # percentage
+          duration: 8
+          amplifier: 10
+        two:
+          chance: 70 # percentage
+          duration: 8
+          amplifier: 10
+        three:
+          chance: 60 # percentage
+          duration: 8
+          amplifier: 10
+    bow:
+      enabled: true
+      level:
+        one:
+          chance: 80 # percentage
+          duration: 8
+          amplifier: 10
+        two:
+          chance: 70 # percentage
+          duration: 8
+          amplifier: 10
+        three:
+          chance: 60 # percentage
+          duration: 8
+          amplifier: 10

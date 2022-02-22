@@ -23,32 +23,36 @@ public class encAutoSell implements Listener {
 
     @EventHandler
     public void onBreak(BlockBreakEvent event) {
-        Player player = event.getPlayer();
-        ItemStack hand = player.getInventory().getItemInMainHand();
+        if (plugin.getConfig().getBoolean("Enchantments.Autosell.enabled", true)) {
+            Player player = event.getPlayer();
+            ItemStack hand = player.getInventory().getItemInMainHand();
 
-        if (plugin.getEconomy() == null) return;
-        if (hand.getType() == Material.AIR) return;
-        if (!hand.hasItemMeta()) return;
-        if (!hand.getItemMeta().hasEnchant(CustomEnchants.AUTOSELL)) return;
-        if (player.getGameMode() == GameMode.CREATIVE || player.getGameMode() == GameMode.SPECTATOR) return;
-        if (event.getBlock().getState() instanceof Container) return;
+            if (plugin.getEconomy() == null) return;
+            if (hand.getType() == Material.AIR) return;
+            if (!hand.hasItemMeta()) return;
+            if (!hand.getItemMeta().hasEnchant(CustomEnchants.AUTOSELL)) return;
+            if (player.getGameMode() == GameMode.CREATIVE || player.getGameMode() == GameMode.SPECTATOR) return;
+            if (event.getBlock().getState() instanceof Container) return;
 
-        Plugin targetPlugin = null;
-        if (Bukkit.getServer().getPluginManager().getPlugin("Essentials") != null) {
-            targetPlugin = Bukkit.getServer().getPluginManager().getPlugin("Essentials");
-        } else if (Bukkit.getServer().getPluginManager().getPlugin("PeligonEconomy") != null) {
-            targetPlugin = Bukkit.getServer().getPluginManager().getPlugin("PeligonEconomy");
+            Plugin targetPlugin;
+            if (Bukkit.getServer().getPluginManager().getPlugin("Essentials") != null) {
+                targetPlugin = Bukkit.getServer().getPluginManager().getPlugin("Essentials");
+            } else if (Bukkit.getServer().getPluginManager().getPlugin("PeligonEconomy") != null) {
+                targetPlugin = Bukkit.getServer().getPluginManager().getPlugin("PeligonEconomy");
+            } else {
+                return;
+            }
+
+            if (targetPlugin == null) return;
+            CustomConfig config = new CustomConfig(targetPlugin, "worth", true);
+
+            double amount = 0;
+            for (int i = 0; i < player.getInventory().getSize(); i++) {
+                amount = getAmount(player, amount, i, config.getConfig());
+            }
+
+            plugin.getEconomy().depositPlayer(player, amount);
         }
-
-        if (targetPlugin == null) return;
-        CustomConfig config = new CustomConfig(targetPlugin, "worth", true);
-
-        double amount = 0;
-        for (int i=0; i<player.getInventory().getSize(); i++) {
-            amount = getAmount(player, amount, i, config.getConfig());
-        }
-
-        plugin.getEconomy().depositPlayer(player, amount);
     }
 
     private double getAmount(Player player, double amount, int i, YamlConfiguration configuration) {
