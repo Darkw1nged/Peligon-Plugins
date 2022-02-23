@@ -31,8 +31,6 @@ public class AtmEvents implements Listener {
 
         ItemStack item = event.getCurrentItem();
         Player player = (Player) event.getWhoClicked();
-        menuDeposit deposit = new menuDeposit(player);
-        menuWithdraw withdraw = new menuWithdraw(player);
         String inventoryName = event.getView().getTitle();
 
         if (item == null || item.getType() == Material.AIR) return;
@@ -44,10 +42,10 @@ public class AtmEvents implements Listener {
                     if (plugin.fileATM.getConfig().contains("atm-inventory.contents." + key + ".event")) {
                         switch (plugin.fileATM.getConfig().getString("atm-inventory.contents." + key + ".event").toLowerCase()) {
                             case "deposit":
-                                player.openInventory(deposit.getInventory());
+                                player.openInventory(new menuDeposit(player).getInventory());
                                 return;
                             case "withdraw":
-                                player.openInventory(withdraw.getInventory());
+                                player.openInventory(new menuWithdraw(player).getInventory());
                                 return;
                             case "close":
                                 player.closeInventory();

@@ -76,6 +76,16 @@ Bounties:
   # Amount added to bounty after each kill.
   amount: 50.0
 
+# This will automatically check for updates
+check-for-updates: true
+
+
+
+
+
+
+
+
 Monster Drops:
   # This will show the amount of xp dropped inside a hologram.
   show-xp-amount:

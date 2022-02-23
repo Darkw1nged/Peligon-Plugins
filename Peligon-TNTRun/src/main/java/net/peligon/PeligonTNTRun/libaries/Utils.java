@@ -82,4 +82,5 @@ public class Utils {
     }
 
     // ---- [ Cached Items ] ----
+    public static List<Game> activeGames = new ArrayList<>();
 }

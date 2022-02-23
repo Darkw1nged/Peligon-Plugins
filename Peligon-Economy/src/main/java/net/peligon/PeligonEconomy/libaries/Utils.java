@@ -8,6 +8,7 @@ import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.text.NumberFormat;
@@ -82,12 +83,26 @@ public class Utils {
         return newList;
     }
 
+    // ---- [ Available space ] ----
+    public static boolean hasSpace(Player player, ItemStack targetItem) {
+        for (ItemStack item : player.getInventory().getContents()) {
+            if (item == null) continue;
+            if (item.getType() == targetItem.getType()) {
+                if (item.getAmount() != item.getMaxStackSize()) {
+                    item.setAmount(item.getAmount() + 1);
+                    return true;
+                }
+            }
+        }
+        if (player.getInventory().firstEmpty() != -1) {
+            player.getInventory().addItem(targetItem);
+            return true;
+        }
+        return false;
+    }
+
     // ---- [ Add transactions ] ----
     public static void addTransaction(Player player, String transaction) {
-//        Map<LocalDateTime, String> list = transactions.containsKey(player.getUniqueId()) ? transactions.get(player.getUniqueId()) : new HashMap<>();
-//        list.put(LocalDateTime.now(), transaction);
-//        transactions.put(player.getUniqueId(), list);
-
         Map<LocalDateTime, String> list = new HashMap<>();
 
         if (Utils.transactions.containsKey(player.getUniqueId())) {
@@ -202,6 +217,7 @@ public class Utils {
     public static Map<UUID, Integer> KillStreak = new HashMap<>();
     public static Map<UUID, Double> bounties = new HashMap<>();
     public static Map<UUID, Map<LocalDateTime, String>> transactions = new HashMap<>();
+    public static List<Pouch> pouches = new ArrayList<>();
 
     // ---- [ Global values ] ----
     public static int RawInterestTimer;

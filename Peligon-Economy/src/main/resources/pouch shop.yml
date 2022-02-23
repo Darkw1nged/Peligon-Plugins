@@ -1,10 +1,70 @@
+pouches:
+  1:
+    item: CHEST
+    name: "&aMoney Pouch"
+    lore:
+      - "&7Open this pouch to receive money!"
+    type: "Money"
+    options:
+      cost: 150
+      from: 100
+      to: 250
+      # If you only want certain players to purchase the item.
+      # !! Set to NONE or remove if you do not want it to have one
+      permission: "NONE"
+  2:
+    item: CHEST
+    name: "&aMoney Pouch"
+    lore:
+      - "&7Open this pouch to receive money!"
+    type: "Money"
+    options:
+      cost: 750
+      from: 500
+      to: 1000
+      permission: "NONE"
+  3:
+    item: CHEST
+    name: "&aMoney Pouch"
+    lore:
+      - "&7Open this pouch to receive money!"
+    type: "Money"
+    options:
+      cost: 5000
+      from: 1000
+      to: 10000
+      permission: "NONE"
+  4:
+    item: CHEST
+    name: "&aMoney Pouch"
+    lore:
+      - "&7Open this pouch to receive money!"
+    type: "Money"
+    options:
+      cost: 15000
+      from: 10000
+      to: 20000
+      permission: "NONE"
+  5:
+    item: CHEST
+    name: "&aMoney Pouch"
+    lore:
+      - "&7Open this pouch to receive money!"
+    type: "Money"
+    options:
+      cost: 35000
+      from: 25000
+      to: 50000
+      permission: "NONE"
+
+
 shop-inventory:
   title: "&7Pouches"
   # !! Must be multiples of 9 | Maximum is 54
   size: 36
 
-  # There is 3 types of items: Money | Experience | Close
-  # If you want the item to be interacted with then please add a type to the item.
+  # There is 3 events of items: Money | Experience | Close
+  # If you want the item to be interacted with then please add a event to the item.
   contents:
     1:
       item: BLACK_STAINED_GLASS_PANE
@@ -25,7 +85,7 @@ shop-inventory:
       item-flags:
         - "HIDE_ATTRIBUTES"
       slot: 12
-      type: "Money"
+      event: "Money"
     3:
       item: EXPERIENCE_BOTTLE
       name: "&aExperience Pouches"
@@ -38,7 +98,7 @@ shop-inventory:
         - "HIDE_ATTRIBUTES"
         - "HIDE_ENCHANTS"
       slot: 16
-      type: "Experience"
+      event: "Experience"
     4:
       item: BARRIER
       name: "&cClose"
@@ -46,7 +106,7 @@ shop-inventory:
         - "HIDE_ATTRIBUTES"
         - "HIDE_ENCHANTS"
       slot: 32
-      type: "Close"
+      event: "Close"
     5:
       item: REDSTONE_TORCH
       name: "&aInformation"
@@ -54,8 +114,7 @@ shop-inventory:
         - "&7If you believe that you have"
         - "&bluck &7and want to try your shot"
         - "&7and open a pouch, check the"
-        - "&7click a type of pouch to get"
-        - "&7started."
+        - "&7click a pouch to get started."
         - ""
         - "&7Current Cash Balance: &6$%cash%"
       item-flags:
@@ -64,12 +123,12 @@ shop-inventory:
       slot: 33
 
 money-inventory:
-  title: "&7Pouches"
+  title: "&7Money Pouches"
   # !! Must be multiples of 9 | Maximum is 54
   size: 36
 
-  # There is 3 types of items: Money | Experience | Close
-  # If you want the item to be interacted with then please add a type to the item.
+  # There is 3 events of items: Purchasable | Close
+  # If you want the item to be interacted with then please add a event to the item.
   contents:
     1:
       item: BLACK_STAINED_GLASS_PANE
@@ -80,106 +139,51 @@ money-inventory:
       # -1 means all slots will be filled with this item.
       slot: -1
     2:
-      item: CHEST
-      name: "&aMoney Pouch"
+      # !! Lore will be added below original item lore
       lore:
-        - "&7Try your luck at getting some"
-        - "&7extra money."
         - ""
-        - "&7Earn money between;"
-        - "&2$100 &7-> &2$250"
-        - ""
+        - "&7Price: &2$%cost%"
         - "&eClick to buy!"
-      item-flags:
-        - "HIDE_ATTRIBUTES"
       slot: 12
-      type: "Purchasable"
-      buying-options:
-        cost: 150
-        amount: 1
-        # If you only want certain players to purchase the item.
-        # !! Set to NONE or remove if you do not want it to have one
-        permission: "NONE"
+      event: "Purchasable"
     3:
-      item: CHEST
-      name: "&aMoney Pouch"
       lore:
-        - "&7Try your luck at getting some"
-        - "&7extra money."
         - ""
-        - "&7Earn money between;"
-        - "&2$500 &7-> &2$1000"
-        - ""
+        - "&7Price: &2$%cost%"
         - "&eClick to buy!"
-      item-flags:
-        - "HIDE_ATTRIBUTES"
       slot: 13
-      type: "Purchasable"
-      buying-options:
-        cost: 750
-        amount: 1
+      event: "Purchasable"
     4:
-      item: CHEST
-      name: "&aMoney Pouch"
       lore:
-        - "&7Try your luck at getting some"
-        - "&7extra money."
         - ""
-        - "&7Earn money between;"
-        - "&2$1000 &7-> &2$10000"
-        - ""
+        - "&7Price: &2$%cost%"
         - "&eClick to buy!"
-      item-flags:
-        - "HIDE_ATTRIBUTES"
       slot: 14
-      type: "Purchasable"
-      buying-options:
-        cost: 5000
-        amount: 1
+      event: "Purchasable"
     5:
-      item: CHEST
-      name: "&aMoney Pouch"
       lore:
-        - "&7Try your luck at getting some"
-        - "&7extra money."
         - ""
-        - "&7Earn money between;"
-        - "&2$10000 &7-> &2$20000"
-        - ""
+        - "&7Price: &2$%cost%"
         - "&eClick to buy!"
-      item-flags:
-        - "HIDE_ATTRIBUTES"
       slot: 15
-      type: "Purchasable"
-      buying-options:
-        cost: 15000
-        amount: 1
+      event: "Purchasable"
     6:
-      item: CHEST
-      name: "&aMoney Pouch"
       lore:
-        - "&7Try your luck at getting some"
-        - "&7extra money."
         - ""
-        - "&7Earn money between;"
-        - "&2$25000 &7-> &2$50000"
-        - ""
+        - "&7Price: &2$%cost%"
         - "&eClick to buy!"
-      item-flags:
-        - "HIDE_ATTRIBUTES"
       slot: 16
-      type: "Purchasable"
-      buying-options:
-        cost: 35000
-        amount: 1
+      event: "Purchasable"
     7:
-      item: BARRIER
-      name: "&cClose"
+      item: ARROW
+      name: "&aGo Back"
+      lore:
+        - "&7To Pouch Shop"
       item-flags:
         - "HIDE_ATTRIBUTES"
         - "HIDE_ENCHANTS"
       slot: 32
-      type: "Close"
+      event: "GoBack"
     8:
       item: REDSTONE_TORCH
       name: "&aInformation"
@@ -187,8 +191,146 @@ money-inventory:
         - "&7If you believe that you have"
         - "&bluck &7and want to try your shot"
         - "&7and open a pouch, check the"
-        - "&7click a type of pouch to get"
-        - "&7started."
+        - "&7click a pouch to get started."
+        - ""
+        - "&7Current Cash Balance: &6$%cash%"
+      item-flags:
+        - "HIDE_ATTRIBUTES"
+        - "HIDE_ENCHANTS"
+      slot: 33
+
+experience-inventory:
+  title: "&7Experience Pouches"
+  # !! Must be multiples of 9 | Maximum is 54
+  size: 36
+
+  # There is 3 events of items: Purchasable | Close
+  # If you want the item to be interacted with then please add a event to the item.
+  contents:
+    1:
+      item: BLACK_STAINED_GLASS_PANE
+      name: " "
+      # See the full list here: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/inventory/ItemFlag.html
+      item-flags:
+        - "HIDE_ATTRIBUTES"
+      # -1 means all slots will be filled with this item.
+      slot: -1
+    2:
+      item: EXPERIENCE_BOTTLE
+      name: "&aExperience Pouch"
+      lore:
+        - "&7Try your luck at getting some"
+        - "&7extra experience."
+        - ""
+        - "&7Earn EXP between;"
+        - "&e25 &7→ &e50"
+        - ""
+        - "&7Price: &2$%cost%"
+        - "&eClick to buy!"
+      item-flags:
+        - "HIDE_ATTRIBUTES"
+      slot: 12
+      event: "Purchasable"
+      buying-options:
+        cost: 150
+        amount: 1
+        # If you only want certain players to purchase the item.
+        # !! Set to NONE or remove if you do not want it to have one
+        permission: "NONE"
+    3:
+      item: EXPERIENCE_BOTTLE
+      name: "&aExperience Pouch"
+      lore:
+        - "&7Try your luck at getting some"
+        - "&7extra experience."
+        - ""
+        - "&7Earn EXP between;"
+        - "&e75 &7→ &e100"
+        - ""
+        - "&7Price: &2$%cost%"
+        - "&eClick to buy!"
+      item-flags:
+        - "HIDE_ATTRIBUTES"
+      slot: 13
+      event: "Purchasable"
+      buying-options:
+        cost: 750
+        amount: 1
+    4:
+      item: EXPERIENCE_BOTTLE
+      name: "&aExperience Pouch"
+      lore:
+        - "&7Try your luck at getting some"
+        - "&7extra experience."
+        - ""
+        - "&7Earn EXP between;"
+        - "&e100 &7→ &e150"
+        - ""
+        - "&7Price: &2$%cost%"
+        - "&eClick to buy!"
+      item-flags:
+        - "HIDE_ATTRIBUTES"
+      slot: 14
+      event: "Purchasable"
+      buying-options:
+        cost: 5000
+        amount: 1
+    5:
+      item: EXPERIENCE_BOTTLE
+      name: "&aExperience Pouch"
+      lore:
+        - "&7Try your luck at getting some"
+        - "&7extra experience."
+        - ""
+        - "&7Earn EXP between;"
+        - "&e200 &7→ &e350"
+        - ""
+        - "&7Price: &2$%cost%"
+        - "&eClick to buy!"
+      item-flags:
+        - "HIDE_ATTRIBUTES"
+      slot: 15
+      event: "Purchasable"
+      buying-options:
+        cost: 15000
+        amount: 1
+    6:
+      item: EXPERIENCE_BOTTLE
+      name: "&aExperience Pouch"
+      lore:
+        - "&7Try your luck at getting some"
+        - "&7extra experience."
+        - ""
+        - "&7Earn EXP between;"
+        - "&e500 &7→ &e1000"
+        - ""
+        - "&7Price: &2$%cost%"
+        - "&eClick to buy!"
+      item-flags:
+        - "HIDE_ATTRIBUTES"
+      slot: 16
+      event: "Purchasable"
+      buying-options:
+        cost: 35000
+        amount: 1
+    7:
+      item: ARROW
+      name: "&aGo Back"
+      lore:
+        - "&7To Pouch Shop"
+      item-flags:
+        - "HIDE_ATTRIBUTES"
+        - "HIDE_ENCHANTS"
+      slot: 32
+      event: "Close"
+    8:
+      item: REDSTONE_TORCH
+      name: "&aInformation"
+      lore:
+        - "&7If you believe that you have"
+        - "&bluck &7and want to try your shot"
+        - "&7and open a pouch, check the"
+        - "&7click a pouch to get started."
         - ""
         - "&7Current Cash Balance: &6$%cash%"
       item-flags:

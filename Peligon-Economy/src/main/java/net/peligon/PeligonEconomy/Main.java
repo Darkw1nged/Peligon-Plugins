@@ -8,7 +8,15 @@ import net.peligon.PeligonEconomy.managers.mgrEconomy;
 import net.peligon.PeligonEconomy.managers.mgrPlaceholders;
 import net.peligon.PeligonEconomy.managers.mgrSignFactory;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
 
 public final class Main extends JavaPlugin {
 
@@ -70,6 +78,11 @@ public final class Main extends JavaPlugin {
 
         // ---- [ Startup message ] ----
         getServer().getConsoleSender().sendMessage(Utils.chatColor(this.fileMessage.getConfig().getString("startup")));
+
+        // ---- [ Check if server has most updated version ] ----
+        if (getConfig().getBoolean("check-for-updates", true)) {
+            versionChecker();
+        }
     }
 
     public void onDisable() {
@@ -104,6 +117,29 @@ public final class Main extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new redeemEvents(), this);
         getServer().getPluginManager().registerEvents(new signEvents(), this);
         getServer().getPluginManager().registerEvents(new AtmEvents(), this);
+        getServer().getPluginManager().registerEvents(new PouchesEvents(), this);
+    }
+
+    private void versionChecker() {
+        try {
+            String key = "key=98BE0FE67F88AB82B4C197FAF1DC3B69206EFDCC4D3B80FC83A00037510B99B4&resource=";
+            int pluginID = 0;
+            String current = "1.0";
+
+            HttpURLConnection connection = (HttpURLConnection) new URL("https://www.spigotmc.org/api/general.php").openConnection();
+            connection.setDoOutput(true);
+            connection.setRequestMethod("POST");
+            connection.getOutputStream().write((key + pluginID).getBytes(StandardCharsets.UTF_8));
+
+            String version = new BufferedReader(new InputStreamReader(connection.getInputStream())).readLine();
+            if (!version.equals(current)) {
+                getServer().getConsoleSender().sendMessage(Utils.chatColor(fileMessage.getConfig().getString("plugin-outdated")));
+                getServer().getConsoleSender().sendMessage(Utils.chatColor(fileMessage.getConfig().getString("plugin-link")));
+            }
+        } catch (IOException e) {
+            getServer().getConsoleSender().sendMessage(Utils.chatColor(fileMessage.getConfig().getString("version-check-error")));
+            e.printStackTrace();
+        }
     }
 
 }
