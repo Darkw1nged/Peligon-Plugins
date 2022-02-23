@@ -29,7 +29,6 @@ public final class Main extends JavaPlugin {
     public CustomConfig fileWorth = new CustomConfig(this, "worth", true);
     public CustomConfig fileSigns = new CustomConfig(this, "signs", true);
     public CustomConfig fileATM = new CustomConfig(this, "ATM", true);
-    public CustomConfig filePouches = new CustomConfig(this, "pouch shop", true);
     public CustomConfig fileMessage;
 
     public void onEnable() {
@@ -42,7 +41,6 @@ public final class Main extends JavaPlugin {
         fileWorth.saveDefaultConfig();
         fileSigns.saveDefaultConfig();
         fileATM.saveDefaultConfig();
-        filePouches.saveDefaultConfig();
         saveDefaultConfig();
 
         // ---- [ Loading lang file ] ----
@@ -97,7 +95,6 @@ public final class Main extends JavaPlugin {
         getCommand("pelecon").setExecutor(new cmdReload());
         getCommand("balance").setExecutor(new cmdBalance());
         getCommand("atm").setExecutor(new cmdATM());
-        getCommand("pouches").setExecutor(new cmdPouches());
         getCommand("balancetop").setExecutor(new cmdBalanceTop());
         getCommand("pay").setExecutor(new cmdPay());
         getCommand("withdraw").setExecutor(new cmdWithdraw());
@@ -113,11 +110,10 @@ public final class Main extends JavaPlugin {
     public void loadEvents() {
         getServer().getPluginManager().registerEvents(new accountSetup(), this);
         getServer().getPluginManager().registerEvents(new bountyEvents(), this);
-        getServer().getPluginManager().registerEvents(new mobDropEvents(), this);
         getServer().getPluginManager().registerEvents(new redeemEvents(), this);
         getServer().getPluginManager().registerEvents(new signEvents(), this);
         getServer().getPluginManager().registerEvents(new AtmEvents(), this);
-        getServer().getPluginManager().registerEvents(new PouchesEvents(), this);
+        getServer().getPluginManager().registerEvents(new MobMoneyEvent(), this);
     }
 
     private void versionChecker() {

@@ -76,32 +76,21 @@ Bounties:
   # Amount added to bounty after each kill.
   amount: 50.0
 
+# When a monster or animal is killed you are able to get a reward.
+Mob-Rewards:
+  money-drop-types:
+    # Type of mob
+    CHICKEN:
+      # If you want to disable any mob drops
+      enable: true
+      # How much is given to the player
+      reward: 5
+    PIG:
+      enable: true
+      reward: 10
+    COW:
+      enable: true
+      reward: 20
+
 # This will automatically check for updates
 check-for-updates: true
-
-
-
-
-
-
-
-
-Monster Drops:
-  # This will show the amount of xp dropped inside a hologram.
-  show-xp-amount:
-    enabled: false
-    format: "&6+%amount%"
-
-  money-drops:
-    enabled: false
-    format: "&2+$%amount%"
-    Types:
-      PIG:
-        enabled: true
-        amount: 10.0
-      COW:
-        enabled: true
-        amount: 10.0
-      CHICKEN:
-        enabled: true
-        amount: 5.0

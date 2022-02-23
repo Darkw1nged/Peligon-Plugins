@@ -9,6 +9,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.text.NumberFormat;
@@ -34,18 +35,7 @@ public class Utils {
     }
 
     // ---- [ Managing holograms for small amount of features ] ----
-    public static void hologram(String name, Location loc) {
-        ArmorStand holo = loc.getWorld().spawn(loc, ArmorStand.class);
-
-        // ---- [ Settings flags for entity ] ----
-        holo.setCustomName(chatColor(name));
-        holo.setCustomNameVisible(true);
-        holo.setGravity(false);
-        holo.setInvisible(true);
-        holo.setInvulnerable(true);
-    }
-
-    public static void hologram(String name, Location loc, int length) {
+    public static void moveUpHologram(String name, Location loc, int length) {
         ArmorStand holo = loc.getWorld().spawn(loc, ArmorStand.class);
 
         // ---- [ Settings flags for entity ] ----
@@ -57,20 +47,23 @@ public class Utils {
         holo.setSmall(true);
         holo.setArms(false);
         holo.setBasePlate(false);
+        holo.setMetadata("hologram", new FixedMetadataValue(plugin, UUID.randomUUID().toString()));
 
-        // ---- [ Disappear after a certain amount of time ] ----
+        activeHolograms.put(holo, System.currentTimeMillis());
         new BukkitRunnable() {
-            int time = 0;
-
             public void run() {
-                if (time >= length) {
-                    holo.remove();
-                    cancel();
-                    return;
+                if (!activeHolograms.isEmpty() && activeHolograms.containsKey(holo)) {
+                    long timeLeft = ((activeHolograms.get(holo) / 1000) + length) - (System.currentTimeMillis() / 1000);
+                    if (timeLeft <= 0) {
+                        activeHolograms.remove(holo);
+                        holo.remove();
+                        cancel();
+                    } else {
+                        holo.teleport(new Location(holo.getWorld(), holo.getLocation().getX(), holo.getLocation().getY() + .01, holo.getLocation().getZ()));
+                    }
                 }
-                time += 1;
             }
-        }.runTaskTimer(plugin, 20, 20);
+        }.runTaskTimer(plugin, 1, 1);
     }
 
     // ---- [ Converting a lore to include colors ] ----
@@ -217,7 +210,7 @@ public class Utils {
     public static Map<UUID, Integer> KillStreak = new HashMap<>();
     public static Map<UUID, Double> bounties = new HashMap<>();
     public static Map<UUID, Map<LocalDateTime, String>> transactions = new HashMap<>();
-    public static List<Pouch> pouches = new ArrayList<>();
+    public static Map<ArmorStand, Long> activeHolograms = new HashMap<>();
 
     // ---- [ Global values ] ----
     public static int RawInterestTimer;
