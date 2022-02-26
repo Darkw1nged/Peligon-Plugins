@@ -12,9 +12,17 @@ Storage:
   database: "SQLite"
 
 # This is the format for when a player sends a message.
-chat-display-foramt: "%player%: %message%"
+chat-display-format: "%player%: %message%"
 # !! Requires vault to receive prefix and suffix.
 #chat-display-format: "%prefix%%player%%suffix%: %message%"
+
+# If people miss their name come up in chat it will play a sound when people ping them.
+# Usage @<Player>
+chat-pings:
+  enabled: true
+  color: "&a"
+  sound: "ENTITY_VILLAGER_YES" # pre 1.13 use < VILLAGER_YES >
+  disabled-worlds: []
 
 daeth-messages:
   disabled-worlds: []

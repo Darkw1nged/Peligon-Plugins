@@ -1,6 +1,6 @@
-name: Peligon Chat
+name: PeligonChat
 version: '${project.version}'
 main: net.peligon.PeligonChat.Main
-api-version: 1.18
+api-version: 1.13
 authors: [ darkwinged ]
 description: This is an open-source plugin

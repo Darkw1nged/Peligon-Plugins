@@ -4,8 +4,10 @@ import net.milkbowl.vault.chat.Chat;
 import net.peligon.PeligonChat.libaries.CustomConfig;
 import net.peligon.PeligonChat.libaries.UpdateChecker;
 import net.peligon.PeligonChat.libaries.Utils;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
+import net.peligon.PeligonChat.listener.chatColor;
+import net.peligon.PeligonChat.listener.chatFormat;
+import net.peligon.PeligonChat.listener.chatPing;
+import net.peligon.PeligonChat.listener.signColor;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -47,7 +49,12 @@ public final class Main extends JavaPlugin {
     }
 
     public void loadCommands() {}
-    public void loadEvents() {}
+    public void loadEvents() {
+        getServer().getPluginManager().registerEvents(new chatColor(), this);
+        getServer().getPluginManager().registerEvents(new signColor(), this);
+        getServer().getPluginManager().registerEvents(new chatFormat(), this);
+        getServer().getPluginManager().registerEvents(new chatPing(), this);
+    }
 
     private boolean setupChat() {
         RegisteredServiceProvider<Chat> rsp = getServer().getServicesManager().getRegistration(Chat.class);
@@ -60,7 +67,7 @@ public final class Main extends JavaPlugin {
     }
 
     private void versionChecker() {
-        new UpdateChecker(this, 100259).getVersion(version -> {
+        new UpdateChecker(this, 0).getVersion(version -> {
             if (!version.equals(this.getDescription().getVersion())) {
                 getServer().getConsoleSender().sendMessage(Utils.chatColor(fileMessage.getConfig().getString("plugin-outdated")));
                 getServer().getConsoleSender().sendMessage(Utils.chatColor(fileMessage.getConfig().getString("plugin-link")));
