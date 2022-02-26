@@ -18,7 +18,7 @@ public class cmdBalance implements CommandExecutor {
                 if (args.length >= 1) {
                     if (args[0].equalsIgnoreCase("bank")) {
                         if (args.length == 2) {
-                            Player target = Bukkit.getPlayer(args[0]);
+                            Player target = Bukkit.getPlayer(args[1]);
                             if (target == null) {
                                 sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-player-found")
                                         .replaceAll("%player%", args[1])
@@ -48,7 +48,7 @@ public class cmdBalance implements CommandExecutor {
             if (args.length >= 1) {
                 if (args[0].equalsIgnoreCase("bank")) {
                     if (args.length == 2) {
-                        Player target = Bukkit.getPlayer(args[0]);
+                        Player target = Bukkit.getPlayer(args[1]);
                         if (target == null) {
                             player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-player-found").replaceAll("%player%", args[0])));
                             return true;

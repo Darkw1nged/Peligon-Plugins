@@ -67,3 +67,6 @@ polls-inventory:
         - "HIDE_ENCHANTS"
       slot: 23
       type: "Close"
+
+# This will automatically check for updates
+check-for-updates: true

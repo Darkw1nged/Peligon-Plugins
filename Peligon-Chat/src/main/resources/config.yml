@@ -1,0 +1,115 @@
+#######################################################################################
+#
+#       Welcome to Peligon Chat's configuration, This is where you can change
+#       Basic settings that will affect how the plugin preforms.
+#       This plugin does have database support; see 'Storage' for more information.
+#
+#######################################################################################
+
+Storage:
+  # Visit 'Plugins/PeligonChat/Lang/' to see the supported languages.
+  Language File: "en_US"
+  database: "SQLite"
+
+# This is the format for when a player sends a message.
+chat-display-foramt: "%player%: %message%"
+# !! Requires vault to receive prefix and suffix.
+#chat-display-format: "%prefix%%player%%suffix%: %message%"
+
+daeth-messages:
+  disabled-worlds: []
+  global-death-event:
+    enabled: false
+    message: "&cOh no, %player% has just died!"
+  # !! Do not edit the name of the death events as it may cause one of the events not to work.
+  types:
+    ENTITY_SWEEP_ATTACK:
+      enabled: true
+      message: "Oh no, %player% has just died"
+    ENTITY_EXPLOSION:
+      enabled: true
+      message: "Oh no, %player% has just died"
+    BLOCK_EXPLOSION:
+      enabled: true
+      message: "Oh no, %player% has just died"
+    FLY_INTO_WALL:
+      enabled: true
+      message: "Oh no, %player% has just died"
+    FALLING_BLOCK:
+      enabled: true
+      message: "Oh no, %player% has just died"
+    ENTITY_ATTACK:
+      enabled: true
+      message: "Oh no, %player% has just died"
+    SUFFOCATION:
+      enabled: true
+      message: "Oh no, %player% has just died"
+    STARVATION:
+      enabled: true
+      message: "Oh no, %player% has just died"
+    PROJECTILE:
+      enabled: true
+      message: "Oh no, %player% has just died"
+    LIGHTNING:
+      enabled: true
+      message: "Oh no, %player% has just died"
+    DRAGON_BREATH:
+      enabled: true
+      message: "Oh no, %player% has just died"
+    HOT_FLOOR:
+      enabled: true
+      message: "Oh no, %player% has just died"
+    FIRE_TICK:
+      enabled: true
+      message: "Oh no, %player% has just died"
+    DROWNING:
+      enabled: true
+      message: "Oh no, %player% has just died"
+    CRAMMING:
+      enabled: true
+      message: "Oh no, %player% has just died"
+    SUICIDE:
+      enabled: true
+      message: "Oh no, %player% has just died"
+    MELTING:
+      enabled: true
+      message: "Oh no, %player% has just died"
+    CONTACT:
+      enabled: true
+      message: "Oh no, %player% has just died"
+    WITHER:
+      enabled: true
+      message: "Oh no, %player% has just died"
+    THORNS:
+      enabled: true
+      message: "Oh no, %player% has just died"
+    POISON:
+      enabled: true
+      message: "Oh no, %player% has just died"
+    DRYOUT:
+      enabled: true
+      message: "Oh no, %player% has just died"
+    FREEZE:
+      enabled: true
+      message: "Oh no, %player% has just died"
+    CUSTOM:
+      enabled: true
+      message: "Oh no, %player% has just died"
+    MAGIC:
+      enabled: true
+      message: "Oh no, %player% has just died"
+    VOID:
+      enabled: true
+      message: "Oh no, %player% has just died"
+    LAVA:
+      enabled: true
+      message: "Oh no, %player% has just died"
+    FIRE:
+      enabled: true
+      message: "Oh no, %player% has just died"
+    FALL:
+      enabled: true
+      message: "Oh no, %player% has just died"
+
+# This will automatically check for updates
+check-for-updates: true

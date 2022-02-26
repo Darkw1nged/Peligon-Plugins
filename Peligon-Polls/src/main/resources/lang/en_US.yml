@@ -1,5 +1,8 @@
 startup: "&aPeligon Polls has successfully loaded."
 shutdown: "&cPeligon Polls has successfully unloaded."
+version-check-error: "&cThere was a problem when checking the plugin version"
+plugin-outdated: "&eThere is a new version of Peligon Polls available."
+plugin-link: "Updated version: https://www.spigotmc.org/resources/peligon-polls.100200/"
 admin-reload: "&eAll configuration files have been reloaded."
 admin-remove: "&eClick to remove a poll."
 

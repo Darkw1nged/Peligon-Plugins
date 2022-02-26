@@ -7,6 +7,7 @@ import net.peligon.PeligonPolls.commands.cmdPoll;
 import net.peligon.PeligonPolls.commands.cmdReload;
 import net.peligon.PeligonPolls.events.menuEvents;
 import net.peligon.PeligonPolls.libaries.CustomConfig;
+import net.peligon.PeligonPolls.libaries.UpdateChecker;
 import net.peligon.PeligonPolls.libaries.Utils;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -45,6 +46,11 @@ public class Main extends JavaPlugin {
         if (isLoaded) {
             // ---- [ Startup message ] ----
             getServer().getConsoleSender().sendMessage(Utils.chatColor(this.fileMessage.getConfig().getString("startup")));
+
+            // ---- [ Check if server has most updated version ] ----
+            if (getConfig().getBoolean("check-for-updates", true)) {
+                versionChecker();
+            }
         }
     }
 
@@ -88,6 +94,15 @@ public class Main extends JavaPlugin {
         if (getConfig().getString("Storage.text-channel-id") == null) return;
         discordChannel = discord.getTextChannelById(getConfig().getString("Storage.text-channel-id"));
         isLoaded = true;
+    }
+
+    private void versionChecker() {
+        new UpdateChecker(this, 100200).getVersion(version -> {
+            if (!version.equals(this.getDescription().getVersion())) {
+                getServer().getConsoleSender().sendMessage(Utils.chatColor(fileMessage.getConfig().getString("plugin-outdated")));
+                getServer().getConsoleSender().sendMessage(Utils.chatColor(fileMessage.getConfig().getString("plugin-link")));
+            }
+        });
     }
 
 }

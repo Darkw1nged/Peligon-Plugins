@@ -117,25 +117,12 @@ public final class Main extends JavaPlugin {
     }
 
     private void versionChecker() {
-        try {
-            String key = "key=98BE0FE67F88AB82B4C197FAF1DC3B69206EFDCC4D3B80FC83A00037510B99B4&resource=";
-            int pluginID = 0;
-            String current = "1.0";
-
-            HttpURLConnection connection = (HttpURLConnection) new URL("https://www.spigotmc.org/api/general.php").openConnection();
-            connection.setDoOutput(true);
-            connection.setRequestMethod("POST");
-            connection.getOutputStream().write((key + pluginID).getBytes(StandardCharsets.UTF_8));
-
-            String version = new BufferedReader(new InputStreamReader(connection.getInputStream())).readLine();
-            if (!version.equals(current)) {
+        new UpdateChecker(this, 100259).getVersion(version -> {
+            if (!version.equals(this.getDescription().getVersion())) {
                 getServer().getConsoleSender().sendMessage(Utils.chatColor(fileMessage.getConfig().getString("plugin-outdated")));
                 getServer().getConsoleSender().sendMessage(Utils.chatColor(fileMessage.getConfig().getString("plugin-link")));
             }
-        } catch (IOException e) {
-            getServer().getConsoleSender().sendMessage(Utils.chatColor(fileMessage.getConfig().getString("version-check-error")));
-            e.printStackTrace();
-        }
+        });
     }
 
 }
