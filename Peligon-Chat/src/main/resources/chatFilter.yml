@@ -1,0 +1,5 @@
+# All letters are converted to lowercase automatically.
+filter:
+  - "fuck"
+  - "shit"
+  - "cunt"

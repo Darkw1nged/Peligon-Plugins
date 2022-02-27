@@ -16,18 +16,16 @@ public class chatPing implements Listener {
     @EventHandler
     public void onChat(AsyncPlayerChatEvent event) {
         String message = event.getMessage();
+        if (!plugin.getConfig().getBoolean("chat-pings.enabled", true)) return;
+        if (plugin.getConfig().getStringList("chat-pings.disabled-worlds").contains(event.getPlayer().getWorld().getName())) return;
 
-        if (plugin.getConfig().getBoolean("chat-pings.enabled", true)) {
-            if (plugin.getConfig().getStringList("chat-pings.disabled-worlds").contains(event.getPlayer().getWorld().getName())) return;
+        for (Player pinged : Bukkit.getOnlinePlayers()) {
+            String ping = "@" + pinged.getName().toLowerCase();
+            if (!message.contains(ping)) return;
+            if (event.getPlayer() == pinged) return;
 
-            for (Player pinged : Bukkit.getOnlinePlayers()) {
-                String ping = "@" + pinged.getName().toLowerCase();
-                if (!message.contains(ping)) return;
-                if (event.getPlayer() == pinged) return;
-
-                event.setMessage(message.replaceAll(ping, Utils.chatColor(plugin.getConfig().getString("chat-pings.color") + ping + "&f")));
-                pinged.playSound(pinged.getLocation(), Sound.valueOf(plugin.getConfig().getString("chat-pings.sound").toUpperCase()), 1.2f, 0.5f);
-            }
+            event.setMessage(message.replaceAll(ping, Utils.chatColor(plugin.getConfig().getString("chat-pings.color") + ping + "&f")));
+            pinged.playSound(pinged.getLocation(), Sound.valueOf(plugin.getConfig().getString("chat-pings.sound").toUpperCase()), 1.2f, 0.5f);
         }
     }
 

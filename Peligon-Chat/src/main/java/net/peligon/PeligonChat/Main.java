@@ -1,21 +1,26 @@
 package net.peligon.PeligonChat;
 
 import net.milkbowl.vault.chat.Chat;
+import net.milkbowl.vault.economy.Economy;
 import net.peligon.PeligonChat.libaries.CustomConfig;
 import net.peligon.PeligonChat.libaries.UpdateChecker;
 import net.peligon.PeligonChat.libaries.Utils;
-import net.peligon.PeligonChat.listener.chatColor;
-import net.peligon.PeligonChat.listener.chatFormat;
-import net.peligon.PeligonChat.listener.chatPing;
-import net.peligon.PeligonChat.listener.signColor;
+import net.peligon.PeligonChat.libaries.storage.SQLite;
+import net.peligon.PeligonChat.listener.*;
+import net.peligon.PeligonChat.manager.mgrServerTotal;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.Arrays;
 
 public final class Main extends JavaPlugin {
 
     public static Main getInstance;
     private static Chat chat = null;
+    private static Economy econ = null;
+    public mgrServerTotal serverTotal;
 
+    public CustomConfig fileChatFilter = new CustomConfig(this, "chatFilter", true);
     public CustomConfig fileMessage;
 
     public void onEnable() {
@@ -26,6 +31,7 @@ public final class Main extends JavaPlugin {
         loadCommands();
         loadEvents();
         saveDefaultConfig();
+        fileChatFilter.saveDefaultConfig();
 
         // ---- [ Loading lang file ] ----
         fileMessage = new CustomConfig(this, "lang/" + this.getConfig().getString("Storage.Language File"), true);
@@ -33,6 +39,14 @@ public final class Main extends JavaPlugin {
 
         // ---- [ Checking if the server has the dependencies ] ----
         setupChat();
+        setupEconomy();
+
+        // ---- [ Initializing instance of manager classes ] ----
+        serverTotal = new mgrServerTotal();
+
+        // ---- [ Setting up SQLite ] ----
+        SQLite sqlLite = new SQLite();
+        sqlLite.loadTables();
 
         // ---- [ Startup message ] ----
         getServer().getConsoleSender().sendMessage(Utils.chatColor(this.fileMessage.getConfig().getString("startup")));
@@ -50,10 +64,16 @@ public final class Main extends JavaPlugin {
 
     public void loadCommands() {}
     public void loadEvents() {
-        getServer().getPluginManager().registerEvents(new chatColor(), this);
-        getServer().getPluginManager().registerEvents(new signColor(), this);
-        getServer().getPluginManager().registerEvents(new chatFormat(), this);
-        getServer().getPluginManager().registerEvents(new chatPing(), this);
+        Arrays.asList(
+                new chatColor(),
+                new signColor(),
+                new chatFormat(),
+                new userMessages(),
+                new chatPing(),
+                new blockedCommands(),
+                new chatFilter(),
+                new antiSpam()
+        ).forEach(listener -> getServer().getPluginManager().registerEvents(listener, this));
     }
 
     private boolean setupChat() {
@@ -62,8 +82,24 @@ public final class Main extends JavaPlugin {
         return chat != null;
     }
 
+    private boolean setupEconomy() {
+        if (getServer().getPluginManager().getPlugin("Vault") == null) {
+            return false;
+        }
+        RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
+        if (rsp == null) {
+            return false;
+        }
+        econ = rsp.getProvider();
+        return econ != null;
+    }
+
     public Chat getChat() {
         return chat;
+    }
+
+    public Economy getEconomy() {
+        return econ;
     }
 
     private void versionChecker() {

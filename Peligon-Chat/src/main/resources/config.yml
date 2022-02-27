@@ -16,6 +16,58 @@ chat-display-format: "%player%: %message%"
 # !! Requires vault to receive prefix and suffix.
 #chat-display-format: "%prefix%%player%%suffix%: %message%"
 
+# Enable/Disable Join and/or Leave messages.
+# Visit your lang file to change the message.
+enable-join-message: true
+enable-quit-message: true
+
+# You can add/remove any commands that you do not want players to have access to.
+blocked-commands:
+  enabled: true
+  commands:
+    - "/bukkit:"
+    - "/?"
+    - "/help"
+    - "/ver"
+    - "/version"
+    - "/pl"
+    - "/plugins"
+    - "/minecraft:help"
+    - "/minecraft:me"
+    - "/me"
+
+# If you want to block certain words from your server, enable this.
+# Visit 'Plugins/PeligonChat/chatFilter.yml' to see the word list.
+enable-chat-filter: false
+
+# If you want a nice clean chat and people not to spam constantly.
+chat-anti-spam:
+  enabled: true
+  kick-player:
+    enabled: true
+    message: "&cKicked for spamming"
+  messages: 5
+  # The delay is in seconds.
+  delay: 3
+
+player-hover-information:
+  enabled: false
+  # Placeholder Key -------
+  # %player% - Gets players name
+  # %rank% - Gets players rank
+  # %prefix% - Gets players prefix
+  # %suffix% - Gets players suffix
+  # %balance% - Gets players balance
+  # %balance_formatted% - Formats players balance
+  # %kills% - Gets players kills
+  # %deaths% - Gets players deaths
+  # %world% - Gets players world
+  # + Any PlaceholderAPI tags
+  # -----------------------
+  format:
+    - "&fPlayer: &e%player%"
+    - "&fRank: &e%rank%"
+
 # If people miss their name come up in chat it will play a sound when people ping them.
 # Usage @<Player>
 chat-pings:
