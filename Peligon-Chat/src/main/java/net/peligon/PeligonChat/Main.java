@@ -72,7 +72,9 @@ public final class Main extends JavaPlugin {
                 new chatPing(),
                 new blockedCommands(),
                 new chatFilter(),
-                new antiSpam()
+                new antiSpam(),
+                new userViewer(),
+                new showItem()
         ).forEach(listener -> getServer().getPluginManager().registerEvents(listener, this));
     }
 

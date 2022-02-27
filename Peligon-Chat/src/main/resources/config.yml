@@ -76,6 +76,14 @@ chat-pings:
   sound: "ENTITY_VILLAGER_YES" # pre 1.13 use < VILLAGER_YES >
   disabled-worlds: []
 
+# Allow players to show off their items inside the chat.
+# Usage [item]
+show-item:
+  enabled: true
+  # Permission: < Peligon.Chat.showItem >
+  requires-permission: true
+  show-in-chat: "&6[%item_name%]"
+
 daeth-messages:
   disabled-worlds: []
   global-death-event:

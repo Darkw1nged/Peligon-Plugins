@@ -24,7 +24,7 @@ public class chatPing implements Listener {
             if (!message.contains(ping)) return;
             if (event.getPlayer() == pinged) return;
 
-            event.setMessage(message.replaceAll(ping, Utils.chatColor(plugin.getConfig().getString("chat-pings.color") + ping + "&f")));
+            event.setMessage(message.replaceAll(ping, Utils.chatColor(plugin.getConfig().getString("chat-pings.color") + ping)));
             pinged.playSound(pinged.getLocation(), Sound.valueOf(plugin.getConfig().getString("chat-pings.sound").toUpperCase()), 1.2f, 0.5f);
         }
     }
