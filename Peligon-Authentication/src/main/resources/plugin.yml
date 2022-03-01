@@ -1,7 +1,11 @@
-name: PeligonChat
+name: PeligonAuthentication
 version: '${project.version}'
-main: net.peligon.PeligonChat.Main
+main: net.peligon.PeligonAuthentication.Main
 api-version: 1.13
 authors: [ darkwinged ]
 description: This is an open-source plugin
-softdepend: [Vault]
+commands:
+  authentication:
+    aliases:
+      - auth
+    description: Allows administrators to reset Google Auth tokens

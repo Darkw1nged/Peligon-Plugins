@@ -1,6 +1,6 @@
 package net.peligon.PeligonAuthentication.libaries;
 
-import net.peligon.PeligonChat.Main;
+import net.peligon.PeligonAuthentication.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 

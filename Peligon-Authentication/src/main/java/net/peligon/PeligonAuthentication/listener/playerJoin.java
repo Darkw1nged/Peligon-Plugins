@@ -50,18 +50,18 @@ public class playerJoin implements Listener {
         String message = event.getMessage();
 
         if (!Utils.neededAuthentication.contains(player.getUniqueId())) return;
+        event.setCancelled(true);
         try {
             if (!Utils.playerInputCode(player, Integer.parseInt(message))) {
                 player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("invalid-code")));
                 return;
             }
             Utils.neededAuthentication.remove(player.getUniqueId());
-            player.sendMessage(Utils.chatColor(plugin.getConfig().getString("prefix") +
-                    plugin.getConfig().getString("access-granted")));
+            player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
+                    plugin.fileMessage.getConfig().getString("access-granted")));
         } catch (Exception e) {
             player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("invalid-code")));
         }
-        event.setCancelled(true);
     }
 
 }

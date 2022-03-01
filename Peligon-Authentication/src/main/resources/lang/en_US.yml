@@ -1,5 +1,5 @@
-startup: "&fPeligon Chat has successfully loaded."
-shutdown: "&fPeligon Chat has successfully unloaded."
+startup: "&aPeligon Authentication has successfully loaded."
+shutdown: "&cPeligon Authentication has successfully unloaded."
 version-check-error: "&cThere was a problem when checking the plugin version"
 plugin-outdated: "&eThere is a new version of Peligon Chat available."
 plugin-link: "Updated version: N/A"
@@ -13,3 +13,9 @@ new-code:
 enter-code: "&aPlease open the &bGoogle Authenticator App &aand provide the &bsix digit code."
 invalid-code: "&cError! Incorrect or expired code ** A code will only contain numbers **"
 access-granted: "&aAccess granted. Enjoy your stay."
+
+no-permission: "&cError! You do not have permission to use this command."
+specify-player: "&cError! Please specify a player."
+no-player-found: "&cError! %player% could not be found."
+
+reset-usage: "&cIncorrect Command Usage: &f/authentication reset [player]"

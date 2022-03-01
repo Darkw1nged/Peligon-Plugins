@@ -1,5 +1,6 @@
 package net.peligon.PeligonAuthentication;
 
+import net.peligon.PeligonAuthentication.commands.cmdAuthReset;
 import net.peligon.PeligonAuthentication.libaries.CustomConfig;
 import net.peligon.PeligonAuthentication.libaries.UpdateChecker;
 import net.peligon.PeligonAuthentication.libaries.Utils;
@@ -53,7 +54,9 @@ public final class Main extends JavaPlugin {
         getServer().getConsoleSender().sendMessage(Utils.chatColor(this.fileMessage.getConfig().getString("shutdown")));
     }
 
-    public void loadCommands() {}
+    public void loadCommands() {
+        getCommand("authentication").setExecutor(new cmdAuthReset());
+    }
     public void loadEvents() {
         Arrays.asList(
                 new Authentication(),
