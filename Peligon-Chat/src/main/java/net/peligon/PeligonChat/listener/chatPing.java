@@ -21,10 +21,10 @@ public class chatPing implements Listener {
 
         for (Player pinged : Bukkit.getOnlinePlayers()) {
             String ping = "@" + pinged.getName().toLowerCase();
-            if (!message.contains(ping)) return;
-            if (event.getPlayer() == pinged) return;
+            if (!message.toLowerCase().contains(ping)) continue;
+            if (event.getPlayer() == pinged) continue;
 
-            event.setMessage(message.replaceAll(ping, Utils.chatColor(plugin.getConfig().getString("chat-pings.color") + ping)));
+            event.setMessage(Utils.chatColor(message.replaceAll(ping, "&a" + ping)));
             pinged.playSound(pinged.getLocation(), Sound.valueOf(plugin.getConfig().getString("chat-pings.sound").toUpperCase()), 1.2f, 0.5f);
         }
     }

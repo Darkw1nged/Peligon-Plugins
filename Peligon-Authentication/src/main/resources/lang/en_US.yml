@@ -1,0 +1,15 @@
+startup: "&fPeligon Chat has successfully loaded."
+shutdown: "&fPeligon Chat has successfully unloaded."
+version-check-error: "&cThere was a problem when checking the plugin version"
+plugin-outdated: "&eThere is a new version of Peligon Chat available."
+plugin-link: "Updated version: N/A"
+
+prefix: "&ePeligon >> "
+new-code:
+  - "&a====================="
+  - "&aYour new &bGoogle Authenticator Code &ais &b%key%"
+  - "&cNOTICE! You must enter this code in the Google Authenticator App before leaving the server."
+  - "&a====================="
+enter-code: "&aPlease open the &bGoogle Authenticator App &aand provide the &bsix digit code."
+invalid-code: "&cError! Incorrect or expired code ** A code will only contain numbers **"
+access-granted: "&aAccess granted. Enjoy your stay."

@@ -1,14 +1,12 @@
-package net.peligon.PeligonChat;
+package net.peligon.PeligonAuthentication;
 
-import net.milkbowl.vault.chat.Chat;
-import net.milkbowl.vault.economy.Economy;
-import net.peligon.PeligonChat.libaries.CustomConfig;
-import net.peligon.PeligonChat.libaries.UpdateChecker;
-import net.peligon.PeligonChat.libaries.Utils;
-import net.peligon.PeligonChat.libaries.storage.SQLite;
-import net.peligon.PeligonChat.listener.*;
-import net.peligon.PeligonChat.manager.mgrServerTotal;
-import org.bukkit.plugin.RegisteredServiceProvider;
+import net.peligon.PeligonAuthentication.libaries.CustomConfig;
+import net.peligon.PeligonAuthentication.libaries.UpdateChecker;
+import net.peligon.PeligonAuthentication.libaries.Utils;
+import net.peligon.PeligonAuthentication.libaries.storage.SQLite;
+import net.peligon.PeligonAuthentication.listener.Authentication;
+import net.peligon.PeligonAuthentication.listener.playerJoin;
+import net.peligon.PeligonAuthentication.manager.mgrAuthentication;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Arrays;
@@ -16,12 +14,11 @@ import java.util.Arrays;
 public final class Main extends JavaPlugin {
 
     public static Main getInstance;
-    private static Chat chat = null;
-    private static Economy econ = null;
-    public mgrServerTotal serverTotal;
+    public mgrAuthentication authentication;
 
-    public CustomConfig fileChatFilter = new CustomConfig(this, "chatFilter", true);
+
     public CustomConfig fileMessage;
+    public CustomConfig fileCache = new CustomConfig(this, "cache", true);
 
     public void onEnable() {
         // ---- [ Initializing instance of main class] ----
@@ -31,18 +28,14 @@ public final class Main extends JavaPlugin {
         loadCommands();
         loadEvents();
         saveDefaultConfig();
-        fileChatFilter.saveDefaultConfig();
+        fileCache.saveDefaultConfig();
 
         // ---- [ Loading lang file ] ----
         fileMessage = new CustomConfig(this, "lang/" + this.getConfig().getString("Storage.Language File"), true);
         fileMessage.saveDefaultConfig();
 
-        // ---- [ Checking if the server has the dependencies ] ----
-        setupChat();
-        setupEconomy();
-
         // ---- [ Initializing instance of manager classes ] ----
-        serverTotal = new mgrServerTotal();
+        authentication = new mgrAuthentication();
 
         // ---- [ Setting up SQLite ] ----
         SQLite sqlLite = new SQLite();
@@ -65,43 +58,9 @@ public final class Main extends JavaPlugin {
     public void loadCommands() {}
     public void loadEvents() {
         Arrays.asList(
-                new chatColor(),
-                new signColor(),
-                new chatFormat(),
-                new userMessages(),
-                new chatPing(),
-                new blockedCommands(),
-                new chatFilter(),
-                new antiSpam(),
-                new showItem()
+                new Authentication(),
+                new playerJoin()
         ).forEach(listener -> getServer().getPluginManager().registerEvents(listener, this));
-    }
-
-    private boolean setupChat() {
-        RegisteredServiceProvider<Chat> rsp = getServer().getServicesManager().getRegistration(Chat.class);
-        if (rsp == null) return chat == null;
-        chat = rsp.getProvider();
-        return chat != null;
-    }
-
-    private boolean setupEconomy() {
-        if (getServer().getPluginManager().getPlugin("Vault") == null) {
-            return false;
-        }
-        RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
-        if (rsp == null) {
-            return false;
-        }
-        econ = rsp.getProvider();
-        return econ != null;
-    }
-
-    public Chat getChat() {
-        return chat;
-    }
-
-    public Economy getEconomy() {
-        return econ;
     }
 
     private void versionChecker() {

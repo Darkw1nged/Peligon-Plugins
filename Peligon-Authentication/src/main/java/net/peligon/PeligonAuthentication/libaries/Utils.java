@@ -1,7 +1,11 @@
-package net.peligon.PeligonChat.libaries;
+package net.peligon.PeligonAuthentication.libaries;
 
-import net.peligon.PeligonChat.Main;
+import com.warrenstrange.googleauth.GoogleAuthenticator;
+import net.peligon.PeligonAuthentication.Main;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -51,5 +55,32 @@ public class Utils {
         }
         return false;
     }
+
+    // ---- [ Gets block under player ] ----
+    public static Optional<Block> getNextBlockUnderPlayer(Player player) {
+        Location loc = player.getLocation();
+        Block block;
+        while(loc.getY() >= 0) {
+            loc.subtract(0, 0.5, 0);
+            block = loc.getBlock();
+            if(block.getType() != Material.AIR) {
+                return Optional.of(block);
+            }
+        }
+        return Optional.empty();
+    }
+
+    // ---- [ Gets players code ] ----
+    public static boolean playerInputCode(Player player, int code) {
+        boolean isValid = new GoogleAuthenticator().authorize(plugin.authentication.getToken(player), code);
+        if (isValid) {
+            neededAuthentication.remove(player.getUniqueId());
+            return true;
+        }
+        return false;
+    }
+
+    // ---- [ Cached items ] ----
+    public static List<UUID> neededAuthentication = new ArrayList<>();
 
 }

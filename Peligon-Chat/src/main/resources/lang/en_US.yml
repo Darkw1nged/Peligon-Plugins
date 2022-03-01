@@ -4,5 +4,6 @@ version-check-error: "&cThere was a problem when checking the plugin version"
 plugin-outdated: "&eThere is a new version of Peligon Chat available."
 plugin-link: "Updated version: N/A"
 
-join-message: "&e%player% &fjoined the server. ( %total% )"
+total-join-message: "&e%player% &fjoined the server. ( %total% )"
+join-message: "&e%player% &fjoined the server."
 quit-messgae: "&e%player% &fleft the server."

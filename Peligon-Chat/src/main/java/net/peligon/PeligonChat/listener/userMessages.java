@@ -18,12 +18,16 @@ public class userMessages implements Listener {
                 plugin.serverTotal.createTotal();
             }
             plugin.serverTotal.addTotal(1);
+            event.setJoinMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("total-join-message")
+                    .replaceAll("%player%", event.getPlayer().getName())
+                    .replaceAll("%total%", "" + plugin.serverTotal.getTotal())
+            ));
+            return;
         }
 
         if (plugin.getConfig().getBoolean("enable-join-message", true)) {
             event.setJoinMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("join-message")
                     .replaceAll("%player%", event.getPlayer().getName())
-                    .replaceAll("%total%", "" + plugin.serverTotal.getTotal())
             ));
         }
     }
