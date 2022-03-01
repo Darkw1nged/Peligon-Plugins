@@ -18,7 +18,6 @@ public final class Main extends JavaPlugin {
 
 
     public CustomConfig fileMessage;
-    public CustomConfig fileCache = new CustomConfig(this, "cache", true);
 
     public void onEnable() {
         // ---- [ Initializing instance of main class] ----
@@ -28,7 +27,6 @@ public final class Main extends JavaPlugin {
         loadCommands();
         loadEvents();
         saveDefaultConfig();
-        fileCache.saveDefaultConfig();
 
         // ---- [ Loading lang file ] ----
         fileMessage = new CustomConfig(this, "lang/" + this.getConfig().getString("Storage.Language File"), true);
