@@ -1,4 +1,4 @@
-name: Peligon Social
+name: PeligonSocial
 version: '${project.version}'
 main: net.peligon.PeligonSocial.Main
 api-version: 1.18

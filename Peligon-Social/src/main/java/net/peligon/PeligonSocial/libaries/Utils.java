@@ -1,13 +1,15 @@
-package net.peligon.PeligonTNTRun.libaries;
+package net.peligon.PeligonSocial.libaries;
 
-import net.peligon.PeligonTNTRun.Main;
+import net.peligon.PeligonSocial.Main;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.text.NumberFormat;
-import java.util.List;
 import java.util.*;
 
 public class Utils {
@@ -15,9 +17,7 @@ public class Utils {
     private static final Main plugin = Main.getInstance;
 
     // ---- [ Managing chat color within the plugin ] ----
-    public static String chatColor(String s) {
-        return ChatColor.translateAlternateColorCodes('&', s);
-    }
+    public static String chatColor(String s) { return ChatColor.translateAlternateColorCodes('&', s); }
 
     // ---- [ Managing chat color within the plugin | Supports Amount ] ----
     public static String chatColor(String s, Double amount) {
@@ -32,8 +32,8 @@ public class Utils {
         if (config == null) return null;
         List<String> oldList = config.getStringList(path + ".lore");
         List<String> newList = new ArrayList<>();
-        for (String a : oldList)
-            newList.add(ChatColor.translateAlternateColorCodes('&', a));
+        for (String s : oldList)
+            newList.add(ChatColor.translateAlternateColorCodes('&', s));
         return newList;
     }
 
@@ -55,32 +55,21 @@ public class Utils {
         return false;
     }
 
-    // ---- [ Removes all color codes from string ] ----
-    public static String replaceAllColorCodes(String string) {
-        return string.replaceAll("&a", "")
-                .replaceAll("&b", "")
-                .replaceAll("&c", "")
-                .replaceAll("&d", "")
-                .replaceAll("&e", "")
-                .replaceAll("&f", "")
-                .replaceAll("&1", "")
-                .replaceAll("&2", "")
-                .replaceAll("&3", "")
-                .replaceAll("&4", "")
-                .replaceAll("&5", "")
-                .replaceAll("&6", "")
-                .replaceAll("&7", "")
-                .replaceAll("&8", "")
-                .replaceAll("&9", "")
-                .replaceAll("&k", "")
-                .replaceAll("&l", "")
-                .replaceAll("&m", "")
-                .replaceAll("&n", "")
-                .replaceAll("&o", "")
-                .replaceAll("&r", "");
-
+    // ---- [ Gets block under player ] ----
+    public static Optional<Block> getNextBlockUnderPlayer(Player player) {
+        Location loc = player.getLocation();
+        Block block;
+        while(loc.getY() >= 0) {
+            loc.subtract(0, 0.5, 0);
+            block = loc.getBlock();
+            if(block.getType() != Material.AIR) {
+                return Optional.of(block);
+            }
+        }
+        return Optional.empty();
     }
 
-    // ---- [ Cached Items ] ----
-    public static List<Game> activeGames = new ArrayList<>();
+    // ---- [ Cached items ] ----
+    public static List<UUID> neededAuthentication = new ArrayList<>();
+
 }

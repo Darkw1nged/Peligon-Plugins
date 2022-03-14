@@ -1,18 +1,24 @@
-package net.peligon.PeligonTNTRun;
+package net.peligon.PeligonTNTTag;
 
-import net.peligon.PeligonTNTRun.libaries.CustomConfig;
-import net.peligon.PeligonTNTRun.libaries.Utils;
+import net.peligon.PeligonTNTTag.events.Temp;
+import net.peligon.PeligonTNTTag.libaries.CustomConfig;
+import net.peligon.PeligonTNTTag.libaries.Utils;
+import net.peligon.PeligonTNTTag.libariesV2.Utilss;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.Arrays;
 
 public final class Main extends JavaPlugin {
 
     public static Main getInstance;
+    private Utilss utilss;
 
     public CustomConfig fileMessage;
 
     public void onEnable() {
         // ---- [ Initializing instance of main class | manager classes | register placeholder ] ----
         getInstance = this;
+        utilss = new Utilss();
 
         // ---- [ Loading Commands | Loading Events | Loading YML Files ] ----
         loadCommands();
@@ -24,16 +30,23 @@ public final class Main extends JavaPlugin {
         fileMessage.saveDefaultConfig();
 
         // ---- [ Startup message ] ----
-        getServer().getConsoleSender().sendMessage(Utils.chatColor(this.fileMessage.getConfig().getString("startup")));
+        utilss.getChatUtil().log(this.fileMessage.getConfig().getString("startup"));
     }
 
     public void onDisable() {
         // ---- [ shutdown message ] ----
-        getServer().getConsoleSender().sendMessage(Utils.chatColor(this.fileMessage.getConfig().getString("shutdown")));
+        utilss.getChatUtil().log(this.fileMessage.getConfig().getString("shutdown"));
     }
 
     public void loadCommands() {
     }
     public void loadEvents() {
+        Arrays.asList(
+                new Temp()
+        ).forEach(listener -> getServer().getPluginManager().registerEvents(listener, this));
+    }
+
+    public Utilss getUtilss() {
+        return this.utilss;
     }
 }

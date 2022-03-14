@@ -1,5 +1,5 @@
-startup: "&aPeligon TNTRun has successfully loaded."
-shutdown: "&cPeligon TNTRun has successfully unloaded."
+startup: "Peligon TNTRun has successfully loaded."
+shutdown: "Peligon TNTRun has successfully unloaded."
 admin-reload: "&eAll configuration files have been reloaded."
 
 prefix: "&cPeligon TNTRun >> "

@@ -1,30 +1,31 @@
-package net.peligon.PeligonTNTRun.libaries;
+package net.peligon.PeligonTNTTag.libaries.Instances;
 
+import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 public class Game {
 
     private String gameID;
-    private boolean hasStarted;
     private boolean isFinished;
     private List<UUID> players;
     private List<UUID> deadPlayers;
     private List<UUID> taggedPlayers;
     private int maxPlayers;
+    private Location lobbyLocation;
 
     public Game() { }
-    public Game(String gameID, List<UUID> players, int maxPlayers) {
+    public Game(String gameID, int maxPlayers) {
         this.gameID = gameID;
-        this.players = players;
         this.maxPlayers = maxPlayers;
+        this.players = new ArrayList<>();
     }
 
-    public Game(String gameID, boolean hasStarted, boolean isFinished, List<UUID> players, List<UUID> deadPlayers, List<UUID> taggedPlayers, int maxPlayers) {
+    public Game(String gameID, boolean isFinished, List<UUID> players, List<UUID> deadPlayers, List<UUID> taggedPlayers, int maxPlayers) {
         this.gameID = gameID;
-        this.hasStarted = hasStarted;
         this.isFinished = isFinished;
         this.players = players;
         this.deadPlayers = deadPlayers;
@@ -38,14 +39,6 @@ public class Game {
 
     public void setGameID(String gameID) {
         this.gameID = gameID;
-    }
-
-    public boolean hasStarted() {
-        return hasStarted;
-    }
-
-    public void setHasStarted(boolean hasStarted) {
-        this.hasStarted = hasStarted;
     }
 
     public boolean isFinished() {
@@ -98,6 +91,14 @@ public class Game {
 
     public void setMaxPlayers(int maxPlayers) {
         this.maxPlayers = maxPlayers;
+    }
+
+    public Location getLobbyLocation() {
+        return lobbyLocation;
+    }
+
+    public void setLobbyLocation(Location location) {
+        this.lobbyLocation = location;
     }
 
 }

@@ -1,6 +1,6 @@
-name: PeligonTNTRun
+name: PeligonTNTTag
 version: '${project.version}'
-main: net.peligon.PeligonTNTRun.Main
+main: net.peligon.PeligonTNTTag.Main
 api-version: 1.18
 authors: [ darkwinged ]
 description: This is an open-source plugin

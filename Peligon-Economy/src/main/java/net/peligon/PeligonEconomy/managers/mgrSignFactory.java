@@ -110,7 +110,7 @@ public class mgrSignFactory {
             openSign.getBlockPositionModifier().write(0, position);
             try {
                 ProtocolLibrary.getProtocolManager().sendServerPacket(player, openSign);
-            } catch (InvocationTargetException exception) {
+            } catch (Exception exception) {
                 exception.printStackTrace();
             }
 

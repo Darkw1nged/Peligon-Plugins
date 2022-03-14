@@ -38,9 +38,9 @@ public class chatFormat implements Listener {
             balance = plugin.getEconomy().getBalance(player);
         }
 
-        TextComponent newMessage = new TextComponent(plugin.getConfig().getString("chat-display-format", "%player%: %message%")
+        TextComponent format = new TextComponent(plugin.getConfig().getString("chat-display-format", "%player%: %message%")
                 .replaceAll("%player%", player.getName())
-                .replaceAll("%message%", message)
+                .replaceAll("%message%", "")
                 .replaceAll("%prefix%", prefix)
                 .replaceAll("%suffix%", suffix));
 
@@ -69,22 +69,22 @@ public class chatFormat implements Listener {
                     builder.append(Utils.chatColor(line + "\n"));
                 }
             }
-            newMessage.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, builder.create()));
+            format.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, builder.create()));
 
-            for (Player target : Bukkit.getOnlinePlayers()) {
-                target.spigot().sendMessage(newMessage);
-            }
+            format.addExtra(event.getMessage());
+
+            Bukkit.spigot().broadcast(format);
             event.setCancelled(true);
             return;
         }
 
-        String format = plugin.getConfig().getString("chat-display-format", "%player%: %message%")
+        String strformat = plugin.getConfig().getString("chat-display-format", "%player%: %message%")
                 .replaceAll("%player%", player.getName())
                 .replaceAll("%message%", message)
                 .replaceAll("%prefix%", prefix)
                 .replaceAll("%suffix%", suffix);
 
-        event.setFormat(format);
+        event.setFormat(strformat);
     }
 
 }

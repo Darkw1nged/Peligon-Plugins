@@ -1,4 +1,4 @@
-package net.peligon.PeligonTNTRun.libaries;
+package net.peligon.PeligonSocial.libaries;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;

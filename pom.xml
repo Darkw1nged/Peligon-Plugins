@@ -18,10 +18,11 @@
         <module>Peligon-Economy</module>
         <module>Peligon-Enchants</module>
         <module>Peligon-Polls</module>
+        <module>Peligon-Ranks</module>
         <module>Peligon-Stats</module>
         <module>Peligon-Social</module>
         <module>Peligon-Skyblock</module>
-        <module>Peligon-TNTRun</module>
+        <module>Peligon-TNTTag</module>
     </modules>
 
     <properties>
