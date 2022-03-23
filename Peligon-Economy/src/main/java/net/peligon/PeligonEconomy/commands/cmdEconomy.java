@@ -30,7 +30,7 @@ public class cmdEconomy implements CommandExecutor {
                 if (args[1].equalsIgnoreCase("bank") && plugin.getConfig().getBoolean("Storage.banks", true)) {
                     if (args[0].equalsIgnoreCase("add") || args[0].equalsIgnoreCase("give")) {
                         Double amount = getAmount(sender, target, args[3]);
-                        plugin.Economy.AddBankAccount(target, amount);
+                        plugin.Economy.addBankAccount(target, amount);
                         sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix")
                                 + plugin.fileMessage.getConfig().getString("admin-money-updated")
                                 .replaceAll("%player%", target.getName())
@@ -38,7 +38,7 @@ public class cmdEconomy implements CommandExecutor {
 
                     } else if (args[0].equalsIgnoreCase("remove") || args[0].equalsIgnoreCase("take")) {
                         Double amount = getAmount(sender, target, args[3]);
-                        plugin.Economy.RemoveBankAccount(target, amount);
+                        plugin.Economy.removeBankAccount(target, amount);
                         sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix")
                                 + plugin.fileMessage.getConfig().getString("admin-money-updated")
                                 .replaceAll("%player%", target.getName())
@@ -53,8 +53,8 @@ public class cmdEconomy implements CommandExecutor {
                                 .replaceAll("%target%", target.getName())));
 
                     } else if (args[0].equalsIgnoreCase("reset")) {
-                        plugin.Economy.RemoveBankAccount(target, plugin.Economy.getBank(target));
-                        plugin.Economy.AddBankAccount(target, plugin.getConfig().getInt("Balance.Account Setup.bank"));
+                        plugin.Economy.removeBankAccount(target, plugin.Economy.getBank(target));
+                        plugin.Economy.addBankAccount(target, plugin.getConfig().getInt("Balance.Account Setup.bank"));
                         sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix")
                                 + plugin.fileMessage.getConfig().getString("admin-money-reset")
                                 .replaceAll("%player%", target.getName())
@@ -64,7 +64,7 @@ public class cmdEconomy implements CommandExecutor {
                 }
                 if (args[0].equalsIgnoreCase("add") || args[0].equalsIgnoreCase("give")) {
                     Double amount = getAmount(sender, target, args[3]);
-                    plugin.Economy.AddAccount(target, amount);
+                    plugin.Economy.addAccount(target, amount);
                     sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix")
                             + plugin.fileMessage.getConfig().getString("admin-money-updated")
                             .replaceAll("%player%", target.getName())
@@ -72,7 +72,7 @@ public class cmdEconomy implements CommandExecutor {
 
                 } else if (args[0].equalsIgnoreCase("remove") || args[0].equalsIgnoreCase("take")) {
                     Double amount = getAmount(sender, target, args[3]);
-                    plugin.Economy.RemoveAccount(target, amount);
+                    plugin.Economy.removeAccount(target, amount);
                     sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix")
                             + plugin.fileMessage.getConfig().getString("admin-money-updated")
                             .replaceAll("%player%", target.getName())
@@ -87,8 +87,8 @@ public class cmdEconomy implements CommandExecutor {
                             .replaceAll("%target%", target.getName())));
 
                 } else if (args[0].equalsIgnoreCase("reset")) {
-                    plugin.Economy.RemoveAccount(target, plugin.Economy.getAccount(target));
-                    plugin.Economy.AddAccount(target, plugin.getConfig().getInt("Balance.Account Setup.cash"));
+                    plugin.Economy.removeAccount(target, plugin.Economy.getAccount(target));
+                    plugin.Economy.addAccount(target, plugin.getConfig().getInt("Balance.Account Setup.cash"));
                     sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix")
                             + plugin.fileMessage.getConfig().getString("admin-money-reset")
                             .replaceAll("%player%", target.getName())

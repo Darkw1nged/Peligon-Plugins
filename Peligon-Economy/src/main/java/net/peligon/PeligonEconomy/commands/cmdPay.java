@@ -28,7 +28,7 @@ public class cmdPay implements CommandExecutor {
                     return true;
                 }
                 Player target = Bukkit.getPlayer(args[0]);
-                double amount = Double.parseDouble(args[1]);
+                double amount;
 
                 // ---- [ Verifying target ] ----
                 if (target == null) {
@@ -73,9 +73,9 @@ public class cmdPay implements CommandExecutor {
                 }
 
                 // ---- [ Removing money ] ----
-                plugin.Economy.RemoveAccount(player, amount);
+                plugin.Economy.removeAccount(player, amount);
                 // ---- [ Adding money ] ----
-                plugin.Economy.AddAccount(target, amount);
+                plugin.Economy.addAccount(target, amount);
 
                 player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") + plugin.fileMessage.getConfig().getString("money-transferred"), amount).replaceAll("%player%", target.getName()));
                 target.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") + plugin.fileMessage.getConfig().getString("money-received"), amount).replaceAll("%player%", player.getName()));

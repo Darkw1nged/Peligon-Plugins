@@ -31,7 +31,7 @@ public class bountyEvents implements Listener {
 
                 // ---- [ Adding money to killers balance if player had a bounty ] ----
                 if (Utils.bounties.containsKey(playerUUID)) {
-                    plugin.Economy.AddAccount(killer, Utils.bounties.get(playerUUID));
+                    plugin.Economy.addAccount(killer, Utils.bounties.get(playerUUID));
                 }
 
                 // ---- [ Managing killers kill steak ] ----

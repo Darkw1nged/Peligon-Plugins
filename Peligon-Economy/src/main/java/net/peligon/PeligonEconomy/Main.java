@@ -17,6 +17,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 
 public final class Main extends JavaPlugin {
 
@@ -52,9 +53,11 @@ public final class Main extends JavaPlugin {
             getServer().getConsoleSender().sendMessage(Utils.chatColor(this.fileMessage.getConfig().getString("no-plugin-dependency")));
             getServer().getPluginManager().disablePlugin(this);
         }
+
         if (Bukkit.getPluginManager().getPlugin("ProtocolLib") == null) {
-            getServer().getConsoleSender().sendMessage(Utils.chatColor(this.fileMessage.getConfig().getString("no-plugin-dependency")));
-            getServer().getPluginManager().disablePlugin(this);
+            getServer().getConsoleSender().sendMessage(Utils.chatColor(this.fileMessage.getConfig().getString("no-protocolLib")));
+        } else {
+            signFactory = new mgrSignFactory(this);
         }
 
         // ---- [ Initializing instance of manager classes | register placeholder ] ----
@@ -62,7 +65,6 @@ public final class Main extends JavaPlugin {
         peligonEconomy = new PeligonEconomy();
         vaultHook = new VaultHook();
         vaultHook.hook();
-        signFactory = new mgrSignFactory(this);
         if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
             new mgrPlaceholders().register();
         }
@@ -105,15 +107,20 @@ public final class Main extends JavaPlugin {
         getCommand("chestsell").setExecutor(new cmdSellChest());
         getCommand("sellwand").setExecutor(new cmdSellWand());
         getCommand("bounty").setExecutor(new cmdBounty());
+        getCommand("goal").setExecutor(new cmdGoal());
     }
 
     public void loadEvents() {
-        getServer().getPluginManager().registerEvents(new accountSetup(), this);
-        getServer().getPluginManager().registerEvents(new bountyEvents(), this);
-        getServer().getPluginManager().registerEvents(new redeemEvents(), this);
-        getServer().getPluginManager().registerEvents(new signEvents(), this);
-        getServer().getPluginManager().registerEvents(new AtmEvents(), this);
-        getServer().getPluginManager().registerEvents(new MobMoneyEvent(), this);
+        Arrays.asList(
+                new accountSetup(),
+                new bountyEvents(),
+                new redeemEvents(),
+                new signEvents(),
+                new AtmEvents(),
+                new MobMoneyEvent(),
+                new DeathPenaltyEvent(),
+                new GrassScavengeEvents()
+        ).forEach(listener -> getServer().getPluginManager().registerEvents(listener, this));
     }
 
     private void versionChecker() {

@@ -1,0 +1,16 @@
+name: PeligonLifeSteal
+version: '${project.version}'
+main: net.peligon.PeligonLifeSteal.Main
+api-version: 1.18
+authors: [ darkwinged ]
+description: This is an open-source plugin
+commands:
+  pellives:
+    aliases:
+      - plifesteal
+      - plives
+    description: Allows admins to reload configuration files
+  lifesteal:
+    description: Allows admins manage player lifes
+  lives:
+    description: Allows players to view lives

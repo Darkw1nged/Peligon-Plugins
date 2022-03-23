@@ -251,7 +251,7 @@ public class PeligonEconomy implements Economy {
             return new EconomyResponse(0, 0, EconomyResponse.ResponseType.FAILURE, "Cannot withdraw negative funds");
 
         if (has(player, amount)) {
-            plugin.Economy.RemoveAccount(player, amount);
+            plugin.Economy.removeAccount(player, amount);
             return new EconomyResponse(amount, getBalance(player), EconomyResponse.ResponseType.SUCCESS, null);
         } else {
             return new EconomyResponse(0, getBalance(player), EconomyResponse.ResponseType.FAILURE, "Insufficient funds");
@@ -271,7 +271,7 @@ public class PeligonEconomy implements Economy {
             return new EconomyResponse(0, 0, EconomyResponse.ResponseType.FAILURE, "Cannot withdraw negative funds");
 
         if (has(player, amount)) {
-            plugin.Economy.RemoveAccount(player, amount);
+            plugin.Economy.removeAccount(player, amount);
             return new EconomyResponse(amount, getBalance(player), EconomyResponse.ResponseType.SUCCESS, null);
         } else {
             return new EconomyResponse(0, getBalance(player), EconomyResponse.ResponseType.FAILURE, "Insufficient funds");
@@ -291,7 +291,7 @@ public class PeligonEconomy implements Economy {
             return new EconomyResponse(0, 0, EconomyResponse.ResponseType.FAILURE, "Cannot withdraw negative funds");
 
         if (has(player, amount)) {
-            plugin.Economy.RemoveAccount(player, amount);
+            plugin.Economy.removeAccount(player, amount);
             return new EconomyResponse(amount, getBalance(player), EconomyResponse.ResponseType.SUCCESS, null);
         } else {
             return new EconomyResponse(0, getBalance(player), EconomyResponse.ResponseType.FAILURE, "Insufficient funds");
@@ -313,7 +313,7 @@ public class PeligonEconomy implements Economy {
             return new EconomyResponse(0, 0, EconomyResponse.ResponseType.FAILURE, "Cannot withdraw negative funds");
 
         if (has(player, amount)) {
-            plugin.Economy.RemoveAccount(player, amount);
+            plugin.Economy.removeAccount(player, amount);
             return new EconomyResponse(amount, getBalance(player), EconomyResponse.ResponseType.SUCCESS, null);
         } else {
             return new EconomyResponse(0, getBalance(player), EconomyResponse.ResponseType.FAILURE, "Insufficient funds");
@@ -328,7 +328,7 @@ public class PeligonEconomy implements Economy {
     @Override
     public EconomyResponse depositPlayer(String playerName, double amount) {
         Player player = Bukkit.getPlayer(playerName);
-        plugin.Economy.AddAccount(player, amount);
+        plugin.Economy.addAccount(player, amount);
         return new EconomyResponse(amount, getBalance(player), EconomyResponse.ResponseType.SUCCESS, null);
     }
 
@@ -341,7 +341,7 @@ public class PeligonEconomy implements Economy {
      */
     @Override
     public EconomyResponse depositPlayer(OfflinePlayer player, double amount) {
-        plugin.Economy.AddAccount(player, amount);
+        plugin.Economy.addAccount(player, amount);
         return new EconomyResponse(amount, getBalance(player), EconomyResponse.ResponseType.SUCCESS, null);
     }
 
@@ -354,7 +354,7 @@ public class PeligonEconomy implements Economy {
     @Override
     public EconomyResponse depositPlayer(String playerName, String worldName, double amount) {
         Player player = Bukkit.getPlayer(playerName);
-        plugin.Economy.AddAccount(player, amount);
+        plugin.Economy.addAccount(player, amount);
         return new EconomyResponse(amount, getBalance(player), EconomyResponse.ResponseType.SUCCESS, null);
     }
 
@@ -369,7 +369,7 @@ public class PeligonEconomy implements Economy {
      */
     @Override
     public EconomyResponse depositPlayer(OfflinePlayer player, String worldName, double amount) {
-        plugin.Economy.AddAccount(player, amount);
+        plugin.Economy.addAccount(player, amount);
         return new EconomyResponse(amount, getBalance(player), EconomyResponse.ResponseType.SUCCESS, null);
     }
 
@@ -443,7 +443,7 @@ public class PeligonEconomy implements Economy {
             return new EconomyResponse(0, 0, EconomyResponse.ResponseType.FAILURE, "Cannot withdraw negative funds");
 
         if(has(player, amount)) {
-            plugin.Economy.RemoveAccount(player, amount);
+            plugin.Economy.removeAccount(player, amount);
             return new EconomyResponse(amount, getBalance(player), EconomyResponse.ResponseType.SUCCESS, null);
         } else {
             return new EconomyResponse(0, getBalance(player), EconomyResponse.ResponseType.FAILURE, "Insufficient funds");
@@ -464,7 +464,7 @@ public class PeligonEconomy implements Economy {
             return new EconomyResponse(0, 0, EconomyResponse.ResponseType.FAILURE, "Cannot deposit negative funds");
 
         if(has(player, amount)) {
-            plugin.Economy.AddAccount(player, amount);
+            plugin.Economy.addAccount(player, amount);
             return new EconomyResponse(amount, getBalance(player), EconomyResponse.ResponseType.SUCCESS, null);
         } else {
             return new EconomyResponse(0, getBalance(player), EconomyResponse.ResponseType.FAILURE, "Insufficient funds");

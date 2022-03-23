@@ -100,7 +100,7 @@ public class signEvents implements Listener {
                         }
                         player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
                                 plugin.fileMessage.getConfig().getString("sold-items"), amount));
-                        plugin.Economy.AddAccount(player, amount);
+                        plugin.Economy.addAccount(player, amount);
                     }
                 } else if (line0.contains(Utils.chatColor(plugin.fileSigns.getConfig().getString("Cash.line-1")))) {
                     player.performCommand("balance");

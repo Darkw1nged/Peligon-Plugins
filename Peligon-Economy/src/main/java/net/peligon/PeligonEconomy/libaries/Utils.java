@@ -139,8 +139,8 @@ public class Utils {
                         }
 
                         player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") + plugin.fileMessage.getConfig().getString("deposited-money"), amount));
-                        plugin.Economy.RemoveAccount(player, amount);
-                        plugin.Economy.AddBankAccount(player, amount);
+                        plugin.Economy.removeAccount(player, amount);
+                        plugin.Economy.addBankAccount(player, amount);
 
                         Utils.addTransaction(player, Utils.chatColor(plugin.fileATM.getConfig().getString("Options.transaction-add"), amount)
                                 .replaceAll("%player%", player.getName()));
@@ -152,8 +152,8 @@ public class Utils {
                         }
 
                         player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") + plugin.fileMessage.getConfig().getString("withdrawn-money"), amount));
-                        plugin.Economy.AddAccount(player, amount);
-                        plugin.Economy.RemoveBankAccount(player, amount);
+                        plugin.Economy.addAccount(player, amount);
+                        plugin.Economy.removeBankAccount(player, amount);
 
                         Utils.addTransaction(player, Utils.chatColor(plugin.fileATM.getConfig().getString("Options.transaction-remove"), amount)
                                 .replaceAll("%player%", player.getName()));

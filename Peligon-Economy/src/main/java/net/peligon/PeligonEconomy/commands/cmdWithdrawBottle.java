@@ -76,7 +76,7 @@ public class cmdWithdrawBottle implements CommandExecutor {
                 player.getInventory().addItem(item);
 
                 // ---- [ Removing experience ] ----
-                player.setTotalExperience(player.getTotalExperience() - amount);
+                player.setExp(player.getExp() - amount);
             } else {
                 player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-permission")));
                 return true;

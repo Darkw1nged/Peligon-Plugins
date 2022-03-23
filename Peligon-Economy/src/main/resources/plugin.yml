@@ -4,15 +4,15 @@ main: net.peligon.PeligonEconomy.Main
 api-version: 1.18
 authors: [ darkwinged ]
 description: This is an open-source plugin.
-depend: [Vault, ProtocolLib]
-softdepend: [PlaceholderAPI]
+depend: [Vault]
+softdepend: [PlaceholderAPI, ProtocolLib]
 load: STARTUP
 loadbefore: [Vault]
 commands:
   economy:
     aliases:
       - econ
-    description: Allows admins manage player accounts in games
+    description: Allows admins manage player accounts
   pelecon:
     aliases:
       - pecon
@@ -53,3 +53,5 @@ commands:
     description: Allows users to withdraw money
   bottle:
     description: Allows users to withdraw experience
+  goal:
+    description: Allows users to contribute money to server goals for rewards

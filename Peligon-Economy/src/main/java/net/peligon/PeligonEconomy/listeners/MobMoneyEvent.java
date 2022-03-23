@@ -26,7 +26,7 @@ public class MobMoneyEvent implements Listener {
                 Location loc = new Location(entity.getWorld(), entityLocation.getX(), height, entityLocation.getZ());
                 if (plugin.getConfig().getBoolean("Mob-Rewards.money-drop-types." + entity.getName().toUpperCase() + ".enable", true)) {
                     Utils.moveUpHologram("&2+$" + plugin.getConfig().getInt("Mob-Rewards.money-drop-types." + entity.getName().toUpperCase() + ".reward"), loc, 2);
-                    plugin.Economy.AddAccount(event.getEntity().getKiller(), plugin.getConfig().getInt("Mob-Rewards.money-drop-types." + entity.getName().toUpperCase() + ".reward"));
+                    plugin.Economy.addAccount(event.getEntity().getKiller(), plugin.getConfig().getInt("Mob-Rewards.money-drop-types." + entity.getName().toUpperCase() + ".reward"));
                 }
             }
         }

@@ -1,0 +1,23 @@
+startup: "Peligon LifeSteal has successfully loaded."
+shutdown: "Peligon LifeSteal has successfully unloaded."
+no-plugin-dependency: "Peligon LifeSteal has been disabled due to missing dependency."
+version-check-error: "There was a problem when checking the plugin version"
+plugin-outdated: "There is a new version of Peligon LifeSteal available."
+plugin-link: "Updated version: "
+
+prefix: "&ePeligon >> "
+admin-reload: "&eAll configuration files have been reloaded."
+admin-lives-updated: "&fYou have updated &e%player% &flives."
+admin-lives-reset: "&fYou have reset &e%player% &flives."
+lives: "&ePeligon >> &fYou have &e%amount% &flives"
+lives-other: "&ePeligon >> &f%player%'s has &e%amount% &flives"
+
+console: "&cError! You are not allowed to perform this inside of the console."
+no-permission: "&cError! You do not have permission to use this command."
+no-player-found: "&cError! %player% could not be found."
+command-disabled: "&cError! The current command is disabled on the server."
+specify-player: "&cError! Please specify a player."
+not-enough-space: "&cError! You do not have enough space for this item."
+no-player-data: "&cError! No data found for &e%player%"
+
+lifesteal-usage: "&cIncorrect Command Usage: &f/lifesteal [add|remove|set|reset|view] [player] (amount)"

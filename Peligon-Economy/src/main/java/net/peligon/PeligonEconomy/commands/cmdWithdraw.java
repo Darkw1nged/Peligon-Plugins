@@ -82,7 +82,7 @@ public class cmdWithdraw implements CommandExecutor {
                 player.getInventory().addItem(item);
 
                 // ---- [ Removing money ] ----
-                plugin.Economy.RemoveAccount(player, amount);
+                plugin.Economy.removeAccount(player, amount);
             } else {
                 player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-permission")));
                 return true;

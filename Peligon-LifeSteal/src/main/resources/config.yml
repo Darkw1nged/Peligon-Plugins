@@ -1,0 +1,26 @@
+#######################################################################################
+#
+#       Welcome to Peligon LifeSteal's configuration, This is where you can change
+#       Basic settings that will affect how the plugin preforms.
+#       This plugin does have database support; see 'Storage' for more information.
+#
+#######################################################################################
+
+Storage:
+  # Visit 'Plugins/PeligonLifeSteal/Lang/' to see the supported languages.
+  Language File: "en_US"
+  database: "SQLite"
+
+Basic-Settings:
+  # How many lives someone starts with.
+  starting-lives: 5
+  # Only allow players to take lives away from others.
+  players-only: false
+
+No-Lives:
+  ban-player: false
+  ban-message: "&c!! You have ran out of lives !!"
+  kick-player: false
+  kick-message: "&c!! You have ran out of lives !!"
+  change-gamemode: true
+  gamemode: SPECTATOR

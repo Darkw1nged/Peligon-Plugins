@@ -65,7 +65,7 @@ public class redeemEvents implements Listener {
                 }
 
                 hand.setAmount(hand.getAmount() - 1);
-                plugin.Economy.AddAccount(player, amount);
+                plugin.Economy.addAccount(player, amount);
 
             } else if (compareItems(hand, experience_bottle)) {
                 int line_number = 0;
@@ -139,7 +139,7 @@ public class redeemEvents implements Listener {
 
                     player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
                             plugin.fileMessage.getConfig().getString("sold-items"), amount));
-                    plugin.Economy.AddAccount(player, amount);
+                    plugin.Economy.addAccount(player, amount);
                 }
             } else if (compareItems(hand, money_note)) {
                 int line_number = 0;
@@ -159,7 +159,7 @@ public class redeemEvents implements Listener {
                 }
 
                 hand.setAmount(hand.getAmount() - 1);
-                plugin.Economy.AddAccount(player, amount);
+                plugin.Economy.addAccount(player, amount);
 
             } else if (compareItems(hand, experience_bottle)) {
                 int line_number = 0;

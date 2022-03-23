@@ -115,7 +115,7 @@ public class mgrEconomy {
      * @param player of the player
      * @param amount Amount to deposit
      */
-    public void AddAccount(OfflinePlayer player, double amount) {
+    public void addAccount(OfflinePlayer player, double amount) {
         if (!hasAccount(player)) return;
         if (amount < 0) return;
         String uuid = String.valueOf(player.getUniqueId());
@@ -134,7 +134,7 @@ public class mgrEconomy {
      * @param player of the player
      * @param amount Amount to deposit
      */
-    public void AddBankAccount(OfflinePlayer player, double amount) {
+    public void addBankAccount(OfflinePlayer player, double amount) {
         if (!hasAccount(player)) return;
         if (amount < 0) return;
         String uuid = String.valueOf(player.getUniqueId());
@@ -153,7 +153,7 @@ public class mgrEconomy {
      * @param player of the player
      * @param amount Amount to withdraw
      */
-    public void RemoveAccount(OfflinePlayer player, double amount) {
+    public void removeAccount(OfflinePlayer player, double amount) {
         if (!hasAccount(player)) return;
         if (amount < 0) return;
         String uuid = String.valueOf(player.getUniqueId());
@@ -172,7 +172,7 @@ public class mgrEconomy {
      * @param player of the player
      * @param amount Amount to withdraw
      */
-    public void RemoveBankAccount(OfflinePlayer player, double amount) {
+    public void removeBankAccount(OfflinePlayer player, double amount) {
         if (!hasAccount(player)) return;
         if (amount < 0) return;
         String uuid = String.valueOf(player.getUniqueId());

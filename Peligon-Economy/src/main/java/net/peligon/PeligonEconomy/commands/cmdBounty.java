@@ -48,7 +48,7 @@ public class cmdBounty implements CommandExecutor {
                             Utils.bounties.put(target.getUniqueId(), Utils.bounties.get(target.getUniqueId()) + amount);
                             if (sender instanceof Player) {
                                 Player player = (Player) sender;
-                                plugin.Economy.RemoveAccount(player, amount);
+                                plugin.Economy.removeAccount(player, amount);
                             }
                         } else {
                             Utils.bounties.put(target.getUniqueId(), amount);

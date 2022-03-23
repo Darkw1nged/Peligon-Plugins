@@ -43,7 +43,7 @@ public class cmdSellAuto implements CommandExecutor {
                     // message
                     player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
                             plugin.fileMessage.getConfig().getString("sold-items"), amount));
-                    plugin.Economy.AddAccount(player, amount);
+                    plugin.Economy.addAccount(player, amount);
 
                 }, 0L, 20L);
             } else {

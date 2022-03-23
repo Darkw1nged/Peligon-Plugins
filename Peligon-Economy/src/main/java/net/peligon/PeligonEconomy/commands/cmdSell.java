@@ -28,7 +28,7 @@ public class cmdSell implements CommandExecutor {
                 // message
                 player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
                         plugin.fileMessage.getConfig().getString("sold-items"), amount));
-                plugin.Economy.AddAccount(player, amount);
+                plugin.Economy.addAccount(player, amount);
             } else {
                 player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-permission")));
                 return true;

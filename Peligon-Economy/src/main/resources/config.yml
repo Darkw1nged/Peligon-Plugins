@@ -69,6 +69,27 @@ Modules:
   bounties: true
   ATMs: true
 
+# When players die, this will cause them to lose money.
+# !! If they do not have enough cash this will automatically use their bank.
+Death-Penalty:
+  enabled: true
+  amount: 100
+
+# Give players a chance to find money inside of grass.
+Grass-Scavenge:
+  enabled: true
+  disabled-plants: []
+  disabled-worlds: []
+  money:
+    1:
+      # The amount found.
+      amount: 10
+      # The chance is treated as a percentage.
+      chance: 80
+    2:
+      amount: 35
+      chance: 65
+
 # !! All bounties will be erased if the plugin is disabled or server is offline.
 Bounties:
   # Minimum amount of kills before getting a bounty.
@@ -91,6 +112,38 @@ Mob-Rewards:
     COW:
       enable: true
       reward: 20
+
+# Setup some server wide goals and give players rewards.
+Server-Goals:
+  targets:
+    1:
+      # Should not include any spaces
+      name: "First_Goal"
+      goal: 10000
+      # This data should not be messed with.
+      data:
+        # Any completed target will be ignored.
+        completed: false
+        raised: 0
+        contributors: []
+      # Rewards will only be given out to contributor to the goal.
+      rewards:
+        - "%econ% 10000"
+        - "%item% Diamond 5"
+        - "%message% &aThanks for reaching the goal!"
+        - "%command% say goal reached!"
+    2:
+      name: "Second_Goal"
+      goal: 100000
+      data:
+        completed: false
+        raised: 0
+        contributors: []
+      rewards:
+        - "%econ% 10000"
+        - "%item% Diamond 5"
+        - "%message% &aThanks for reaching the goal!"
+        - "%command% say goal reached!"
 
 # This will automatically check for updates
 check-for-updates: true

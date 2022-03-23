@@ -6,6 +6,7 @@ import net.peligon.PeligonEconomy.managers.Menu;
 import net.peligon.PeligonEconomy.menu.menuATM;
 import net.peligon.PeligonEconomy.menu.menuDeposit;
 import net.peligon.PeligonEconomy.menu.menuWithdraw;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -72,8 +73,8 @@ public class AtmEvents implements Listener {
                                 amount = plugin.Economy.getAccount(player);
                                 if (amount <= 0) event.setCancelled(true);
 
-                                plugin.Economy.RemoveAccount(player, amount);
-                                plugin.Economy.AddBankAccount(player, amount);
+                                plugin.Economy.removeAccount(player, amount);
+                                plugin.Economy.addBankAccount(player, amount);
 
                                 player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") + plugin.fileMessage.getConfig().getString("deposited-money"), amount));
                                 Utils.addTransaction(player, Utils.chatColor(plugin.fileATM.getConfig().getString("Options.transaction-add"), amount)
@@ -85,8 +86,8 @@ public class AtmEvents implements Listener {
                                 amount = (plugin.Economy.getAccount(player) * (50 / 100.0f));
                                 if (amount <= 0) event.setCancelled(true);
 
-                                plugin.Economy.RemoveAccount(player, amount);
-                                plugin.Economy.AddBankAccount(player, amount);
+                                plugin.Economy.removeAccount(player, amount);
+                                plugin.Economy.addBankAccount(player, amount);
                                 player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") + plugin.fileMessage.getConfig().getString("deposited-money"), amount));
                                 Utils.addTransaction(player, Utils.chatColor(plugin.fileATM.getConfig().getString("Options.transaction-add"), amount)
                                         .replaceAll("%player%", player.getName()));
@@ -94,6 +95,7 @@ public class AtmEvents implements Listener {
                                 player.openInventory(new menuATM(player).getInventory());
                                 return;
                             case "depositspecific":
+                                if (Bukkit.getPluginManager().getPlugin("ProtocolLib") == null) return;
                                 List<String> lines = new ArrayList<>();
                                 lines.add("");
                                 lines.add("^^^^^^^^^^^^^^^");
@@ -123,8 +125,8 @@ public class AtmEvents implements Listener {
                                 amount = plugin.Economy.getBank(player);
                                 if (amount <= 0) event.setCancelled(true);
 
-                                plugin.Economy.AddAccount(player, amount);
-                                plugin.Economy.RemoveBankAccount(player, amount);
+                                plugin.Economy.addAccount(player, amount);
+                                plugin.Economy.removeBankAccount(player, amount);
                                 player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") + plugin.fileMessage.getConfig().getString("withdrawn-money"), amount));
 
                                 Utils.addTransaction(player, Utils.chatColor(plugin.fileATM.getConfig().getString("Options.transaction-remove"), amount)
@@ -136,8 +138,8 @@ public class AtmEvents implements Listener {
                                 amount = (plugin.Economy.getBank(player) * (50 / 100.0f));
                                 if (amount <= 0) event.setCancelled(true);
 
-                                plugin.Economy.AddAccount(player, amount);
-                                plugin.Economy.RemoveBankAccount(player, amount);
+                                plugin.Economy.addAccount(player, amount);
+                                plugin.Economy.removeBankAccount(player, amount);
                                 player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") + plugin.fileMessage.getConfig().getString("withdrawn-money"), amount));
 
                                 Utils.addTransaction(player, Utils.chatColor(plugin.fileATM.getConfig().getString("Options.transaction-remove"), amount)
@@ -149,8 +151,8 @@ public class AtmEvents implements Listener {
                                 amount = (plugin.Economy.getBank(player) * (20 / 100.0f));
                                 if (amount <= 0) event.setCancelled(true);
 
-                                plugin.Economy.AddAccount(player, amount);
-                                plugin.Economy.RemoveBankAccount(player, amount);
+                                plugin.Economy.addAccount(player, amount);
+                                plugin.Economy.removeBankAccount(player, amount);
                                 player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") + plugin.fileMessage.getConfig().getString("withdrawn-money"), amount));
 
                                 Utils.addTransaction(player, Utils.chatColor(plugin.fileATM.getConfig().getString("Options.transaction-remove"), amount)
@@ -159,6 +161,7 @@ public class AtmEvents implements Listener {
                                 player.openInventory(new menuATM(player).getInventory());
                                 return;
                             case "withdrawspecific":
+                                if (Bukkit.getPluginManager().getPlugin("ProtocolLib") == null) return;
                                 List<String> lines = new ArrayList<>();
                                 lines.add("");
                                 lines.add("^^^^^^^^^^^^^^^");

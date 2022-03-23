@@ -12,7 +12,6 @@ Options:
     # !! Days - d | Hours - h | Minutes - m | Seconds - s
     time: "24h"
 
-
 atm-inventory:
   title: "&7Bank Account"
   # !! Must be multiples of 9 | Maximum is 54
