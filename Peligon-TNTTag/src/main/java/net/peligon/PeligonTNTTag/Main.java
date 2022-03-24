@@ -3,7 +3,6 @@ package net.peligon.PeligonTNTTag;
 import net.peligon.PeligonTNTTag.events.Temp;
 import net.peligon.PeligonTNTTag.libaries.CustomConfig;
 import net.peligon.PeligonTNTTag.libaries.Utils;
-import net.peligon.PeligonTNTTag.libariesV2.Utilss;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Arrays;
@@ -11,14 +10,14 @@ import java.util.Arrays;
 public final class Main extends JavaPlugin {
 
     public static Main getInstance;
-    private Utilss utilss;
+    private Utils utils;
 
     public CustomConfig fileMessage;
 
     public void onEnable() {
         // ---- [ Initializing instance of main class | manager classes | register placeholder ] ----
         getInstance = this;
-        utilss = new Utilss();
+        utils = new Utils();
 
         // ---- [ Loading Commands | Loading Events | Loading YML Files ] ----
         loadCommands();
@@ -30,12 +29,12 @@ public final class Main extends JavaPlugin {
         fileMessage.saveDefaultConfig();
 
         // ---- [ Startup message ] ----
-        utilss.getChatUtil().log(this.fileMessage.getConfig().getString("startup"));
+        utils.getChatUtil().log(this.fileMessage.getConfig().getString("startup"));
     }
 
     public void onDisable() {
         // ---- [ shutdown message ] ----
-        utilss.getChatUtil().log(this.fileMessage.getConfig().getString("shutdown"));
+        utils.getChatUtil().log(this.fileMessage.getConfig().getString("shutdown"));
     }
 
     public void loadCommands() {
@@ -46,7 +45,7 @@ public final class Main extends JavaPlugin {
         ).forEach(listener -> getServer().getPluginManager().registerEvents(listener, this));
     }
 
-    public Utilss getUtilss() {
-        return this.utilss;
+    public Utils getUtilss() {
+        return this.utils;
     }
 }

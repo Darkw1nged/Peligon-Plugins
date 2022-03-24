@@ -1,6 +1,6 @@
-package net.peligon.PeligonTNTTag.libariesV2;
+package net.peligon.PeligonTNTTag.libaries.util;
 
-import net.peligon.PeligonTNTTag.libariesV2.enums.MessageCenter;
+import net.peligon.PeligonTNTTag.libaries.enums.MessageCenter;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -98,5 +98,6 @@ public class ChatUtil {
 
         return returnMessage.toString();
     }
+
 
 }

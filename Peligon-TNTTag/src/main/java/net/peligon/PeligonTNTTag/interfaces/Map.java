@@ -1,4 +1,4 @@
-package net.peligon.PeligonTNTTag.libaries.Instances;
+package net.peligon.PeligonTNTTag.interfaces;
 
 import com.sk89q.worldedit.EditSession;
 import com.sk89q.worldedit.WorldEdit;

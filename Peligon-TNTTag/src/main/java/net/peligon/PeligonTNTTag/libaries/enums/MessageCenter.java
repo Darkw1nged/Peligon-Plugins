@@ -1,4 +1,4 @@
-package net.peligon.PeligonTNTTag.libariesV2.enums;
+package net.peligon.PeligonTNTTag.libaries.enums;
 
 public enum MessageCenter {
     A('A', 5), a('a', 5),

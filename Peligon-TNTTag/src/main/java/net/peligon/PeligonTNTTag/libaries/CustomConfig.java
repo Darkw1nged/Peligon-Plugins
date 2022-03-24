@@ -8,12 +8,6 @@ import java.util.logging.Level;
 
 public class CustomConfig {
 
-    /*
-        Author: Yovez
-        This is their class for managing custom files.
-        This includes player data, new files and pre-defined files.
-     */
-
     private YamlConfiguration customConfig;
     private File customConfigFile;
     private final Plugin plugin;

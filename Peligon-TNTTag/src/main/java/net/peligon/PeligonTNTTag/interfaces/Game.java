@@ -1,4 +1,4 @@
-package net.peligon.PeligonTNTTag.libaries.Instances;
+package net.peligon.PeligonTNTTag.interfaces;
 
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;

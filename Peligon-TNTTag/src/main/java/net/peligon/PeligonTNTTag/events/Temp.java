@@ -1,6 +1,6 @@
 package net.peligon.PeligonTNTTag.events;
 
-import net.peligon.PeligonTNTTag.libaries.Utils;
+import net.peligon.PeligonTNTTag.managers.GameManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -12,8 +12,8 @@ public class Temp implements Listener {
     public void onAction(AsyncPlayerChatEvent event) {
         Player player = event.getPlayer();
         if (event.getMessage().equalsIgnoreCase("peligonDebug:JoinGame")) {
-           Utils.joinGame(player);
-           System.out.println(Utils.gamesWaiting.get(0).getPlayers());
+           GameManager.getInstance.playerJoinGame(player);
+           System.out.println(GameManager.getInstance.getGamesWaiting().get(0).getPlayers());
         }
     }
 
