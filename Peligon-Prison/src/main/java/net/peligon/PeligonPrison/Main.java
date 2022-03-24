@@ -1,15 +1,10 @@
 package net.peligon.PeligonPrison;
 
+import net.peligon.PeligonPrison.commands.*;
 import net.peligon.PeligonPrison.libaries.CustomConfig;
 import net.peligon.PeligonPrison.libaries.Utils;
 import net.peligon.PeligonPrison.libaries.storage.SQLite;
-import org.bukkit.Material;
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -60,7 +55,11 @@ public final class Main extends JavaPlugin implements Listener {
     }
 
     public void loadCommands() {
-
+        getCommand("pelprison").setExecutor(new cmdReload());
+        getCommand("autoblock").setExecutor(new cmdAutoBlock());
+        getCommand("autosmelt").setExecutor(new cmdAutoSmelt());
+        getCommand("autopickup").setExecutor(new cmdAutoPickup());
+        getCommand("autosell").setExecutor(new cmdAutoSell());
     }
     public void loadEvents() {}
 

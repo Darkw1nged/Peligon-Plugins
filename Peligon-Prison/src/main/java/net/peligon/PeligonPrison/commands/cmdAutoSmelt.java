@@ -17,7 +17,6 @@ import java.util.UUID;
 public class cmdAutoSmelt implements CommandExecutor {
 
     private final Main plugin = Main.getInstance;
-    private final List<UUID> cache = new ArrayList<>();
 
     public boolean onCommand(CommandSender sender, Command cmd, String string, String[] args) {
         if (cmd.getName().equalsIgnoreCase("autosmelt")) {
@@ -28,44 +27,15 @@ public class cmdAutoSmelt implements CommandExecutor {
             Player player = (Player)sender;
             if (player.hasPermission("Peligon.Prison.AutoSmelt") || player.hasPermission("Peligon.Prison.*")) {
                 UUID uuid = player.getUniqueId();
-                if (cache.contains(uuid)) {
-                    cache.remove(uuid);
+                if (Utils.autoSmelt.contains(uuid)) {
+                    Utils.autoSmelt.remove(uuid);
                     player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
                             plugin.fileMessage.getConfig().getString("autosmelt-off")));
                 } else {
-                    cache.add(uuid);
+                    Utils.autoSmelt.add(uuid);
                     player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
                             plugin.fileMessage.getConfig().getString("autosmelt-on")));
                 }
-                Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
-                    if (!cache.contains(uuid)) return;
-                    for (ItemStack item : player.getInventory().getContents()) {
-                        switch (item.getType()) {
-                            case COAL_ORE:
-                            case DEEPSLATE_COAL_ORE:
-                                item.setType(Material.COAL);
-                                break;
-                            case RAW_COPPER:
-                                item.setType(Material.COPPER_INGOT);
-                                break;
-                            case RAW_COPPER_BLOCK:
-                                item.setType(Material.COPPER_BLOCK);
-                                break;
-                            case RAW_GOLD:
-                                item.setType(Material.GOLD_INGOT);
-                                break;
-                            case RAW_GOLD_BLOCK:
-                                item.setType(Material.GOLD_BLOCK);
-                                break;
-                            case RAW_IRON:
-                                item.setType(Material.IRON_INGOT);
-                                break;
-                            case RAW_IRON_BLOCK:
-                                item.setType(Material.IRON_BLOCK);
-                                break;
-                        }
-                    }
-                }, 0L, 20L);
             } else {
                 player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-permission")));
                 return true;
@@ -73,5 +43,4 @@ public class cmdAutoSmelt implements CommandExecutor {
         }
         return false;
     }
-
 }

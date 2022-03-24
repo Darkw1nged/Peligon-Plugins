@@ -1,6 +1,19 @@
-name: Peligon Prison
+name: PeligonPrison
 version: '${project.version}'
 main: net.peligon.PeligonPrison.Main
 api-version: 1.18
 authors: [ darkwinged ]
 description: This is an open-source plugin
+commands:
+  pelprison:
+    aliases:
+      - pprison
+      description: Allows admins to reload configuration files
+  autoblock:
+    description: Allows users to enbale automatically change materials into their block form
+  autosmelt:
+    description: Allows users to enbale automatically smelt their ores
+  autopickup:
+    description: Allows users to automatically pickup items
+  autosell:
+    description: Allows users to automatically sell their items

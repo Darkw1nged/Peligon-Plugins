@@ -83,9 +83,8 @@ public class Utils {
     }
 
     // ---- [ Cached Items ] ----
-    public static Map<UUID, Integer> KillStreak = new HashMap<>();
-    public static Map<UUID, Double> bounties = new HashMap<>();
-    public static Map<UUID, Map<LocalDateTime, String>> transactions = new HashMap<>();
     public static Map<ArmorStand, Long> activeHolograms = new HashMap<>();
+    public static List<UUID> autoPickup = new ArrayList<>();
+    public static List<UUID> autoSmelt = new ArrayList<>();
 
 }
