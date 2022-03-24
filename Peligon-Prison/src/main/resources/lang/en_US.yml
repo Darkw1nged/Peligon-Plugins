@@ -1,0 +1,13 @@
+startup: "Peligon Prison has successfully loaded."
+shutdown: "Peligon Prison has successfully unloaded."
+version-check-error: "There was a problem when checking the plugin version"
+plugin-outdated: "There is a new version of Peligon Prison available."
+plugin-link: "Updated version:"
+admin-reload: "&eAll configuration files have been reloaded."
+
+console: "&cError! You are not allowed to perform this inside of the console."
+no-permission: "&cError! You do not have permission to use this command."
+no-player-found: "&cError! %player% could not be found."
+command-disabled: "&cError! The current command is disabled on the server."
+specify-player: "&cError! Please specify a player."
+account-error: "&cError! %player% dont seem to have an account."

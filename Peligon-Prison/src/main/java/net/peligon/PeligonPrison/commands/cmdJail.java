@@ -1,0 +1,4 @@
+package net.peligon.PeligonPrison.commands;
+
+public class cmdJail {
+}
