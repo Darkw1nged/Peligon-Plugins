@@ -1,0 +1,6 @@
+name: PeligonSkills
+version: '${project.version}'
+main: net.peligon.PeligonSkills.Main
+api-version: 1.18
+authors: [ darkwinged ]
+description: This is an open-source plugin.

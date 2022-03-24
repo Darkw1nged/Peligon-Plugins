@@ -1,6 +1,0 @@
-name: Peligon_Stats
-version: '${project.version}'
-main: net.peligon.PeligonStats.Main
-api-version: 1.18
-authors: [ darkwinged ]
-description: This is an open-source plugin.
