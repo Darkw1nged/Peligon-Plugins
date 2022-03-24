@@ -13,27 +13,31 @@ public class smeltingEvents implements Listener {
 
     @EventHandler
     public void onSmelt(FurnaceExtractEvent event) {
-        Player player = event.getPlayer();
+        if (plugin.getConfig().getBoolean("Skills.smelting.enabled", true)) {
+            if (plugin.getConfig().getStringList("Skills.smelting.disabled-worlds").contains(event.getBlock().getWorld().getName())) return;
+            Player player = event.getPlayer();
 
-        int max_level = plugin.getConfig().getInt("Settings.fishing.max-level");
-        int needed = Utils.neededExperience(plugin.Smelting.getLevel(player));
-        int minimum = plugin.getConfig().getInt("Settings.fishing.minimum-xp");
-        int maximum = plugin.getConfig().getInt("Settings.fishing.maximum-xp");
-        int amount = (int) (Math.floor(Math.random() * maximum) + minimum);
+            int max_level = plugin.getConfig().getInt("Skills.smelting.maximum-level");
+            int needed = Utils.neededExperience(plugin.Smelting.getLevel(player));
+            int minimum = plugin.getConfig().getInt("Skills.smelting.earnable-experience.minimum");
+            int maximum = plugin.getConfig().getInt("Skills.smelting.earnable-experience.maximum");
+            int amount = (int) (Math.floor(Math.random() * maximum) + minimum);
 
-        plugin.Smelting.addExperience(player, amount);
+            plugin.Smelting.addExperience(player, amount);
 
-        if (plugin.Smelting.getExperience(player) >= needed) {
-            if (max_level == 0) {
-                plugin.Smelting.removeExperience(player, needed);
-                plugin.Smelting.addLevel(player, 1);
-                player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") + plugin.fileMessage.getConfig().getString("level-up")));
-            } else if (plugin.Smelting.getLevel(player) != max_level) {
-                plugin.Smelting.removeExperience(player, needed);
-                plugin.Smelting.addLevel(player, 1);
-                player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") + plugin.fileMessage.getConfig().getString("level-up")));
+            if (plugin.Smelting.getExperience(player) >= needed) {
+                if (max_level == -1) {
+                    plugin.Smelting.removeExperience(player, needed);
+                    plugin.Smelting.addLevel(player, 1);
+                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") + plugin.fileMessage.getConfig().getString("level-up")));
+                } else if (plugin.Smelting.getLevel(player) != max_level) {
+                    plugin.Smelting.removeExperience(player, needed);
+                    plugin.Smelting.addLevel(player, 1);
+                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") + plugin.fileMessage.getConfig().getString("level-up")));
+                }
             }
         }
+
     }
 
 }

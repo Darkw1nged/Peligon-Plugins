@@ -31,6 +31,14 @@ public class lifeUpdate implements Listener {
                 plugin.lives.removeLives(player, 1);
         }
 
+        if (plugin.getConfig().getBoolean("Basic-Settings.command-on-death.enabled", false)) {
+            for (String command : plugin.getConfig().getStringList("Basic-Settings.command-on-death.commands")) {
+                command = command.replaceAll("%player%", player.getName())
+                        .replaceAll("%lives%", "" + plugin.lives.getLives(player));
+                Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), Utils.chatColor(command));
+            }
+        }
+
         if (plugin.lives.getLives(player) <= 0) {
             if (plugin.getConfig().getBoolean("No-Lives.ban-player", false)) {
                 BanList bans = Bukkit.getBanList(BanList.Type.NAME);

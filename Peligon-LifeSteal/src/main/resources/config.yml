@@ -16,6 +16,12 @@ Basic-Settings:
   starting-lives: 5
   # Only allow players to take lives away from others.
   players-only: false
+  # Issue a command when a player dies
+  command-on-death:
+    enabled: false
+    commands:
+      - "say &c%player% has just died! They have %lives% lives left!"
+      - "say Second message!"
 
 No-Lives:
   ban-player: false

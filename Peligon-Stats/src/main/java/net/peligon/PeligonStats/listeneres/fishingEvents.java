@@ -15,27 +15,30 @@ public class fishingEvents implements Listener {
 
     @EventHandler
     public void onBreak(PlayerFishEvent event) {
-        Player player = event.getPlayer();
-        ItemStack item = player.getInventory().getItemInMainHand();
+        if (plugin.getConfig().getBoolean("Skills.fishing.enabled", true)) {
+            if (plugin.getConfig().getStringList("Skills.fishing.disabled-worlds").contains(event.getPlayer().getWorld().getName())) return;
+            Player player = event.getPlayer();
+            ItemStack item = player.getInventory().getItemInMainHand();
 
-        if (item.getType().equals(Material.FISHING_ROD)) {
-            int max_level = plugin.getConfig().getInt("Settings.fishing.max-level");
-            int needed = Utils.neededExperience(plugin.Fishing.getLevel(player));
-            int minimum = plugin.getConfig().getInt("Settings.fishing.minimum-xp");
-            int maximum = plugin.getConfig().getInt("Settings.fishing.maximum-xp");
-            int amount = (int) (Math.floor(Math.random() * maximum) + minimum);
+            if (item.getType().equals(Material.FISHING_ROD)) {
+                int max_level = plugin.getConfig().getInt("Skills.fishing.maximum-level");
+                int needed = Utils.neededExperience(plugin.Fishing.getLevel(player));
+                int minimum = plugin.getConfig().getInt("Skills.fishing.earnable-experience.minimum");
+                int maximum = plugin.getConfig().getInt("Skills.fishing.earnable-experience.maximum");
+                int amount = (int) (Math.floor(Math.random() * maximum) + minimum);
 
-            plugin.Fishing.addExperience(player, amount);
+                plugin.Fishing.addExperience(player, amount);
 
-            if (plugin.Fishing.getExperience(player) >= needed) {
-                if (max_level == 0) {
-                    plugin.Fishing.removeExperience(player, needed);
-                    plugin.Fishing.addLevel(player, 1);
-                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") + plugin.fileMessage.getConfig().getString("level-up")));
-                } else if (plugin.Fishing.getLevel(player) != max_level) {
-                    plugin.Fishing.removeExperience(player, needed);
-                    plugin.Fishing.addLevel(player, 1);
-                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") + plugin.fileMessage.getConfig().getString("level-up")));
+                if (plugin.Fishing.getExperience(player) >= needed) {
+                    if (max_level == -1) {
+                        plugin.Fishing.removeExperience(player, needed);
+                        plugin.Fishing.addLevel(player, 1);
+                        player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") + plugin.fileMessage.getConfig().getString("level-up")));
+                    } else if (plugin.Fishing.getLevel(player) != max_level) {
+                        plugin.Fishing.removeExperience(player, needed);
+                        plugin.Fishing.addLevel(player, 1);
+                        player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") + plugin.fileMessage.getConfig().getString("level-up")));
+                    }
                 }
             }
         }

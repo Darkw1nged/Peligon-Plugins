@@ -12,15 +12,19 @@
     <name>Peligon</name>
 
     <modules>
+        <!-- Released Plugins -->
         <module>Peligon-Authentication</module>
+        <module>Peligon-LifeSteal</module>
+        <module>Peligon-Polls</module>
+
+        <!-- Updating Plugin(s) -->
+        <module>Peligon-Economy</module>
+
+        <!-- Development Plugins -->
         <module>Peligon-Boosters</module>
         <module>Peligon-Core</module>
         <module>Peligon-Chat</module>
-        <module>Peligon-Economy</module>
         <module>Peligon-Enchants</module>
-        <module>Peligon-LifeSteal</module>
-        <module>Peligon-Polls</module>
-        <module>Peligon-Ranks</module>
         <module>Peligon-Stats</module>
         <module>Peligon-Social</module>
         <module>Peligon-Skyblock</module>

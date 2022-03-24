@@ -46,9 +46,9 @@ public final class Main extends JavaPlugin implements Listener {
         getServer().getConsoleSender().sendMessage(Utils.chatColor(this.fileMessage.getConfig().getString("startup")));
 
         // ---- [ Check if server has most updated version ] ----
-//        if (getConfig().getBoolean("check-for-updates", true)) {
-//            versionChecker();
-//        }
+        if (getConfig().getBoolean("check-for-updates", true)) {
+            versionChecker();
+        }
     }
 
     public void onDisable() {
@@ -70,7 +70,7 @@ public final class Main extends JavaPlugin implements Listener {
     }
 
     private void versionChecker() {
-        new UpdateChecker(this, 0).getVersion(version -> {
+        new UpdateChecker(this, 100900).getVersion(version -> {
             if (!version.equals(this.getDescription().getVersion())) {
                 getServer().getConsoleSender().sendMessage(Utils.chatColor(fileMessage.getConfig().getString("plugin-outdated")));
                 getServer().getConsoleSender().sendMessage(Utils.chatColor(fileMessage.getConfig().getString("plugin-link")));

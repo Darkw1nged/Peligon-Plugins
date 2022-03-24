@@ -1,4 +1,12 @@
 package net.peligon.PeligonStats.listeneres;
 
-public class alchemyEvents {
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+
+public class alchemyEvents implements Listener {
+
+    @EventHandler
+    public void onBrew() {}
+
+
 }

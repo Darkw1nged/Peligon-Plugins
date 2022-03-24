@@ -31,14 +31,18 @@ public class cmdLives implements CommandExecutor {
             }
             Player player = (Player) sender;
             if (args.length >= 1) {
-                Player target = Bukkit.getPlayer(args[0]);
-                if (target == null) {
-                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-player-found").replaceAll("%player%", args[0])));
-                    return true;
+                if (sender.hasPermission("Peligon.LifeSteal.View.Other") || sender.hasPermission("Peligon.LifeSteal.*")) {
+                    Player target = Bukkit.getPlayer(args[0]);
+                    if (target == null) {
+                        player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-player-found").replaceAll("%player%", args[0])));
+                        return true;
+                    }
+                    sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("lives-other")
+                                    .replaceAll("%amount%", "" + plugin.lives.getLives(target)))
+                            .replaceAll("%player%", target.getName()));
+                } else {
+                    sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-permission")));
                 }
-                sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("lives-other")
-                                .replaceAll("%amount%", "" + plugin.lives.getLives(target)))
-                        .replaceAll("%player%", target.getName()));
             } else {
                 sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("lives")
                         .replaceAll("%amount%", "" + plugin.lives.getLives(player))));

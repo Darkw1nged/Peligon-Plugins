@@ -3,9 +3,12 @@ package net.peligon.PeligonStats;
 import net.peligon.PeligonStats.libaries.CustomConfig;
 import net.peligon.PeligonStats.libaries.Utils;
 import net.peligon.PeligonStats.libaries.storage.SQLite;
+import net.peligon.PeligonStats.listeneres.*;
 import net.peligon.PeligonStats.managers.*;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.Arrays;
 
 
 public final class Main extends JavaPlugin {
@@ -62,6 +65,18 @@ public final class Main extends JavaPlugin {
     }
 
     public void loadCommands() {}
-    public void loadEvents() {}
-
+    public void loadEvents() {
+        Arrays.asList(
+                new accountSetup(),
+                new acrobaticsEvents(), // TODO
+                new alchemyEvents(), // TODO
+                new excavationEvents(),
+                new fishingEvents(),
+                new herbalismEvents(),
+                new lumberjackEvents(),
+                new miningEvents(),
+                new repairEvents(),
+                new smeltingEvents()
+        ).forEach(listener -> getServer().getPluginManager().registerEvents(listener, this));
+    }
 }

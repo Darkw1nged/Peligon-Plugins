@@ -3,7 +3,7 @@ shutdown: "Peligon LifeSteal has successfully unloaded."
 no-plugin-dependency: "Peligon LifeSteal has been disabled due to missing dependency."
 version-check-error: "There was a problem when checking the plugin version"
 plugin-outdated: "There is a new version of Peligon LifeSteal available."
-plugin-link: "Updated version: "
+plugin-link: "Updated version: https://www.spigotmc.org/resources/peligon-lifesteal.100900/"
 
 prefix: "&ePeligon >> "
 admin-reload: "&eAll configuration files have been reloaded."
