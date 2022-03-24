@@ -19,6 +19,8 @@ Basic-Settings:
   # Issue a command when a player dies
   command-on-death:
     enabled: false
+    # Only execute the commands when the player reaches 0 lives
+    execute-on-zero: false
     commands:
       - "say &c%player% has just died! They have %lives% lives left!"
       - "say Second message!"

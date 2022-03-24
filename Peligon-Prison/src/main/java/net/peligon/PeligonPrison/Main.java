@@ -4,14 +4,13 @@ import net.peligon.PeligonPrison.commands.*;
 import net.peligon.PeligonPrison.libaries.CustomConfig;
 import net.peligon.PeligonPrison.libaries.Utils;
 import net.peligon.PeligonPrison.libaries.storage.SQLite;
+import net.peligon.PeligonPrison.listeners.PickupEvent;
+import net.peligon.PeligonPrison.listeners.SmeltEvent;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public final class Main extends JavaPlugin implements Listener {
 
@@ -24,7 +23,6 @@ public final class Main extends JavaPlugin implements Listener {
     public HashMap<String, Integer> mines = new HashMap<>();
     public boolean resetMinesOnTimer = false;
     public HashMap<UUID, List<UUID>> gangs = new HashMap<>();
-    public List<UUID> jailed = new ArrayList<>();
     public HashMap<UUID, List<ItemStack>> backpack = new HashMap<>();
     public HashMap<UUID, Integer> experienceMultiplier = new HashMap<>();
 
@@ -61,6 +59,11 @@ public final class Main extends JavaPlugin implements Listener {
         getCommand("autopickup").setExecutor(new cmdAutoPickup());
         getCommand("autosell").setExecutor(new cmdAutoSell());
     }
-    public void loadEvents() {}
+    public void loadEvents() {
+        Arrays.asList(
+                new SmeltEvent(),
+                new PickupEvent()
+        ).forEach(listener -> getServer().getPluginManager().registerEvents(listener, this));
+    }
 
 }

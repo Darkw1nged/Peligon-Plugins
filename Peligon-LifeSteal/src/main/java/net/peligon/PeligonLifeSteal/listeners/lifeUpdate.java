@@ -32,11 +32,22 @@ public class lifeUpdate implements Listener {
         }
 
         if (plugin.getConfig().getBoolean("Basic-Settings.command-on-death.enabled", false)) {
-            for (String command : plugin.getConfig().getStringList("Basic-Settings.command-on-death.commands")) {
-                command = command.replaceAll("%player%", player.getName())
-                        .replaceAll("%lives%", "" + plugin.lives.getLives(player));
-                Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), Utils.chatColor(command));
+            if (plugin.getConfig().getBoolean("Basic-Settings.command-on-death.execute-on-zero", false)) {
+                if (plugin.lives.getLives(player) <= 0) {
+                    for (String command : plugin.getConfig().getStringList("Basic-Settings.command-on-death.commands")) {
+                        command = command.replaceAll("%player%", player.getName())
+                                .replaceAll("%lives%", "" + plugin.lives.getLives(player));
+                        Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), Utils.chatColor(command));
+                    }
+                }
+            } else {
+                for (String command : plugin.getConfig().getStringList("Basic-Settings.command-on-death.commands")) {
+                    command = command.replaceAll("%player%", player.getName())
+                            .replaceAll("%lives%", "" + plugin.lives.getLives(player));
+                    Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), Utils.chatColor(command));
+                }
             }
+
         }
 
         if (plugin.lives.getLives(player) <= 0) {
