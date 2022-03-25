@@ -1,6 +1,8 @@
 package net.peligon.PeligonPrison.libaries;
 
 import net.peligon.PeligonPrison.Main;
+import net.peligon.PeligonPrison.struts.Prestige;
+import net.peligon.PeligonPrison.struts.Rank;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -86,5 +88,36 @@ public class Utils {
     public static Map<ArmorStand, Long> activeHolograms = new HashMap<>();
     public static List<UUID> autoPickup = new ArrayList<>();
     public static List<UUID> autoSmelt = new ArrayList<>();
+    public static List<Rank> ranks = new ArrayList<>();
+    public static List<Prestige> prestige = new ArrayList<>();
+
+    // Temporary
+    static {
+        ranks.add(new Rank("Leather", 100.0, true));
+        ranks.add(new Rank("Iron", 500.0));
+        ranks.add(new Rank("Gold", 1000.0));
+        ranks.add(new Rank("Diamond", 2500.0));
+        ranks.add(new Rank("Emerald", 5000.0));
+        ranks.add(new Rank("Obsidian", 10000.0));
+        ranks.add(new Rank("End", 15000.0));
+        ranks.add(new Rank("Nether", 20000.0));
+        ranks.add(new Rank("Ender", 35000.0));
+        ranks.add(new Rank("Infinity", 50000.0));
+        ranks.add(new Rank("The End", 100000.0));
+    }
+
+    static {
+        prestige.add(new Prestige("Leather", 100.0));
+        prestige.add(new Prestige("Iron", 500.0));
+        prestige.add(new Prestige("Gold", 1000.0));
+        prestige.add(new Prestige("Diamond", 2500.0));
+        prestige.add(new Prestige("Emerald", 5000.0));
+        prestige.add(new Prestige("Obsidian", 10000.0));
+        prestige.add(new Prestige("End", 15000.0));
+        prestige.add(new Prestige("Nether", 20000.0));
+        prestige.add(new Prestige("Ender", 35000.0));
+        prestige.add(new Prestige("Infinity", 50000.0));
+        prestige.add(new Prestige("The End", 100000.0));
+    }
 
 }

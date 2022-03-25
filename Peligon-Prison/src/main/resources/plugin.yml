@@ -17,3 +17,11 @@ commands:
     description: Allows users to automatically pickup items
   autosell:
     description: Allows users to automatically sell their items
+  rankup:
+    description: Allows users to rankup
+  rankupall:
+    aliases:
+      - rankupmax
+    description: Allows users to rankup to max rank
+  prestige:
+    description: Allows users to prestige

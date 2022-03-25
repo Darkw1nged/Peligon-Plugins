@@ -10,3 +10,23 @@ Storage:
   # Visit 'Plugins/PeligonPrison/Lang/' to see the supported languages.
   Language File: "en_US"
   database: "SQLite"
+
+Rankup:
+  message: true
+  title-message:
+    enabled: true
+    title: "&aRankup"
+    subtitle: "&aCongratulations!"
+    fade-in: 20
+    stay: 60
+    fade-out: 20
+
+Prestige:
+  message: true
+  title-message:
+    enabled: true
+    title: "&aPrestige"
+    subtitle: "&aCongratulations!"
+    fade-in: 20
+    stay: 60
+    fade-out: 20
