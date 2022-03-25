@@ -29,7 +29,8 @@ public final class Main extends JavaPlugin {
 
     public CustomConfig fileWorth = new CustomConfig(this, "worth", true);
     public CustomConfig fileSigns = new CustomConfig(this, "signs", true);
-    public CustomConfig fileATM = new CustomConfig(this, "ATM", true);
+    public CustomConfig fileATM = new CustomConfig(this, "Inventories/ATM", true);
+    public CustomConfig fileDailyReward = new CustomConfig(this, "Inventories/daily", true);
     public CustomConfig fileMessage;
 
     public void onEnable() {
@@ -42,6 +43,7 @@ public final class Main extends JavaPlugin {
         fileWorth.saveDefaultConfig();
         fileSigns.saveDefaultConfig();
         fileATM.saveDefaultConfig();
+        fileDailyReward.saveDefaultConfig();
         saveDefaultConfig();
 
         // ---- [ Loading lang file ] ----
@@ -108,6 +110,7 @@ public final class Main extends JavaPlugin {
         getCommand("sellwand").setExecutor(new cmdSellWand());
         getCommand("bounty").setExecutor(new cmdBounty());
         getCommand("goal").setExecutor(new cmdGoal());
+        getCommand("daily").setExecutor(new cmdDaily());
     }
 
     public void loadEvents() {

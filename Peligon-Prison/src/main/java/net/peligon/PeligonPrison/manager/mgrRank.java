@@ -37,7 +37,7 @@ public class mgrRank {
      */
     public void createData(OfflinePlayer player, String rank) {
         if (hasData(player)) return;
-        String query = "INSERT INTO server values('" + player.getUniqueId() + "', " + rank + ", '');";
+        String query = "INSERT INTO server values('" + player.getUniqueId() + "', '" + rank + "', '');";
         try {
             Statement statement = SQLite.connection.createStatement();
             statement.execute(query);
@@ -54,7 +54,7 @@ public class mgrRank {
     public void setRank(OfflinePlayer player, String rank) {
         if (!hasData(player)) return;
         if (rank.equals("")) return;
-        String query = "UPDATE server SET rank=" + rank + " WHERE uuid='" + player.getUniqueId() + "';";
+        String query = "UPDATE server SET rank='" + rank + "' WHERE uuid='" + player.getUniqueId() + "';";
         try {
             Statement statement = SQLite.connection.createStatement();
             statement.execute(query);

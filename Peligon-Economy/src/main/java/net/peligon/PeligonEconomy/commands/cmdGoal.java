@@ -86,8 +86,7 @@ public class cmdGoal implements CommandExecutor {
                             }
 
                             if (plugin.getConfig().getInt("Server-Goals.targets." + key + ".data.raised") == plugin.getConfig().getInt("Server-Goals.targets." + key + ".goal")) {
-                                player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
-                                        plugin.fileMessage.getConfig().getString("goal-reached")));
+                                player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("goal-already-reached")));
                                 return true;
                             }
 
@@ -111,6 +110,8 @@ public class cmdGoal implements CommandExecutor {
                                 for (String uuid : plugin.getConfig().getStringList("Server-Goals.targets." + key + ".data.contributors")) {
                                     rewardContributors.add(UUID.fromString(uuid));
                                 }
+
+                                System.out.println(rewardContributors);
 
                                 for (UUID uuid : rewardContributors) {
                                     for (String line : plugin.getConfig().getStringList("Server-Goals.targets." + key + ".rewards")) {

@@ -26,17 +26,28 @@ public class cmdRankupAll implements CommandExecutor {
                 }
 
                 int amount = 0;
-                String newRank = "";
+                Rank newRank = null;
                 for (Rank rank : Utils.ranks) {
                     if (plugin.getEconomy().getBalance(player) >= rank.getCost() && !(amount > plugin.getEconomy().getBalance(player))) {
                         amount += rank.getCost();
-                        newRank = rank.getName();
+                        newRank = rank;
                     }
                 }
+                if (newRank == null) return true;
                 plugin.getEconomy().withdrawPlayer(player, amount);
-                plugin.rankManager.setRank(player, newRank);
-                player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
-                        plugin.fileMessage.getConfig().getString("rankup").replace("%rank%", newRank)));
+                plugin.rankManager.setRank(player, newRank.getName());
+                if (plugin.getConfig().getBoolean("Rankup.message", true)) {
+                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
+                            plugin.fileMessage.getConfig().getString("rankup").replaceAll("%rank%", newRank.getName())));
+                }
+
+                if (plugin.getConfig().getBoolean("Rankup.title-message.enabled", true)) {
+                    player.sendTitle(Utils.chatColor(plugin.getConfig().getString("Rankup.title-message.title")),
+                            Utils.chatColor(plugin.getConfig().getString("Rankup.title-message.subtitle")),
+                            plugin.getConfig().getInt("Rankup.title-message.fadeIn"),
+                            plugin.getConfig().getInt("Rankup.title-message.stay"),
+                            plugin.getConfig().getInt("Rankup.title-message.fadeOut"));
+                }
             } else {
                 player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("noPermission")));
             }

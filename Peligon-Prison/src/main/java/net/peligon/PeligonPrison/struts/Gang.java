@@ -17,10 +17,7 @@ public class Gang {
     private List<String> memberNames;
     private List<UUID> banned;
     private List<String> bannedNames;
-    private List<String> ranks;
     private boolean isPublic;
-    private boolean hasMultiplier;
-    private List<Multiplier> multipliers;
 
     public Gang(String name, UUID owner, String OwnerName) {
         this.name = name;
@@ -39,14 +36,11 @@ public class Gang {
 
         this.banned = new ArrayList<>();
         this.bannedNames = new ArrayList<>();
-        this.ranks = new ArrayList<>();
         this.isPublic = false;
-        this.hasMultiplier = false;
-        this.multipliers = new ArrayList<>();
     }
 
 
-    public Gang(String name, UUID owner, String ownerName, String description, String tag, List<UUID> members, List<String> memberNames, List<UUID> banned, List<String> bannedNames, List<String> ranks, boolean isPublic, boolean hasMultiplier, List<Multiplier> multipliers) {
+    public Gang(String name, UUID owner, String ownerName, String description, String tag, List<UUID> members, List<String> memberNames, List<UUID> banned, List<String> bannedNames, boolean isPublic) {
         this.name = name;
         this.owner = owner;
         this.ownerName = ownerName;
@@ -56,10 +50,7 @@ public class Gang {
         this.memberNames = memberNames;
         this.banned = banned;
         this.bannedNames = bannedNames;
-        this.ranks = ranks;
         this.isPublic = isPublic;
-        this.hasMultiplier = hasMultiplier;
-        this.multipliers = multipliers;
     }
 
     public String getName() {
@@ -114,6 +105,10 @@ public class Gang {
         members.add(member);
     }
 
+    public void removeMember(UUID member) {
+        members.remove(member);
+    }
+
     public List<String> getMemberNames() {
         return memberNames;
     }
@@ -124,6 +119,10 @@ public class Gang {
 
     public void addMemberName(String memberName) {
         memberNames.add(memberName);
+    }
+
+    public void removeMemberName(String memberName) {
+        memberNames.remove(memberName);
     }
 
     public List<UUID> getBanned() {
@@ -138,6 +137,10 @@ public class Gang {
         this.banned.add(banned);
     }
 
+    public void removeBanned(UUID banned) {
+        this.banned.remove(banned);
+    }
+
     public List<String> getBannedNames() {
         return bannedNames;
     }
@@ -150,40 +153,16 @@ public class Gang {
         this.bannedNames.add(bannedName);
     }
 
-    public List<String> getRanks() {
-        return ranks;
+    public void removeBannedName(String bannedName) {
+        this.bannedNames.remove(bannedName);
     }
 
-    public void setRanks(List<String> ranks) {
-        this.ranks = ranks;
-    }
-
-    public boolean isIsPublic() {
+    public boolean isPublic() {
         return isPublic;
     }
 
     public void setIsPublic(boolean isPublic) {
         this.isPublic = isPublic;
-    }
-
-    public boolean isHasMultiplier() {
-        return hasMultiplier;
-    }
-
-    public void setHasMultiplier(boolean hasMultiplier) {
-        this.hasMultiplier = hasMultiplier;
-    }
-
-    public List<Multiplier> getMultipliers() {
-        return multipliers;
-    }
-
-    public void setMultipliers(List<Multiplier> multipliers) {
-        this.multipliers = multipliers;
-    }
-
-    public void addMultiplier(Multiplier multiplier) {
-        this.multipliers.add(multiplier);
     }
 
 }

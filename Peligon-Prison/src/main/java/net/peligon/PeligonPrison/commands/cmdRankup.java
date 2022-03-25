@@ -32,22 +32,23 @@ public class cmdRankup implements CommandExecutor {
                                 plugin.getEconomy().withdrawPlayer(player, nextRank.getCost());
                                 plugin.rankManager.setRank(player, nextRank.getName());
 
-                                if (plugin.fileMessage.getConfig().getBoolean("Rankup.message", true)) {
+                                if (plugin.getConfig().getBoolean("Rankup.message", true)) {
                                     player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
                                             plugin.fileMessage.getConfig().getString("rankup").replaceAll("%rank%", nextRank.getName())));
                                 }
 
-                                if (plugin.fileMessage.getConfig().getBoolean("Rankup.title-message.enabled", true)) {
-                                    player.sendTitle(Utils.chatColor(plugin.fileMessage.getConfig().getString("Rankup.title-message.title")),
-                                            Utils.chatColor(plugin.fileMessage.getConfig().getString("Rankup.title-message.subtitle")),
-                                            plugin.fileMessage.getConfig().getInt("Rankup.title-message.fadeIn"),
-                                            plugin.fileMessage.getConfig().getInt("Rankup.title-message.stay"),
-                                            plugin.fileMessage.getConfig().getInt("Rankup.title-message.fadeOut"));
+                                if (plugin.getConfig().getBoolean("Rankup.title-message.enabled", true)) {
+                                    player.sendTitle(Utils.chatColor(plugin.getConfig().getString("Rankup.title-message.title")),
+                                            Utils.chatColor(plugin.getConfig().getString("Rankup.title-message.subtitle")),
+                                            plugin.getConfig().getInt("Rankup.title-message.fadeIn"),
+                                            plugin.getConfig().getInt("Rankup.title-message.stay"),
+                                            plugin.getConfig().getInt("Rankup.title-message.fadeOut"));
                                 }
                             } else {
                                 player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
                                         plugin.fileMessage.getConfig().getString("not-enough-money")));
                             }
+                            return true;
                         }
                     }
                 }

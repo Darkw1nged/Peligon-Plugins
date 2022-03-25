@@ -40,7 +40,7 @@ public class mgrPrestige {
     public void setPrestige(OfflinePlayer player, String prestige) {
         if (!hasData(player)) return;
         if (prestige.equals("")) return;
-        String query = "UPDATE server SET prestige=" + prestige + " WHERE uuid='" + player.getUniqueId() + "';";
+        String query = "UPDATE server SET prestige='" + prestige + "' WHERE uuid='" + player.getUniqueId() + "';";
         try {
             Statement statement = SQLite.connection.createStatement();
             statement.execute(query);

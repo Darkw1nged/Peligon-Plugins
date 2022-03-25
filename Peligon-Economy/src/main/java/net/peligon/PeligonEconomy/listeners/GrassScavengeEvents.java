@@ -19,11 +19,11 @@ public class GrassScavengeEvents implements Listener {
         if (plugin.getConfig().getBoolean("Grass-Scavenge.enabled", true)) {
             if (plugin.getConfig().getStringList("Grass-Scavenge.disabled-worlds").contains(block.getWorld().getName())) return;
             if (plugin.getConfig().getStringList("Grass-Scavenge.disabled-plants").contains(block.getType().name().toLowerCase())) return;
+            int random = new Random().nextInt(100);
 
-            int random = new Random().nextInt();
             for (String key : plugin.getConfig().getConfigurationSection("Grass-Scavenge.money").getKeys(false)) {
-                if (random >= plugin.getConfig().getInt("Grass-Scavenge.money." + key + ".chance") &&
-                    random <= plugin.getConfig().getInt("Grass-Scavenge.money." + key + ".chance") + 2) {
+                if (random >= plugin.getConfig().getInt("Grass-Scavenge.money." + key + ".chance.minimum") &&
+                    random <= plugin.getConfig().getInt("Grass-Scavenge.money." + key + ".chance.maximum")) {
 
                     String name = "&2$%amount%".replaceAll("%amount%", "" + plugin.getConfig().getInt("Grass-Scavenge.money." + key + ".amount"));
                     Utils.moveUpHologram(name, block.getLocation(), 2);

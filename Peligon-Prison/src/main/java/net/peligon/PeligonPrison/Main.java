@@ -8,6 +8,7 @@ import net.peligon.PeligonPrison.libaries.storage.SQLite;
 import net.peligon.PeligonPrison.listeners.PickupEvent;
 import net.peligon.PeligonPrison.listeners.SmeltEvent;
 import net.peligon.PeligonPrison.listeners.accountSetup;
+import net.peligon.PeligonPrison.manager.mgrGangs;
 import net.peligon.PeligonPrison.manager.mgrPrestige;
 import net.peligon.PeligonPrison.manager.mgrRank;
 import org.bukkit.event.Listener;
@@ -23,6 +24,7 @@ public final class Main extends JavaPlugin implements Listener {
     private Economy econ = null;
     public mgrRank rankManager;
     public mgrPrestige prestigeManager;
+    public mgrGangs gangManager;
 
     public CustomConfig fileMessage;
 
@@ -35,6 +37,7 @@ public final class Main extends JavaPlugin implements Listener {
         getInstance = this;
         rankManager = new mgrRank();
         prestigeManager = new mgrPrestige();
+        gangManager = new mgrGangs();
 
         // ---- [ Loading Commands | Loading Events | Loading YML Files ] ----
         loadCommands();
@@ -45,8 +48,9 @@ public final class Main extends JavaPlugin implements Listener {
         SQLite sqlLite = new SQLite();
         sqlLite.loadTables();
 
-        // ---- [ Loading Economy ] ----
+        // ---- [ Loading Economy and Gangs ] ----
         setupEconomy();
+        gangManager.loadGangs();
 
         // ---- [ Loading lang file ] ----
         fileMessage = new CustomConfig(this, "lang/" + this.getConfig().getString("Storage.Language File"), true);
@@ -57,6 +61,9 @@ public final class Main extends JavaPlugin implements Listener {
     }
 
     public void onDisable() {
+        // ---- [ Saving the gangs ] ----
+        gangManager.saveGangs();
+
         // ---- [ shutdown message ] ----
         getServer().getConsoleSender().sendMessage(Utils.chatColor(this.fileMessage.getConfig().getString("shutdown")));
     }
@@ -67,9 +74,13 @@ public final class Main extends JavaPlugin implements Listener {
         getCommand("autosmelt").setExecutor(new cmdAutoSmelt());
         getCommand("autopickup").setExecutor(new cmdAutoPickup());
         getCommand("autosell").setExecutor(new cmdAutoSell());
+        getCommand("rank").setExecutor(new cmdRank());
         getCommand("rankup").setExecutor(new cmdRankup());
         getCommand("rankupall").setExecutor(new cmdRankupAll());
         getCommand("prestige").setExecutor(new cmdPrestige());
+        getCommand("gang").setExecutor(new cmdGang());
+
+        // TODO : cmdGangs | cmdRanks | cmdPrestiges
     }
     public void loadEvents() {
         Arrays.asList(

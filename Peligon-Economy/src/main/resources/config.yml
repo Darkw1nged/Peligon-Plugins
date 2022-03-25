@@ -85,10 +85,14 @@ Grass-Scavenge:
       # The amount found.
       amount: 10
       # The chance is treated as a percentage.
-      chance: 80
+      chance:
+        minimum: 80
+        maximum: 100
     2:
       amount: 35
-      chance: 65
+      chance:
+        minimum: 65
+        maximum: 75
 
 # !! All bounties will be erased if the plugin is disabled or server is offline.
 Bounties:
@@ -129,7 +133,7 @@ Server-Goals:
       # Rewards will only be given out to contributor to the goal.
       rewards:
         - "%econ% 10000"
-        - "%item% Diamond 5"
+        - "%item% diamond 5"
         - "%message% &aThanks for reaching the goal!"
         - "%command% say goal reached!"
     2:
@@ -141,7 +145,7 @@ Server-Goals:
         contributors: []
       rewards:
         - "%econ% 10000"
-        - "%item% Diamond 5"
+        - "%item% diamond 5"
         - "%message% &aThanks for reaching the goal!"
         - "%command% say goal reached!"
 

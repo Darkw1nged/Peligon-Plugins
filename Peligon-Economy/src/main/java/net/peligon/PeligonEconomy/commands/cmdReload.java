@@ -18,6 +18,7 @@ public class cmdReload implements CommandExecutor {
                 plugin.fileMessage.reloadConfig();
                 plugin.fileWorth.reloadConfig();
                 plugin.fileSigns.reloadConfig();
+                plugin.fileDailyReward.reloadConfig();
 
                 sender.sendMessage(Utils.chatColor("&eConfiguration files have has been reloaded."));
             }

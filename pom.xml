@@ -21,6 +21,7 @@
         <module>Peligon-Economy</module>
 
         <!-- Development Plugins -->
+        <module>Peligon-Prison</module>
         <module>Peligon-Boosters</module>
         <module>Peligon-Core</module>
         <module>Peligon-Chat</module>

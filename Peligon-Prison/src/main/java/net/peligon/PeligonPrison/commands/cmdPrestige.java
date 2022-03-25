@@ -28,6 +28,7 @@ public class cmdPrestige implements CommandExecutor {
                 for (Prestige prestige : Utils.prestige) {
                     if (prestige.getName().equals(plugin.prestigeManager.getPrestige(player))) {
                         Prestige nextPrestige = Utils.prestige.get(Utils.prestige.indexOf(prestige) + 1);
+                        if (nextPrestige == null) nextPrestige = Utils.prestige.get(0);
                         if (nextPrestige != null) {
                             if (plugin.getEconomy().getBalance(player) >= nextPrestige.getCost()) {
                                 plugin.getEconomy().withdrawPlayer(player, nextPrestige.getCost());
@@ -39,11 +40,11 @@ public class cmdPrestige implements CommandExecutor {
                                 }
 
                                 if (plugin.fileMessage.getConfig().getBoolean("Prestige.title-message.enabled", true)) {
-                                    player.sendTitle(Utils.chatColor(plugin.fileMessage.getConfig().getString("Prestige.title-message.title")),
-                                            Utils.chatColor(plugin.fileMessage.getConfig().getString("Prestige.title-message.subtitle")),
-                                            plugin.fileMessage.getConfig().getInt("Prestige.title-message.fadeIn"),
-                                            plugin.fileMessage.getConfig().getInt("Prestige.title-message.stay"),
-                                            plugin.fileMessage.getConfig().getInt("Prestige.title-message.fadeOut"));
+                                    player.sendTitle(Utils.chatColor(plugin.getConfig().getString("Prestige.title-message.title")),
+                                            Utils.chatColor(plugin.getConfig().getString("Prestige.title-message.subtitle")),
+                                            plugin.getConfig().getInt("Prestige.title-message.fadeIn"),
+                                            plugin.getConfig().getInt("Prestige.title-message.stay"),
+                                            plugin.getConfig().getInt("Prestige.title-message.fadeOut"));
                                 }
                             } else {
                                 player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +

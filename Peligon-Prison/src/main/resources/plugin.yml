@@ -8,7 +8,7 @@ commands:
   pelprison:
     aliases:
       - pprison
-      description: Allows admins to reload configuration files
+    description: Allows admins to reload configuration files
   autoblock:
     description: Allows users to enbale automatically change materials into their block form
   autosmelt:
@@ -25,3 +25,7 @@ commands:
     description: Allows users to rankup to max rank
   prestige:
     description: Allows users to prestige
+  gang:
+    description: Allows users to create gangs
+  gangs:
+    description: Allows users to view gangs

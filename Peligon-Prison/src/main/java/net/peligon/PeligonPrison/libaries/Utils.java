@@ -1,6 +1,7 @@
 package net.peligon.PeligonPrison.libaries;
 
 import net.peligon.PeligonPrison.Main;
+import net.peligon.PeligonPrison.struts.Gang;
 import net.peligon.PeligonPrison.struts.Prestige;
 import net.peligon.PeligonPrison.struts.Rank;
 import org.bukkit.ChatColor;
@@ -84,12 +85,18 @@ public class Utils {
         return false;
     }
 
+    // ---- [ Check if String is only letters ] ----
+    public static boolean isOnlyLetters(String s) {
+        return s.matches("[a-zA-Z]+");
+    }
+
     // ---- [ Cached Items ] ----
     public static Map<ArmorStand, Long> activeHolograms = new HashMap<>();
     public static List<UUID> autoPickup = new ArrayList<>();
     public static List<UUID> autoSmelt = new ArrayList<>();
     public static List<Rank> ranks = new ArrayList<>();
     public static List<Prestige> prestige = new ArrayList<>();
+    public static List<Gang> gangs = new ArrayList<>();
 
     // Temporary
     static {

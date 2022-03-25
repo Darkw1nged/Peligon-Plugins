@@ -55,3 +55,5 @@ commands:
     description: Allows users to withdraw experience
   goal:
     description: Allows users to contribute money to server goals for rewards
+  daily:
+    description: Allows users to get a daily reward

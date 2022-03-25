@@ -11,6 +11,10 @@ Storage:
   Language File: "en_US"
   database: "SQLite"
 
+# How long someone has to accept or deny a request before it expires.
+invite-timeout: 30
+
+# Executed when a player gains a new rank.
 Rankup:
   message: true
   title-message:
@@ -21,6 +25,7 @@ Rankup:
     stay: 60
     fade-out: 20
 
+# Executed when a player gains a new prestige.
 Prestige:
   message: true
   title-message:
