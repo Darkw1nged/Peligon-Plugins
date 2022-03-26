@@ -82,6 +82,7 @@ public class mgrGangs {
     public void addBanned(Player player, String gangName) {
         Gang gang = getGang(gangName);
         if (gang != null) {
+            removeMember(player, gangName);
             gang.addBanned(player.getUniqueId());
             gang.addBannedName(player.getName());
         }
@@ -98,8 +99,13 @@ public class mgrGangs {
 
     public void disbandGang(String gangName) {
         Gang gang = getGang(gangName);
-        if (gang != null)
+        if (gang != null) {
             Utils.gangs.remove(gang);
+            File file = new File(Main.getInstance.getDataFolder(), "gangs/" + gangName + ".yml");
+            if (file.exists())
+                file.delete();
+        }
+
     }
 
     public void setGangDescription(String gangName, String description) {
