@@ -1,11 +1,11 @@
 package net.peligon.PeligonPrison;
 
-import javafx.print.PageLayout;
 import net.milkbowl.vault.economy.Economy;
 import net.peligon.PeligonPrison.commands.*;
 import net.peligon.PeligonPrison.libaries.CustomConfig;
 import net.peligon.PeligonPrison.libaries.Utils;
 import net.peligon.PeligonPrison.libaries.storage.SQLite;
+import net.peligon.PeligonPrison.listeners.BackpackOpenEvent;
 import net.peligon.PeligonPrison.listeners.PickupEvent;
 import net.peligon.PeligonPrison.listeners.SmeltEvent;
 import net.peligon.PeligonPrison.listeners.accountSetup;
@@ -13,17 +13,12 @@ import net.peligon.PeligonPrison.manager.mgrBackpack;
 import net.peligon.PeligonPrison.manager.mgrGangs;
 import net.peligon.PeligonPrison.manager.mgrPrestige;
 import net.peligon.PeligonPrison.manager.mgrRank;
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.*;
 
-public final class Main extends JavaPlugin implements Listener {
+public final class Main extends JavaPlugin {
 
     public static Main getInstance;
     private Economy econ = null;
@@ -85,6 +80,7 @@ public final class Main extends JavaPlugin implements Listener {
         getCommand("rankupall").setExecutor(new cmdRankupAll());
         getCommand("prestige").setExecutor(new cmdPrestige());
         getCommand("gang").setExecutor(new cmdGang());
+        getCommand("backpack").setExecutor(new cmdBackpack());
 
         // TODO : cmdGangs | cmdRanks | cmdPrestiges
     }
@@ -92,7 +88,8 @@ public final class Main extends JavaPlugin implements Listener {
         Arrays.asList(
                 new accountSetup(),
                 new SmeltEvent(),
-                new PickupEvent()
+                new PickupEvent(),
+                new BackpackOpenEvent()
         ).forEach(listener -> getServer().getPluginManager().registerEvents(listener, this));
     }
 

@@ -22,10 +22,12 @@ public class accountSetup implements Listener {
                     return;
                 }
             }
-
-
-
+        }
+        if (!player.getInventory().contains(plugin.backpackManager.backpack)) {
+            player.getInventory().addItem(plugin.backpackManager.backpack);
         }
     }
+
+
 
 }
