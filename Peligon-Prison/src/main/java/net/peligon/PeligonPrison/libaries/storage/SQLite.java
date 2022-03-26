@@ -32,11 +32,13 @@ public class SQLite {
         try {
             getSQLConnection();
             String table = "CREATE TABLE IF NOT EXISTS server(uuid PRIMARY KEY, rank, prestige);";
+            String bpTable = "CREATE TABLE IF NOT EXISTS backpack(uuid PRIMARY KEY, contents);";
 
             try {
                 Statement statement = connection.createStatement();
                 {
                     statement.execute(table);
+                    statement.execute(bpTable);
                 }
                 statement.close();
             } catch (SQLException e) {

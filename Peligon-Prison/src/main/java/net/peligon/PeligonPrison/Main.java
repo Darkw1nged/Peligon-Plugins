@@ -1,5 +1,6 @@
 package net.peligon.PeligonPrison;
 
+import javafx.print.PageLayout;
 import net.milkbowl.vault.economy.Economy;
 import net.peligon.PeligonPrison.commands.*;
 import net.peligon.PeligonPrison.libaries.CustomConfig;
@@ -8,10 +9,14 @@ import net.peligon.PeligonPrison.libaries.storage.SQLite;
 import net.peligon.PeligonPrison.listeners.PickupEvent;
 import net.peligon.PeligonPrison.listeners.SmeltEvent;
 import net.peligon.PeligonPrison.listeners.accountSetup;
+import net.peligon.PeligonPrison.manager.mgrBackpack;
 import net.peligon.PeligonPrison.manager.mgrGangs;
 import net.peligon.PeligonPrison.manager.mgrPrestige;
 import net.peligon.PeligonPrison.manager.mgrRank;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -25,12 +30,12 @@ public final class Main extends JavaPlugin implements Listener {
     public mgrRank rankManager;
     public mgrPrestige prestigeManager;
     public mgrGangs gangManager;
+    public mgrBackpack backpackManager;
 
     public CustomConfig fileMessage;
 
     public HashMap<String, Integer> mines = new HashMap<>();
     public boolean resetMinesOnTimer = false;
-    public HashMap<UUID, List<ItemStack>> backpack = new HashMap<>();
 
     public void onEnable() {
         // ---- [ Initializing instance of main class | manager classes | register placeholder ] ----
@@ -38,6 +43,7 @@ public final class Main extends JavaPlugin implements Listener {
         rankManager = new mgrRank();
         prestigeManager = new mgrPrestige();
         gangManager = new mgrGangs();
+        backpackManager = new mgrBackpack();
 
         // ---- [ Loading Commands | Loading Events | Loading YML Files ] ----
         loadCommands();
@@ -104,4 +110,5 @@ public final class Main extends JavaPlugin implements Listener {
     public Economy getEconomy() {
         return econ;
     }
+
 }
