@@ -64,26 +64,36 @@ public class mgrGangs {
 
     public void addMember(Player player, String gangName) {
         Gang gang = getGang(gangName);
-        if (gang != null)
+        if (gang != null) {
             gang.addMember(player.getUniqueId());
+            gang.addMemberName(player.getName());
+        }
+
     }
 
     public void removeMember(Player player, String gangName) {
         Gang gang = getGang(gangName);
-        if (gang != null)
+        if (gang != null) {
             gang.removeMember(player.getUniqueId());
+            gang.removeMemberName(player.getName());
+        }
     }
 
     public void addBanned(Player player, String gangName) {
         Gang gang = getGang(gangName);
-        if (gang != null)
+        if (gang != null) {
             gang.addBanned(player.getUniqueId());
+            gang.addBannedName(player.getName());
+        }
+
     }
 
     public void removeBanned(Player player, String gangName) {
         Gang gang = getGang(gangName);
-        if (gang != null)
+        if (gang != null) {
             gang.removeBanned(player.getUniqueId());
+            gang.removeBannedName(player.getName());
+        }
     }
 
     public void disbandGang(String gangName) {

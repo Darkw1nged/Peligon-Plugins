@@ -132,10 +132,35 @@ public class cmdGang implements CommandExecutor {
                         }
                         break;
                     case "kick":
+                        if (plugin.gangManager.getGang(player) == null) {
+                            player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("not-in-gang")));
+                            return true;
+                        }
+                        if (!plugin.gangManager.isOwner(player)) {
+                            player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("must-be-owner")));
+                            return true;
+                        }
+                        if (args.length != 2) {
+                            player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("specify-player")));
+                            return true;
+                        }
+                        Player kickTarget = plugin.getServer().getPlayer(args[1]);
+                        if (kickTarget == null) {
+                            player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-player-found")));
+                            return true;
+                        }
+                        if (plugin.gangManager.getGang(kickTarget) == null || !(plugin.gangManager.getGang(kickTarget).equals(plugin.gangManager.getGang(player)))) {
+                            player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("player-not-in-gang")));
+                            return true;
+                        }
+                        plugin.gangManager.removeMember(kickTarget, plugin.gangManager.getGang(player).getName());
+
+                        player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
+                                plugin.fileMessage.getConfig().getString("gang-kick")
+                                        .replaceAll("%player%", kickTarget.getName())
+                                        .replaceAll("%gang%", plugin.gangManager.getGang(player).getName())));
                         break;
                     case "leave":
-                        break;
-                    case "info":
                         break;
                     case "list":
                         break;
@@ -174,6 +199,32 @@ public class cmdGang implements CommandExecutor {
                                         .replaceAll("%gang%", plugin.gangManager.getGang(player).getName())));
                         break;
                     case "unban":
+                        if (plugin.gangManager.getGang(player) == null) {
+                            player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("not-in-gang")));
+                            return true;
+                        }
+                        if (!plugin.gangManager.isOwner(player)) {
+                            player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("must-be-owner")));
+                            return true;
+                        }
+                        if (args.length != 2) {
+                            player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("specify-player")));
+                        }
+                        Player unbanTarget = Bukkit.getPlayer(args[1]);
+                        if (unbanTarget == null) {
+                            player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-player-found")));
+                            return true;
+                        }
+                        if (!plugin.gangManager.getGang(player).getBanned().contains(unbanTarget.getUniqueId())) {
+                            player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("player-not-banned").replaceAll("%player%", unbanTarget.getName())));
+                            return true;
+                        }
+                        plugin.gangManager.getGang(player).removeBanned(unbanTarget.getUniqueId());
+                        plugin.gangManager.getGang(player).removeBannedName(unbanTarget.getName());
+                        player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
+                                plugin.fileMessage.getConfig().getString("gang-unban")
+                                        .replaceAll("%player%", unbanTarget.getName())
+                                        .replaceAll("%gang%", plugin.gangManager.getGang(player).getName())));
                         break;
 
                 }
