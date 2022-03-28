@@ -38,7 +38,22 @@ gang-help-menu:
   - "&f/gang deny &7- &fDeny an invite to your gang"
   - "&f/gang edit description <description> &7- &fEdit your gang's description"
   - "&f/gang edit tag <tag> &7- &fEdit your gang's tag"
-
+mine-created: "&fYou have successfully created a mine named &e%mine%&f!"
+mine-deleted: "&fYou have successfully deleted &e%mine%&f!"
+mine-position-one: "&fYou have successfully set the first position of &e%mine%&f!"
+mine-position-two: "&fYou have successfully set the second position of &e%mine%&f!"
+mine-edit: "&fYou have successfully edited &e%mine%&f!"
+mine-list-header: "&fAvailable mines:"
+mine-list-item: "&f%mine% &7- &f%resets%"
+mine-help-menu:
+  - "&f/mine help &7- &fShow this help"
+  - "&f/mine create <mine> &7- &fCreate a mine"
+  - "&f/mine delete <mine> &7- &fDelete a mine"
+  - "&f/mine set area &7- &fSet the area of a mine"
+  - "&f/mine edit <mine> &7- &fEdit a mine"
+  - "&f/mine info <mine> &7- &fShow information about a mine"
+mine-reset: "&fYou have successfully reset &e%mine%&f!"
+mine-reset-all: "&fYou have successfully reset all mines!"
 
 console: "&cError! You are not allowed to perform this inside of the console."
 no-permission: "&cError! You do not have permission to use this command."
@@ -49,8 +64,8 @@ account-error: "&cError! %player% dont seem to have an account."
 not-enough-money: "&cError! You do not have enough money to do this."
 max-rank: "&cError! You have reached the maximum rank."
 max-prestige: "&cError! You have reached the maximum prestige."
-specify-gang-name: "&cError! Please specify a gang name."
-invalid-gang-name: "&cError! This is not a valid gang name."
+specify-name: "&cError! Please specify a name."
+invalid-name: "&cError! This is not a valid name."
 gang-already-exists: "&cError! A gang with this name already exists."
 gang-not-found: "&cError! This gang does not exist."
 can-not-create-gang: "&cError! You can not create a gang."
@@ -63,10 +78,8 @@ player-already-banned: "&cError! %player% is already banned from this gang."
 player-not-banned: "&cError! %player% is not banned from this gang."
 player-not-in-gang: "&cError! %player% is not in this gang."
 gang-not-public: "&cError! This gang is not public."
+mine-not-found: "&cError! This mine does not exist."
+specify-blocks: "&cError! Please specify blocks. (Example: /mine set area stone,dirt%10,grass)"
 
-gang-edit-usage: "&cIncorrect Command Usage: &f/gang edit [name] [description|tag]"
-
-#                        player.sendMessage(Utils.chatColor("&7/gang invite &7- &fInvite a player to your gang"));
-#                        player.sendMessage(Utils.chatColor("&7/gang accept &7- &fAccept an invite"));
-#                        player.sendMessage(Utils.chatColor("&7/gang deny &7- &fDeny an invite"));
-#                        player.sendMessage(Utils.chatColor("&7/gang edit &7- &fEdit your gang"));
+gang-edit-usage: "&cIncorrect Command Usage: &f/gang edit <name> <description|tag>"
+mine-edit-usage: "&cIncorrect Command Usage: &f/mine edit <name> <name|area|spawn|block(s)> <block(s)>"

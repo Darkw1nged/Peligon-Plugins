@@ -9,10 +9,7 @@ import net.peligon.PeligonPrison.listeners.BackpackEvents;
 import net.peligon.PeligonPrison.listeners.PickupEvent;
 import net.peligon.PeligonPrison.listeners.SmeltEvent;
 import net.peligon.PeligonPrison.listeners.accountSetup;
-import net.peligon.PeligonPrison.manager.mgrBackpack;
-import net.peligon.PeligonPrison.manager.mgrGangs;
-import net.peligon.PeligonPrison.manager.mgrPrestige;
-import net.peligon.PeligonPrison.manager.mgrRank;
+import net.peligon.PeligonPrison.manager.*;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -25,6 +22,7 @@ public final class Main extends JavaPlugin {
     public mgrRank rankManager;
     public mgrPrestige prestigeManager;
     public mgrGangs gangManager;
+    public mgrMines minesManager;
     public mgrBackpack backpackManager;
 
     public CustomConfig fileMessage;
@@ -38,6 +36,7 @@ public final class Main extends JavaPlugin {
         rankManager = new mgrRank();
         prestigeManager = new mgrPrestige();
         gangManager = new mgrGangs();
+        minesManager = new mgrMines();
         backpackManager = new mgrBackpack();
 
         // ---- [ Loading Commands | Loading Events | Loading YML Files ] ----
@@ -49,9 +48,10 @@ public final class Main extends JavaPlugin {
         SQLite sqlLite = new SQLite();
         sqlLite.loadTables();
 
-        // ---- [ Loading Economy and Gangs ] ----
+        // ---- [ Loading Economy, Gangs and Mines ] ----
         setupEconomy();
         gangManager.loadGangs();
+        minesManager.loadMines();
 
         // ---- [ Loading lang file ] ----
         fileMessage = new CustomConfig(this, "lang/" + this.getConfig().getString("Storage.Language File"), true);
@@ -64,6 +64,9 @@ public final class Main extends JavaPlugin {
     public void onDisable() {
         // ---- [ Saving the gangs ] ----
         gangManager.saveGangs();
+
+        // ---- [ Saving the mines ] ----
+        minesManager.saveMines();
 
         // ---- [ shutdown message ] ----
         getServer().getConsoleSender().sendMessage(Utils.chatColor(this.fileMessage.getConfig().getString("shutdown")));
@@ -80,6 +83,7 @@ public final class Main extends JavaPlugin {
         getCommand("rankupall").setExecutor(new cmdRankupAll());
         getCommand("prestige").setExecutor(new cmdPrestige());
         getCommand("gang").setExecutor(new cmdGang());
+        getCommand("mine").setExecutor(new cmdMine());
         getCommand("backpack").setExecutor(new cmdBackpack());
 
         // TODO : cmdGangs | cmdRanks | cmdPrestiges

@@ -27,5 +27,5 @@ commands:
     description: Allows users to prestige
   gang:
     description: Allows users to create gangs
-  gangs:
-    description: Allows users to view gangs
+  mine:
+    description: Allows admins to create and manage mines

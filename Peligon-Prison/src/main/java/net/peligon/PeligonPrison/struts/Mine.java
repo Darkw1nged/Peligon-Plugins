@@ -1,10 +1,10 @@
 package net.peligon.PeligonPrison.struts;
 
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 
 import java.util.List;
-import java.util.UUID;
 
 public class Mine {
 
@@ -12,10 +12,21 @@ public class Mine {
     private boolean hasPermission;
     private String permission;
     private Location spawnLocation;
-    private List<Block> blocks;
+    private List<Material> blocks;
     private long resetTime;
     private Location cornerOne;
     private Location cornerTwo;
+
+    public Mine(String name) {
+        this.name = name;
+        this.hasPermission = false;
+        this.permission = "";
+        this.spawnLocation = null;
+        this.blocks = null;
+        this.resetTime = -1;
+        this.cornerOne = null;
+        this.cornerTwo = null;
+    }
 
     public Mine(String name, Location cornerOne, Location cornerTwo) {
         this.name = name;
@@ -28,7 +39,7 @@ public class Mine {
         this.cornerTwo = cornerTwo;
     }
 
-    public Mine(String name, boolean hasPermission, String permission, Location spawnLocation, List<Block> blocks, long resetTime, Location cornerOne, Location cornerTwo) {
+    public Mine(String name, boolean hasPermission, String permission, Location spawnLocation, List<Material> blocks, long resetTime, Location cornerOne, Location cornerTwo) {
         this.name = name;
         this.hasPermission = hasPermission;
         this.permission = permission;
@@ -71,11 +82,11 @@ public class Mine {
         this.spawnLocation = spawnLocation;
     }
 
-    public List<Block> getBlocks() {
+    public List<Material> getBlocks() {
         return blocks;
     }
 
-    public void setBlocks(List<Block> blocks) {
+    public void setBlocks(List<Material> blocks) {
         this.blocks = blocks;
     }
 

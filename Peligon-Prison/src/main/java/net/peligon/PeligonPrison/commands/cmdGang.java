@@ -203,12 +203,12 @@ public class cmdGang implements CommandExecutor {
                             return true;
                         }
                         if (args.length != 2) {
-                            player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("specify-gang-name")));
+                            player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("specify-name")));
                             return true;
                         }
                         String gangName = args[1];
-                        if (!Utils.isOnlyLetters(gangName)) {
-                            player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("invalid-gang-name")));
+                        if (Utils.isOnlyLetters(gangName)) {
+                            player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("invalid-name")));
                             return true;
                         }
                         for (Gang gang : Utils.gangs) {
@@ -351,7 +351,7 @@ public class cmdGang implements CommandExecutor {
                             return true;
                         }
                         if (args.length != 2) {
-                            player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("specify-gang-NAME")));
+                            player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("specify-name")));
                             return true;
                         }
                         if (plugin.gangManager.getGang(args[1]) == null) {

@@ -122,7 +122,7 @@ public class mgrGangs {
 
     public void saveGangs() {
         for (Gang gang : Utils.gangs) {
-            CustomConfig config = new CustomConfig(Main.getInstance, "gangs/" + gang.getName(), false);
+            CustomConfig config = new CustomConfig(Main.getInstance, gang.getName(), "gangs");
             YamlConfiguration data = config.getConfig();
 
             data.set("name", gang.getName());
@@ -154,7 +154,7 @@ public class mgrGangs {
         File[] files = new File(Main.getInstance.getDataFolder() + File.separator + "gangs").listFiles();
         if (files != null)
             for (File file : files) {
-                CustomConfig config = new CustomConfig(Main.getInstance, "gangs/" + file.getName(), false);
+                CustomConfig config = new CustomConfig(Main.getInstance, file.getName(), "gangs");
                 YamlConfiguration data = config.getConfig();
 
                 String name = data.getString("name");

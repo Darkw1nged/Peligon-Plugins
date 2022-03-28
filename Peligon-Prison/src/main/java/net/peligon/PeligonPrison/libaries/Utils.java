@@ -2,6 +2,7 @@ package net.peligon.PeligonPrison.libaries;
 
 import net.peligon.PeligonPrison.Main;
 import net.peligon.PeligonPrison.struts.Gang;
+import net.peligon.PeligonPrison.struts.Mine;
 import net.peligon.PeligonPrison.struts.Prestige;
 import net.peligon.PeligonPrison.struts.Rank;
 import org.bukkit.ChatColor;
@@ -13,7 +14,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.time.LocalDateTime;
 import java.util.*;
 
 public class Utils {
@@ -87,7 +87,7 @@ public class Utils {
 
     // ---- [ Check if String is only letters ] ----
     public static boolean isOnlyLetters(String s) {
-        return s.matches("[a-zA-Z]+");
+        return !s.matches("[a-zA-Z]+");
     }
 
     // ---- [ Cached Items ] ----
@@ -97,6 +97,7 @@ public class Utils {
     public static List<Rank> ranks = new ArrayList<>();
     public static List<Prestige> prestige = new ArrayList<>();
     public static List<Gang> gangs = new ArrayList<>();
+    public static List<Mine> mines = new ArrayList<>();
 
     // Temporary
     static {
