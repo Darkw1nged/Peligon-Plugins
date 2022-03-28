@@ -2,7 +2,7 @@ package net.peligon.PeligonPrison.menu;
 
 import net.peligon.PeligonPrison.Main;
 import net.peligon.PeligonPrison.libaries.Utils;
-import net.peligon.PeligonPrison.manager.Menu;
+import net.peligon.PeligonPrison.struts.Menu;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;

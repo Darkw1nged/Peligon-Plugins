@@ -1,4 +1,4 @@
-package net.peligon.PeligonPrison.manager;
+package net.peligon.PeligonPrison.struts;
 
 import net.peligon.PeligonPrison.Main;
 import org.bukkit.entity.Player;

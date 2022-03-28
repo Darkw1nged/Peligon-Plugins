@@ -36,7 +36,11 @@ Prestige:
     stay: 60
     fade-out: 20
 
+# Players can store items inside a custom inventory.
 Backpack:
+  Settings:
+    allow-drop: false
+    allow-place: false
   Item:
     material: CHEST
     name: "&aBackpack"

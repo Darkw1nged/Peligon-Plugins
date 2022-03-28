@@ -5,7 +5,7 @@ import net.peligon.PeligonPrison.commands.*;
 import net.peligon.PeligonPrison.libaries.CustomConfig;
 import net.peligon.PeligonPrison.libaries.Utils;
 import net.peligon.PeligonPrison.libaries.storage.SQLite;
-import net.peligon.PeligonPrison.listeners.BackpackOpenEvent;
+import net.peligon.PeligonPrison.listeners.BackpackEvents;
 import net.peligon.PeligonPrison.listeners.PickupEvent;
 import net.peligon.PeligonPrison.listeners.SmeltEvent;
 import net.peligon.PeligonPrison.listeners.accountSetup;
@@ -89,7 +89,7 @@ public final class Main extends JavaPlugin {
                 new accountSetup(),
                 new SmeltEvent(),
                 new PickupEvent(),
-                new BackpackOpenEvent()
+                new BackpackEvents()
         ).forEach(listener -> getServer().getPluginManager().registerEvents(listener, this));
     }
 
