@@ -31,9 +31,11 @@ public class cmdMine implements CommandExecutor {
             if (player.hasPermission("Peligon.Prison.Mine") || player.hasPermission("Peligon.Prison.*")) {
                 if (args.length == 0) {
                     if (player.hasPermission("Peligon.Prison.Mine.Help") || player.hasPermission("Peligon.Prison.*")) {
+                        player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("help-menu-header")));
                         for (String s : plugin.fileMessage.getConfig().getStringList("mine-help-menu")) {
                             player.sendMessage(Utils.chatColor(s));
                         }
+                        player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("help-menu-footer")));
                     } else {
                         player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-permission")));
                     }
@@ -42,9 +44,11 @@ public class cmdMine implements CommandExecutor {
                 switch (args[0].toLowerCase()) {
                     case "help":
                         if (player.hasPermission("Peligon.Prison.Mine.Help") || player.hasPermission("Peligon.Prison.*")) {
+                            player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("help-menu-header")));
                             for (String s : plugin.fileMessage.getConfig().getStringList("mine-help-menu")) {
                                 player.sendMessage(Utils.chatColor(s));
                             }
+                            player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("help-menu-footer")));
                         } else {
                             player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-permission")));
                         }
@@ -100,9 +104,8 @@ public class cmdMine implements CommandExecutor {
                                                 .replaceAll("%mine%", mine.getName())
                                                 .replaceAll("%resets%", plugin.minesManager.getTimeUntilReset(mine.getName()))));
 
-                                TextComponent edit = new TextComponent(Utils.chatColor("&7[&aEdit&7]"));
-                                edit.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/mine edit " + mine.getName()));
-                                edit.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(Utils.chatColor("&7Click to edit this mine.")).create()));
+                                TextComponent edit = new TextComponent(Utils.chatColor(" &7[&aEdit&7]"));
+                                edit.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/mine edit"));
 
                                 player.spigot().sendMessage(original, edit);
                             }
@@ -156,6 +159,8 @@ public class cmdMine implements CommandExecutor {
                                 plugin.minesManager.getMine(args[1]).setBlocks(blocks);
                                 player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
                                         plugin.fileMessage.getConfig().getString("mine-edit").replaceAll("%mine%", args[1])));
+                            } else {
+                                player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("mine-edit-usage")));
                             }
                         } else {
                             player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-permission")));

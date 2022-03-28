@@ -17,6 +17,8 @@ commands:
     description: Allows users to automatically pickup items
   autosell:
     description: Allows users to automatically sell their items
+  rank:
+    description: Allows users to view their rank
   rankup:
     description: Allows users to rankup
   rankupall:
@@ -29,3 +31,5 @@ commands:
     description: Allows users to create gangs
   mine:
     description: Allows admins to create and manage mines
+  backpack:
+    description: Allows users to open their backpacks

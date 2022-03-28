@@ -18,16 +18,16 @@ public class menuBackpack implements Menu {
         this.player = player;
 
         int size = 9;
-        if (player.hasPermission("Peligon.Prison.Backpack.Size.18")) {
-            size = 18;
-        } else if (player.hasPermission("Peligon.Prison.Backpack.Size.27")) {
-            size = 27;
-        } else if (player.hasPermission("Peligon.Prison.Backpack.Size.36")) {
-            size = 36;
+        if (player.hasPermission("Peligon.Prison.Backpack.Size.54")) {
+            size = 54;
         } else if (player.hasPermission("Peligon.Prison.Backpack.Size.45")) {
             size = 45;
-        } else if (player.hasPermission("Peligon.Prison.Backpack.Size.54")) {
-            size = 54;
+        } else if (player.hasPermission("Peligon.Prison.Backpack.Size.36")) {
+            size = 36;
+        } else if (player.hasPermission("Peligon.Prison.Backpack.Size.27")) {
+            size = 27;
+        } else if (player.hasPermission("Peligon.Prison.Backpack.Size.18")) {
+            size = 18;
         }
 
         this.inventory = Bukkit.createInventory(this, size,
@@ -42,6 +42,10 @@ public class menuBackpack implements Menu {
     }
 
     public void onClose(Main plugin, Player player) {
+        if (!plugin.backpackManager.hasData(player)) {
+            plugin.backpackManager.createBackpack(player, this.inventory.getContents());
+            return;
+        }
         plugin.backpackManager.setBackpack(player, this.inventory.getContents());
     }
 

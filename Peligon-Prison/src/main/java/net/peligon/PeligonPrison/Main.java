@@ -27,9 +27,6 @@ public final class Main extends JavaPlugin {
 
     public CustomConfig fileMessage;
 
-    public HashMap<String, Integer> mines = new HashMap<>();
-    public boolean resetMinesOnTimer = false;
-
     public void onEnable() {
         // ---- [ Initializing instance of main class | manager classes | register placeholder ] ----
         getInstance = this;
@@ -52,6 +49,7 @@ public final class Main extends JavaPlugin {
         setupEconomy();
         gangManager.loadGangs();
         minesManager.loadMines();
+        minesManager.resetMines();
 
         // ---- [ Loading lang file ] ----
         fileMessage = new CustomConfig(this, "lang/" + this.getConfig().getString("Storage.Language File"), true);

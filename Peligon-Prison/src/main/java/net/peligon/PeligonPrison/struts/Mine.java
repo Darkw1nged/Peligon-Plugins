@@ -13,6 +13,7 @@ public class Mine {
     private String permission;
     private Location spawnLocation;
     private List<Material> blocks;
+    private long lastReset;
     private long resetTime;
     private Location cornerOne;
     private Location cornerTwo;
@@ -23,6 +24,7 @@ public class Mine {
         this.permission = "";
         this.spawnLocation = null;
         this.blocks = null;
+        this.lastReset = -1;
         this.resetTime = -1;
         this.cornerOne = null;
         this.cornerTwo = null;
@@ -34,17 +36,19 @@ public class Mine {
         this.permission = "";
         this.spawnLocation = null;
         this.blocks = null;
+        this.lastReset = -1;
         this.resetTime = -1;
         this.cornerOne = cornerOne;
         this.cornerTwo = cornerTwo;
     }
 
-    public Mine(String name, boolean hasPermission, String permission, Location spawnLocation, List<Material> blocks, long resetTime, Location cornerOne, Location cornerTwo) {
+    public Mine(String name, boolean hasPermission, String permission, Location spawnLocation, List<Material> blocks, long lastReset, long resetTime, Location cornerOne, Location cornerTwo) {
         this.name = name;
         this.hasPermission = hasPermission;
         this.permission = permission;
         this.spawnLocation = spawnLocation;
         this.blocks = blocks;
+        this.lastReset = lastReset;
         this.resetTime = resetTime;
         this.cornerOne = cornerOne;
         this.cornerTwo = cornerTwo;
@@ -88,6 +92,14 @@ public class Mine {
 
     public void setBlocks(List<Material> blocks) {
         this.blocks = blocks;
+    }
+
+    public long getLastReset() {
+        return lastReset;
+    }
+
+    public void setLastReset(long lastReset) {
+        this.lastReset = lastReset;
     }
 
     public long getResetTime() {

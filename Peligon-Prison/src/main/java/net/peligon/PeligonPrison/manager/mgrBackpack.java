@@ -27,6 +27,7 @@ public class mgrBackpack {
         meta.setDisplayName(Utils.chatColor(plugin.getConfig().getString("Backpack.Item.name")));
         meta.setLore(Utils.getConvertedLore(plugin.getConfig(), "Backpack.Item"));
         item.setItemMeta(meta);
+        backpack = item;
     }
     /**
      * Checking if player has any data in database
@@ -43,6 +44,25 @@ public class mgrBackpack {
             e.printStackTrace();
         }
         return false;
+    }
+
+    /**
+     * Creates a backpack for the user if they do not already have one.
+     *
+     * @param player of the player
+     * @param contents to open account with
+     */
+    public void createBackpack(OfflinePlayer player, ItemStack[] contents) {
+        if (hasData(player)) return;
+        if (contents == null) return;
+        String uuid = String.valueOf(player.getUniqueId());
+        String query = "INSERT INTO backpack values('" + uuid + "', " + contents + ");";
+        try {
+            Statement statement = SQLite.connection.createStatement();
+            statement.execute(query);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     /**

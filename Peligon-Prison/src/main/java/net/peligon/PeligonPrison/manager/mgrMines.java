@@ -16,6 +16,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 public class mgrMines {
 
@@ -131,11 +132,20 @@ public class mgrMines {
     public String getTimeUntilReset(String name) {
         for (Mine mine : Utils.mines) {
             if (mine.getName().equals(name)) {
-                long time = mine.getResetTime() - System.currentTimeMillis();
-                long hours = time / 3600;
-                long minutes = (time % 3600) / 60;
-                long seconds = (time % 3600) % 60;
-                return hours + "hours, " + minutes + "minutes, " + seconds + "seconds";
+                long lastReset = mine.getLastReset();
+                long currentTime = System.currentTimeMillis();
+                // Calculate the time until the next reset
+                long timeUntilReset = (lastReset + mine.getResetTime()) - currentTime;
+                // Convert the time to a readable format
+                long hours = TimeUnit.MILLISECONDS.toHours(timeUntilReset);
+                timeUntilReset -= TimeUnit.HOURS.toMillis(hours);
+                long minutes = TimeUnit.MILLISECONDS.toMinutes(timeUntilReset);
+                timeUntilReset -= TimeUnit.MINUTES.toMillis(minutes);
+                long seconds = TimeUnit.MILLISECONDS.toSeconds(timeUntilReset);
+                timeUntilReset -= TimeUnit.SECONDS.toMillis(seconds);
+                long milliseconds = timeUntilReset;
+                // Return the time until the next reset
+                return String.format("%02d:%02d:%02d:%03d", hours, minutes, seconds, milliseconds);
             }
         }
         return null;
@@ -163,6 +173,7 @@ public class mgrMines {
                     Material randomMaterial = blocks.get(rand.nextInt(blocks.size()));
                     areaBlock.setType(randomMaterial);
                 }
+                mine.setLastReset(System.currentTimeMillis());
             }
         }
     }
@@ -187,7 +198,8 @@ public class mgrMines {
             data.set("spawn.yaw", mine.getSpawnLocation().getYaw());
             data.set("spawn.pitch", mine.getSpawnLocation().getPitch());
             data.set("blocks", mine.getBlocks());
-            data.set("resetTime", mine.getResetTime());
+            data.set("reset.last", mine.getLastReset());
+            data.set("reset.delay", mine.getResetTime());
             data.set("cornerOne", mine.getCornerOne());
             data.set("cornerTwo", mine.getCornerTwo());
             config.saveConfig();
@@ -218,11 +230,13 @@ public class mgrMines {
                     blocks.add(Material.valueOf(block));
                 }
 
-                long resetTime = data.getLong("resetTime");
+                long resetTime = data.getLong("reset.delay");
+                long lastReset = data.getLong("reset.last");
+
                 Location cornerOne = data.getLocation("cornerOne");
                 Location cornerTwo = data.getLocation("cornerTwo");
 
-                Mine mine = new Mine(name, hasPermission, permission, spawn, blocks, resetTime, cornerOne, cornerTwo);
+                Mine mine = new Mine(name, hasPermission, permission, spawn, blocks, lastReset, resetTime, cornerOne, cornerTwo);
                 Utils.mines.add(mine);
             }
     }
