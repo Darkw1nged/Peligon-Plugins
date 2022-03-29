@@ -38,14 +38,11 @@ public class menuBackpack implements Menu {
     }
 
     public void onOpen(Main plugin, Player player) {
-        this.inventory.setContents(plugin.backpackManager.getBackpack(player));
+        if (plugin.backpackManager.getBackpack(player) != null)
+            this.inventory.setContents(plugin.backpackManager.getBackpack(player));
     }
 
     public void onClose(Main plugin, Player player) {
-        if (!plugin.backpackManager.hasData(player)) {
-            plugin.backpackManager.createBackpack(player, this.inventory.getContents());
-            return;
-        }
         plugin.backpackManager.setBackpack(player, this.inventory.getContents());
     }
 
