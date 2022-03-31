@@ -55,7 +55,26 @@ public class cmdMine implements CommandExecutor {
                         break;
                     case "info":
                         if (player.hasPermission("Peligon.Prison.Mine.Info") || player.hasPermission("Peligon.Prison.*")) {
-                            // TODO get mine information
+                            if (args.length == 2) {
+                                Mine mine = plugin.minesManager.getMine(args[1]);
+                                if (mine == null) {
+                                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("mine-not-found")));
+                                    return true;
+                                }
+                                player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("mine-info-header")));
+                                for (String s : plugin.fileMessage.getConfig().getStringList("mine-info-menu")) {
+                                    player.sendMessage(Utils.chatColor(s)
+                                            .replaceAll("%name%", mine.getName())
+                                            .replaceAll("%lastreset%", mine.getLastReset() + "")
+                                            .replaceAll("%nextreset%", mine.getResetTime() + "")
+                                            .replaceAll("%spawn%", mine.getSpawnLocation().getWorld().getName() + " " + mine.getSpawnLocation().getBlockX() + " " + mine.getSpawnLocation().getBlockY() + " " + mine.getSpawnLocation().getBlockZ())
+                                            .replaceAll("%private%", mine.hasPermission() ? "Yes" : "No")
+                                            .replaceAll("%permission%", mine.getPermission()));
+                                }
+                                player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("mine-info-footer")));
+                            } else {
+                                player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("mine-not-found")));
+                            }
                         } else {
                             player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-permission")));
                         }
@@ -70,13 +89,54 @@ public class cmdMine implements CommandExecutor {
                                 player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("invalid-name")));
                                 return true;
                             }
-                            plugin.minesManager.addMine(new Mine(args[1]));
+                            Utils.mineCreationInProgress.put(player.getUniqueId(), args[1]);
                             player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
-                                    plugin.fileMessage.getConfig().getString("mine-created").replaceAll("%mine%", args[1])));
+                                    plugin.fileMessage.getConfig().getString("mine-creation").replaceAll("%mine%", args[1])));
+                            player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
+                                    plugin.fileMessage.getConfig().getString("mine-creation-info")));
+                            plugin.itemManager.addItem(player);
                         } else {
                             player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-permission")));
                         }
                         break;
+                    case "confirm":
+                        if (player.hasPermission("Peligon.Prison.Mine.Create") || player.hasPermission("Peligon.Prison.*")) {
+                            if (Utils.mineCreationInProgress.containsKey(player.getUniqueId())) {
+                                if (Utils.mineCreationCornerOne.containsKey(player.getUniqueId()) && Utils.mineCreationCornerTwo.containsKey(player.getUniqueId())) {
+                                    if (Utils.mineCreationCornerOne.get(player.getUniqueId()).getWorld().equals(Utils.mineCreationCornerTwo.get(player.getUniqueId()).getWorld())) {
+                                        if (Utils.mineCreationCornerOne.get(player.getUniqueId()).distance(Utils.mineCreationCornerTwo.get(player.getUniqueId())) > 1) {
+                                            Mine mine = new Mine(Utils.mineCreationInProgress.get(player.getUniqueId()), Utils.mineCreationCornerOne.get(player.getUniqueId()), Utils.mineCreationCornerTwo.get(player.getUniqueId()));
+                                            Utils.mines.add(mine);
+                                            Utils.mineCreationInProgress.remove(player.getUniqueId());
+                                            Utils.mineCreationCornerOne.remove(player.getUniqueId());
+                                            Utils.mineCreationCornerTwo.remove(player.getUniqueId());
+                                            player.sendMessage(plugin.fileMessage.getConfig().getString("prefix") +
+                                                    Utils.chatColor(plugin.fileMessage.getConfig().getString("mine-created").replaceAll("%mine%", mine.getName())));
+                                        } else {
+                                            player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("too-small-mine")));
+                                        }
+                                    }
+                                } else {
+                                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("select-area")));
+                                }
+                            }
+                        } else {
+                            player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-permission")));
+                        }
+                    case "cancel":
+                        if (player.hasPermission("Peligon.Prison.Mine.Create") || player.hasPermission("Peligon.Prison.*")) {
+                            if (Utils.mineCreationInProgress.containsKey(player.getUniqueId())) {
+                                Utils.mineCreationInProgress.remove(player.getUniqueId());
+                                Utils.mineCreationCornerOne.remove(player.getUniqueId());
+                                Utils.mineCreationCornerTwo.remove(player.getUniqueId());
+                                player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
+                                        plugin.fileMessage.getConfig().getString("mine-creation-cancelled")));
+                            } else {
+                                player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("not-in-mine-creation")));
+                            }
+                        } else {
+                            player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-permission")));
+                        }
                     case "delete":
                         if (player.hasPermission("Peligon.Prison.Mine.Delete") || player.hasPermission("Peligon.Prison.*")) {
                             if (args.length != 1) {
@@ -137,7 +197,11 @@ public class cmdMine implements CommandExecutor {
                                 player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
                                         plugin.fileMessage.getConfig().getString("mine-edit").replaceAll("%mine%", args[2])));
                             } else if (args[2].equalsIgnoreCase("area")) {
-                                // TODO : Add area edit
+                                Utils.mineCreationInProgress.put(player.getUniqueId(), args[1]);
+                                player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
+                                        plugin.fileMessage.getConfig().getString("mine-creation-info")));
+                                plugin.itemManager.addItem(player);
+
                             } else if (args[2].equalsIgnoreCase("spawn")) {
                                 Location location = player.getLocation();
                                 plugin.minesManager.getMine(args[1]).setSpawnLocation(location);

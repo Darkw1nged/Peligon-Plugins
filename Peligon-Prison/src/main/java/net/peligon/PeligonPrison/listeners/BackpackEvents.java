@@ -32,7 +32,7 @@ public class BackpackEvents implements Listener {
     @EventHandler
     public void onDrop(PlayerDropItemEvent event) {
         Player player = event.getPlayer();
-        if (plugin.getConfig().getBoolean("Backpack.Settings.allow-drop", false)) {
+        if (!plugin.getConfig().getBoolean("Backpack.Settings.allow-drop", true)) {
             if (player.getInventory().getItemInMainHand().equals(plugin.backpackManager.backpack)) {
                 event.setCancelled(true);
             }
@@ -42,7 +42,7 @@ public class BackpackEvents implements Listener {
     @EventHandler
     public void onPlace(BlockPlaceEvent event) {
         Player player = event.getPlayer();
-        if (plugin.getConfig().getBoolean("Backpack.Settings.allow-place", false)) {
+        if (!plugin.getConfig().getBoolean("Backpack.Settings.allow-place", true)) {
             if (player.getInventory().getItemInMainHand().equals(plugin.backpackManager.backpack)) {
                 event.setCancelled(true);
             }

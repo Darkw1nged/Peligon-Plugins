@@ -1,6 +1,36 @@
-name: Peligon_Core
+name: PeligonCore
 version: '${project.version}'
 main: net.peligon.PeligonCore.Main
 api-version: 1.18
 authors: [ darkwinged ]
 description: This is an open-source plugin
+commands:
+  # ADMIN COMMANDS
+  pelcore:
+    aliases:
+      - pcore
+    description: Allows admins to reload configuration files
+  gamemode:
+    aliases:
+      - gm
+    description: Allows admins to change the gamemode of a player
+  gmsurvival:
+    aliases:
+      - gms
+    description: Sets the gamemode of a player to survival
+  gmcreative:
+    aliases:
+      - gmc
+    description: Sets the gamemode of a player to creative
+  gmadventure:
+    aliases:
+      - gma
+    description: Sets the gamemode of a player to adventure
+  gmspectator:
+    aliases:
+      - gmsp
+    description: Sets the gamemode of a player to spectator
+  # FUN COMMANDS
+  hat:
+    description: Allows players to wear a hat
+

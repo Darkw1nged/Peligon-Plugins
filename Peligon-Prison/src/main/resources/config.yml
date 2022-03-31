@@ -39,8 +39,8 @@ Prestige:
 # Players can store items inside a custom inventory.
 Backpack:
   Settings:
-    allow-drop: false
-    allow-place: false
+    allow-drop: true
+    allow-place: true
   Item:
     material: CHEST
     name: "&aBackpack"

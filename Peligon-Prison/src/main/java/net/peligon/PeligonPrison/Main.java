@@ -5,10 +5,7 @@ import net.peligon.PeligonPrison.commands.*;
 import net.peligon.PeligonPrison.libaries.CustomConfig;
 import net.peligon.PeligonPrison.libaries.Utils;
 import net.peligon.PeligonPrison.libaries.storage.SQLite;
-import net.peligon.PeligonPrison.listeners.BackpackEvents;
-import net.peligon.PeligonPrison.listeners.PickupEvent;
-import net.peligon.PeligonPrison.listeners.SmeltEvent;
-import net.peligon.PeligonPrison.listeners.accountSetup;
+import net.peligon.PeligonPrison.listeners.*;
 import net.peligon.PeligonPrison.manager.*;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -24,6 +21,7 @@ public final class Main extends JavaPlugin {
     public mgrGangs gangManager;
     public mgrMines minesManager;
     public mgrBackpack backpackManager;
+    public mgrItems itemManager;
 
     public CustomConfig fileMessage;
 
@@ -35,6 +33,7 @@ public final class Main extends JavaPlugin {
         gangManager = new mgrGangs();
         minesManager = new mgrMines();
         backpackManager = new mgrBackpack();
+        itemManager = new mgrItems();
 
         // ---- [ Loading Commands | Loading Events | Loading YML Files ] ----
         loadCommands();
@@ -91,7 +90,8 @@ public final class Main extends JavaPlugin {
                 new accountSetup(),
                 new SmeltEvent(),
                 new PickupEvent(),
-                new BackpackEvents()
+                new BackpackEvents(),
+                new MineCreationEvents()
         ).forEach(listener -> getServer().getPluginManager().registerEvents(listener, this));
     }
 

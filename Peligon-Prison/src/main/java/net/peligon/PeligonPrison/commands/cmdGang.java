@@ -229,11 +229,11 @@ public class cmdGang implements CommandExecutor {
                             player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("gang-already-exists")));
                             return true;
                         }
-                        Gang newGang = new Gang(gangName, player.getUniqueId(), player.getName());
-                        Utils.gangs.add(newGang);
-                        player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
-                                plugin.fileMessage.getConfig().getString("gang-created").replaceAll("%gang%", gangName)));
                     }
+                    Gang newGang = new Gang(gangName, player.getUniqueId(), player.getName());
+                    Utils.gangs.add(newGang);
+                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
+                            plugin.fileMessage.getConfig().getString("gang-created").replaceAll("%gang%", newGang.getName())));
                     break;
                 case "invite":
                     if (plugin.gangManager.getGang(player) == null) {

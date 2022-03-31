@@ -1,17 +1,83 @@
 package net.Peligon.PeligonCore;
 
+import net.Peligon.PeligonCore.commands.*;
+import net.Peligon.PeligonCore.libaries.CustomConfig;
+import net.Peligon.PeligonCore.libaries.UpdateChecker;
+import net.Peligon.PeligonCore.libaries.Utils;
+import net.Peligon.PeligonCore.libaries.storage.SQLite;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.Arrays;
 
 public final class Main extends JavaPlugin {
 
-    @Override
-    public void onEnable() {
-        // Plugin startup logic
+    public static Main getInstance;
 
+    public CustomConfig fileMessage;
+
+    public void onEnable() {
+        // ---- [ Initializing instance of main class ] ----
+        getInstance = this;
+
+        // ---- [ Loading Commands | Loading Events | Loading YML Files ] ----
+        loadCommands();
+        loadEvents();
+        saveDefaultConfig();
+
+        // ---- [ Loading lang file ] ----
+        fileMessage = new CustomConfig(this, "lang/" + this.getConfig().getString("Storage.Language File"), true);
+        fileMessage.saveDefaultConfig();
+
+        // ---- [ Checking if the server has the dependencies, if not disable ] ----
+        if (Bukkit.getPluginManager().getPlugin("Vault") == null) {
+            getServer().getConsoleSender().sendMessage(Utils.chatColor(this.fileMessage.getConfig().getString("no-plugin-dependency")));
+            getServer().getPluginManager().disablePlugin(this);
+        }
+
+        // ---- [ Setting up SQLite ] ----
+        SQLite sqlLite = new SQLite();
+        sqlLite.loadTables();
+
+        // ---- [ Startup message ] ----
+        getServer().getConsoleSender().sendMessage(Utils.chatColor(this.fileMessage.getConfig().getString("startup")));
+
+        // ---- [ Check if server has most updated version ] ----
+        if (getConfig().getBoolean("check-for-updates", true)) {
+            versionChecker();
+        }
     }
 
-    @Override
     public void onDisable() {
-        // Plugin shutdown logic
+        // ---- [ shutdown message ] ----
+        getServer().getConsoleSender().sendMessage(Utils.chatColor(this.fileMessage.getConfig().getString("shutdown")));
+    }
+
+    public void loadCommands() {
+        getCommand("pelcore").setExecutor(new cmdReload());
+
+        // ---- [ Fun commands ] ----
+        getCommand("hat").setExecutor(new cmdHat());
+
+        // ---- [ Admin commands ] ----
+        getCommand("gamemode").setExecutor(new cmdGamemode());
+        getCommand("gmadventure").setExecutor(new cmdGamemodeAdventure());
+        getCommand("gmsurvival").setExecutor(new cmdGamemodeSurvival());
+        getCommand("gmcreative").setExecutor(new cmdGamemodeCreative());
+        getCommand("gmspectator").setExecutor(new cmdGamemodeSpectator());
+    }
+
+    public void loadEvents() {
+//        Arrays.asList(
+//        ).forEach(listener -> getServer().getPluginManager().registerEvents(listener, this));
+    }
+
+    private void versionChecker() {
+        new UpdateChecker(this, 0).getVersion(version -> {
+            if (!version.equals(this.getDescription().getVersion())) {
+                getServer().getConsoleSender().sendMessage(Utils.chatColor(fileMessage.getConfig().getString("plugin-outdated")));
+                getServer().getConsoleSender().sendMessage(Utils.chatColor(fileMessage.getConfig().getString("plugin-link")));
+            }
+        });
     }
 }

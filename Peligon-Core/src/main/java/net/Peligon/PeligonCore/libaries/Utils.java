@@ -1,4 +1,4 @@
-package net.peligon.PeligonPrison.libaries;
+package net.Peligon.PeligonCore.libaries;
 
 import net.peligon.PeligonPrison.Main;
 import net.peligon.PeligonPrison.struts.Gang;
@@ -98,9 +98,6 @@ public class Utils {
     public static List<Prestige> prestige = new ArrayList<>();
     public static List<Gang> gangs = new ArrayList<>();
     public static List<Mine> mines = new ArrayList<>();
-    public static Map<UUID, String> mineCreationInProgress = new HashMap<>();
-    public static Map<UUID, Location> mineCreationCornerOne = new HashMap<>();
-    public static Map<UUID, Location> mineCreationCornerTwo = new HashMap<>();
 
     // Temporary
     static {
