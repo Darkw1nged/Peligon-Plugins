@@ -48,7 +48,7 @@ public final class Main extends JavaPlugin {
         setupEconomy();
         gangManager.loadGangs();
         minesManager.loadMines();
-        minesManager.resetMines();
+        minesManager.resetAllMines();
 
         // ---- [ Loading lang file ] ----
         fileMessage = new CustomConfig(this, "lang/" + this.getConfig().getString("Storage.Language File"), true);

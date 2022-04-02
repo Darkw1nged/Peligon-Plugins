@@ -33,7 +33,7 @@ public class mgrItems {
         if (!Utils.hasSpace(player, mineCreationWand)) {
             playerItem.put(player.getUniqueId(), player.getItemInHand());
         }
-        player.getInventory().addItem(mineCreationWand);
+        player.getInventory().setItemInHand(mineCreationWand);
     }
 
     public void removeItem(Player player) {

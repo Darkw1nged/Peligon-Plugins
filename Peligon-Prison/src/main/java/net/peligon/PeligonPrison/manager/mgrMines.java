@@ -168,6 +168,7 @@ public class mgrMines {
         for (Mine mine : Utils.mines) {
             if (mine.getName().equals(name)) {
                 List<Material> blocks = mine.getBlocks();
+                if (blocks.size() > 0 || mine.getBlocks().isEmpty()) return;
                 for (Block areaBlock : getMinesRemainingBlocks(name)) {
                     Random rand = new Random();
                     Material randomMaterial = blocks.get(rand.nextInt(blocks.size()));
@@ -178,7 +179,7 @@ public class mgrMines {
         }
     }
 
-    public void resetMines() {
+    public void resetAllMines() {
         for (Mine mine : Utils.mines) {
             resetMine(mine.getName());
         }

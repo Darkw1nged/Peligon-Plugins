@@ -101,6 +101,7 @@ specify-blocks: "&cError! Please specify blocks. (Example: /mine set area stone,
 select-area: "&cError! Please use the wand to select an area."
 too-small-mine: "&cError! The mine is too small."
 not-in-mine-creation: "&cError! You must be in the mine creation process to do this."
+no-blocks-in-mine: "&cError! You must have at least one block in the mine."
 
 gang-edit-usage: "&cIncorrect Command Usage: &f/gang edit <name> <description|tag>"
 mine-edit-usage: "&cIncorrect Command Usage: &f/mine edit <name> <name|area|spawn|block(s)> <block(s)>"

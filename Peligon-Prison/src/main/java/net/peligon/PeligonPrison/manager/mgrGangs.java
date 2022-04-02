@@ -127,7 +127,7 @@ public class mgrGangs {
 
             data.set("name", gang.getName());
             data.set("owner.uuid", gang.getOwner().toString());
-            data.set("owner.name", gang.getOwner().toString());
+            data.set("owner.name", gang.getOwnerName());
             data.set("description", gang.getDescription());
             data.set("tag", gang.getTag());
 

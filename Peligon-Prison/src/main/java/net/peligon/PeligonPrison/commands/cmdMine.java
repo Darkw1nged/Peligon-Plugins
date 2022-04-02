@@ -110,6 +110,7 @@ public class cmdMine implements CommandExecutor {
                                             Utils.mineCreationInProgress.remove(player.getUniqueId());
                                             Utils.mineCreationCornerOne.remove(player.getUniqueId());
                                             Utils.mineCreationCornerTwo.remove(player.getUniqueId());
+                                            plugin.itemManager.removeItem(player);
                                             player.sendMessage(plugin.fileMessage.getConfig().getString("prefix") +
                                                     Utils.chatColor(plugin.fileMessage.getConfig().getString("mine-created").replaceAll("%mine%", mine.getName())));
                                         } else {
@@ -139,7 +140,7 @@ public class cmdMine implements CommandExecutor {
                         }
                     case "delete":
                         if (player.hasPermission("Peligon.Prison.Mine.Delete") || player.hasPermission("Peligon.Prison.*")) {
-                            if (args.length != 1) {
+                            if (args.length != 2) {
                                 player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("specify-name")));
                                 return true;
                             }
@@ -250,7 +251,7 @@ public class cmdMine implements CommandExecutor {
                         break;
                     case "resetall":
                         if (player.hasPermission("Peligon.Prison.Mine.ResetAll") || player.hasPermission("Peligon.Prison.*")) {
-                            plugin.minesManager.resetMines();
+                            plugin.minesManager.resetAllMines();
                             player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
                                     plugin.fileMessage.getConfig().getString("mine-reset-all")));
                         } else {

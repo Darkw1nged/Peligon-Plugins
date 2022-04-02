@@ -15,18 +15,16 @@ public class MineCreationEvents implements Listener {
     @EventHandler
     public void onInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
-        if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
-            if (Utils.mineCreationInProgress.containsKey(player.getUniqueId())) {
-                if (player.getInventory().getItemInHand().equals(plugin.itemManager.mineCreationWand)) {
-                    event.setCancelled(true);
+        if (player.getInventory().getItemInHand().equals(plugin.itemManager.mineCreationWand)) {
+            event.setCancelled(true);
+            if (event.getAction().equals(Action.LEFT_CLICK_BLOCK)) {
+                if (Utils.mineCreationInProgress.containsKey(player.getUniqueId())) {
                     Utils.mineCreationCornerOne.put(player.getUniqueId(), event.getClickedBlock().getLocation());
                     player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") + plugin.fileMessage.getConfig().getString("first-corner-set")));
                 }
-            }
-        } else if (event.getAction().equals(Action.LEFT_CLICK_BLOCK)) {
-            if (Utils.mineCreationInProgress.containsKey(player.getUniqueId())) {
-                if (player.getInventory().getItemInHand().equals(plugin.itemManager.mineCreationWand)) {
-                    event.setCancelled(true);
+
+            } else if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
+                if (Utils.mineCreationInProgress.containsKey(player.getUniqueId())) {
                     Utils.mineCreationCornerTwo.put(player.getUniqueId(), event.getClickedBlock().getLocation());
                     player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") + plugin.fileMessage.getConfig().getString("second-corner-set")));
                 }
