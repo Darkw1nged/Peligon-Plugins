@@ -11,7 +11,7 @@ loadbefore: [Vault]
 commands:
   economy:
     aliases:
-      - econ
+      - eco
     description: Allows admins manage player accounts
   pelecon:
     aliases:
