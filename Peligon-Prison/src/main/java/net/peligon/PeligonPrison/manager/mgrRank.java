@@ -1,6 +1,9 @@
 package net.peligon.PeligonPrison.manager;
 
+import net.peligon.PeligonPrison.Main;
+import net.peligon.PeligonPrison.libaries.Utils;
 import net.peligon.PeligonPrison.libaries.storage.SQLite;
+import net.peligon.PeligonPrison.struts.Rank;
 import org.bukkit.OfflinePlayer;
 
 import java.sql.PreparedStatement;
@@ -14,6 +17,8 @@ public class mgrRank {
     public mgrRank() {
         getInstance = this;
     }
+
+    private final static Main plugin = Main.getInstance;
 
     /**
      * Checking if player has any data in database
@@ -81,6 +86,17 @@ public class mgrRank {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public void loadRanks() {
+        for (String key : plugin.fileRanks.getConfig().getConfigurationSection("ranks").getKeys(false)) {
+            Rank rank = new Rank(
+                    plugin.fileRanks.getConfig().getString("ranks." + key + ".name"),
+                    plugin.fileRanks.getConfig().getDouble("ranks." + key + ".cost"),
+                    plugin.fileRanks.getConfig().getBoolean("ranks." + key + ".default")
+            );
+            Utils.ranks.add(rank);
+        }
     }
 
 }

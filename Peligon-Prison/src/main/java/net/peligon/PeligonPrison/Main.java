@@ -24,6 +24,7 @@ public final class Main extends JavaPlugin {
     public mgrItems itemManager;
 
     public CustomConfig fileMessage;
+    public CustomConfig fileRanks = new CustomConfig(this, "ranks", true);
 
     public void onEnable() {
         // ---- [ Initializing instance of main class | manager classes | register placeholder ] ----
@@ -39,6 +40,7 @@ public final class Main extends JavaPlugin {
         loadCommands();
         loadEvents();
         saveDefaultConfig();
+        fileRanks.saveDefaultConfig();
 
         // ---- [ Creating the SQLLite connection ] ----
         SQLite sqlLite = new SQLite();
@@ -49,6 +51,10 @@ public final class Main extends JavaPlugin {
         gangManager.loadGangs();
         minesManager.loadMines();
         minesManager.resetAllMines();
+
+        // ---- [ Loading ranks and prestige's ] ----
+        rankManager.loadRanks();
+        prestigeManager.loadPrestiges();
 
         // ---- [ Loading lang file ] ----
         fileMessage = new CustomConfig(this, "lang/" + this.getConfig().getString("Storage.Language File"), true);

@@ -4,10 +4,12 @@ public class Prestige {
 
     private String name;
     private double cost;
+    private double rankMultiplier;
 
-    public Prestige(String name, double cost) {
+    public Prestige(String name, double cost, double rankMultiplier) {
         this.name = name;
         this.cost = cost;
+        this.rankMultiplier = rankMultiplier;
     }
 
     public String getName() {
@@ -24,6 +26,14 @@ public class Prestige {
 
     public void setCost(double cost) {
         this.cost = cost;
+    }
+
+    public double getRankMultiplier() {
+        return rankMultiplier;
+    }
+
+    public void setRankMultiplier(double rankMultiplier) {
+        this.rankMultiplier = rankMultiplier;
     }
 
 }

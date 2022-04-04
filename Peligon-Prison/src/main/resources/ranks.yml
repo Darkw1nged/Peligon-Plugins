@@ -1,0 +1,115 @@
+ranks:
+  1:
+    name: "Private"
+    default: true
+    cost: 0
+  2:
+    name: "Corporal"
+    default: false
+    cost: 1000
+  3:
+    name: "Sergeant"
+    default: false
+    cost: 5000
+  4:
+    name: "Lieutenant"
+    default: false
+    cost: 10000
+  5:
+    name: "Captain"
+    default: false
+    cost: 25000
+  6:
+    name: "Major"
+    default: false
+    cost: 50000
+  7:
+    name: "Colonel"
+    default: false
+    cost: 75000
+  8:
+    name: "General"
+    default: false
+    cost: 100000
+  9:
+    name: "Field Marshal"
+    default: false
+    cost: 125000
+  10:
+    name: "Supreme Marshal"
+    default: false
+    cost: 150000
+  11:
+    name: "National Force"
+    default: false
+    cost: 175000
+  12:
+    name: "World Class Force"
+    default: false
+    cost: 200000
+  13:
+    name: "Legendary Force"
+    default: false
+    cost: 225000
+  14:
+    name: "God of War"
+    default: false
+    cost: 250000
+  15:
+    name: "God of War II"
+    default: false
+    cost: 275000
+  16:
+    name: "God of War III"
+    default: false
+    cost: 300000
+  17:
+    name: "God of War IV"
+    default: false
+    cost: 325000
+  18:
+    name: "God of War V"
+    default: false
+    cost: 350000
+
+prestiges:
+  1:
+    name: "Prestige 1"
+    cost: 100000
+    rank-cost-multiplier: 1.1
+  2:
+    name: "Prestige 2"
+    cost: 250000
+    rank-cost-multiplier: 1.2
+  3:
+    name: "Prestige 3"
+    cost: 500000
+    rank-cost-multiplier: 1.3
+  4:
+    name: "Prestige 4"
+    cost: 750000
+    rank-cost-multiplier: 1.4
+  5:
+    name: "Prestige 5"
+    cost: 1000000
+    rank-cost-multiplier: 1.5
+  6:
+    name: "Prestige 6"
+    cost: 1250000
+    rank-cost-multiplier: 1.6
+  7:
+    name: "Prestige 7"
+    cost: 1500000
+    rank-cost-multiplier: 1.7
+  8:
+    name: "Prestige 8"
+    cost: 1750000
+    rank-cost-multiplier: 1.8
+  9:
+    name: "Prestige 9"
+    cost: 2000000
+    rank-cost-multiplier: 1.9
+  10:
+    name: "Prestige 10"
+    cost: 2250000
+    rank-cost-multiplier: 2.0
