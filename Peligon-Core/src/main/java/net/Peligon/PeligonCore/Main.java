@@ -15,6 +15,7 @@ public final class Main extends JavaPlugin {
     public static Main getInstance;
 
     public CustomConfig fileMessage;
+    public CustomConfig fileSpawn = new CustomConfig(this, "spawn", true);
 
     public void onEnable() {
         // ---- [ Initializing instance of main class ] ----
@@ -24,6 +25,7 @@ public final class Main extends JavaPlugin {
         loadCommands();
         loadEvents();
         saveDefaultConfig();
+        fileSpawn.saveDefaultConfig();
 
         // ---- [ Loading lang file ] ----
         fileMessage = new CustomConfig(this, "lang/" + this.getConfig().getString("Storage.Language File"), true);
@@ -65,6 +67,10 @@ public final class Main extends JavaPlugin {
         getCommand("gmsurvival").setExecutor(new cmdGamemodeSurvival());
         getCommand("gmcreative").setExecutor(new cmdGamemodeCreative());
         getCommand("gmspectator").setExecutor(new cmdGamemodeSpectator());
+        getCommand("setspawn").setExecutor(new cmdSetSpawn());
+
+        // ---- [ Player commands ] ----
+        getCommand("spawn").setExecutor(new cmdSpawn());
     }
 
     public void loadEvents() {

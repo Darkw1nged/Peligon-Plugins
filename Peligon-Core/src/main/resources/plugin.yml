@@ -30,7 +30,12 @@ commands:
     aliases:
       - gmsp
     description: Sets the gamemode of a player to spectator
+  setspawn:
+    description: Sets the spawn of a player
   # FUN COMMANDS
   hat:
     description: Allows players to wear a hat
+  # UTILITY COMMANDS
+  spawn:
+    description: Teleports a player to the spawn
 
