@@ -2,6 +2,7 @@ package net.peligon.PeligonEconomy.commands;
 
 import net.peligon.PeligonEconomy.Main;
 import net.peligon.PeligonEconomy.libaries.Utils;
+import net.peligon.PeligonEconomy.menu.menuSellGUI;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -20,12 +21,16 @@ public class cmdSell implements CommandExecutor {
             }
             Player player = (Player)sender;
             if (player.hasPermission("Peligon.Economy.Sell") || player.hasPermission("Peligon.Economy.*")) {
+                if (plugin.getConfig().getBoolean("Sell-GUI.enabled", true)) {
+                    menuSellGUI menu = new menuSellGUI(player);
+                    player.openInventory(menu.getInventory());
+                    return true;
+                }
                 Double amount = getSellableItems(player);
                 if (amount <= 0) {
                     player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-items")));
                     return true;
                 }
-                // message
                 player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
                         plugin.fileMessage.getConfig().getString("sold-items"), amount));
                 plugin.Economy.addAccount(player, amount);

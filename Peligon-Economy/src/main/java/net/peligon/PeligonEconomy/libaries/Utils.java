@@ -211,6 +211,15 @@ public class Utils {
     public static Map<UUID, Double> bounties = new HashMap<>();
     public static Map<UUID, Map<LocalDateTime, String>> transactions = new HashMap<>();
     public static Map<ArmorStand, Long> activeHolograms = new HashMap<>();
+    public static Map<UUID, Long> dailyCooldown = new HashMap<>();
+
+    // ---- [ Checking if a day has passed ] ----
+    public static boolean canClaim(Player player) {
+        if (dailyCooldown.containsKey(player.getUniqueId())) {
+            return dailyCooldown.get(player.getUniqueId()) + 86400000 <= System.currentTimeMillis();
+        }
+        return true;
+    }
 
     // ---- [ Global values ] ----
     public static int RawInterestTimer;

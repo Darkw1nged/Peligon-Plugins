@@ -17,7 +17,7 @@ atm-inventory:
   # !! Must be multiples of 9 | Maximum is 54
   size: 36
 
-  # There is 4 types of item events: Deposit | Withdraw | Transactions | Close
+  # There is 4 types of item event(s): Deposit | Withdraw | Transactions | Close
   # If you want the item to be interacted with then please add a type to the item.
   contents:
     1:

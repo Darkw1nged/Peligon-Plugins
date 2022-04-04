@@ -27,6 +27,10 @@ Economy-Leaderboard:
     format: "%position%. &e%player% &f- &2$%amount%"
     show-server-total: true
 
+Sell-GUI:
+  # When the player performs the /sell command, the GUI will be opened.
+  enabled: true
+
 Items:
   # Placeholder Key -------------
   # %amount% - Required for them to work.
@@ -77,7 +81,8 @@ Death-Penalty:
 
 # Give players a chance to find money inside of grass.
 Grass-Scavenge:
-  enabled: true
+  # Be careful as players
+  enabled: false
   disabled-plants: []
   disabled-worlds: []
   money:
@@ -90,6 +95,26 @@ Grass-Scavenge:
         maximum: 100
     2:
       amount: 35
+      chance:
+        minimum: 65
+        maximum: 75
+
+# Give players a chance to find money when mining.
+Mining-Rewards:
+  # Would be useful for prisons.
+  enabled: false
+  disabled-worlds: []
+  disabled-blocks: []
+  money:
+    1:
+      # The amount found.
+      amount: 100
+      # The chance is treated as a percentage.
+      chance:
+        minimum: 80
+        maximum: 100
+    2:
+      amount: 300
       chance:
         minimum: 65
         maximum: 75
@@ -120,9 +145,7 @@ Mob-Rewards:
 # Setup some server wide goals and give players rewards.
 Server-Goals:
   targets:
-    1:
-      # Should not include any spaces
-      name: "First_Goal"
+    First_Goal:
       goal: 10000
       # This data should not be messed with.
       data:
@@ -136,8 +159,7 @@ Server-Goals:
         - "%item% diamond 5"
         - "%message% &aThanks for reaching the goal!"
         - "%command% say goal reached!"
-    2:
-      name: "Second_Goal"
+    Second_Goal:
       goal: 100000
       data:
         completed: false

@@ -8,15 +8,8 @@ import net.peligon.PeligonEconomy.managers.mgrEconomy;
 import net.peligon.PeligonEconomy.managers.mgrPlaceholders;
 import net.peligon.PeligonEconomy.managers.mgrSignFactory;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 public final class Main extends JavaPlugin {
@@ -31,6 +24,7 @@ public final class Main extends JavaPlugin {
     public CustomConfig fileSigns = new CustomConfig(this, "signs", true);
     public CustomConfig fileATM = new CustomConfig(this, "Inventories/ATM", true);
     public CustomConfig fileDailyReward = new CustomConfig(this, "Inventories/daily", true);
+    public CustomConfig fileSellGUI = new CustomConfig(this, "Inventories/sellGUI", true);
     public CustomConfig fileMessage;
 
     public void onEnable() {
@@ -44,6 +38,7 @@ public final class Main extends JavaPlugin {
         fileSigns.saveDefaultConfig();
         fileATM.saveDefaultConfig();
         fileDailyReward.saveDefaultConfig();
+        fileSellGUI.saveDefaultConfig();
         saveDefaultConfig();
 
         // ---- [ Loading lang file ] ----
@@ -122,7 +117,11 @@ public final class Main extends JavaPlugin {
                 new AtmEvents(),
                 new MobMoneyEvent(),
                 new DeathPenaltyEvent(),
-                new GrassScavengeEvents()
+                new GrassScavengeEvents(),
+                new MiningRewardsEvents(),
+                new DailyInventoryEvents(),
+                new SellGUIEvents(),
+                new GlobalInventoryEvents()
         ).forEach(listener -> getServer().getPluginManager().registerEvents(listener, this));
     }
 

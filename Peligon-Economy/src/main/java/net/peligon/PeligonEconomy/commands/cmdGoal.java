@@ -31,7 +31,7 @@ public class cmdGoal implements CommandExecutor {
                     if (plugin.getConfig().getBoolean("Server-Goals.targets." + key + ".data.completed", false)) continue;
                     player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
                             plugin.fileMessage.getConfig().getString("current-goal")
-                                    .replaceAll("%name%", plugin.getConfig().getString("Server-Goals.targets." + key + ".name").replaceAll("_", " "))
+                                    .replaceAll("%name%", plugin.getConfig().getString("Server-Goals.targets." + key).replaceAll("_", " "))
                                     .replaceAll("%raised%", "" + plugin.getConfig().getInt("Server-Goals.targets." + key + ".data.raised"))
                                     .replaceAll("%goal%", "" + plugin.getConfig().getInt("Server-Goals.targets." + key + ".goal"))));
                     return true;
@@ -44,7 +44,7 @@ public class cmdGoal implements CommandExecutor {
                     if (plugin.getConfig().getBoolean("Server-Goals.targets." + key + ".data.completed", false)) continue;
                     player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
                             plugin.fileMessage.getConfig().getString("goal")
-                                    .replaceAll("%name%", plugin.getConfig().getString("Server-Goals.targets." + key + ".name").replaceAll("_", " "))
+                                    .replaceAll("%name%", plugin.getConfig().getString("Server-Goals.targets." + key).replaceAll("_", " "))
                                     .replaceAll("%raised%", "" + plugin.getConfig().getInt("Server-Goals.targets." + key + ".data.raised"))
                                     .replaceAll("%goal%", "" + plugin.getConfig().getInt("Server-Goals.targets." + key + ".goal"))));
                 }
@@ -53,7 +53,7 @@ public class cmdGoal implements CommandExecutor {
             if (args.length == 3) {
                 if (args[0].equalsIgnoreCase("contribute") || args[0].equalsIgnoreCase("pay")) {
                     for (String key : plugin.getConfig().getConfigurationSection("Server-Goals.targets").getKeys(false)) {
-                        if (args[1].equalsIgnoreCase(plugin.getConfig().getString("Server-Goals.targets." + key + ".name"))) {
+                        if (args[1].equalsIgnoreCase(plugin.getConfig().getString("Server-Goals.targets." + key))) {
                             if (plugin.getConfig().getBoolean("Server-Goals.targets." + key + ".data.completed")) {
                                 player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("goal-already-reached")));
                                 return true;
@@ -100,7 +100,7 @@ public class cmdGoal implements CommandExecutor {
 
                             player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
                                     plugin.fileMessage.getConfig().getString("current-goal")
-                                            .replaceAll("%name%", plugin.getConfig().getString("Server-Goals.targets." + key + ".name").replaceAll("_", " "))
+                                            .replaceAll("%name%", plugin.getConfig().getString("Server-Goals.targets." + key).replaceAll("_", " "))
                                             .replaceAll("%raised%", "" + plugin.getConfig().getInt("Server-Goals.targets." + key + ".data.raised"))
                                             .replaceAll("%goal%", "" + plugin.getConfig().getInt("Server-Goals.targets." + key + ".goal"))));
 
@@ -142,7 +142,6 @@ public class cmdGoal implements CommandExecutor {
                                 player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
                                         plugin.fileMessage.getConfig().getString("goal-reached")));
                             }
-
 
 
                         }

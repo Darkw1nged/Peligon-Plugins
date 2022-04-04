@@ -45,6 +45,7 @@ no-items: "&cError! No items could be found."
 account-error: "&cError! %player% dont seem to have a bank account."
 no-goals-found: "&cError! No server goals could be found."
 goal-already-reached: "&cError! That goal has already been reached."
+already-claimed: "&cError! You must wait a day before claiming again."
 
 economy-usage: "&cIncorrect Command Usage: &f/economy [add|remove|set|reset] [cash|bank] [player] [amount]"
 bounty-usage: "&cIncorrect Command Usage: &f/bounty [set|view] [player] [amount]"

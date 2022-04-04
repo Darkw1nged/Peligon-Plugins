@@ -183,18 +183,4 @@ public class AtmEvents implements Listener {
         }
     }
 
-    @EventHandler
-    private void onOpen(InventoryOpenEvent event) {
-        InventoryHolder holder = event.getInventory().getHolder();
-        if (holder instanceof Menu)
-            ((Menu) holder).onOpen(plugin, (Player) event.getPlayer());
-    }
-
-    @EventHandler
-    private void onClose(InventoryCloseEvent event) {
-        InventoryHolder holder = event.getInventory().getHolder();
-        if (holder instanceof Menu)
-            ((Menu) holder).onClose(plugin, (Player) event.getPlayer());
-    }
-
 }

@@ -2,6 +2,7 @@ package net.peligon.PeligonEconomy.listeners;
 
 import net.peligon.PeligonEconomy.Main;
 import net.peligon.PeligonEconomy.libaries.Utils;
+import org.bukkit.GameMode;
 import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -16,7 +17,8 @@ public class GrassScavengeEvents implements Listener {
     @EventHandler
     public void onBreak(BlockBreakEvent event) {
         Block block = event.getBlock();
-        if (plugin.getConfig().getBoolean("Grass-Scavenge.enabled", true)) {
+        if (event.getPlayer().getGameMode() == GameMode.CREATIVE) return;
+        if (plugin.getConfig().getBoolean("Grass-Scavenge.enabled", false)) {
             if (plugin.getConfig().getStringList("Grass-Scavenge.disabled-worlds").contains(block.getWorld().getName())) return;
             if (plugin.getConfig().getStringList("Grass-Scavenge.disabled-plants").contains(block.getType().name().toLowerCase())) return;
             int random = new Random().nextInt(100);
