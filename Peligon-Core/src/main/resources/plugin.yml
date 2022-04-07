@@ -31,11 +31,34 @@ commands:
       - gmsp
     description: Sets the gamemode of a player to spectator
   setspawn:
-    description: Sets the spawn of a player
+    description: Allows admins to set the spawn
+  setwarp:
+    description: Allows admins to set a warp
+  deletewarp:
+    aliases:
+      - delwarp
+    description: Allows admins to delete a warp
+  # UTILITY COMMANDS
+  spawn:
+    description: Teleports a player to spawn
+  warps:
+    description: Shows the player a lists of all warps
+  warp:
+    description: Allows players to teleport to a warp
+  craft:
+    description: Allows players to craft items
+  disposal:
+    description: Allows players to dispose of items
+  enderchest:
+    description: Allows players to open an enderchest
   # FUN COMMANDS
   hat:
     description: Allows players to wear a hat
-  # UTILITY COMMANDS
-  spawn:
-    description: Teleports a player to the spawn
+  heal:
+    description: Allows players to heal themselves
+  feed:
+    description: Allows players to feed themselves
+  suicide:
+    description: Allows players to end their lives
+
 

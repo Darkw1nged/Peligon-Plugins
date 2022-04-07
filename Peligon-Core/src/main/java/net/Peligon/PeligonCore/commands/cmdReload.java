@@ -16,7 +16,6 @@ public class cmdReload implements CommandExecutor {
 
                 plugin.reloadConfig();
                 plugin.fileMessage.reloadConfig();
-                plugin.fileSpawn.reloadConfig();
 
                 sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("admin-reload")));
             }

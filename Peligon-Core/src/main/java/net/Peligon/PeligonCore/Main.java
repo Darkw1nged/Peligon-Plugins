@@ -8,14 +8,11 @@ import net.Peligon.PeligonCore.libaries.storage.SQLite;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.Arrays;
-
 public final class Main extends JavaPlugin {
 
     public static Main getInstance;
 
     public CustomConfig fileMessage;
-    public CustomConfig fileSpawn = new CustomConfig(this, "spawn", true);
 
     public void onEnable() {
         // ---- [ Initializing instance of main class ] ----
@@ -25,7 +22,6 @@ public final class Main extends JavaPlugin {
         loadCommands();
         loadEvents();
         saveDefaultConfig();
-        fileSpawn.saveDefaultConfig();
 
         // ---- [ Loading lang file ] ----
         fileMessage = new CustomConfig(this, "lang/" + this.getConfig().getString("Storage.Language File"), true);
@@ -60,6 +56,9 @@ public final class Main extends JavaPlugin {
 
         // ---- [ Fun commands ] ----
         getCommand("hat").setExecutor(new cmdHat());
+        getCommand("heal").setExecutor(new cmdHeal());
+        getCommand("feed").setExecutor(new cmdFeed());
+        getCommand("suicide").setExecutor(new cmdSuicide());
 
         // ---- [ Admin commands ] ----
         getCommand("gamemode").setExecutor(new cmdGamemode());
@@ -68,9 +67,16 @@ public final class Main extends JavaPlugin {
         getCommand("gmcreative").setExecutor(new cmdGamemodeCreative());
         getCommand("gmspectator").setExecutor(new cmdGamemodeSpectator());
         getCommand("setspawn").setExecutor(new cmdSetSpawn());
+        getCommand("setwarp").setExecutor(new cmdSetWarp());
+        getCommand("deletewarp").setExecutor(new cmdDeleteWarp());
 
         // ---- [ Player commands ] ----
         getCommand("spawn").setExecutor(new cmdSpawn());
+        getCommand("warp").setExecutor(new cmdWarp());
+        getCommand("warps").setExecutor(new cmdWarps());
+        getCommand("craft").setExecutor(new cmdCraft());
+        getCommand("disposal").setExecutor(new cmdDisposal());
+        getCommand("enderchest").setExecutor(new cmdEnderchest());
     }
 
     public void loadEvents() {

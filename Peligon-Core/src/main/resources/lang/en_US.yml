@@ -17,6 +17,15 @@ teleported-other-delay: "&eYou will be teleported to &6%player%&e in &6%seconds%
 spawn-to-teleported: "&eYou have been teleported to spawn."
 warp-set: "&eWarp &6%warp%&e set to your current location."
 warp-delete: "&eWarp &6%warp%&e has been deleted."
+warps-list: "&eWarps list: %list%"
+teleported-to-warp: "&eYou have been teleported to &6%warp%&e."
+# Add command at bottom to here
+healed: "&eYou have been healed."
+healed-other: "&eYou have healed &6%player%&e."
+all-players-healed: "&eAll players have been healed."
+fed: "&eYou have been fed."
+fed-other: "&eYou have fed &6%player%&e."
+all-players-fed: "&eAll players have been fed."
 
 console: "&cError! You are not allowed to perform this inside of the console."
 no-permission: "&cError! You do not have permission to use this command."
@@ -28,5 +37,11 @@ invalid-amount: "&cError! Invalid Amount."
 no-spawn-set: "&cError! No spawn has been set."
 specify-name: "&cError! Please specify a name."
 warp-already-exists: "&cError! A warp with that name already exists."
+no-warps-found: "&cError! No warps found."
+no-warp-found: "&cError! No warp with that name could be found."
 
 gamemode-usage: "&cIncorrect Command Usage: &f/gamemode <gamemode> [player]"
+
+
+
+suicide: "&eYou have killed yourself."

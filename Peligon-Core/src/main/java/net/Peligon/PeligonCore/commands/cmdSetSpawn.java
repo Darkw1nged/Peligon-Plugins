@@ -1,6 +1,7 @@
 package net.Peligon.PeligonCore.commands;
 
 import net.Peligon.PeligonCore.Main;
+import net.Peligon.PeligonCore.libaries.CustomConfig;
 import net.Peligon.PeligonCore.libaries.Utils;
 import org.bukkit.World;
 import org.bukkit.command.Command;
@@ -27,13 +28,15 @@ public class cmdSetSpawn implements CommandExecutor {
                 float pitch = player.getLocation().getPitch();
                 float yaw = player.getLocation().getYaw();
 
-                plugin.fileSpawn.getConfig().set("spawn.world", world);
-                plugin.fileSpawn.getConfig().set("spawn.x", x);
-                plugin.fileSpawn.getConfig().set("spawn.y", y);
-                plugin.fileSpawn.getConfig().set("spawn.z", z);
-                plugin.fileSpawn.getConfig().set("spawn.pitch", pitch);
-                plugin.fileSpawn.getConfig().set("spawn.yaw", yaw);
-                plugin.fileSpawn.saveConfig();
+                CustomConfig spawnConfig = new CustomConfig(plugin, "spawn", "");
+
+                spawnConfig.getConfig().set("world", world);
+                spawnConfig.getConfig().set("x", x);
+                spawnConfig.getConfig().set("y", y);
+                spawnConfig.getConfig().set("z", z);
+                spawnConfig.getConfig().set("pitch", pitch);
+                spawnConfig.getConfig().set("yaw", yaw);
+                spawnConfig.saveConfig();
 
                 player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
                         plugin.fileMessage.getConfig().getString("spawn-set")));
