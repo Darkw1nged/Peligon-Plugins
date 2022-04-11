@@ -14,11 +14,11 @@
     <modules>
         <!-- Released Plugins -->
         <module>Peligon-Authentication</module>
-        <module>Peligon-LifeSteal</module>
         <module>Peligon-Polls</module>
 
         <!-- Updating Plugin(s) -->
         <module>Peligon-Economy</module>
+        <module>Peligon-LifeSteal</module>
 
         <!-- Development Plugins -->
         <module>Peligon-Prison</module>

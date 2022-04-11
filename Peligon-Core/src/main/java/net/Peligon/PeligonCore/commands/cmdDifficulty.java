@@ -22,7 +22,11 @@ public class cmdDifficulty implements CommandExecutor {
                         return true;
                     }
                     Player player = (Player) sender;
-                    if (args[0].equalsIgnoreCase("easy")) {
+                    if (args[0].equalsIgnoreCase("peaceful")) {
+                        player.getWorld().setDifficulty(Difficulty.PEACEFUL);
+                        player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
+                                plugin.fileMessage.getConfig().getString("world-difficulty-updated")));
+                    } else if (args[0].equalsIgnoreCase("easy")) {
                         player.getWorld().setDifficulty(Difficulty.EASY);
                         player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
                                 plugin.fileMessage.getConfig().getString("world-difficulty-updated")));
@@ -43,7 +47,11 @@ public class cmdDifficulty implements CommandExecutor {
                     return true;
                 }
                 if (args.length == 2) {
-                    if (args[1].equalsIgnoreCase("easy")) {
+                    if (args[0].equalsIgnoreCase("peaceful")) {
+                        Bukkit.getWorld(world).setDifficulty(Difficulty.PEACEFUL);
+                        sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
+                                plugin.fileMessage.getConfig().getString("world-difficulty-updated")));
+                    } else if (args[1].equalsIgnoreCase("easy")) {
                         Bukkit.getWorld(world).setDifficulty(Difficulty.EASY);
                         sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
                                 plugin.fileMessage.getConfig().getString("world-difficulty-updated-specific").replaceAll("%world%", world)));
