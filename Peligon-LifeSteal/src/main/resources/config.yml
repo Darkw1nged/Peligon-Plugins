@@ -10,25 +10,44 @@ Storage:
   # Visit 'Plugins/PeligonLifeSteal/Lang/' to see the supported languages.
   Language File: "en_US"
   database: "SQLite"
-
-Basic-Settings:
-  # How many lives someone starts with.
   starting-lives: 5
-  # Only allow players to take lives away from others.
+
+# Settings for how the player will lose a life.
+Lose-Lives:
+  # Only allow players to take lives away.
   players-only: false
-  # Issue a command when a player dies
-  command-on-death:
-    enabled: false
-    # Only execute the commands when the player reaches 0 lives
-    execute-on-zero: false
+  blacklisted-mobs:
+    - "ENDERMAN"
+    - "ENDERMITE"
+    - "PHANTOM"
+
+# What happens when a player respawns.
+Player-Respawn:
+  title:
+    send-title: true
+    has-lives-left:
+      title: "&7%player%"
+      subtitle: "&cYou have &e%lives% &clives left!"
+    no-lives-left:
+      title: "&7%player%"
+      subtitle: "&cYou have no lives left!"
+    fade-in: 20
+    stay: 60
+    fade-out: 20
+
+# Commands to be executed when a player reaches a chosen amount of lives.
+Commands-on-Death:
+  enabled: false
+    # Only execute commands when the player reaches a certain amount of lives.
+    execute-at-lives: 0
     commands:
       - "say &c%player% has just died! They have %lives% lives left!"
       - "say Second message!"
 
-No-Lives:
-  ban-player: false
-  ban-message: "&c!! You have ran out of lives !!"
-  kick-player: false
-  kick-message: "&c!! You have ran out of lives !!"
-  change-gamemode: true
+
+# What will be executed when the player runs out of lives.
+Out-of-Lives:
+  ban-on-death: false
+  kick-on-death: false
+  change-gamemode-on-death: false
   gamemode: SPECTATOR

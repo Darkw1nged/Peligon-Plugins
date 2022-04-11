@@ -69,6 +69,13 @@ public final class Main extends JavaPlugin {
         getCommand("setspawn").setExecutor(new cmdSetSpawn());
         getCommand("setwarp").setExecutor(new cmdSetWarp());
         getCommand("deletewarp").setExecutor(new cmdDeleteWarp());
+        getCommand("day").setExecutor(new cmdDay());
+        getCommand("noon").setExecutor(new cmdNoon());
+        getCommand("night").setExecutor(new cmdNight());
+        getCommand("time").setExecutor(new cmdTime());
+        getCommand("weather").setExecutor(new cmdWeather());
+        getCommand("difficulty").setExecutor(new cmdDifficulty());
+        getCommand("fly").setExecutor(new cmdFly());
 
         // ---- [ Player commands ] ----
         getCommand("spawn").setExecutor(new cmdSpawn());

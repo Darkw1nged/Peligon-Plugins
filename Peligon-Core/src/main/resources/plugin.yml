@@ -38,6 +38,20 @@ commands:
     aliases:
       - delwarp
     description: Allows admins to delete a warp
+  day:
+    description: Allows admins to set the time to day
+  night:
+    description: Allows admins to set the time to night
+  noon:
+    description: Allows admins to set the time to noon
+  time:
+    description: Allows admins to set the time
+  weather:
+    description: Allows admins to set the weather
+  difficulty:
+    description: Allows admins to set the difficulty
+  fly:
+    description: Allows players to set their fly mode
   # UTILITY COMMANDS
   spawn:
     description: Teleports a player to spawn
