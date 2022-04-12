@@ -88,7 +88,7 @@ public class Utils {
 
     // ---- [ Cached Items ] ----
     public static Map<ArmorStand, Long> activeHolograms = new HashMap<>();
-    public static List<UUID> autoPickup = new ArrayList<>();
-    public static List<UUID> autoSmelt = new ArrayList<>();
+    public static List<UUID> godmode = new ArrayList<>();
+    public static List<UUID> muted = new ArrayList<>();
 
 }
