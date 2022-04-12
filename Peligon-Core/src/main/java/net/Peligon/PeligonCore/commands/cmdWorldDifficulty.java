@@ -9,7 +9,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class cmdDifficulty implements CommandExecutor {
+public class cmdWorldDifficulty implements CommandExecutor {
 
     private final Main plugin = Main.getInstance;
 

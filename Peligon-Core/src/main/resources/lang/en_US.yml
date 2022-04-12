@@ -36,6 +36,8 @@ world-difficulty-updated: "&fWorld's difficulty has been updated."
 world-difficulty-updated-specific: "&fWorld &e%world%'s &fdifficulty has been updated."
 world-weather-updated: "&fWorld's weather has been changed."
 world-weather-updated-specific: "&fWorld &e%world%'s &fweather has been updated."
+player-weather-updated: "&fPlayer's weather has been changed."
+player-time-updated: "&fPlayer's time has been updated."
 
 console: "&cError! You are not allowed to perform this inside of the console."
 no-permission: "&cError! You do not have permission to use this command."

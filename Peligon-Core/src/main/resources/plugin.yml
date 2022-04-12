@@ -65,6 +65,26 @@ commands:
     description: Allows players to dispose of items
   enderchest:
     description: Allows players to open an enderchest
+  playertime:
+    aliases:
+      - ptime
+    description: Allows players to set their own time
+  playerweather:
+    aliases:
+      - pweather
+    description: Allows players to set their own weather
+  playerday:
+    aliases:
+      - pday
+    description: Allows players to set their own time to day
+  playernight:
+    aliases:
+      - pnight
+    description: Allows players to set their own time to night
+  playernoon:
+    aliases:
+      - pnoon
+    description: Allows players to set their own time to noon
   # FUN COMMANDS
   hat:
     description: Allows players to wear a hat

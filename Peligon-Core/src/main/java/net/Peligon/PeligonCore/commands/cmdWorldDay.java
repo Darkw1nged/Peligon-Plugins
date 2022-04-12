@@ -7,7 +7,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class cmdDay implements CommandExecutor {
+public class cmdWorldDay implements CommandExecutor {
 
     private final Main plugin = Main.getInstance;
 

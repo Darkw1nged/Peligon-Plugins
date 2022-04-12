@@ -7,17 +7,17 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class cmdNight implements CommandExecutor {
+public class cmdWorldNoon implements CommandExecutor {
 
     private final Main plugin = Main.getInstance;
 
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        if (cmd.getName().equalsIgnoreCase("night")) {
-            if (sender.hasPermission("Peligon.Core.Night") || sender.hasPermission("Peligon.Core.*")) {
+        if (cmd.getName().equalsIgnoreCase("noon")) {
+            if (sender.hasPermission("Peligon.Core.Noon") || sender.hasPermission("Peligon.Core.*")) {
                 if (args.length == 1) {
                     String world = args[0];
                     if (plugin.getServer().getWorld(world) != null) {
-                        plugin.getServer().getWorld(world).setTime(18000L);
+                        plugin.getServer().getWorld(world).setTime(6000L);
                         sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
                                 plugin.fileMessage.getConfig().getString("world-time-updated-specific").replaceAll("%world%", world)));
                     } else {
@@ -30,7 +30,7 @@ public class cmdNight implements CommandExecutor {
                     return true;
                 }
                 Player player = (Player) sender;
-                player.getWorld().setTime(18000L);
+                player.getWorld().setTime(6000L);
                 player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
                         plugin.fileMessage.getConfig().getString("world-time-updated")));
 

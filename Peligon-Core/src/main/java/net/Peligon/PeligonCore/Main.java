@@ -69,12 +69,12 @@ public final class Main extends JavaPlugin {
         getCommand("setspawn").setExecutor(new cmdSetSpawn());
         getCommand("setwarp").setExecutor(new cmdSetWarp());
         getCommand("deletewarp").setExecutor(new cmdDeleteWarp());
-        getCommand("day").setExecutor(new cmdDay());
-        getCommand("noon").setExecutor(new cmdNoon());
-        getCommand("night").setExecutor(new cmdNight());
-        getCommand("time").setExecutor(new cmdTime());
-        getCommand("weather").setExecutor(new cmdWeather());
-        getCommand("difficulty").setExecutor(new cmdDifficulty());
+        getCommand("day").setExecutor(new cmdWorldDay());
+        getCommand("noon").setExecutor(new cmdWorldNoon());
+        getCommand("night").setExecutor(new cmdWorldNight());
+        getCommand("time").setExecutor(new cmdWorldTime());
+        getCommand("weather").setExecutor(new cmdWorldWeather());
+        getCommand("difficulty").setExecutor(new cmdWorldDifficulty());
         getCommand("fly").setExecutor(new cmdFly());
 
         // ---- [ Player commands ] ----
@@ -84,6 +84,11 @@ public final class Main extends JavaPlugin {
         getCommand("craft").setExecutor(new cmdCraft());
         getCommand("disposal").setExecutor(new cmdDisposal());
         getCommand("enderchest").setExecutor(new cmdEnderchest());
+        getCommand("playertime").setExecutor(new cmdPlayerTime());
+        getCommand("playerday").setExecutor(new cmdPlayerDay());
+        getCommand("playernight").setExecutor(new cmdPlayerNight());
+        getCommand("playernoon").setExecutor(new cmdPlayerNoon());
+        getCommand("playerweather").setExecutor(new cmdPlayerWeather());
     }
 
     public void loadEvents() {
