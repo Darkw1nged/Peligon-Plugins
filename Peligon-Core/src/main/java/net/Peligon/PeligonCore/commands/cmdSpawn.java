@@ -33,7 +33,7 @@ public class cmdSpawn implements CommandExecutor {
                 }
                 Player target = plugin.getServer().getPlayer(args[0]);
                 if (target == null) {
-                    sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("player-not-found")));
+                    sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-player-found")));
                     return true;
                 }
                 Location location = new Location(
@@ -74,7 +74,7 @@ public class cmdSpawn implements CommandExecutor {
                 if (player.hasPermission("Peligon.Core.Spawn.Other") || player.hasPermission("Peligon.Core.*")) {
                     Player target = plugin.getServer().getPlayer(args[0]);
                     if (target == null) {
-                        player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("player-not-found")));
+                        player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-player-found")));
                         return true;
                     }
                     if (target.hasPermission("Peligon.Core.Spawn.Bypass") || target.hasPermission("Peligon.Core.*")) {

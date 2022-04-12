@@ -21,7 +21,7 @@ public class cmdFly implements CommandExecutor {
                 }
                 Player target = Bukkit.getPlayer(args[0]);
                 if (target == null) {
-                    sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("player-not-found")));
+                    sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-player-found")));
                     return true;
                 }
                 if (target.getAllowFlight()) {
@@ -42,7 +42,7 @@ public class cmdFly implements CommandExecutor {
                 if (player.hasPermission("Peligon.Core.Fly.Other") || player.hasPermission("Peligon.Core.*")) {
                     Player target = Bukkit.getPlayer(args[0]);
                     if (target == null) {
-                        player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("player-not-found")));
+                        player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-player-found")));
                         return true;
                     }
                     if (target.getAllowFlight()) {

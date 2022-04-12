@@ -28,7 +28,7 @@ public class cmdFeed implements CommandExecutor {
                 }
                 Player target = plugin.getServer().getPlayer(args[0]);
                 if (target == null) {
-                    sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("player-not-found")));
+                    sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-player-found")));
                     return true;
                 }
                 target.setFoodLevel(20);
@@ -49,7 +49,7 @@ public class cmdFeed implements CommandExecutor {
                     }
                     Player target = plugin.getServer().getPlayer(args[0]);
                     if (target == null) {
-                        sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("player-not-found")));
+                        sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-player-found")));
                         return true;
                     }
                     target.setFoodLevel(20);

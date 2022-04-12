@@ -76,6 +76,9 @@ public final class Main extends JavaPlugin {
         getCommand("weather").setExecutor(new cmdWorldWeather());
         getCommand("difficulty").setExecutor(new cmdWorldDifficulty());
         getCommand("fly").setExecutor(new cmdFly());
+        getCommand("vanish").setExecutor(new cmdVanish());
+        getCommand("godmode").setExecutor(new cmdGodmode());
+        getCommand("kill").setExecutor(new cmdKill());
 
         // ---- [ Player commands ] ----
         getCommand("spawn").setExecutor(new cmdSpawn());

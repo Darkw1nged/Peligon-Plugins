@@ -8,12 +8,12 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class cmdGod implements CommandExecutor {
+public class cmdGodmode implements CommandExecutor {
 
     private final Main plugin = Main.getInstance;
 
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        if (cmd.getName().equalsIgnoreCase("god")) {
+        if (cmd.getName().equalsIgnoreCase("godmode")) {
             if (args.length == 0) {
                 if (!(sender instanceof Player)) {
                     sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("godmode-usage")));
@@ -37,7 +37,7 @@ public class cmdGod implements CommandExecutor {
             }
             Player target = Bukkit.getPlayer(args[0]);
             if (target == null) {
-                sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("player-not-found")));
+                sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-player-found")));
                 return true;
             }
             if (sender.hasPermission("Peligon.Core.God.Other") || sender.hasPermission("Peligon.Core.*")) {
