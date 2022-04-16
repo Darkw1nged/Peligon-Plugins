@@ -92,6 +92,10 @@ public final class Main extends JavaPlugin {
         getCommand("playernight").setExecutor(new cmdPlayerNight());
         getCommand("playernoon").setExecutor(new cmdPlayerNoon());
         getCommand("playerweather").setExecutor(new cmdPlayerWeather());
+        getCommand("sethome").setExecutor(new cmdSetHome());
+        getCommand("deletehome").setExecutor(new cmdDeleteHome());
+        getCommand("home").setExecutor(new cmdHome());
+        getCommand("homes").setExecutor(new cmdHomes());
     }
 
     public void loadEvents() {

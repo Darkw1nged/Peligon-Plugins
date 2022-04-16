@@ -95,6 +95,16 @@ commands:
     aliases:
       - pnoon
     description: Allows players to set their own time to noon
+  sethome:
+    description: Allows players to set a home
+  deletehome:
+    aliases:
+      - delhome
+    description: Allows players to delete a home
+  home:
+    description: Allows players to teleport to a home
+  homes:
+    description: Shows the player a list of all homes
   # FUN COMMANDS
   hat:
     description: Allows players to wear a hat
