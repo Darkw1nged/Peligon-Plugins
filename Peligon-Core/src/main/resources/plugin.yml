@@ -136,6 +136,14 @@ commands:
     aliases:
       - tpcancel
     description: Allows players to cancel a teleport request
+  teleportaccept:
+    aliases:
+      - tpaccept
+    description: Allows players to accept a teleport request
+  teleportdeny:
+    aliases:
+      - tpdeny
+    description: Allows players to deny a teleport request
   # FUN COMMANDS
   hat:
     description: Allows players to wear a hat

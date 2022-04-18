@@ -118,7 +118,9 @@ public final class Main extends JavaPlugin {
                 new blockedCommands(),
                 new durabilityWarning(),
                 new teleportCancel(),
-                new godmode()
+                new godmode(),
+                new netherWater(),
+                new worldProtections()
         ).forEach(listener -> getServer().getPluginManager().registerEvents(listener, this));
     }
 

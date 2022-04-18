@@ -41,3 +41,22 @@ Warnings:
       id: BLOCK_ANVIL_FALL # pre 1.13.2 use ( ANVIL_LAND )
       volume: 1.0
       pitch: 1.0
+
+Nether-Water: false
+
+World-Protection:
+  blacklisted-worlds: []
+  events:
+    Block-Break: true
+    Block-Place: true
+    Item-Pickup: true
+    Item-Drop: true
+    Interact: true
+    Redstone: true
+    Explosions: true
+    Fall-Damage: true
+    Player-Damage: true
+    Mob-Damage: true
+    Mpb-Spawning: true
+    Animal-Spawning: true
+    Xp-Drop: true
