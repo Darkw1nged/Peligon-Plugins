@@ -52,8 +52,9 @@ public class cmdHome implements CommandExecutor {
                             plugin.fileMessage.getConfig().getString("home-teleported").replaceAll("%home%", home)));
                 } else {
                     cooldown.put(player.getUniqueId(), System.currentTimeMillis());
+                    Utils.isTeleporting.add(player.getUniqueId());
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                        if (cooldown.containsKey(player.getUniqueId())) {
+                        if (cooldown.containsKey(player.getUniqueId()) && Utils.isTeleporting.contains(player.getUniqueId())) {
                             cooldown.remove(player.getUniqueId());
                             player.teleport(location);
                             player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +

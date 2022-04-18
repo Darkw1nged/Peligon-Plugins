@@ -83,6 +83,7 @@ home-not-found: "&cError! Home could not be found."
 command-blocked: "&cThis command is blocked."
 player-already-blocked: "&c%player% is already blocked."
 player-not-blocked: "&c%player% is not blocked."
+teleport-canceled: "&cTeleport has been canceled."
 
 gamemode-usage: "&cIncorrect Command Usage: &f/gamemode <gamemode> (player)"
 time-usage: "&cIncorrect Command Usage: &f/time (world) <day|noon|night>"

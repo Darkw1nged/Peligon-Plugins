@@ -43,14 +43,15 @@ public class cmdWarp implements CommandExecutor {
                     float yaw = (float)  warpConfig.getConfig().getDouble("yaw");
                     Location location = new Location(world, x, y, z, yaw, pitch);
 
-                    if (player.hasPermission("Peligon.Core.Spawn.Bypass") || player.hasPermission("Peligon.Core.*")) {
+                    if (player.hasPermission("Peligon.Core.Warp.Bypass") || player.hasPermission("Peligon.Core.*")) {
                         player.teleport(location);
                         player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
                                 plugin.fileMessage.getConfig().getString("teleported-to-warp").replaceAll("%warp%", warp)));
                     } else {
                         cooldown.put(player.getUniqueId(), System.currentTimeMillis());
+                        Utils.isTeleporting.add(player.getUniqueId());
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                            if (cooldown.containsKey(player.getUniqueId())) {
+                            if (cooldown.containsKey(player.getUniqueId()) && Utils.isTeleporting.contains(player.getUniqueId())) {
                                 cooldown.remove(player.getUniqueId());
                                 player.teleport(location);
                                 player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +

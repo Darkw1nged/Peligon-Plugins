@@ -50,8 +50,9 @@ public class cmdSpawn implements CommandExecutor {
                             plugin.fileMessage.getConfig().getString("teleported-to-spawn")));
                 } else {
                     cooldown.put(target.getUniqueId(), System.currentTimeMillis());
+                    Utils.isTeleporting.add(target.getUniqueId());
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                        if (cooldown.containsKey(target.getUniqueId())) {
+                        if (cooldown.containsKey(target.getUniqueId()) && Utils.isTeleporting.contains(target.getUniqueId())) {
                             cooldown.remove(target.getUniqueId());
                             target.teleport(location);
                             target.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
@@ -83,8 +84,9 @@ public class cmdSpawn implements CommandExecutor {
                                 plugin.fileMessage.getConfig().getString("teleported-to-spawn")));
                     } else {
                         cooldown.put(target.getUniqueId(), System.currentTimeMillis());
+                        Utils.isTeleporting.add(target.getUniqueId());
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                            if (cooldown.containsKey(target.getUniqueId())) {
+                            if (cooldown.containsKey(target.getUniqueId()) && Utils.isTeleporting.contains(target.getUniqueId())) {
                                 cooldown.remove(target.getUniqueId());
                                 target.teleport(location);
                                 target.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
@@ -103,8 +105,9 @@ public class cmdSpawn implements CommandExecutor {
                         plugin.fileMessage.getConfig().getString("teleported-to-spawn")));
             } else {
                 cooldown.put(player.getUniqueId(), System.currentTimeMillis());
+                Utils.isTeleporting.add(player.getUniqueId());
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                    if (cooldown.containsKey(player.getUniqueId())) {
+                    if (cooldown.containsKey(player.getUniqueId()) && Utils.isTeleporting.contains(player.getUniqueId())) {
                         cooldown.remove(player.getUniqueId());
                         player.teleport(location);
                         player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +

@@ -90,5 +90,6 @@ public class Utils {
     public static Map<ArmorStand, Long> activeHolograms = new HashMap<>();
     public static List<UUID> godmode = new ArrayList<>();
     public static Map<UUID, Location> lastLocation = new HashMap<>();
+    public static List<UUID> isTeleporting = new ArrayList<>();
 
 }

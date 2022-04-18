@@ -8,6 +8,7 @@ import net.Peligon.PeligonCore.libaries.storage.SQLite;
 import net.Peligon.PeligonCore.listeners.blockedCommands;
 import net.Peligon.PeligonCore.listeners.durabilityWarning;
 import net.Peligon.PeligonCore.listeners.teleportBack;
+import net.Peligon.PeligonCore.listeners.teleportCancel;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -114,7 +115,8 @@ public final class Main extends JavaPlugin {
         Arrays.asList(
                 new teleportBack(),
                 new blockedCommands(),
-                new durabilityWarning()
+                new durabilityWarning(),
+                new teleportCancel()
         ).forEach(listener -> getServer().getPluginManager().registerEvents(listener, this));
     }
 
