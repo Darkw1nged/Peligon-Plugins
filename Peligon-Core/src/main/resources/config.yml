@@ -12,3 +12,32 @@ Storage:
   database: "SQLite"
 
 Disposal-Inventory-Name: "&7Disposal"
+
+# This is a list of commands that players can not perform.
+Blocked-Commands:
+  - "/bukkit:"
+  - /?
+  - /help
+  - /ver
+  - /version
+  - /pl
+  - /plugins
+  - /minecraft:help
+  - /minecraft:me
+  - /me
+
+Warnings:
+  Tool-Durability:
+    # percentage of tool durability at which a warning will be displayed.
+    percentage:
+      - 100
+      - 75
+      - 50
+      - 25
+      - 10
+      - 5
+    sound:
+      enabled: true
+      id: BLOCK_ANVIL_FALL # pre 1.13.2 use ( ANVIL_LAND )
+      volume: 1.0
+      pitch: 1.0

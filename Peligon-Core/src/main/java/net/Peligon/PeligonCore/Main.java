@@ -5,9 +5,15 @@ import net.Peligon.PeligonCore.libaries.CustomConfig;
 import net.Peligon.PeligonCore.libaries.UpdateChecker;
 import net.Peligon.PeligonCore.libaries.Utils;
 import net.Peligon.PeligonCore.libaries.storage.SQLite;
+import net.Peligon.PeligonCore.listeners.blockedCommands;
+import net.Peligon.PeligonCore.listeners.durabilityWarning;
+import net.Peligon.PeligonCore.listeners.teleportBack;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.Arrays;
+
+@SuppressWarnings("ALL")
 public final class Main extends JavaPlugin {
 
     public static Main getInstance;
@@ -79,6 +85,9 @@ public final class Main extends JavaPlugin {
         getCommand("vanish").setExecutor(new cmdVanish());
         getCommand("godmode").setExecutor(new cmdGodmode());
         getCommand("kill").setExecutor(new cmdKill());
+        getCommand("back").setExecutor(new cmdBack());
+        getCommand("teleport").setExecutor(new cmdTeleport());
+        getCommand("teleporthere").setExecutor(new cmdTeleportHere());
 
         // ---- [ Player commands ] ----
         getCommand("spawn").setExecutor(new cmdSpawn());
@@ -96,11 +105,17 @@ public final class Main extends JavaPlugin {
         getCommand("deletehome").setExecutor(new cmdDeleteHome());
         getCommand("home").setExecutor(new cmdHome());
         getCommand("homes").setExecutor(new cmdHomes());
+        getCommand("teleporttoggle").setExecutor(new cmdTeleportToggle());
+        getCommand("teleportblock").setExecutor(new cmdTeleportBlock());
+        getCommand("teleportunblock").setExecutor(new cmdTeleportUnblock());
     }
 
     public void loadEvents() {
-//        Arrays.asList(
-//        ).forEach(listener -> getServer().getPluginManager().registerEvents(listener, this));
+        Arrays.asList(
+                new teleportBack(),
+                new blockedCommands(),
+                new durabilityWarning()
+        ).forEach(listener -> getServer().getPluginManager().registerEvents(listener, this));
     }
 
     private void versionChecker() {

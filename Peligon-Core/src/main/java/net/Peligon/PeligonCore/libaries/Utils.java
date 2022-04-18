@@ -18,7 +18,7 @@ public class Utils {
 
     // ---- [ Managing chat color within the plugin ] ----
     public static String chatColor(String s) {
-        return ChatColor.translateAlternateColorCodes('&', s);
+        return s == null ? null : ChatColor.translateAlternateColorCodes('&', s);
     }
 
     // ---- [ Managing holograms for small amount of features ] ----
@@ -89,6 +89,6 @@ public class Utils {
     // ---- [ Cached Items ] ----
     public static Map<ArmorStand, Long> activeHolograms = new HashMap<>();
     public static List<UUID> godmode = new ArrayList<>();
-    public static List<UUID> muted = new ArrayList<>();
+    public static Map<UUID, Location> lastLocation = new HashMap<>();
 
 }
