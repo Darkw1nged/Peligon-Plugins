@@ -16,7 +16,7 @@ public class teleportCancel implements Listener {
         Player player = event.getPlayer();
         if (Utils.isTeleporting != null && Utils.isTeleporting.contains(player.getUniqueId())) {
             Utils.isTeleporting.remove(player.getUniqueId());
-            player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("teleport-canceled")));
+            player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("teleport-cancelled")));
         }
     }
 

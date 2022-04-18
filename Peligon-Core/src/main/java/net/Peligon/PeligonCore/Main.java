@@ -109,6 +109,8 @@ public final class Main extends JavaPlugin {
         getCommand("teleporttoggle").setExecutor(new cmdTeleportToggle());
         getCommand("teleportblock").setExecutor(new cmdTeleportBlock());
         getCommand("teleportunblock").setExecutor(new cmdTeleportUnblock());
+        getCommand("teleportrequest").setExecutor(new cmdTeleportRequest());
+        getCommand("teleportcancel").setExecutor(new cmdTeleportCancel());
     }
 
     public void loadEvents() {

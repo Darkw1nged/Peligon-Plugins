@@ -127,6 +127,15 @@ commands:
     aliases:
       - tpublock
     description: Allows players to unblock players from teleporting to them
+  teleportrequest:
+    aliases:
+      - tprequest
+      - tpa
+    description: Allows players to request a teleport
+  teleportcancel:
+    aliases:
+      - tpcancel
+    description: Allows players to cancel a teleport request
   # FUN COMMANDS
   hat:
     description: Allows players to wear a hat
