@@ -5,10 +5,7 @@ import net.Peligon.PeligonCore.libaries.CustomConfig;
 import net.Peligon.PeligonCore.libaries.UpdateChecker;
 import net.Peligon.PeligonCore.libaries.Utils;
 import net.Peligon.PeligonCore.libaries.storage.SQLite;
-import net.Peligon.PeligonCore.listeners.blockedCommands;
-import net.Peligon.PeligonCore.listeners.durabilityWarning;
-import net.Peligon.PeligonCore.listeners.teleportBack;
-import net.Peligon.PeligonCore.listeners.teleportCancel;
+import net.Peligon.PeligonCore.listeners.*;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -111,6 +108,8 @@ public final class Main extends JavaPlugin {
         getCommand("teleportunblock").setExecutor(new cmdTeleportUnblock());
         getCommand("teleportrequest").setExecutor(new cmdTeleportRequest());
         getCommand("teleportcancel").setExecutor(new cmdTeleportCancel());
+        getCommand("teleportaccept").setExecutor(new cmdTeleportAccept());
+        getCommand("teleportdeny").setExecutor(new cmdTeleportDeny());
     }
 
     public void loadEvents() {
@@ -118,7 +117,8 @@ public final class Main extends JavaPlugin {
                 new teleportBack(),
                 new blockedCommands(),
                 new durabilityWarning(),
-                new teleportCancel()
+                new teleportCancel(),
+                new godmode()
         ).forEach(listener -> getServer().getPluginManager().registerEvents(listener, this));
     }
 

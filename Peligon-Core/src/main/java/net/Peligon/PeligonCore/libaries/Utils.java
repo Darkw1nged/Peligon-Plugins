@@ -91,6 +91,6 @@ public class Utils {
     public static List<UUID> godmode = new ArrayList<>();
     public static Map<UUID, Location> lastLocation = new HashMap<>();
     public static List<UUID> isTeleporting = new ArrayList<>();
-    public static Map<UUID, TeleportRequest> teleportRequests = new HashMap<>();
+    public static List<TeleportRequest> teleportRequests = new ArrayList<>();
 
 }

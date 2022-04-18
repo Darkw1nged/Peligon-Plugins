@@ -34,7 +34,7 @@ public class cmdTeleportHereRequest implements CommandExecutor {
                     player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("cant-teleport-to-self")));
                     return true;
                 }
-                Utils.teleportRequests.put(player.getUniqueId(), new TeleportRequest(player.getUniqueId(), target.getUniqueId(), "TeleportPlayerHere"));
+                Utils.teleportRequests.add(new TeleportRequest(player.getUniqueId(), target.getUniqueId(), "TeleportPlayerHere"));
                 player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
                         plugin.fileMessage.getConfig().getString("teleport-request-sent").replaceAll("%player%", target.getName())));
                 target.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
