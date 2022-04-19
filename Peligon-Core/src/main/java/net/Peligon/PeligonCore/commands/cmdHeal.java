@@ -1,7 +1,7 @@
-package net.Peligon.PeligonCore.commands;
+package net.peligon.PeligonCore.commands;
 
-import net.Peligon.PeligonCore.Main;
-import net.Peligon.PeligonCore.libaries.Utils;
+import net.peligon.PeligonCore.Main;
+import net.peligon.PeligonCore.libaries.Utils;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

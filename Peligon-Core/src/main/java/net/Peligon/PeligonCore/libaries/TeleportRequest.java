@@ -1,4 +1,4 @@
-package net.Peligon.PeligonCore.libaries;
+package net.peligon.PeligonCore.libaries;
 
 import java.util.UUID;
 

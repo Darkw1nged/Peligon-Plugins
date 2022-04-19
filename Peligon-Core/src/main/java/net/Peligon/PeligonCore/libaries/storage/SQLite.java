@@ -1,7 +1,7 @@
-package net.Peligon.PeligonCore.libaries.storage;
+package net.peligon.PeligonCore.libaries.storage;
 
-import net.Peligon.PeligonCore.Main;
-import net.Peligon.PeligonCore.libaries.Utils;
+import net.peligon.PeligonCore.Main;
+import net.peligon.PeligonCore.libaries.Utils;
 
 import java.io.File;
 import java.sql.*;

@@ -1,4 +1,4 @@
-package net.Peligon.PeligonCore.libaries;
+package net.peligon.PeligonCore.libaries;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;

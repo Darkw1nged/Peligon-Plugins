@@ -1,8 +1,8 @@
-package net.Peligon.PeligonCore.commands;
+package net.peligon.PeligonCore.commands;
 
-import net.Peligon.PeligonCore.Main;
-import net.Peligon.PeligonCore.libaries.CustomConfig;
-import net.Peligon.PeligonCore.libaries.Utils;
+import net.peligon.PeligonCore.Main;
+import net.peligon.PeligonCore.libaries.CustomConfig;
+import net.peligon.PeligonCore.libaries.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -28,10 +28,17 @@ public class cmdVanish implements CommandExecutor {
                         YamlConfiguration data = config.getConfig();
                         if (data.getBoolean("Vanish")) {
                             data.set("Vanish", false);
+                            for (Player online : Bukkit.getOnlinePlayers()) {
+                                online.showPlayer(player);
+                            }
                             player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
                                     plugin.fileMessage.getConfig().getString("vanish-disabled")));
                         } else {
                             data.set("Vanish", true);
+                            for (Player online : Bukkit.getOnlinePlayers()) {
+                                if (online.hasPermission("Peligon.Core.SeeVanish") || online.hasPermission("Peligon.Core.*")) continue;
+                                online.hidePlayer(player);
+                            }
                             player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
                                     plugin.fileMessage.getConfig().getString("vanish-enabled")));
                         }

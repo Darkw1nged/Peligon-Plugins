@@ -1,11 +1,11 @@
-package net.Peligon.PeligonCore;
+package net.peligon.PeligonCore;
 
-import net.Peligon.PeligonCore.commands.*;
-import net.Peligon.PeligonCore.libaries.CustomConfig;
-import net.Peligon.PeligonCore.libaries.UpdateChecker;
-import net.Peligon.PeligonCore.libaries.Utils;
-import net.Peligon.PeligonCore.libaries.storage.SQLite;
-import net.Peligon.PeligonCore.listeners.*;
+import net.peligon.PeligonCore.commands.*;
+import net.peligon.PeligonCore.libaries.CustomConfig;
+import net.peligon.PeligonCore.libaries.UpdateChecker;
+import net.peligon.PeligonCore.libaries.Utils;
+import net.peligon.PeligonCore.libaries.storage.SQLite;
+import net.peligon.PeligonCore.listeners.*;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -120,7 +120,10 @@ public final class Main extends JavaPlugin {
                 new teleportCancel(),
                 new godmode(),
                 new netherWater(),
-                new worldProtections()
+                new worldProtections(),
+                new bannedItems(),
+                new itemCooldown(),
+                new doubleJump()
         ).forEach(listener -> getServer().getPluginManager().registerEvents(listener, this));
     }
 

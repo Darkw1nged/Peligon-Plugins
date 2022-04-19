@@ -1,8 +1,8 @@
-package net.Peligon.PeligonCore.commands;
+package net.peligon.PeligonCore.commands;
 
-import net.Peligon.PeligonCore.Main;
-import net.Peligon.PeligonCore.libaries.CustomConfig;
-import net.Peligon.PeligonCore.libaries.Utils;
+import net.peligon.PeligonCore.Main;
+import net.peligon.PeligonCore.libaries.CustomConfig;
+import net.peligon.PeligonCore.libaries.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -48,6 +48,8 @@ public class cmdSpawn implements CommandExecutor {
                     target.teleport(location);
                     target.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
                             plugin.fileMessage.getConfig().getString("teleported-to-spawn")));
+                    sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
+                            plugin.fileMessage.getConfig().getString("teleported-player-to-spawn").replace("%player%", target.getName())));
                 } else {
                     cooldown.put(target.getUniqueId(), System.currentTimeMillis());
                     Utils.isTeleporting.add(target.getUniqueId());
@@ -57,6 +59,8 @@ public class cmdSpawn implements CommandExecutor {
                             target.teleport(location);
                             target.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
                                     plugin.fileMessage.getConfig().getString("teleported-to-spawn")));
+                            sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
+                                    plugin.fileMessage.getConfig().getString("teleported-player-to-spawn").replace("%player%", target.getName())));
                         }
                     }, 20L);
                 }
@@ -82,6 +86,8 @@ public class cmdSpawn implements CommandExecutor {
                         target.teleport(location);
                         target.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
                                 plugin.fileMessage.getConfig().getString("teleported-to-spawn")));
+                        player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
+                                plugin.fileMessage.getConfig().getString("teleported-player-to-spawn").replace("%player%", target.getName())));
                     } else {
                         cooldown.put(target.getUniqueId(), System.currentTimeMillis());
                         Utils.isTeleporting.add(target.getUniqueId());
@@ -91,6 +97,8 @@ public class cmdSpawn implements CommandExecutor {
                                 target.teleport(location);
                                 target.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
                                         plugin.fileMessage.getConfig().getString("teleported-to-spawn")));
+                                player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
+                                        plugin.fileMessage.getConfig().getString("teleported-player-to-spawn").replace("%player%", target.getName())));
                             }
                         }, 20L);
                     }

@@ -1,7 +1,7 @@
-package net.Peligon.PeligonCore.commands;
+package net.peligon.PeligonCore.commands;
 
-import net.Peligon.PeligonCore.Main;
-import net.Peligon.PeligonCore.libaries.Utils;
+import net.peligon.PeligonCore.Main;
+import net.peligon.PeligonCore.libaries.Utils;
 import org.bukkit.GameMode;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -28,22 +28,22 @@ public class cmdGamemode implements CommandExecutor {
                     target.setGameMode(GameMode.SURVIVAL);
                     sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
                             plugin.fileMessage.getConfig().getString("gamemode-changed-other").replace("%player%", target.getName())
-                                    .replace("%gamemode%", "SURVIVAL")));
+                                    .replace("%gamemode%", "survival")));
                 } else if (args[0].equalsIgnoreCase("creative") || args[0].equalsIgnoreCase("1")) {
                     target.setGameMode(GameMode.CREATIVE);
                     sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
                             plugin.fileMessage.getConfig().getString("gamemode-changed-other").replace("%player%", target.getName())
-                                    .replace("%gamemode%", "CREATIVE")));
+                                    .replace("%gamemode%", "creative")));
                 } else if (args[0].equalsIgnoreCase("adventure") || args[0].equalsIgnoreCase("2")) {
                     target.setGameMode(GameMode.ADVENTURE);
                     sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
                             plugin.fileMessage.getConfig().getString("gamemode-changed-other").replace("%player%", target.getName())
-                                    .replace("%gamemode%", "ADVENTURE")));
+                                    .replace("%gamemode%", "adventure")));
                 } else if (args[0].equalsIgnoreCase("spectator") || args[0].equalsIgnoreCase("3")) {
                     target.setGameMode(GameMode.SPECTATOR);
                     sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
                             plugin.fileMessage.getConfig().getString("gamemode-changed-other").replace("%player%", target.getName())
-                                    .replace("%gamemode%", "SPECTATOR")));
+                                    .replace("%gamemode%", "spectator")));
                 }
                 return true;
             }
@@ -60,7 +60,7 @@ public class cmdGamemode implements CommandExecutor {
                             target.setGameMode(GameMode.SURVIVAL);
                             player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
                                     plugin.fileMessage.getConfig().getString("gamemode-changed-other").replace("%player%", target.getName())
-                                            .replace("%gamemode%", "SURVIVAL")));
+                                            .replace("%gamemode%", "survival")));
                             return true;
                         } else {
                             player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-permission")));
@@ -69,7 +69,7 @@ public class cmdGamemode implements CommandExecutor {
                     if (player.hasPermission("Peligon.Core.Gamemode.survival") || player.hasPermission("Peligon.Core.Gamemode.*") || player.hasPermission("Peligon.Core.*")) {
                         player.setGameMode(GameMode.SURVIVAL);
                         player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
-                                plugin.fileMessage.getConfig().getString("gamemode-changed").replaceAll("%gamemode%", "SURVIVAL")));
+                                plugin.fileMessage.getConfig().getString("gamemode-changed").replaceAll("%gamemode%", "survival")));
                     } else {
                         player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-permission")));
                     }
@@ -84,7 +84,7 @@ public class cmdGamemode implements CommandExecutor {
                             target.setGameMode(GameMode.CREATIVE);
                             player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
                                     plugin.fileMessage.getConfig().getString("gamemode-changed-other").replace("%player%", target.getName())
-                                            .replace("%gamemode%", "CREATIVE")));
+                                            .replace("%gamemode%", "creative")));
                             return true;
                         } else {
                             player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-permission")));
@@ -92,7 +92,7 @@ public class cmdGamemode implements CommandExecutor {
                         if (player.hasPermission("Peligon.Core.Gamemode.creative") || player.hasPermission("Peligon.Core.Gamemode.*") || player.hasPermission("Peligon.Core.*")) {
                             player.setGameMode(GameMode.CREATIVE);
                             player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
-                                    plugin.fileMessage.getConfig().getString("gamemode-changed").replaceAll("%gamemode%", "CREATIVE")));
+                                    plugin.fileMessage.getConfig().getString("gamemode-changed").replaceAll("%gamemode%", "creative")));
                         } else {
                             player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-permission")));
                         }
@@ -108,7 +108,7 @@ public class cmdGamemode implements CommandExecutor {
                             target.setGameMode(GameMode.ADVENTURE);
                             player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
                                     plugin.fileMessage.getConfig().getString("gamemode-changed-other").replace("%player%", target.getName())
-                                            .replace("%gamemode%", "ADVENTURE")));
+                                            .replace("%gamemode%", "adventure")));
                             return true;
                         } else {
                             player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-permission")));
@@ -116,7 +116,7 @@ public class cmdGamemode implements CommandExecutor {
                         if (player.hasPermission("Peligon.Core.Gamemode.adventure") || player.hasPermission("Peligon.Core.Gamemode.*") || player.hasPermission("Peligon.Core.*")) {
                             player.setGameMode(GameMode.ADVENTURE);
                             player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
-                                    plugin.fileMessage.getConfig().getString("gamemode-changed").replaceAll("%gamemode%", "ADVENTURE")));
+                                    plugin.fileMessage.getConfig().getString("gamemode-changed").replaceAll("%gamemode%", "adventure")));
                         } else {
                             player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-permission")));
                         }
@@ -132,7 +132,7 @@ public class cmdGamemode implements CommandExecutor {
                             target.setGameMode(GameMode.SPECTATOR);
                             player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
                                     plugin.fileMessage.getConfig().getString("gamemode-changed-other").replace("%player%", target.getName())
-                                            .replace("%gamemode%", "SPECTATOR")));
+                                            .replace("%gamemode%", "spectator")));
                             return true;
                         } else {
                             player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-permission")));
@@ -140,7 +140,7 @@ public class cmdGamemode implements CommandExecutor {
                         if (player.hasPermission("Peligon.Core.Gamemode.spectator") || player.hasPermission("Peligon.Core.Gamemode.*") || player.hasPermission("Peligon.Core.*")) {
                             player.setGameMode(GameMode.SPECTATOR);
                             player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
-                                    plugin.fileMessage.getConfig().getString("gamemode-changed").replaceAll("%gamemode%", "SPECTATOR")));
+                                    plugin.fileMessage.getConfig().getString("gamemode-changed").replaceAll("%gamemode%", "spectator")));
                         } else {
                             player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-permission")));
                         }

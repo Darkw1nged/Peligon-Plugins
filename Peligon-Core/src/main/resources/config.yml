@@ -60,3 +60,24 @@ World-Protection:
     Mpb-Spawning: true
     Animal-Spawning: true
     Xp-Drop: true
+
+banned-items:
+  enabled: false
+  types:
+    - END_PORTAL_FRAME
+    - OBSIDIAN
+
+item-cooldown:
+  enabled: false
+  items:
+    # The item and how long before it can be used again.
+    STONE_SWORD: 5
+    STONE_PICKAXE: 5
+    STONE_AXE: 5
+    STONE_SHOVEL: 5
+    STONE_HOE: 5
+
+Double-Jump:
+  enabled: false
+  # How long before can double jump again.
+  delay: 3

@@ -1,7 +1,7 @@
-package net.Peligon.PeligonCore.commands;
+package net.peligon.PeligonCore.commands;
 
-import net.Peligon.PeligonCore.Main;
-import net.Peligon.PeligonCore.libaries.Utils;
+import net.peligon.PeligonCore.Main;
+import net.peligon.PeligonCore.libaries.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -38,7 +38,7 @@ public class cmdTeleport implements CommandExecutor {
                 int z = Integer.parseInt(args[2]);
                 player.teleport(new Location(player.getWorld(), x, y, z));
                 player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
-                        plugin.fileMessage.getConfig().getString("teleport-player-to-coordinates").replaceAll("%x%", args[0])
+                        plugin.fileMessage.getConfig().getString("teleport-to-coordinates").replaceAll("%x%", args[0])
                                 .replaceAll("%y%", args[1]).replaceAll("%z%", args[2])));
             }
             if (args.length == 2) {
@@ -50,7 +50,7 @@ public class cmdTeleport implements CommandExecutor {
                 }
                 targetOne.teleport(targetTwo);
                 player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
-                        plugin.fileMessage.getConfig().getString("teleport-players")));
+                        plugin.fileMessage.getConfig().getString("teleport-players").replaceAll("%player%", args[0]).replaceAll("%player2%", args[1])));
                 return true;
             }
             Player target = Bukkit.getPlayer(args[0]);

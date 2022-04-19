@@ -1,6 +1,6 @@
-package net.Peligon.PeligonCore.listeners;
+package net.peligon.PeligonCore.listeners;
 
-import net.Peligon.PeligonCore.libaries.Utils;
+import net.peligon.PeligonCore.libaries.Utils;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

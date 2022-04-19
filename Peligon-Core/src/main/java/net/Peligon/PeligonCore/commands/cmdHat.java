@@ -1,7 +1,7 @@
-package net.Peligon.PeligonCore.commands;
+package net.peligon.PeligonCore.commands;
 
-import net.Peligon.PeligonCore.Main;
-import net.Peligon.PeligonCore.libaries.Utils;
+import net.peligon.PeligonCore.Main;
+import net.peligon.PeligonCore.libaries.Utils;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -34,6 +34,7 @@ public class cmdHat implements CommandExecutor {
                 }
 
                 player.getInventory().setHelmet(item);
+                player.getInventory().getHelmet().setAmount(1);
             } else {
                 player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-permission")));
                 return true;

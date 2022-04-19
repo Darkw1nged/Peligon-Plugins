@@ -1,7 +1,7 @@
-package net.Peligon.PeligonCore.commands;
+package net.peligon.PeligonCore.commands;
 
-import net.Peligon.PeligonCore.Main;
-import net.Peligon.PeligonCore.libaries.Utils;
+import net.peligon.PeligonCore.Main;
+import net.peligon.PeligonCore.libaries.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -43,11 +43,11 @@ public class cmdGodmode implements CommandExecutor {
             if (sender.hasPermission("Peligon.Core.God.Other") || sender.hasPermission("Peligon.Core.*")) {
                 if (Utils.godmode.contains(target.getUniqueId())) {
                     Utils.godmode.remove(target.getUniqueId());
-                    target.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
+                    sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
                             plugin.fileMessage.getConfig().getString("godmode-disabled-other").replaceAll("%player%", target.getName())));
                 } else {
                     Utils.godmode.add(target.getUniqueId());
-                    target.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
+                    sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
                             plugin.fileMessage.getConfig().getString("godmode-enabled-other").replaceAll("%player%", target.getName())));
                 }
             } else {

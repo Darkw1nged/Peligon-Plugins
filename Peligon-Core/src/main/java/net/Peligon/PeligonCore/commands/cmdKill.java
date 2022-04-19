@@ -1,7 +1,7 @@
-package net.Peligon.PeligonCore.commands;
+package net.peligon.PeligonCore.commands;
 
-import net.Peligon.PeligonCore.Main;
-import net.Peligon.PeligonCore.libaries.Utils;
+import net.peligon.PeligonCore.Main;
+import net.peligon.PeligonCore.libaries.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -26,7 +26,7 @@ public class cmdKill implements CommandExecutor {
                         return true;
                     }
                     Player player = (Player) sender;
-                    if (args[1].equalsIgnoreCase("!player")) {
+                    if (args.length >= 2 && args[1].equalsIgnoreCase("!player")) {
                         for (Entity entity : player.getWorld().getEntities()) {
                             if (!(entity instanceof Player)) {
                                 entity.remove();

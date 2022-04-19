@@ -1,7 +1,7 @@
-package net.Peligon.PeligonCore.commands;
+package net.peligon.PeligonCore.commands;
 
-import net.Peligon.PeligonCore.Main;
-import net.Peligon.PeligonCore.libaries.Utils;
+import net.peligon.PeligonCore.Main;
+import net.peligon.PeligonCore.libaries.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.Difficulty;
 import org.bukkit.command.Command;
@@ -64,7 +64,9 @@ public class cmdWorldDifficulty implements CommandExecutor {
                         sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
                                 plugin.fileMessage.getConfig().getString("world-difficulty-updated-specific").replaceAll("%world%", world)));
                     }
+                    return true;
                 }
+                sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("difficulty-usage")));
             } else {
                 sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-permission")));
             }

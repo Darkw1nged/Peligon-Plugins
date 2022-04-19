@@ -1,6 +1,6 @@
-package net.Peligon.PeligonCore.libaries;
+package net.peligon.PeligonCore.libaries;
 
-import net.Peligon.PeligonCore.Main;
+import net.peligon.PeligonCore.Main;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;

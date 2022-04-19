@@ -1,8 +1,8 @@
-package net.Peligon.PeligonCore.commands;
+package net.peligon.PeligonCore.commands;
 
-import net.Peligon.PeligonCore.Main;
-import net.Peligon.PeligonCore.libaries.TeleportRequest;
-import net.Peligon.PeligonCore.libaries.Utils;
+import net.peligon.PeligonCore.Main;
+import net.peligon.PeligonCore.libaries.TeleportRequest;
+import net.peligon.PeligonCore.libaries.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -14,7 +14,7 @@ public class cmdTeleportHereRequest implements CommandExecutor {
     private final Main plugin = Main.getInstance;
 
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        if (cmd.getName().equalsIgnoreCase("teleportrequest")) {
+        if (cmd.getName().equalsIgnoreCase("teleporthere")) {
             if (!(sender instanceof Player)) {
                 sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("console")));
                 return true;

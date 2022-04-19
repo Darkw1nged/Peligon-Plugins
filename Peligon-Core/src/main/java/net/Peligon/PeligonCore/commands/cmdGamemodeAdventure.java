@@ -1,7 +1,7 @@
-package net.Peligon.PeligonCore.commands;
+package net.peligon.PeligonCore.commands;
 
-import net.Peligon.PeligonCore.Main;
-import net.Peligon.PeligonCore.libaries.Utils;
+import net.peligon.PeligonCore.Main;
+import net.peligon.PeligonCore.libaries.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.command.Command;
@@ -28,7 +28,7 @@ public class cmdGamemodeAdventure implements CommandExecutor {
                 target.setGameMode(GameMode.ADVENTURE);
                 sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
                         plugin.fileMessage.getConfig().getString("gamemode-changed-other").replaceAll("%player%", target.getName())
-                                .replaceAll("%gamemode%", "ADVENTURE")));
+                                .replaceAll("%gamemode%", "adventure")));
                 return true;
             }
             Player player = (Player) sender;
@@ -36,7 +36,7 @@ public class cmdGamemodeAdventure implements CommandExecutor {
                 if (player.hasPermission("Peligon.Core.Gamemode.adventure") || player.hasPermission("Peligon.Core.Gamemode.*") || player.hasPermission("Peligon.Core.*")) {
                     player.setGameMode(GameMode.ADVENTURE);
                     player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
-                            plugin.fileMessage.getConfig().getString("gamemode-changed").replaceAll("%gamemode%", "ADVENTURE")));
+                            plugin.fileMessage.getConfig().getString("gamemode-changed").replaceAll("%gamemode%", "adventure")));
                 } else {
                     player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-permission")));
                 }
@@ -51,7 +51,7 @@ public class cmdGamemodeAdventure implements CommandExecutor {
                     target.setGameMode(GameMode.ADVENTURE);
                     player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
                             plugin.fileMessage.getConfig().getString("gamemode-changed-other").replaceAll("%player%", target.getName())
-                                    .replaceAll("%gamemode%", "ADVENTURE")));
+                                    .replaceAll("%gamemode%", "adventure")));
                 } else {
                     player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-permission")));
                 }

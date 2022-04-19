@@ -1,7 +1,7 @@
-package net.Peligon.PeligonCore.listeners;
+package net.peligon.PeligonCore.listeners;
 
-import net.Peligon.PeligonCore.Main;
-import net.Peligon.PeligonCore.libaries.CustomConfig;
+import net.peligon.PeligonCore.Main;
+import net.peligon.PeligonCore.libaries.CustomConfig;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

@@ -1,6 +1,6 @@
-package net.Peligon.PeligonCore.listeners;
+package net.peligon.PeligonCore.listeners;
 
-import net.Peligon.PeligonCore.Main;
+import net.peligon.PeligonCore.Main;
 import org.bukkit.entity.Animals;
 import org.bukkit.entity.Monster;
 import org.bukkit.entity.Player;
