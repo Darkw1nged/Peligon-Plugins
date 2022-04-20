@@ -1,0 +1,14 @@
+#######################################################################################
+#
+#       Welcome to Peligon PlayTime's configuration, This is where you can change
+#       Basic settings that will affect how the plugin preforms.
+#       This plugin does have database support; see 'Storage' for more information.
+#
+#######################################################################################
+
+Storage:
+  # Visit 'Plugins/PeligonPlayTime/Lang/' to see the supported languages.
+  Language File: "en_US"
+  database: "SQLite"
+
+check-for-updates: true

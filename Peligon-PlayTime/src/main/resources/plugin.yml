@@ -1,0 +1,12 @@
+name: PlayTime
+version: '${project.version}'
+main: net.peligon.PeligonPlayTime.Main
+api-version: 1.18
+authors: [ darkwinged ]
+description: This is an open-source plugin
+commands:
+  pelplaytime:
+    aliases:
+      - pplaytime
+      - pptime
+    description: Allows admins to reload configuration files
