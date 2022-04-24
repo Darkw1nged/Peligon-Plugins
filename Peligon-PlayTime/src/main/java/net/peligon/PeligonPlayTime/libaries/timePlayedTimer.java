@@ -13,7 +13,9 @@ public class timePlayedTimer extends BukkitRunnable {
     @Override
     public void run() {
        for (Player online : Bukkit.getOnlinePlayers()) {
+           for (String reward : plugin.getConfig().getConfigurationSection("rewards").getKeys(false)) {
 
+           }
        }
     }
 }

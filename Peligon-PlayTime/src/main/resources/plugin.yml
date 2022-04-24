@@ -20,3 +20,5 @@ commands:
       - tplayedtop
       - playtimetop
     description: Gives players a list of players with the most time played
+  playtime:
+    description: Allows admins to reset the playtime of a player

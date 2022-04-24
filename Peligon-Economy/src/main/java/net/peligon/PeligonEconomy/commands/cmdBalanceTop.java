@@ -46,9 +46,8 @@ public class cmdBalanceTop implements CommandExecutor {
                 Map<UUID, Double> temp = new HashMap<>();
                 int pos = 0;
                 for (UUID uuid : plugin.Economy.getCashFromDescending().keySet()) {
-                    Player player = Bukkit.getPlayer(uuid);
                     if (pos != plugin.getConfig().getInt("Economy-Leaderboard.cash.players")) {
-                        temp.put(player.getUniqueId(), plugin.Economy.getCashFromDescending().get(uuid));
+                        temp.put(uuid, plugin.Economy.getCashFromDescending().get(uuid));
                         continue;
                     }
                     break;

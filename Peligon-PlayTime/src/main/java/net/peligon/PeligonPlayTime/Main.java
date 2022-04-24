@@ -2,6 +2,7 @@ package net.peligon.PeligonPlayTime;
 
 import net.peligon.PeligonPlayTime.commands.cmdLeaderboard;
 import net.peligon.PeligonPlayTime.commands.cmdReload;
+import net.peligon.PeligonPlayTime.commands.cmdReset;
 import net.peligon.PeligonPlayTime.commands.cmdTimePlayed;
 import net.peligon.PeligonPlayTime.libaries.CustomConfig;
 import net.peligon.PeligonPlayTime.libaries.UpdateChecker;
@@ -54,7 +55,7 @@ public final class Main extends JavaPlugin {
         }
 
         // ---- [ Calling repeating tasks ] ----
-        new timePlayedTimer().runTaskLaterAsynchronously(this, 20 * 2);
+        new timePlayedTimer().runTaskLaterAsynchronously(this, 20 * 5);
 
         // ---- [ Startup message ] ----
         getServer().getConsoleSender().sendMessage(Utils.chatColor(this.fileMessage.getConfig().getString("startup")));
@@ -74,6 +75,7 @@ public final class Main extends JavaPlugin {
         getCommand("pelplaytime").setExecutor(new cmdReload());
         getCommand("timeplayed").setExecutor(new cmdTimePlayed());
         getCommand("timeplayedtop").setExecutor(new cmdLeaderboard());
+        getCommand("playtime").setExecutor(new cmdReset());
     }
 
     public void loadEvents() {

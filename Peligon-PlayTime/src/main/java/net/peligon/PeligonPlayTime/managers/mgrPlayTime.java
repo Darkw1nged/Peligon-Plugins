@@ -52,7 +52,7 @@ public class mgrPlayTime {
     }
 
     /**
-     * Creates lives data for the player
+     * Creates data for the player
      */
     public void createData(OfflinePlayer player) {
         if (hasData(player)) return;
@@ -83,6 +83,33 @@ public class mgrPlayTime {
     }
 
     /**
+     * Reset time for the player
+     */
+    public void resetTime(OfflinePlayer player) {
+        if (!hasData(player)) return;
+        String query = "UPDATE server SET timePlayed = 0 WHERE uuid= '" + player.getUniqueId() + "';";
+        try {
+            Statement statement = SQLite.connection.createStatement();
+            statement.execute(query);
+            setLastUpdated(player);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void resetTime(UUID uuid) {
+        if (!hasData(uuid)) return;
+        String query = "UPDATE server SET timePlayed = 0 WHERE uuid= '" + uuid + "';";
+        try {
+            Statement statement = SQLite.connection.createStatement();
+            statement.execute(query);
+            setLastUpdated(uuid);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
      * Gets the player's time played
      *
      * @return Players time played in array format
@@ -104,7 +131,7 @@ public class mgrPlayTime {
 
     public long getTimePlayed(UUID uuid) {
         if (!hasData(uuid)) return 0;
-        String query = "SELECT * FROM server WHERE uuid='" + uuid.toString() + "';";
+        String query = "SELECT * FROM server WHERE uuid='" + uuid + "';";
         try {
 
             PreparedStatement statement = SQLite.connection.prepareStatement(query);
@@ -145,6 +172,17 @@ public class mgrPlayTime {
     public void setLastUpdated(OfflinePlayer player) {
         if (!hasData(player)) return;
         String query = "UPDATE server SET lastUpdated=" + System.currentTimeMillis() + " WHERE uuid='" + player.getUniqueId() + "';";
+        try {
+            Statement statement = SQLite.connection.createStatement();
+            statement.execute(query);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setLastUpdated(UUID uuid) {
+        if (!hasData(uuid)) return;
+        String query = "UPDATE server SET lastUpdated=" + System.currentTimeMillis() + " WHERE uuid='" + uuid + "';";
         try {
             Statement statement = SQLite.connection.createStatement();
             statement.execute(query);
