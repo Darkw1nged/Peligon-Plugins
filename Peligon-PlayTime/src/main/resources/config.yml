@@ -11,4 +11,35 @@ Storage:
   Language File: "en_US"
   database: "SQLite"
 
+format: "%seconds%s, %minutes%m, %hours%hrs, %days%d, %weeks%wks"
+leaderboard:
+  players: 10
+  format: "%position%. &e%player% &f- &a%time_played%"
+
+rewards:
+  1:
+    # This is the amount of time before the player gets rewarded.
+    # !! Supported Time Units: s (seconds), m (minutes), h (hours), d (days), w (weeks)
+    time: "1h"
+    message: "&aYou have been rewarded for playing for 1 hour!"
+    commands:
+      - "give %player% diamond 1"
+      - "eco give %player% 100"
+    # This is all the players that have been rewarded.
+    claimed: []
+  2:
+    time: "1d"
+    message: "&aYou have been rewarded for playing for 1 day!"
+    commands:
+      - "give %player% diamond 3"
+      - "eco give %player% 1000"
+    claimed: []
+  3:
+    time: "1w"
+    message: "&aYou have been rewarded for playing for 1 week!"
+    commands:
+      - "give %player% diamond 5"
+      - "eco give %player% 5000"
+    claimed: []
+
 check-for-updates: true

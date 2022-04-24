@@ -20,6 +20,8 @@
         <module>Peligon-Economy</module>
         <module>Peligon-LifeSteal</module>
 
+        <module>Peligon-PlayTime</module>
+
         <!-- Development Plugins -->
         <module>Peligon-Prison</module>
         <module>Peligon-Boosters</module>

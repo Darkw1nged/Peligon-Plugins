@@ -1,4 +1,4 @@
-name: PlayTime
+name: PeligonPlayTime
 version: '${project.version}'
 main: net.peligon.PeligonPlayTime.Main
 api-version: 1.18
@@ -10,3 +10,13 @@ commands:
       - pplaytime
       - pptime
     description: Allows admins to reload configuration files
+  timeplayed:
+    aliases:
+      - tplayed
+      - playtime
+    description: Allows players to see how much time they have played on the server
+  timeplayedtop:
+    aliases:
+      - tplayedtop
+      - playtimetop
+    description: Gives players a list of players with the most time played
