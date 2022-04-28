@@ -9,10 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class mgrPlayTime {
 
@@ -197,7 +194,7 @@ public class mgrPlayTime {
      * @return Players time played position
      */
     public int getTimePlayedPosition(OfflinePlayer player) {
-        String query = "SELECT uuid, timePlayed FROM server DESC;";
+        String query = "SELECT uuid, timePlayed FROM server ORDER BY timePlayed DESC;";
         try {
             PreparedStatement statement = SQLite.connection.prepareStatement(query);
             ResultSet rs = statement.executeQuery();
@@ -224,7 +221,7 @@ public class mgrPlayTime {
      * @return List of players played time going from shortest to longest
      */
     public HashMap<UUID, Long> getTimePlayedLeaderboard() {
-        String query = "SELECT uuid, timePlayed FROM server DESC;";
+        String query = "SELECT uuid, timePlayed FROM server ORDER BY timePlayed DESC;";
         try {
             PreparedStatement statement = SQLite.connection.prepareStatement(query);
             ResultSet rs = statement.executeQuery();

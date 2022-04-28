@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class cmdLeaderboard implements CommandExecutor {
 
@@ -24,23 +25,12 @@ public class cmdLeaderboard implements CommandExecutor {
                         plugin.playerTime.addTime(online);
                     }
                 }
-
-                Map<UUID, Long> temp = new HashMap<>();
-                int pos = 0;
-                for (UUID uuid : plugin.playerTime.getTimePlayedLeaderboard().keySet()) {
-                    if (pos != plugin.getConfig().getInt("leaderboard.players")) {
-                        temp.put(uuid, plugin.playerTime.getTimePlayed(uuid));
-                        continue;
-                    }
-                    break;
-                }
-
                 sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("playtime-top")
                         .replaceAll("%number%", String.valueOf(plugin.getConfig().getInt("leaderboard.players")))));
 
-                pos = 0;
-                for (UUID uuid: temp.keySet()) {
-                    long timePlayed = plugin.playerTime.getTimePlayed(uuid);
+                AtomicInteger i = new AtomicInteger();
+                plugin.playerTime.getTimePlayedLeaderboard().entrySet().stream().sorted(Collections.reverseOrder(Map.Entry.comparingByValue())).forEach(entry -> {
+                    long timePlayed = plugin.playerTime.getTimePlayed(entry.getKey());
                     long weeks = TimeUnit.MILLISECONDS.toDays(timePlayed) / 7;
                     long days = TimeUnit.MILLISECONDS.toDays(timePlayed);
                     long hours = TimeUnit.MILLISECONDS.toHours(timePlayed) - TimeUnit.DAYS.toHours(TimeUnit.MILLISECONDS.toDays(timePlayed));
@@ -54,13 +44,12 @@ public class cmdLeaderboard implements CommandExecutor {
                             .replaceAll("%minutes%", minutes + "")
                             .replaceAll("%seconds%", seconds + "");
 
-                    OfflinePlayer player = Bukkit.getOfflinePlayer(uuid);
+                    OfflinePlayer player = Bukkit.getOfflinePlayer(entry.getKey());
 
-                    sender.sendMessage(Utils.chatColor(plugin.getConfig().getString("leaderboard.format").replaceAll("%position%", String.valueOf(pos + 1))
+                    sender.sendMessage(Utils.chatColor(plugin.getConfig().getString("leaderboard.format").replaceAll("%position%", (i.getAndIncrement() + 1) + "")
                             .replaceAll("%player%", player.getName())
                             .replaceAll("%time_played%", time)));
-                    pos++;
-                }
+                });
             } else {
                 sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-permission")));
             }

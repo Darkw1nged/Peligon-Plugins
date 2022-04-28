@@ -19,23 +19,23 @@ leaderboard:
 rewards:
   1:
     # This is the amount of time before the player gets rewarded.
-    # !! Supported Time Units: s (seconds), m (minutes), h (hours), d (days), w (weeks)
-    time: "1h"
+    # !! Note: This is in seconds.
+    time: "3600"
     message: "&aYou have been rewarded for playing for 1 hour!"
     commands:
       - "give %player% diamond 1"
       - "eco give %player% 100"
-    # This is all the players that have been rewarded.
+    # This will keep track how many times the player has been rewarded.
     claimed: []
   2:
-    time: "1d"
+    time: "86400"
     message: "&aYou have been rewarded for playing for 1 day!"
     commands:
       - "give %player% diamond 3"
       - "eco give %player% 1000"
     claimed: []
   3:
-    time: "1w"
+    time: "604800"
     message: "&aYou have been rewarded for playing for 1 week!"
     commands:
       - "give %player% diamond 5"

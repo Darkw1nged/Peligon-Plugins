@@ -2,7 +2,6 @@ package net.peligon.PeligonPlayTime;
 
 import net.peligon.PeligonPlayTime.commands.cmdLeaderboard;
 import net.peligon.PeligonPlayTime.commands.cmdReload;
-import net.peligon.PeligonPlayTime.commands.cmdReset;
 import net.peligon.PeligonPlayTime.commands.cmdTimePlayed;
 import net.peligon.PeligonPlayTime.libaries.CustomConfig;
 import net.peligon.PeligonPlayTime.libaries.UpdateChecker;
@@ -73,9 +72,8 @@ public final class Main extends JavaPlugin {
 
     public void loadCommands() {
         getCommand("pelplaytime").setExecutor(new cmdReload());
-        getCommand("timeplayed").setExecutor(new cmdTimePlayed());
+        getCommand("playtime").setExecutor(new cmdTimePlayed());
         getCommand("timeplayedtop").setExecutor(new cmdLeaderboard());
-        getCommand("playtime").setExecutor(new cmdReset());
     }
 
     public void loadEvents() {

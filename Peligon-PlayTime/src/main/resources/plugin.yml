@@ -10,15 +10,13 @@ commands:
       - pplaytime
       - pptime
     description: Allows admins to reload configuration files
-  timeplayed:
+  playtime:
     aliases:
       - tplayed
-      - playtime
+      - timeplayed
     description: Allows players to see how much time they have played on the server
   timeplayedtop:
     aliases:
       - tplayedtop
       - playtimetop
     description: Gives players a list of players with the most time played
-  playtime:
-    description: Allows admins to reset the playtime of a player
