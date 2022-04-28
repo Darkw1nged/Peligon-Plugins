@@ -18,7 +18,7 @@ public class cmdLeaderboard implements CommandExecutor {
     private final Main plugin = Main.getInstance;
 
     public boolean onCommand(CommandSender sender, Command cmd, String string, String[] args) {
-        if (cmd.getName().equalsIgnoreCase("timeplayedtop")) {
+        if (cmd.getName().equalsIgnoreCase("playtimetop")) {
             if (sender.hasPermission("Peligon.PlayTime.Top") || sender.hasPermission("Peligon.PlayTime.*")) {
                 for (Player online : Bukkit.getOnlinePlayers()) {
                     if (plugin.playerTime.hasData(online)) {

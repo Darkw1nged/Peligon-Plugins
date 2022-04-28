@@ -73,7 +73,7 @@ public final class Main extends JavaPlugin {
     public void loadCommands() {
         getCommand("pelplaytime").setExecutor(new cmdReload());
         getCommand("playtime").setExecutor(new cmdTimePlayed());
-        getCommand("timeplayedtop").setExecutor(new cmdLeaderboard());
+        getCommand("playtimetop").setExecutor(new cmdLeaderboard());
     }
 
     public void loadEvents() {

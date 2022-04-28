@@ -15,8 +15,8 @@ commands:
       - tplayed
       - timeplayed
     description: Allows players to see how much time they have played on the server
-  timeplayedtop:
+  playtimetop:
     aliases:
       - tplayedtop
-      - playtimetop
+      - timeplayedtop
     description: Gives players a list of players with the most time played
