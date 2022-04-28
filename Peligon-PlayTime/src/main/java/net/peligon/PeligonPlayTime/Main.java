@@ -54,7 +54,7 @@ public final class Main extends JavaPlugin {
         }
 
         // ---- [ Calling repeating tasks ] ----
-        new timePlayedTimer().runTaskLaterAsynchronously(this, 20 * 5);
+        new timePlayedTimer().runTaskTimer(this, 20 * 5, 20 * 5);
 
         // ---- [ Startup message ] ----
         getServer().getConsoleSender().sendMessage(Utils.chatColor(this.fileMessage.getConfig().getString("startup")));
