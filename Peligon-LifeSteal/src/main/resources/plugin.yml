@@ -1,6 +1,6 @@
 name: PeligonLifeSteal
 version: '${project.version}'
-main: net.peligon.PeligonLifeSteal.Main
+main: net.peligon.LifeSteal.Main
 api-version: 1.18
 authors: [ darkwinged ]
 description: This is an open-source plugin

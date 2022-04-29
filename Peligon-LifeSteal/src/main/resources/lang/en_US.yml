@@ -11,9 +11,6 @@ admin-lives-updated: "&fYou have updated &e%player% &flives."
 admin-lives-reset: "&fYou have reset &e%player% &flives."
 lives: "&ePeligon >> &fYou have &e%amount% &flives"
 lives-other: "&ePeligon >> &f%player%'s has &e%amount% &flives"
-death-screen-message:
-  lives: "&fYou have &e%amount% &flives left"
-  no-lives: "&fYou have no lives left!"
 ban-message: "&fYou have run out of lives."
 kick-message: "&fYou have run out of lives."
 

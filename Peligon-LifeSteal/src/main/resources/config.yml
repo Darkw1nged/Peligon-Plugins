@@ -24,7 +24,7 @@ Lose-Lives:
 # What happens when a player respawns.
 Player-Respawn:
   title:
-    send-title: true
+    send-title: true\
     has-lives-left:
       title: "&7%player%"
       subtitle: "&cYou have &e%lives% &clives left!"
@@ -38,11 +38,11 @@ Player-Respawn:
 # Commands to be executed when a player reaches a chosen amount of lives.
 Commands-on-Death:
   enabled: false
-    # Only execute commands when the player reaches a certain amount of lives.
-    execute-at-lives: 0
-    commands:
-      - "say &c%player% has just died! They have %lives% lives left!"
-      - "say Second message!"
+  # Only execute commands when the player reaches a certain amount of lives.
+  execute-at-lives: 0
+  commands:
+    - "say &c%player% has just died! They have %lives% lives left!"
+    - "say Second message!"
 
 
 # What will be executed when the player runs out of lives.
@@ -51,3 +51,5 @@ Out-of-Lives:
   kick-on-death: false
   change-gamemode-on-death: false
   gamemode: SPECTATOR
+  teleport-player-world: false
+  world: "world"
