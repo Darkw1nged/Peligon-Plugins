@@ -235,6 +235,7 @@ public class Utils {
             RawInterestTimer = Integer.parseInt(Utils.formatTime(path));
         }
     }
-    public static int InterestTimer = RawInterestTimer;
+
+    public static int InterestTimer = 0;
 
 }

@@ -24,12 +24,12 @@ public class InterestTimer extends BukkitRunnable {
                     toAdd = amount * (plugin.fileATM.getConfig().getInt("Options.interest.percentage") / 100.0f);
                 }
 
-                plugin.Economy.AddBankAccount(uuid, toAdd);
+                plugin.Economy.addBankAccount(uuid, toAdd);
                 Player player = Bukkit.getPlayer(uuid);
                 if (player == null) return;
                 player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") + plugin.fileMessage.getConfig().getString("interest-added"), toAdd));
 
-                Utils.InterestTimer = Utils.RawInterestTimer;
+                Utils.InterestTimer = 0;
             }
         } else {
             Utils.InterestTimer += 2;

@@ -15,12 +15,11 @@
         <!-- Released Plugins -->
         <module>Peligon-Authentication</module>
         <module>Peligon-Polls</module>
+        <module>Peligon-LifeSteal</module>
+        <module>Peligon-PlayTime</module>
 
         <!-- Updating Plugin(s) -->
         <module>Peligon-Economy</module>
-        <module>Peligon-LifeSteal</module>
-
-        <module>Peligon-PlayTime</module>
 
         <!-- Development Plugins -->
         <module>Peligon-Prison</module>

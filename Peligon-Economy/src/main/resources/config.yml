@@ -9,7 +9,14 @@
 Storage:
   # Visit 'Plugins/PeligonEconomy/Lang/' to see the supported languages.
   Language File: "en_US"
-  database: "SQLite"
+  # Avaliable options: "MySQL", "SQLite"
+  database: "MongoDB"
+  MySQL:
+    host: "localhost"
+    port: 3306
+    database: "minecraft"
+    username: "root"
+    password: "password0"
   banks: true
 
 Account-Setup:
@@ -72,6 +79,11 @@ Modules:
   sell-wand: true
   bounties: true
   ATMs: true
+  gift-items: true
+
+# Block certain items from being gifted.
+Gift-Blacklisted-Items:
+  - BEDROCK
 
 # When players die, this will cause them to lose money.
 # !! If they do not have enough cash this will automatically use their bank.

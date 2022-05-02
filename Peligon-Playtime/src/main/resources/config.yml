@@ -22,12 +22,11 @@ rewards:
     time: 3600
     message:
       chat: "&aYou have been rewarded for playing for 1 hour!"
-      title:
-        title: "&aYou have been rewarded!"
-        subtitle: "&aYou have been rewarded for playing for 1 hour!"
-        fade-in: 20
-        stay: 60
-        fade-out: 20
+      title: "&aYou have been rewarded!"
+      subtitle: "&aYou have been rewarded for playing for 1 hour!"
+      title-fade-in: 20
+      title-stay: 60
+      title-fade-out: 20
     commands:
       - "give %player% diamond 1"
       - "eco give %player% 100"
@@ -37,12 +36,11 @@ rewards:
     time: 86400
     message:
       chat: "&aYou have been rewarded for playing for 1 day!"
-      title:
-        title: "&aYou have been rewarded!"
-        subtitle: "&aYou have been rewarded for playing for 1 day!"
-        fade-in: 20
-        stay: 60
-        fade-out: 20
+      title: "&aYou have been rewarded!"
+      subtitle: "&aYou have been rewarded for playing for 1 day!"
+      title-fade-in: 20
+      title-stay: 60
+      title-fade-out: 20
     commands:
       - "give %player% diamond 3"
       - "eco give %player% 1000"
@@ -51,12 +49,11 @@ rewards:
     time: 604800
     message:
       chat: "&aYou have been rewarded for playing for 1 week!"
-      title:
-        title: "&aYou have been rewarded!"
-        subtitle: "&aYou have been rewarded for playing for 1 week!"
-        fade-in: 20
-        stay: 60
-        fade-out: 20
+      title: "&aYou have been rewarded!"
+      subtitle: "&aYou have been rewarded for playing for 1 week!"
+      title-fade-in: 20
+      title-stay: 60
+      title-fade-out: 20
     commands:
       - "give %player% diamond 5"
       - "eco give %player% 5000"

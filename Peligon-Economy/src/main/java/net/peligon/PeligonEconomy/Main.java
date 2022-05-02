@@ -2,7 +2,8 @@ package net.peligon.PeligonEconomy;
 
 import net.peligon.PeligonEconomy.commands.*;
 import net.peligon.PeligonEconomy.libaries.*;
-import net.peligon.PeligonEconomy.libaries.storage.SQLite;
+import net.peligon.PeligonEconomy.libaries.storage.SQLibrary;
+import net.peligon.PeligonEconomy.libaries.storage.SQLiteLibary;
 import net.peligon.PeligonEconomy.listeners.*;
 import net.peligon.PeligonEconomy.managers.mgrEconomy;
 import net.peligon.PeligonEconomy.managers.mgrPlaceholders;
@@ -19,12 +20,15 @@ public final class Main extends JavaPlugin {
     public mgrEconomy Economy;
     public PeligonEconomy peligonEconomy;
     public mgrSignFactory signFactory;
+    public SQLibrary sqlLibrary;
+    public String storageType = "SQLite";
 
     public CustomConfig fileWorth = new CustomConfig(this, "worth", true);
     public CustomConfig fileSigns = new CustomConfig(this, "signs", true);
     public CustomConfig fileATM = new CustomConfig(this, "Inventories/ATM", true);
     public CustomConfig fileDailyReward = new CustomConfig(this, "Inventories/daily", true);
     public CustomConfig fileSellGUI = new CustomConfig(this, "Inventories/sellGUI", true);
+    public CustomConfig fileBoxGUI = new CustomConfig(this, "Inventories/box", true);
     public CustomConfig fileMessage;
 
     public void onEnable() {
@@ -39,6 +43,7 @@ public final class Main extends JavaPlugin {
         fileATM.saveDefaultConfig();
         fileDailyReward.saveDefaultConfig();
         fileSellGUI.saveDefaultConfig();
+        fileBoxGUI.saveDefaultConfig();
         saveDefaultConfig();
 
         // ---- [ Loading lang file ] ----
@@ -66,12 +71,12 @@ public final class Main extends JavaPlugin {
             new mgrPlaceholders().register();
         }
 
-        // ---- [ Setting up SQLite ] ----
-        SQLite sqlLite = new SQLite();
-        sqlLite.loadTables();
+        // ---- [ Setting up databases ] ----
+        setupStorage();
+
 
         // ---- [ Calling repeating tasks ] ----
-        new InterestTimer().runTaskLaterAsynchronously(this, 20 * 2);
+        new InterestTimer().runTaskTimerAsynchronously(this, 20 * 2, 20 * 2);
 
         // ---- [ Startup message ] ----
         getServer().getConsoleSender().sendMessage(Utils.chatColor(this.fileMessage.getConfig().getString("startup")));
@@ -106,6 +111,8 @@ public final class Main extends JavaPlugin {
         getCommand("bounty").setExecutor(new cmdBounty());
         getCommand("goal").setExecutor(new cmdGoal());
         getCommand("daily").setExecutor(new cmdDaily());
+        getCommand("gift").setExecutor(new cmdGift());
+        getCommand("box").setExecutor(new cmdBox());
     }
 
     public void loadEvents() {
@@ -121,7 +128,8 @@ public final class Main extends JavaPlugin {
                 new MiningRewardsEvents(),
                 new DailyInventoryEvents(),
                 new SellGUIEvents(),
-                new GlobalInventoryEvents()
+                new GlobalInventoryEvents(),
+                new BoxEvents()
         ).forEach(listener -> getServer().getPluginManager().registerEvents(listener, this));
     }
 
@@ -132,6 +140,26 @@ public final class Main extends JavaPlugin {
                 getServer().getConsoleSender().sendMessage(Utils.chatColor(fileMessage.getConfig().getString("plugin-link")));
             }
         });
+    }
+
+    private void setupStorage() {
+        if (getConfig().getString("Storage.database", "SQLite").equalsIgnoreCase("sqlite")) {
+            SQLiteLibary sqlLite = new SQLiteLibary();
+            sqlLite.loadTables();
+            this.storageType = "SQLite";
+        } else if (getConfig().getString("Storage.database", "SQLite").equalsIgnoreCase("MYSQL")) {
+            sqlLibrary = new SQLibrary(getConfig().getString("Storage.MySQL.host"),
+                    getConfig().getInt("Storage.MySQL.port"),
+                    getConfig().getString("Storage.MySQL.database"),
+                    getConfig().getString("Storage.MySQL.username"),
+                    getConfig().getString("Storage.MySQL.password"));
+
+            if (sqlLibrary.getConnection() == null) {
+                System.out.println("[Peligon Economy] Unable to establish a connection to MySQL.");
+                return;
+            }
+            this.storageType = "MySQL";
+        }
     }
 
 }

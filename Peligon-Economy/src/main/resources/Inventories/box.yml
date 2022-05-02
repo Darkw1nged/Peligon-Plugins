@@ -1,0 +1,38 @@
+inventory:
+  title: "&7Box"
+  # ! This inventory will automatically size depending on the number of items
+  # There will always be a bottom row of events such as close, next, and previous
+
+  # There is 2 type of item event(s): Item | Close
+  # If you want the item to be interacted with then please add a type to the item.
+  contents:
+    1:
+      item: BLACK_STAINED_GLASS_PANE
+      name: " "
+      # See the full list here: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/inventory/ItemFlag.html
+      item-flags:
+        - "HIDE_ATTRIBUTES"
+      # -1 means all slots will be filled with this item.
+      slot: -1
+    2:
+      item: ARROW
+      name: "&7Previous"
+      item-flags:
+        - "HIDE_ATTRIBUTES"
+      # Slots are based on the bottom row only.
+      slot: 2
+      event: "PreviousPage"
+    3:
+      item: BARRIER
+      name: "&cClose"
+      item-flags:
+        - "HIDE_ATTRIBUTES"
+      slot: 5
+      event: "Close"
+    4:
+      item: ARROW
+      name: "&7Next"
+      item-flags:
+        - "HIDE_ATTRIBUTES"
+      slot: 8
+      event: "NextPage"

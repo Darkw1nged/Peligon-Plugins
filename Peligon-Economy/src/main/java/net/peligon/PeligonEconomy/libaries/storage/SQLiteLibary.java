@@ -8,13 +8,13 @@ import java.sql.*;
 
 import static org.bukkit.Bukkit.getServer;
 
-public class SQLite {
+public class SQLiteLibary {
 
     public static Connection connection;
     private final Main plugin = Main.getInstance;
 
     public void getSQLConnection() throws SQLException {
-        File dbFolder = new File(plugin.getDataFolder(), "peligon.db");
+        File dbFolder = new File(plugin.getDataFolder() + "/data", "peligon.db");
         connection = DriverManager.getConnection("jdbc:sqlite:" + dbFolder);
 
         try {
