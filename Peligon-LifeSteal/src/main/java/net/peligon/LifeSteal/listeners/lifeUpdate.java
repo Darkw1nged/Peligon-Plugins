@@ -17,7 +17,6 @@ import org.bukkit.event.player.PlayerRespawnEvent;
 public class lifeUpdate implements Listener {
 
     private final Main plugin = Main.getInstance;
-    private boolean execute = false;
 
     @EventHandler
     public void onDeath(EntityDamageEvent event) {
@@ -29,7 +28,7 @@ public class lifeUpdate implements Listener {
                 if (event instanceof EntityDamageByEntityEvent) {
                     EntityDamageByEntityEvent e = (EntityDamageByEntityEvent) event;
 
-                    if (plugin.getConfig().getBoolean("Lose-Lives.players-only")) {
+                    if (plugin.getConfig().getStringList("Events").contains("players-only")) {
                         if (e.getDamager() instanceof Player && plugin.lives.hasData((Player) e.getDamager())) {
                             Player damager = (Player) e.getDamager();
                             plugin.lives.addLives(damager, 1);
@@ -37,13 +36,13 @@ public class lifeUpdate implements Listener {
                         plugin.lives.removeLives(player, 1);
                         return;
                     }
-                    if (!plugin.getConfig().getStringList("Lose-Lives.blacklisted-mobs").contains(e.getDamager().getType().name().toUpperCase())) {
+                    if (!plugin.getConfig().getStringList("blacklisted-mobs").contains(e.getDamager().getType().name().toUpperCase())) {
                         if (plugin.lives.getLives(player) > 0)
                             plugin.lives.removeLives(player, 1);
                     }
                     return;
                 }
-                if (plugin.getConfig().getBoolean("Lose-Lives.players-only")) return;
+                if (plugin.getConfig().getStringList("Events").contains("players-only")) return;
                 plugin.lives.removeLives(player, 1);
             }
         }
@@ -54,18 +53,18 @@ public class lifeUpdate implements Listener {
         Player player = event.getEntity();
 
         if (plugin.lives.getLives(player) <= 0) {
-            if (plugin.getConfig().getBoolean("Out-of-Lives.ban-on-death", false)) {
+            if (plugin.getConfig().getStringList("Out-of-Lives.Actions").contains("ban-on-death")) {
                 BanList bans = Bukkit.getBanList(BanList.Type.NAME);
                 bans.addBan(player.getName(), Utils.chatColor(plugin.fileMessage.getConfig().getString("ban-message")), null, null);
                 player.kickPlayer(Utils.chatColor(plugin.fileMessage.getConfig().getString("ban-message")));
             }
-            if (plugin.getConfig().getBoolean("Out-of-Lives.kick-on-death", false)) {
-                player.kickPlayer(Utils.chatColor(plugin.fileMessage.getConfig().getString("No-Lives.kick-message")));
+            if (plugin.getConfig().getStringList("Out-of-Lives.Actions").contains("kick-on-death")) {
+                player.kickPlayer(Utils.chatColor(plugin.fileMessage.getConfig().getString("kick-message")));
             }
-            if (plugin.getConfig().getBoolean("Out-of-Lives.change-gamemode-on-death", false)) {
+            if (plugin.getConfig().getStringList("Out-of-Lives.Actions").contains("change-gamemode-on-death")) {
                 player.setGameMode(GameMode.valueOf(plugin.getConfig().getString("Out-of-Lives.gamemode").toUpperCase()));
             }
-            if (plugin.getConfig().getBoolean("Out-of-Lives.teleport-player-world", false)) {
+            if (plugin.getConfig().getStringList("Out-of-Lives.Actions").contains("teleport-player-world")) {
                 World world = Bukkit.getWorld(plugin.getConfig().getString("Out-of-Lives.world"));
                 if (world == null) return;
                 player.teleport(world.getSpawnLocation());
@@ -77,7 +76,7 @@ public class lifeUpdate implements Listener {
     public void executeCommands(PlayerDeathEvent event) {
         Player player = event.getEntity();
 
-        if (plugin.getConfig().getBoolean("Commands-on-Death.enabled", false)) {
+        if (plugin.getConfig().getStringList("Events").contains("commands-on-death")) {
             if (plugin.getConfig().getInt("Commands-on-Death.execute-at-lives") == plugin.lives.getLives(player)) {
                 for (String command : plugin.getConfig().getStringList("Commands-on-Death.commands")) {
                     command = command.replaceAll("%player%", player.getName())
@@ -104,18 +103,18 @@ public class lifeUpdate implements Listener {
                         plugin.getConfig().getInt("Player-Respawn.title.fade-in"),
                         plugin.getConfig().getInt("Player-Respawn.title.stay"),
                         plugin.getConfig().getInt("Player-Respawn.title.out"));
+                return;
             }
-            return;
+            player.sendTitle(Utils.chatColor(plugin.getConfig().getString("Player-Respawn.title.has-lives-left.title")
+                            .replaceAll("%lives%", "" + plugin.lives.getLives(player))
+                            .replaceAll("%player%", player.getName())),
+                    Utils.chatColor(plugin.getConfig().getString("Player-Respawn.title.has-lives-left.subtitle")
+                            .replaceAll("%lives%", "" + plugin.lives.getLives(player))
+                            .replaceAll("%player%", player.getName())),
+                    plugin.getConfig().getInt("Player-Respawn.title.fade-in"),
+                    plugin.getConfig().getInt("Player-Respawn.title.stay"),
+                    plugin.getConfig().getInt("Player-Respawn.title.out"));
         }
-        player.sendTitle(Utils.chatColor(plugin.getConfig().getString("Player-Respawn.title.has-lives-left.title")
-                        .replaceAll("%lives%", "" + plugin.lives.getLives(player))
-                        .replaceAll("%player%", player.getName())),
-                Utils.chatColor(plugin.getConfig().getString("Player-Respawn.title.has-lives-left.subtitle")
-                        .replaceAll("%lives%", "" + plugin.lives.getLives(player))
-                        .replaceAll("%player%", player.getName())),
-                plugin.getConfig().getInt("Player-Respawn.title.fade-in"),
-                plugin.getConfig().getInt("Player-Respawn.title.stay"),
-                plugin.getConfig().getInt("Player-Respawn.title.out"));
     }
 
 }

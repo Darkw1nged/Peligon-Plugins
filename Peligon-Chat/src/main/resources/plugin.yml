@@ -1,7 +1,0 @@
-name: PeligonChat
-version: '${project.version}'
-main: net.peligon.PeligonChat.Main
-api-version: 1.13
-authors: [ darkwinged ]
-description: This is an open-source plugin
-softdepend: [Vault]

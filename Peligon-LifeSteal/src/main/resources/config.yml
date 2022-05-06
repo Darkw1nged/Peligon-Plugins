@@ -12,19 +12,34 @@ Storage:
   database: "SQLite"
   starting-lives: 5
 
-# Settings for how the player will lose a life.
-Lose-Lives:
-  # Only allow players to take lives away.
-  players-only: false
-  blacklisted-mobs:
-    - "ENDERMAN"
-    - "ENDERMITE"
-    - "PHANTOM"
+###############################################################
+# +---------------------------------------------------------+ #
+# |                Peligon LifeSteal (Events)               | #
+# |      !!! To disable modules, add # next to item !!!     | #
+# +---------------------------------------------------------+ #
+###############################################################
+Events:
+  # These two settings are protected by permissions.
+  # Permissions: "Peligon.LifeSteal.Keep.Inventory", "Peligon.LifeSteal.Keep.Experience"
+  - keep-inventory
+  - keep-experience
+  - lightning-strike-on-death
+  - death-penalty
+#  - commands-on-death
+  # Only allow players to take away lives.
+  - players-only
+  - auto-respawn
+  - custom-death-messages
+
+blacklisted-mobs:
+  - "ENDERMAN"
+  - "ENDERMITE"
+  - "PHANTOM"
 
 # What happens when a player respawns.
 Player-Respawn:
   title:
-    send-title: true\
+    send-title: true
     has-lives-left:
       title: "&7%player%"
       subtitle: "&cYou have &e%lives% &clives left!"
@@ -35,21 +50,35 @@ Player-Respawn:
     stay: 60
     fade-out: 20
 
-# Commands to be executed when a player reaches a chosen amount of lives.
 Commands-on-Death:
-  enabled: false
   # Only execute commands when the player reaches a certain amount of lives.
   execute-at-lives: 0
   commands:
     - "say &c%player% has just died! They have %lives% lives left!"
     - "say Second message!"
 
-
 # What will be executed when the player runs out of lives.
 Out-of-Lives:
-  ban-on-death: false
-  kick-on-death: false
-  change-gamemode-on-death: false
-  gamemode: SPECTATOR
-  teleport-player-world: false
-  world: "world"
+  Actions:
+    - ban-on-death
+    - kick-on-death
+    - change-gamemode-on-death
+    - teleport-player-world
+  Settings:
+    gamemode: SPECTATOR
+    world: "world"
+
+# If the player dies the amount will be removed from their bank.
+Death-Penalty:
+  only-players: false
+  amount: 100
+
+# Add an effect to the player when they die.
+Lightning-on-death:
+  only-players: false
+  # Only execute lightning when the player reaches a certain amount of lives.
+  # -1 means execute lightning on death regardless of lives.
+  execute-at-lives: -1
+
+# This will automatically check for updates
+check-for-updates: true

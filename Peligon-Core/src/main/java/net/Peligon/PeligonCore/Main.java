@@ -17,6 +17,7 @@ public final class Main extends JavaPlugin {
     public static Main getInstance;
 
     public CustomConfig fileMessage;
+    public CustomConfig fileChatFilter = new CustomConfig(this, "Chat Filter", true);
 
     public void onEnable() {
         // ---- [ Initializing instance of main class ] ----

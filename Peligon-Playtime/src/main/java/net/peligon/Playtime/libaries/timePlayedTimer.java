@@ -18,8 +18,7 @@ public class timePlayedTimer extends BukkitRunnable {
             plugin.playerTime.addTime(online);
             for (String reward : plugin.getConfig().getConfigurationSection("rewards").getKeys(false)) {
                 long seconds = plugin.playerTime.getTimePlayed(online) / 1000;
-
-                if (plugin.getConfig().contains("rewards." + reward + ".claimed." + online.getUniqueId())) {
+                if (plugin.getConfig().contains("rewards." + reward + ".claimed." + online.getUniqueId().toString())) {
                     int timesClaimed = plugin.getConfig().getInt("rewards." + reward + ".claimed." + online.getUniqueId());
                     if (seconds >= (long) plugin.getConfig().getInt("rewards." + reward + ".time") * timesClaimed) {
                         online.sendMessage(Utils.chatColor(plugin.getConfig().getString(Utils.chatColor("rewards." + reward + ".message.chat"))));

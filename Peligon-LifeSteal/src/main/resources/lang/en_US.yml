@@ -4,6 +4,7 @@ no-plugin-dependency: "Peligon LifeSteal has been disabled due to missing depend
 version-check-error: "There was a problem when checking the plugin version"
 plugin-outdated: "There is a new version of Peligon LifeSteal available."
 plugin-link: "Updated version: https://www.spigotmc.org/resources/peligon-lifesteal.100900/"
+no-vault-dependency: "Some features have been disabled due to missing Vault dependency."
 
 prefix: "&ePeligon >> "
 admin-reload: "&eAll configuration files have been reloaded."
@@ -13,6 +14,7 @@ lives: "&ePeligon >> &fYou have &e%amount% &flives"
 lives-other: "&ePeligon >> &f%player%'s has &e%amount% &flives"
 ban-message: "&fYou have run out of lives."
 kick-message: "&fYou have run out of lives."
+death-penalty: "&fYou have lost &2$%amount% &fbecause you died."
 
 console: "&cError! You are not allowed to perform this inside of the console."
 no-permission: "&cError! You do not have permission to use this command."

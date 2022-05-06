@@ -70,5 +70,6 @@ public class Utils {
     }
 
     // ---- [ Cached items ] ----
+    public static Map<UUID, Long> combatTag = new HashMap<>();
 
 }

@@ -1,8 +1,0 @@
-startup: "Peligon TNTRun has successfully loaded."
-shutdown: "Peligon TNTRun has successfully unloaded."
-admin-reload: "&eAll configuration files have been reloaded."
-
-prefix: "&cPeligon TNTRun >> "
-
-console: "&cError! You are not allowed to perform this inside of the console."
-no-permission: "&cError! You do not have permission to use this command."

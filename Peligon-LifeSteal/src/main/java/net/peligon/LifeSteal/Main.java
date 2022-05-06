@@ -1,5 +1,6 @@
 package net.peligon.LifeSteal;
 
+import net.milkbowl.vault.economy.Economy;
 import net.peligon.LifeSteal.commands.cmdLifeSteal;
 import net.peligon.LifeSteal.commands.cmdLives;
 import net.peligon.LifeSteal.commands.cmdReload;
@@ -7,10 +8,10 @@ import net.peligon.LifeSteal.libaries.CustomConfig;
 import net.peligon.LifeSteal.libaries.UpdateChecker;
 import net.peligon.LifeSteal.libaries.Utils;
 import net.peligon.LifeSteal.libaries.storage.SQLite;
-import net.peligon.LifeSteal.listeners.AccountSetup;
-import net.peligon.LifeSteal.listeners.lifeUpdate;
+import net.peligon.LifeSteal.listeners.*;
 import net.peligon.LifeSteal.manager.mgrLives;
 import org.bukkit.event.Listener;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Arrays;
@@ -20,7 +21,10 @@ public final class Main extends JavaPlugin implements Listener {
     public static Main getInstance;
     public mgrLives lives;
 
+    private static Economy econ = null;
+
     public CustomConfig fileMessage;
+    public CustomConfig fileDeathMessage = new CustomConfig(this, "death messages", true);
 
     public void onEnable() {
         // ---- [ Initializing instance of main class] ----
@@ -29,6 +33,7 @@ public final class Main extends JavaPlugin implements Listener {
         // ---- [ Loading Commands | Loading Events | Loading YML Files ] ----
         loadCommands();
         loadEvents();
+        fileDeathMessage.saveDefaultConfig();
         saveDefaultConfig();
 
         // ---- [ Loading lang file ] ----
@@ -41,6 +46,11 @@ public final class Main extends JavaPlugin implements Listener {
         // ---- [ Setting up SQLite ] ----
         SQLite sqlLite = new SQLite();
         sqlLite.loadTables();
+
+        if (!setupEconomy() ) {
+            System.out.println(Utils.chatColor(this.fileMessage.getConfig().getString("no-vault-dependency")));
+            return;
+        }
 
         // ---- [ Startup message ] ----
         getServer().getConsoleSender().sendMessage(Utils.chatColor(this.fileMessage.getConfig().getString("startup")));
@@ -65,8 +75,26 @@ public final class Main extends JavaPlugin implements Listener {
     public void loadEvents() {
         Arrays.asList(
                 new AccountSetup(),
-                new lifeUpdate()
+                new lifeUpdate(),
+                new deathPenalty(),
+                new LightningStrike(),
+                new keepExperience(),
+                new keepInventory(),
+                new AutoRespawn(),
+                new customDeathMessages()
         ).forEach(listener -> getServer().getPluginManager().registerEvents(listener, this));
+    }
+
+    private boolean setupEconomy() {
+        if (getServer().getPluginManager().getPlugin("Vault") == null) {
+            return false;
+        }
+        RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
+        if (rsp == null) {
+            return false;
+        }
+        econ = rsp.getProvider();
+        return econ != null;
     }
 
     private void versionChecker() {
@@ -76,5 +104,9 @@ public final class Main extends JavaPlugin implements Listener {
                 getServer().getConsoleSender().sendMessage(Utils.chatColor(fileMessage.getConfig().getString("plugin-link")));
             }
         });
+    }
+
+    public Economy getEconomy() {
+        return econ;
     }
 }

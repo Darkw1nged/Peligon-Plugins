@@ -1,5 +1,0 @@
-startup: "&aPeligon Authentication has successfully loaded."
-shutdown: "&cPeligon Authentication has successfully unloaded."
-version-check-error: "&cThere was a problem when checking the plugin version"
-plugin-outdated: "&eThere is a new version of Peligon Chat available."
-plugin-link: "Updated version: N/A"
