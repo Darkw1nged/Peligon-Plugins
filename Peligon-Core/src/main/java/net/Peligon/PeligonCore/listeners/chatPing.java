@@ -16,16 +16,18 @@ public class chatPing implements Listener {
     @EventHandler
     public void onChat(AsyncPlayerChatEvent event) {
         String message = event.getMessage();
-        if (!plugin.getConfig().getBoolean("chat-pings.enabled", true)) return;
-        if (plugin.getConfig().getStringList("chat-pings.disabled-worlds").contains(event.getPlayer().getWorld().getName())) return;
+        if (!plugin.getConfig().getStringList("Events").contains("chat-ping")) return;
+        if (plugin.fileChatSettings.getConfig().getStringList("Chat-Pings.disabled-worlds").contains(event.getPlayer().getWorld().getName())) return;
 
         for (Player pinged : Bukkit.getOnlinePlayers()) {
             String ping = "@" + pinged.getName().toLowerCase();
             if (!message.toLowerCase().contains(ping)) continue;
             if (event.getPlayer() == pinged) continue;
 
-            event.setMessage(Utils.chatColor(message.replaceAll(ping, "&a" + ping)));
-            pinged.playSound(pinged.getLocation(), Sound.valueOf(plugin.getConfig().getString("chat-pings.sound").toUpperCase()), 1.2f, 0.5f);
+            event.setMessage(Utils.chatColor(message.replaceAll(ping, plugin.fileChatSettings.getConfig().getString("Chat-Pings.color") + ping)));
+            pinged.playSound(pinged.getLocation(), Sound.valueOf(plugin.fileChatSettings.getConfig().getString("Chat-Pings.sound").toUpperCase()),
+                    Float.parseFloat(plugin.fileChatSettings.getConfig().getString("Chat-Pings.sound-volume", "1.2")),
+                    Float.parseFloat(plugin.fileChatSettings.getConfig().getString("Chat-Pings.sound-pitch", "0.5")));
         }
     }
 

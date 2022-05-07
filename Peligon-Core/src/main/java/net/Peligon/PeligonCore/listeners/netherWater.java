@@ -17,7 +17,7 @@ public class netherWater  implements Listener {
     @EventHandler
     public void onWaterPlace(PlayerBucketEmptyEvent event) {
         Player player = event.getPlayer();
-        if (plugin.getConfig().getBoolean("Nether-Water", false)) {
+        if (plugin.getConfig().getStringList("Events").contains("nether-water")) {
             Block block = event.getBlockClicked();
             if (block.getWorld().getEnvironment().equals(World.Environment.NETHER) && event.getBucket().equals(Material.WATER_BUCKET)) {
                 int x = block.getX();

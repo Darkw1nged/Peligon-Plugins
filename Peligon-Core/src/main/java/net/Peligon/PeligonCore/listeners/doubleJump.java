@@ -21,7 +21,7 @@ public class doubleJump implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        if (plugin.getConfig().getBoolean("Double-Jump.enabled")) {
+        if (plugin.getConfig().getStringList("Events").contains("double-jump")) {
             if (player.hasPermission("Peligon.Core.Double-Jump") || player.hasPermission("Peligon.Core.*")) {
                 player.setAllowFlight(true);
             }
@@ -31,7 +31,7 @@ public class doubleJump implements Listener {
     @EventHandler
     public void onJump(PlayerToggleFlightEvent event) {
         Player player = event.getPlayer();
-        if (plugin.getConfig().getBoolean("Double-Jump.enabled")) {
+        if (plugin.getConfig().getStringList("Events").contains("double-jump")) {
             if (player.hasPermission("Peligon.Core.Double-Jump") || player.hasPermission("Peligon.Core.*")) {
                 switch (player.getGameMode()) {
                     case CREATIVE:

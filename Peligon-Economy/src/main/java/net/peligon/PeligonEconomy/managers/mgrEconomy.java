@@ -1,6 +1,7 @@
 package net.peligon.PeligonEconomy.managers;
 
 import net.peligon.PeligonEconomy.Main;
+import net.peligon.PeligonEconomy.libaries.storage.SQLibrary;
 import net.peligon.PeligonEconomy.libaries.storage.SQLiteLibary;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -16,6 +17,7 @@ public class mgrEconomy {
     private Map<UUID, Double> bank = new HashMap<>();
 
     public static mgrEconomy getInstance;
+
     public mgrEconomy() {
         getInstance = this;
     }
@@ -34,11 +36,19 @@ public class mgrEconomy {
                 PreparedStatement statement = SQLiteLibary.connection.prepareStatement(query);
                 ResultSet rs = statement.executeQuery();
                 return rs.next();
-            } catch (SQLException e) {
-                e.printStackTrace();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
             }
         } else if (plugin.storageType.equalsIgnoreCase("mysql")) {
-
+            String uuid = String.valueOf(player.getUniqueId());
+            String query = "SELECT 1 FROM accounts WHERE uuid='" + uuid + "';";
+            try {
+                PreparedStatement statement = plugin.sqlLibrary.getConnection().prepareStatement(query);
+                ResultSet rs = statement.executeQuery();
+                return rs.next();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
         }
         return false;
     }
@@ -50,19 +60,26 @@ public class mgrEconomy {
      * @param balance Amount to open account with
      */
     public void createAccount(OfflinePlayer player, double balance) {
+        if (hasAccount(player)) return;
+        if (balance < 0) return;
         if (plugin.storageType.equalsIgnoreCase("sqlite")) {
-            if (hasAccount(player)) return;
-            if (balance < 0) return;
             String uuid = String.valueOf(player.getUniqueId());
             String query = "INSERT INTO plg_money values('" + uuid + "', " + balance + ", 0.0);";
             try {
                 Statement statement = SQLiteLibary.connection.createStatement();
                 statement.execute(query);
-            } catch (SQLException e) {
-                e.printStackTrace();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
             }
         } else if (plugin.storageType.equalsIgnoreCase("mysql")) {
-
+            String uuid = String.valueOf(player.getUniqueId());
+            String query = "INSERT INTO accounts values('" + uuid + "', " + balance + ", 0.0);";
+            try {
+                Statement statement = plugin.sqlLibrary.getConnection().createStatement();
+                statement.execute(query);
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
         }
     }
 
@@ -74,19 +91,26 @@ public class mgrEconomy {
      * @param bank    Amount to open bank account with
      */
     public void createAccount(OfflinePlayer player, double balance, double bank) {
+        if (hasAccount(player)) return;
+        if (balance < 0 || bank < 0) return;
         if (plugin.storageType.equalsIgnoreCase("sqlite")) {
-            if (hasAccount(player)) return;
-            if (balance < 0 || bank < 0) return;
             String uuid = String.valueOf(player.getUniqueId());
             String query = "INSERT INTO plg_money values('" + uuid + "'," + balance + "," + bank + ");";
             try {
                 Statement statement = SQLiteLibary.connection.createStatement();
                 statement.execute(query);
-            } catch (SQLException e) {
-                e.printStackTrace();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
             }
         } else if (plugin.storageType.equalsIgnoreCase("mysql")) {
-
+            String uuid = String.valueOf(player.getUniqueId());
+            String query = "INSERT INTO accounts values('" + uuid + "'," + balance + "," + bank + ");";
+            try {
+                Statement statement = plugin.sqlLibrary.getConnection().createStatement();
+                statement.execute(query);
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
         }
     }
 
@@ -97,18 +121,25 @@ public class mgrEconomy {
      * @param amount Amount to set
      */
     public void setAccount(OfflinePlayer player, double amount) {
+        if (amount < 0) return;
         if (plugin.storageType.equalsIgnoreCase("sqlite")) {
             String uuid = String.valueOf(player.getUniqueId());
-            if (amount < 0) return;
             String query = "UPDATE plg_money SET cash=" + amount + " WHERE uuid='" + uuid + "';";
             try {
                 Statement statement = SQLiteLibary.connection.createStatement();
                 statement.execute(query);
-            } catch (SQLException e) {
-                e.printStackTrace();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
             }
         } else if (plugin.storageType.equalsIgnoreCase("mysql")) {
-
+            String uuid = String.valueOf(player.getUniqueId());
+            String query = "UPDATE accounts SET cash=" + amount + " WHERE uuid='" + uuid + "';";
+            try {
+                Statement statement = plugin.sqlLibrary.getConnection().createStatement();
+                statement.execute(query);
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
         }
     }
 
@@ -119,18 +150,25 @@ public class mgrEconomy {
      * @param amount Amount to set
      */
     public void setBankAccount(OfflinePlayer player, double amount) {
+        if (amount < 0) return;
         if (plugin.storageType.equalsIgnoreCase("sqlite")) {
             String uuid = String.valueOf(player.getUniqueId());
-            if (amount < 0) return;
             String query = "UPDATE plg_money SET bank=" + amount + " WHERE uuid='" + uuid + "';";
             try {
                 Statement statement = SQLiteLibary.connection.createStatement();
                 statement.execute(query);
-            } catch (SQLException e) {
-                e.printStackTrace();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
             }
         } else if (plugin.storageType.equalsIgnoreCase("mysql")) {
-
+            String uuid = String.valueOf(player.getUniqueId());
+            String query = "UPDATE accounts SET bank=" + amount + " WHERE uuid='" + uuid + "';";
+            try {
+                Statement statement = plugin.sqlLibrary.getConnection().createStatement();
+                statement.execute(query);
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
         }
     }
 
@@ -141,19 +179,26 @@ public class mgrEconomy {
      * @param amount Amount to deposit
      */
     public void addAccount(OfflinePlayer player, double amount) {
+        if (!hasAccount(player)) return;
+        if (amount < 0) return;
         if (plugin.storageType.equalsIgnoreCase("sqlite")) {
-            if (!hasAccount(player)) return;
-            if (amount < 0) return;
             String uuid = String.valueOf(player.getUniqueId());
             String query = "UPDATE plg_money SET cash = (SELECT cash FROM plg_money WHERE uuid='" + uuid + "') +" + amount + " WHERE uuid= '" + uuid + "';";
             try {
                 Statement statement = SQLiteLibary.connection.createStatement();
                 statement.execute(query);
-            } catch (SQLException e) {
-                e.printStackTrace();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
             }
         } else if (plugin.storageType.equalsIgnoreCase("mysql")) {
-
+            String uuid = String.valueOf(player.getUniqueId());
+            String query = "UPDATE accounts SET cash = (SELECT cash FROM accounts WHERE uuid='" + uuid + "') +" + amount + " WHERE uuid= '" + uuid + "';";
+            try {
+                Statement statement = plugin.sqlLibrary.getConnection().createStatement();
+                statement.execute(query);
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
         }
     }
 
@@ -164,19 +209,26 @@ public class mgrEconomy {
      * @param amount Amount to deposit
      */
     public void addBankAccount(OfflinePlayer player, double amount) {
+        if (!hasAccount(player)) return;
+        if (amount < 0) return;
         if (plugin.storageType.equalsIgnoreCase("sqlite")) {
-            if (!hasAccount(player)) return;
-            if (amount < 0) return;
             String uuid = String.valueOf(player.getUniqueId());
             String query = "UPDATE plg_money SET bank = (SELECT bank FROM plg_money WHERE uuid='" + uuid + "') +" + amount + " WHERE uuid= '" + uuid + "';";
             try {
                 Statement statement = SQLiteLibary.connection.createStatement();
                 statement.execute(query);
-            } catch (SQLException e) {
-                e.printStackTrace();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
             }
         } else if (plugin.storageType.equalsIgnoreCase("mysql")) {
-
+            String uuid = String.valueOf(player.getUniqueId());
+            String query = "UPDATE accounts SET bank = (SELECT bank FROM accounts WHERE uuid='" + uuid + "') +" + amount + " WHERE uuid= '" + uuid + "';";
+            try {
+                Statement statement = plugin.sqlLibrary.getConnection().createStatement();
+                statement.execute(query);
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
         }
     }
 
@@ -187,19 +239,26 @@ public class mgrEconomy {
      * @param amount Amount to withdraw
      */
     public void removeAccount(OfflinePlayer player, double amount) {
+        if (!hasAccount(player)) return;
+        if (amount < 0) return;
         if (plugin.storageType.equalsIgnoreCase("sqlite")) {
-            if (!hasAccount(player)) return;
-            if (amount < 0) return;
             String uuid = String.valueOf(player.getUniqueId());
             String query = "UPDATE plg_money SET cash = (SELECT cash FROM plg_money WHERE uuid='" + uuid + "') -" + amount + " WHERE uuid= '" + uuid + "';";
             try {
                 Statement statement = SQLiteLibary.connection.createStatement();
                 statement.execute(query);
-            } catch (SQLException e) {
-                e.printStackTrace();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
             }
         } else if (plugin.storageType.equalsIgnoreCase("mysql")) {
-
+            String uuid = String.valueOf(player.getUniqueId());
+            String query = "UPDATE accounts SET cash = (SELECT cash FROM accounts WHERE uuid='" + uuid + "') -" + amount + " WHERE uuid= '" + uuid + "';";
+            try {
+                Statement statement = plugin.sqlLibrary.getConnection().createStatement();
+                statement.execute(query);
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
         }
     }
 
@@ -210,19 +269,26 @@ public class mgrEconomy {
      * @param amount Amount to withdraw
      */
     public void removeBankAccount(OfflinePlayer player, double amount) {
+        if (!hasAccount(player)) return;
+        if (amount < 0) return;
         if (plugin.storageType.equalsIgnoreCase("sqlite")) {
-            if (!hasAccount(player)) return;
-            if (amount < 0) return;
             String uuid = String.valueOf(player.getUniqueId());
             String query = "UPDATE plg_money SET bank = (SELECT bank FROM plg_money WHERE uuid='" + uuid + "') -" + amount + " WHERE uuid= '" + uuid + "';";
             try {
                 Statement statement = SQLiteLibary.connection.createStatement();
                 statement.execute(query);
-            } catch (SQLException e) {
-                e.printStackTrace();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
             }
         } else if (plugin.storageType.equalsIgnoreCase("mysql")) {
-
+            String uuid = String.valueOf(player.getUniqueId());
+            String query = "UPDATE accounts SET bank = (SELECT bank FROM accounts WHERE uuid='" + uuid + "') -" + amount + " WHERE uuid= '" + uuid + "';";
+            try {
+                Statement statement = plugin.sqlLibrary.getConnection().createStatement();
+                statement.execute(query);
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
         }
     }
 
@@ -233,8 +299,8 @@ public class mgrEconomy {
      * @return Amount currently held in players account
      */
     public Double getAccount(OfflinePlayer player) {
+        if (!hasAccount(player)) return 0.0;
         if (plugin.storageType.equalsIgnoreCase("sqlite")) {
-            if (!hasAccount(player)) return 0.0;
             String uuid = String.valueOf(player.getUniqueId());
             String query = "SELECT * FROM plg_money WHERE uuid='" + uuid + "';";
             try {
@@ -243,11 +309,21 @@ public class mgrEconomy {
                 ResultSet rs = statement.executeQuery();
                 rs.next();
                 return rs.getDouble("cash");
-            } catch (SQLException e) {
-                e.printStackTrace();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
             }
         } else if (plugin.storageType.equalsIgnoreCase("mysql")) {
+            String uuid = String.valueOf(player.getUniqueId());
+            String query = "SELECT * FROM accounts WHERE uuid='" + uuid + "';";
+            try {
 
+                PreparedStatement statement = plugin.sqlLibrary.getConnection().prepareStatement(query);
+                ResultSet rs = statement.executeQuery();
+                rs.next();
+                return rs.getDouble("cash");
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
         }
         return 0.0;
     }
@@ -259,8 +335,8 @@ public class mgrEconomy {
      * @return Amount currently held in players account
      */
     public Double getBank(OfflinePlayer player) {
+        if (!hasAccount(player)) return 0.0;
         if (plugin.storageType.equalsIgnoreCase("sqlite")) {
-            if (!hasAccount(player)) return 0.0;
             String uuid = String.valueOf(player.getUniqueId());
             String query = "SELECT * FROM plg_money WHERE uuid='" + uuid + "';";
             try {
@@ -269,11 +345,21 @@ public class mgrEconomy {
                 ResultSet rs = statement.executeQuery();
                 rs.next();
                 return rs.getDouble("bank");
-            } catch (SQLException e) {
-                e.printStackTrace();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
             }
         } else if (plugin.storageType.equalsIgnoreCase("mysql")) {
+            String uuid = String.valueOf(player.getUniqueId());
+            String query = "SELECT * FROM accounts WHERE uuid='" + uuid + "';";
+            try {
 
+                PreparedStatement statement = plugin.sqlLibrary.getConnection().prepareStatement(query);
+                ResultSet rs = statement.executeQuery();
+                rs.next();
+                return rs.getDouble("bank");
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
         }
         return 0.0;
     }
@@ -286,8 +372,8 @@ public class mgrEconomy {
      * @return True if player has enough money, False else wise
      */
     public boolean hasEnoughCash(OfflinePlayer player, double amount) {
+        if (!hasAccount(player)) return false;
         if (plugin.storageType.equalsIgnoreCase("sqlite")) {
-            if (!hasAccount(player)) return false;
             String uuid = String.valueOf(player.getUniqueId());
             String query = "SELECT cash FROM plg_money WHERE uuid='" + uuid + "';";
             try {
@@ -295,11 +381,20 @@ public class mgrEconomy {
                 ResultSet rs = statement.executeQuery();
                 rs.next();
                 return hasAccount(player) && rs.getDouble("cash") >= amount;
-            } catch (SQLException e) {
-                e.printStackTrace();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
             }
         } else if (plugin.storageType.equalsIgnoreCase("mysql")) {
-
+            String uuid = String.valueOf(player.getUniqueId());
+            String query = "SELECT cash FROM accounts WHERE uuid='" + uuid + "';";
+            try {
+                PreparedStatement statement = plugin.sqlLibrary.getConnection().prepareStatement(query);
+                ResultSet rs = statement.executeQuery();
+                rs.next();
+                return hasAccount(player) && rs.getDouble("cash") >= amount;
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
         }
         return false;
     }
@@ -312,8 +407,8 @@ public class mgrEconomy {
      * @return True if player has enough money, False else wise
      */
     public boolean hasEnoughBank(OfflinePlayer player, double amount) {
+        if (!hasAccount(player)) return false;
         if (plugin.storageType.equalsIgnoreCase("sqlite")) {
-            if (!hasAccount(player)) return false;
             String uuid = String.valueOf(player.getUniqueId());
             String query = "SELECT bank FROM plg_money WHERE uuid='" + uuid + "';";
             try {
@@ -321,11 +416,20 @@ public class mgrEconomy {
                 ResultSet rs = statement.executeQuery();
                 rs.next();
                 return hasAccount(player) && rs.getDouble("bank") >= amount;
-            } catch (SQLException e) {
-                e.printStackTrace();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
             }
         } else if (plugin.storageType.equalsIgnoreCase("mysql")) {
-
+            String uuid = String.valueOf(player.getUniqueId());
+            String query = "SELECT bank FROM accounts WHERE uuid='" + uuid + "';";
+            try {
+                PreparedStatement statement = plugin.sqlLibrary.getConnection().prepareStatement(query);
+                ResultSet rs = statement.executeQuery();
+                rs.next();
+                return hasAccount(player) && rs.getDouble("bank") >= amount;
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
         }
         return false;
     }
@@ -343,15 +447,19 @@ public class mgrEconomy {
                 PreparedStatement statement = SQLiteLibary.connection.prepareStatement(query);
                 ResultSet rs = statement.executeQuery();
                 return rs.next();
-            } catch (SQLException e) {
-                e.printStackTrace();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
             }
         } else if (plugin.storageType.equalsIgnoreCase("mysql")) {
-
-        } else if (plugin.storageType.equalsIgnoreCase("mongodb")) {
-            return hasAccount(Bukkit.getOfflinePlayer(uuid));
+            String query = "SELECT 1 FROM accounts WHERE uuid='" + uuid + "';";
+            try {
+                PreparedStatement statement = plugin.sqlLibrary.getConnection().prepareStatement(query);
+                ResultSet rs = statement.executeQuery();
+                return rs.next();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
         }
-
         return false;
     }
 
@@ -362,18 +470,24 @@ public class mgrEconomy {
      * @param amount Amount to deposit
      */
     public void addBankAccount(UUID uuid, double amount) {
+        if (!hasAccount(uuid)) return;
+        if (amount < 0) return;
         if (plugin.storageType.equalsIgnoreCase("sqlite")) {
-            if (!hasAccount(uuid)) return;
-            if (amount < 0) return;
             String query = "UPDATE plg_money SET bank = (SELECT bank FROM plg_money WHERE uuid='" + uuid + "') +" + amount + " WHERE uuid= '" + uuid + "';";
             try {
                 Statement statement = SQLiteLibary.connection.createStatement();
                 statement.execute(query);
-            } catch (SQLException e) {
-                e.printStackTrace();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
             }
         } else if (plugin.storageType.equalsIgnoreCase("mysql")) {
-
+            String query = "UPDATE accounts SET bank = (SELECT bank FROM accounts WHERE uuid='" + uuid + "') +" + amount + " WHERE uuid= '" + uuid + "';";
+            try {
+                Statement statement = plugin.sqlLibrary.getConnection().createStatement();
+                statement.execute(query);
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
         }
 
     }
@@ -386,20 +500,27 @@ public class mgrEconomy {
      * @return Amount currently held in players account
      */
     public Double getAccount(UUID uuid) {
+        if (!hasAccount(uuid)) return 0.0;
         if (plugin.storageType.equalsIgnoreCase("sqlite")) {
-            if (!hasAccount(uuid)) return 0.0;
             String query = "SELECT * FROM plg_money WHERE uuid='" + uuid + "';";
             try {
-
                 PreparedStatement statement = SQLiteLibary.connection.prepareStatement(query);
                 ResultSet rs = statement.executeQuery();
                 rs.next();
                 return rs.getDouble("cash");
-            } catch (SQLException e) {
-                e.printStackTrace();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
             }
         } else if (plugin.storageType.equalsIgnoreCase("mysql")) {
-
+            String query = "SELECT * FROM accounts WHERE uuid='" + uuid + "';";
+            try {
+                PreparedStatement statement = plugin.sqlLibrary.getConnection().prepareStatement(query);
+                ResultSet rs = statement.executeQuery();
+                rs.next();
+                return rs.getDouble("cash");
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
         }
         return 0.0;
     }
@@ -411,8 +532,8 @@ public class mgrEconomy {
      * @return Amount currently held in players account
      */
     public Double getBank(UUID uuid) {
+        if (!hasAccount(uuid)) return 0.0;
         if (plugin.storageType.equalsIgnoreCase("sqlite")) {
-            if (!hasAccount(uuid)) return 0.0;
             String query = "SELECT * FROM plg_money WHERE uuid='" + uuid + "';";
             try {
 
@@ -420,17 +541,26 @@ public class mgrEconomy {
                 ResultSet rs = statement.executeQuery();
                 rs.next();
                 return rs.getDouble("bank");
-            } catch (SQLException e) {
-                e.printStackTrace();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
             }
         } else if (plugin.storageType.equalsIgnoreCase("mysql")) {
+            String query = "SELECT * FROM accounts WHERE uuid='" + uuid + "';";
+            try {
 
+                PreparedStatement statement = plugin.sqlLibrary.getConnection().prepareStatement(query);
+                ResultSet rs = statement.executeQuery();
+                rs.next();
+                return rs.getDouble("bank");
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
         }
         return 0.0;
     }
 
     /**
-     * Checks if the player account has the amount in a given world - DO NOT USE NEGATIVE AMOUNTS
+     * Gets all players cash from the database in descending order
      *
      * @return List of cash going from lowest to largest
      */
@@ -449,17 +579,32 @@ public class mgrEconomy {
                 }
                 rs.close();
                 return leaderboard;
-            } catch (SQLException e) {
-                e.printStackTrace();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
             }
         } else if (plugin.storageType.equalsIgnoreCase("mysql")) {
+            String query = "SELECT uuid, cash FROM accounts ORDER BY cash DESC;";
+            try {
+                PreparedStatement statement = plugin.sqlLibrary.getConnection().prepareStatement(query);
+                ResultSet rs = statement.executeQuery();
+                HashMap<UUID, Double> leaderboard = new HashMap<>();
 
+                while (rs.next()) {
+                    Player player = Bukkit.getPlayer(UUID.fromString(rs.getString("uuid")));
+                    if (player == null) return new HashMap<>();
+                    leaderboard.put(player.getUniqueId(), rs.getDouble("cash"));
+                }
+                rs.close();
+                return leaderboard;
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
         }
         return new HashMap<>();
     }
 
     /**
-     * Checks if the player account has the amount in a given world - DO NOT USE NEGATIVE AMOUNTS
+     * Gets all players bank from the database in descending order
      *
      * @return List of bank going from lowest to largest
      */
@@ -478,17 +623,32 @@ public class mgrEconomy {
                 }
                 rs.close();
                 return leaderboard;
-            } catch (SQLException e) {
-                e.printStackTrace();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
             }
         } else if (plugin.storageType.equalsIgnoreCase("mysql")) {
+            String query = "SELECT uuid, bank FROM accounts ORDER BY bank DESC;";
+            try {
+                PreparedStatement statement = plugin.sqlLibrary.getConnection().prepareStatement(query);
+                ResultSet rs = statement.executeQuery();
+                HashMap<UUID, Double> leaderboard = new HashMap<>();
 
+                while (rs.next()) {
+                    Player player = Bukkit.getPlayer(UUID.fromString(rs.getString("uuid")));
+                    if (player == null) continue;
+                    leaderboard.put(player.getUniqueId(), rs.getDouble("bank"));
+                }
+                rs.close();
+                return leaderboard;
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
         }
         return new HashMap<>();
     }
 
     /**
-     * Checks if the player account has the amount in a given world - DO NOT USE NEGATIVE AMOUNTS
+     * Gets the server total cash balance
      *
      * @return List of bank going from lowest to largest
      */
@@ -505,11 +665,24 @@ public class mgrEconomy {
                 }
                 rs.close();
                 return total;
-            } catch (SQLException e) {
-                e.printStackTrace();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
             }
         } else if (plugin.storageType.equalsIgnoreCase("mysql")) {
+            String query = "SELECT cash FROM accounts;";
+            try {
+                PreparedStatement statement = plugin.sqlLibrary.getConnection().prepareStatement(query);
+                ResultSet rs = statement.executeQuery();
+                double total = 0.0;
 
+                while (rs.next()) {
+                    total += rs.getDouble("cash");
+                }
+                rs.close();
+                return total;
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
         }
         return 0.0;
     }
@@ -532,11 +705,24 @@ public class mgrEconomy {
                 }
                 rs.close();
                 return total;
-            } catch (SQLException e) {
-                e.printStackTrace();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
             }
         } else if (plugin.storageType.equalsIgnoreCase("mysql")) {
+            String query = "SELECT bank FROM accounts;";
+            try {
+                PreparedStatement statement = plugin.sqlLibrary.getConnection().prepareStatement(query);
+                ResultSet rs = statement.executeQuery();
+                double total = 0.0;
 
+                while (rs.next()) {
+                    total += rs.getDouble("bank");
+                }
+                rs.close();
+                return total;
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
         }
         return 0.0;
     }
@@ -560,11 +746,25 @@ public class mgrEconomy {
                 }
                 rs.close();
                 return temp;
-            } catch (SQLException e) {
-                e.printStackTrace();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
             }
         } else if (plugin.storageType.equalsIgnoreCase("mysql")) {
+            String query = "SELECT uuid, bank FROM accounts;";
+            try {
+                PreparedStatement statement = plugin.sqlLibrary.getConnection().prepareStatement(query);
+                ResultSet rs = statement.executeQuery();
 
+                HashMap<UUID, Double> temp = new HashMap<>();
+
+                while (rs.next()) {
+                    temp.put(UUID.fromString(rs.getString("uuid")), rs.getDouble("bank"));
+                }
+                rs.close();
+                return temp;
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
         }
         return new HashMap<>();
     }

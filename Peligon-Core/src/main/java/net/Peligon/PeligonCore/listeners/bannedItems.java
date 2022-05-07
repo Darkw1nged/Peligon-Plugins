@@ -13,7 +13,7 @@ public class bannedItems implements Listener {
 
     @EventHandler
     public void onPickup(InventoryPickupItemEvent event) {
-        if (plugin.getConfig().getBoolean("banned-items.enabled", false)) {
+        if (plugin.getConfig().getStringList("Events").contains("banned-items")) {
             if (plugin.getConfig().getStringList("banned-items.types").contains(event.getItem().getItemStack().getType().toString())) {
                 event.setCancelled(true);
             }
@@ -22,7 +22,7 @@ public class bannedItems implements Listener {
 
     @EventHandler
     public void onDrop(EntityDropItemEvent event) {
-        if (plugin.getConfig().getBoolean("banned-items.enabled", false)) {
+        if (plugin.getConfig().getStringList("Events").contains("banned-items")) {
             if (plugin.getConfig().getStringList("banned-items.types").contains(event.getItemDrop().getItemStack().getType().toString())) {
                 event.getItemDrop().getItemStack().setType(Material.AIR);
             }

@@ -6,7 +6,7 @@
 
     <groupId>net.peligon.LifeSteal</groupId>
     <artifactId>Peligon-LifeSteal</artifactId>
-    <version>1.2</version>
+    <version>1.3</version>
     <packaging>jar</packaging>
 
     <name>Peligon-LifeSteal</name>

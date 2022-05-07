@@ -15,21 +15,32 @@ Storage:
 ###############################################################
 # +---------------------------------------------------------+ #
 # |                Peligon LifeSteal (Events)               | #
-# |      !!! To disable modules, add # next to item !!!     | #
+# |    !!! To disable modules, add # before to item !!!     | #
 # +---------------------------------------------------------+ #
 ###############################################################
 Events:
   # These two settings are protected by permissions.
   # Permissions: "Peligon.LifeSteal.Keep.Inventory", "Peligon.LifeSteal.Keep.Experience"
-  - keep-inventory
-  - keep-experience
+#  - keep-inventory
+#  - keep-experience
   - lightning-strike-on-death
   - death-penalty
 #  - commands-on-death
   # Only allow players to take away lives.
-  - players-only
-  - auto-respawn
+#  - players-only
+#  - auto-respawn
   - custom-death-messages
+#  - combat-log
+  -
+
+combat-tag:
+  blocked-commands:
+    - "spawn"
+    - "warp"
+    - "home"
+  # How long should the combat tag be active for
+  # !! This is in seconds.
+  duration: 30
 
 blacklisted-mobs:
   - "ENDERMAN"

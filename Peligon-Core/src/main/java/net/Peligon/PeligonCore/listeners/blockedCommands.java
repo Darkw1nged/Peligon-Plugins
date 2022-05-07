@@ -12,10 +12,11 @@ public class blockedCommands implements Listener {
 
     @EventHandler
     public void onChat(PlayerCommandPreprocessEvent event) {
-        for (String s : plugin.getConfig().getStringList("Blocked-Commands")) {
+        for (String s : plugin.fileChatSettings.getConfig().getStringList("Blocked-Commands")) {
             if (event.getMessage().equalsIgnoreCase(s)) {
+                if (event.getPlayer().hasPermission("Peligon.Core.Bypass") || event.getPlayer().hasPermission("Peligon.Core.*")) return;
                 event.setCancelled(true);
-                if (plugin.getConfig().getBoolean("Blocked-Commands-Message")) {
+                if (plugin.fileChatSettings.getConfig().getBoolean("Blocked-Command-Message")) {
                     event.getPlayer().sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("command-blocked")));
                 }
             }

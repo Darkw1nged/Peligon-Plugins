@@ -64,6 +64,8 @@ commands:
     description: Allows admins to kill entities
   back:
     description: Allows players to go back to their last location
+  clearchat:
+    description: Allows admins to clear the chat
   # UTILITY COMMANDS
   spawn:
     description: Teleports a player to spawn
@@ -153,5 +155,4 @@ commands:
     description: Allows players to feed themselves
   suicide:
     description: Allows players to end their lives
-
 

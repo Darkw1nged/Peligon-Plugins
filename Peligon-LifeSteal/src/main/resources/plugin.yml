@@ -14,3 +14,7 @@ commands:
     description: Allows admins manage player lifes
   lives:
     description: Allows players to view lives
+  combattag:
+    aliases:
+      - ct
+    description: Allows players to view how long left they have in combat

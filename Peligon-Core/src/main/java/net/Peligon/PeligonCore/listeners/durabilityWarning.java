@@ -12,6 +12,7 @@ public class durabilityWarning implements Listener {
 
     @EventHandler
     public void toolDamage(PlayerItemDamageEvent event) {
+        if (!plugin.getConfig().getStringList("Events").contains("tool-durability-warnings")) return;
         for (String percent : plugin.getConfig().getStringList("Warnings.Tool-Durability.percentage")) {
             if (event.getItem().getDurability() / event.getItem().getType().getMaxDurability() * 100 <= Integer.parseInt(percent)) {
                 event.getPlayer().sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +

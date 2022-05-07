@@ -16,13 +16,13 @@ public class antiSpam implements Listener {
     private final Main plugin = Main.getInstance;
     Map<UUID, Long> messageTimeout = new HashMap<>();
     Map<UUID, Integer> playerMessages = new HashMap<>();
-    int delay = plugin.getConfig().getInt("chat-anti-spam.delay", 3);
+    int delay = plugin.fileChatSettings.getConfig().getInt("anti-spam-delay", 3);
 
     @EventHandler
     public void onChat(AsyncPlayerChatEvent event) {
         Player player = event.getPlayer();
-        if (!plugin.getConfig().getBoolean("chat-anti-spam.enabled", true)) return;
-        if (player.hasPermission("Peligon.Chat.bypass") || player.hasPermission("Peligon.Chat.*")) return;
+        if (!plugin.getConfig().getStringList("Events").contains("anti-spam")) return;
+        if (player.hasPermission("Peligon.Core.bypass") || player.hasPermission("Peligon.Core.*")) return;
 
         if (!messageTimeout.isEmpty() && messageTimeout.containsKey(player.getUniqueId())) {
             long timeLeft = ((messageTimeout.get(player.getUniqueId()) / 1000) + delay) - (System.currentTimeMillis() / 1000);

@@ -9,8 +9,8 @@
 Storage:
   # Visit 'Plugins/PeligonEconomy/Lang/' to see the supported languages.
   Language File: "en_US"
-  # Avaliable options: "MySQL", "SQLite"
-  database: "MongoDB"
+  # Available options: "MySQL", "SQLite"
+  database: "MySQL"
   MySQL:
     host: "localhost"
     port: 3306
@@ -112,8 +112,8 @@ Grass-Scavenge:
         maximum: 75
 
 # Give players a chance to find money when mining.
+# !! This only woks with stone blocks.
 Mining-Rewards:
-  # Would be useful for prisons.
   enabled: false
   disabled-worlds: []
   disabled-blocks: []
@@ -130,6 +130,23 @@ Mining-Rewards:
       chance:
         minimum: 65
         maximum: 75
+
+# When mining a block, this will give players a chance to find something extra.
+# !! This only works with stone blocks.
+Lucky-Blocks:
+  enabled: false
+  disabled-worlds: []
+  disabled-blocks: []
+  blocks:
+    1:
+      # The block that will spawn when mined.
+      type: BEACON
+      chance:
+        minimum: 10
+        maximum: 12
+      commands:
+        - "give @p diamond_pickaxe 1"
+
 
 # !! All bounties will be erased if the plugin is disabled or server is offline.
 Bounties:
@@ -154,6 +171,7 @@ Mob-Rewards:
       enable: true
       reward: 20
 
+# TODO - REDO SERVER GOALS ======================================================
 # Setup some server wide goals and give players rewards.
 Server-Goals:
   targets:
@@ -182,6 +200,7 @@ Server-Goals:
         - "%item% diamond 5"
         - "%message% &aThanks for reaching the goal!"
         - "%command% say goal reached!"
+# TODO - END SERVER GOALS ======================================================
 
 # This will automatically check for updates
 check-for-updates: true

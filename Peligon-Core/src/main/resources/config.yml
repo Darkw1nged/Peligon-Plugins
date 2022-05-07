@@ -13,18 +13,25 @@ Storage:
 
 Disposal-Inventory-Name: "&7Disposal"
 
-# This is a list of commands that players can not perform.
-Blocked-Commands:
-  - "/bukkit:"
-  - /?
-  - /help
-  - /ver
-  - /version
-  - /pl
-  - /plugins
-  - /minecraft:help
-  - /minecraft:me
-  - /me
+###############################################################
+# +---------------------------------------------------------+ #
+# |                Peligon LifeSteal (Events)               | #
+# |    !!! To disable modules, add # before to item !!!     | #
+# +---------------------------------------------------------+ #
+###############################################################
+Events:
+#  - nether-water
+#  - tool-durability-warnings
+#  - banned-items
+#  - item-cooldown
+#  - double-jump
+  - player-join-message
+  - player-leave-message
+  - chat-color
+  - sign-color
+  - word-filter
+  - anti-spam
+  - chat-ping
 
 Warnings:
   Tool-Durability:
@@ -42,42 +49,34 @@ Warnings:
       volume: 1.0
       pitch: 1.0
 
-Nether-Water: false
-
 World-Protection:
-  blacklisted-worlds: []
+  blacklisted-worlds: [ ]
   events:
-    Block-Break: true
-    Block-Place: true
-    Item-Pickup: true
-    Item-Drop: true
-    Interact: true
-    Redstone: true
-    Explosions: true
-    Fall-Damage: true
-    Player-Damage: true
-    Mob-Damage: true
-    Mpb-Spawning: true
-    Animal-Spawning: true
-    Xp-Drop: true
+    - block-break
+    - block-place
+    - item-pickup
+    - item-drop
+    - interact
+    - redstone
+    - explosions
+    - fall-damage
+    - player-damage
+    - mob-damage
+    - mob-spawn
+    - animal-spawn
+    - experience-drop
 
 banned-items:
-  enabled: false
-  types:
-    - END_PORTAL_FRAME
-    - OBSIDIAN
+  - END_PORTAL_FRAME
+  - BEDROCK
 
+# The item and how long before it can be used again.
 item-cooldown:
-  enabled: false
-  items:
-    # The item and how long before it can be used again.
-    STONE_SWORD: 5
-    STONE_PICKAXE: 5
-    STONE_AXE: 5
-    STONE_SHOVEL: 5
-    STONE_HOE: 5
+  STONE_SWORD: 5
+  STONE_PICKAXE: 5
+  STONE_AXE: 5
+  STONE_SHOVEL: 5
+  STONE_HOE: 5
 
-Double-Jump:
-  enabled: false
-  # How long before can double jump again.
-  delay: 3
+# How long before can double jump again.
+Double-Jump-Delay: 3

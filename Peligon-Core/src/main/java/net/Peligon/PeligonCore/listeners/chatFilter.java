@@ -13,10 +13,10 @@ public class chatFilter implements Listener {
     public void onChat(AsyncPlayerChatEvent event) {
         String message = event.getMessage();
         String censor = "#$@&%*!";
-        if (!plugin.getConfig().getBoolean("enable-chat-filter", true)) return;
+        if (!plugin.getConfig().getStringList("Events").contains("word-filter")) return;
 
         for (String word : message.split(" ")) {
-            if (!plugin.fileChatFilter.getConfig().getStringList("words").contains(word.toLowerCase())) continue;
+            if (!plugin.fileChatSettings.getConfig().getStringList("Chat-Filter").contains(word.toLowerCase())) continue;
             event.setMessage(message.replaceAll(word, censor));
         }
     }

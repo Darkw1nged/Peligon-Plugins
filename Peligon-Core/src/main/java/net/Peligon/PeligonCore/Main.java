@@ -17,7 +17,7 @@ public final class Main extends JavaPlugin {
     public static Main getInstance;
 
     public CustomConfig fileMessage;
-    public CustomConfig fileChatFilter = new CustomConfig(this, "Chat Filter", true);
+    public CustomConfig fileChatSettings = new CustomConfig(this, "Chat Settings", true);
 
     public void onEnable() {
         // ---- [ Initializing instance of main class ] ----
@@ -27,6 +27,7 @@ public final class Main extends JavaPlugin {
         loadCommands();
         loadEvents();
         saveDefaultConfig();
+        fileChatSettings.saveDefaultConfig();
 
         // ---- [ Loading lang file ] ----
         fileMessage = new CustomConfig(this, "lang/" + this.getConfig().getString("Storage.Language File"), true);
@@ -87,6 +88,7 @@ public final class Main extends JavaPlugin {
         getCommand("back").setExecutor(new cmdBack());
         getCommand("teleport").setExecutor(new cmdTeleport());
         getCommand("teleporthere").setExecutor(new cmdTeleportHere());
+        getCommand("clearchat").setExecutor(new cmdClearChat());
 
         // ---- [ Player commands ] ----
         getCommand("spawn").setExecutor(new cmdSpawn());

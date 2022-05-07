@@ -1,12 +1,14 @@
 package net.peligon.LifeSteal;
 
 import net.milkbowl.vault.economy.Economy;
+import net.peligon.LifeSteal.commands.cmdCombatTag;
 import net.peligon.LifeSteal.commands.cmdLifeSteal;
 import net.peligon.LifeSteal.commands.cmdLives;
 import net.peligon.LifeSteal.commands.cmdReload;
 import net.peligon.LifeSteal.libaries.CustomConfig;
 import net.peligon.LifeSteal.libaries.UpdateChecker;
 import net.peligon.LifeSteal.libaries.Utils;
+import net.peligon.LifeSteal.libaries.combatTagTimer;
 import net.peligon.LifeSteal.libaries.storage.SQLite;
 import net.peligon.LifeSteal.listeners.*;
 import net.peligon.LifeSteal.manager.mgrLives;
@@ -47,6 +49,9 @@ public final class Main extends JavaPlugin implements Listener {
         SQLite sqlLite = new SQLite();
         sqlLite.loadTables();
 
+        // ---- [ Calling repeating tasks ] ----
+        new combatTagTimer().runTaskTimerAsynchronously(this, 20 * 2, 20 * 2);
+
         if (!setupEconomy() ) {
             System.out.println(Utils.chatColor(this.fileMessage.getConfig().getString("no-vault-dependency")));
             return;
@@ -70,6 +75,7 @@ public final class Main extends JavaPlugin implements Listener {
         getCommand("pellives").setExecutor(new cmdReload());
         getCommand("lifesteal").setExecutor(new cmdLifeSteal());
         getCommand("lives").setExecutor(new cmdLives());
+        getCommand("combattag").setExecutor(new cmdCombatTag());
     }
 
     public void loadEvents() {
@@ -81,7 +87,8 @@ public final class Main extends JavaPlugin implements Listener {
                 new keepExperience(),
                 new keepInventory(),
                 new AutoRespawn(),
-                new customDeathMessages()
+                new customDeathMessages(),
+                new CombatTag()
         ).forEach(listener -> getServer().getPluginManager().registerEvents(listener, this));
     }
 

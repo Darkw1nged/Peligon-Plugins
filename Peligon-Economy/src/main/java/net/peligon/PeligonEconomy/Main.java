@@ -11,8 +11,10 @@ import net.peligon.PeligonEconomy.managers.mgrSignFactory;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.sql.SQLException;
 import java.util.Arrays;
 
+@SuppressWarnings("ALL")
 public final class Main extends JavaPlugin {
 
     public static Main getInstance;
@@ -25,6 +27,7 @@ public final class Main extends JavaPlugin {
 
     public CustomConfig fileWorth = new CustomConfig(this, "worth", true);
     public CustomConfig fileSigns = new CustomConfig(this, "signs", true);
+    public CustomConfig fileCoupons = new CustomConfig(this, "coupons", true);
     public CustomConfig fileATM = new CustomConfig(this, "Inventories/ATM", true);
     public CustomConfig fileDailyReward = new CustomConfig(this, "Inventories/daily", true);
     public CustomConfig fileSellGUI = new CustomConfig(this, "Inventories/sellGUI", true);
@@ -40,6 +43,7 @@ public final class Main extends JavaPlugin {
         loadEvents();
         fileWorth.saveDefaultConfig();
         fileSigns.saveDefaultConfig();
+        fileCoupons.saveDefaultConfig();
         fileATM.saveDefaultConfig();
         fileDailyReward.saveDefaultConfig();
         fileSellGUI.saveDefaultConfig();
@@ -73,7 +77,6 @@ public final class Main extends JavaPlugin {
 
         // ---- [ Setting up databases ] ----
         setupStorage();
-
 
         // ---- [ Calling repeating tasks ] ----
         new InterestTimer().runTaskTimerAsynchronously(this, 20 * 2, 20 * 2);
@@ -126,6 +129,7 @@ public final class Main extends JavaPlugin {
                 new DeathPenaltyEvent(),
                 new GrassScavengeEvents(),
                 new MiningRewardsEvents(),
+                new LuckyBlockEvents(),
                 new DailyInventoryEvents(),
                 new SellGUIEvents(),
                 new GlobalInventoryEvents(),
@@ -158,6 +162,14 @@ public final class Main extends JavaPlugin {
                 System.out.println("[Peligon Economy] Unable to establish a connection to MySQL.");
                 return;
             }
+
+            try {
+                sqlLibrary.getConnection().prepareStatement("CREATE TABLE IF NOT EXISTS accounts" +
+                        " (uuid VARCHAR(36) NOT NULL, cash INT(16) DEFAULT 0, bank INT(16) DEFAULT 0, PRIMARY KEY (uuid));").executeUpdate();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+
             this.storageType = "MySQL";
         }
     }

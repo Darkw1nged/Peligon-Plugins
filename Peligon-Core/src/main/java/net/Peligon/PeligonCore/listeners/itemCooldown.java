@@ -20,7 +20,7 @@ public class itemCooldown implements Listener {
     @EventHandler
     public void onInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
-        if (plugin.getConfig().getBoolean("item-cooldown.enabled", false)) {
+        if (plugin.getConfig().getStringList("Events").contains("item-cooldown")) {
             for (String item : plugin.getConfig().getConfigurationSection("item-cooldown.items").getKeys(false)) {
                 int timeout = plugin.getConfig().getInt("item-cooldown.items." + item, 5);
                 if (player.getItemInHand().getType().name().equalsIgnoreCase(item)) {
