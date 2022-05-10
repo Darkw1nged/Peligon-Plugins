@@ -10,7 +10,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-public class CombatTag implements Listener {
+public class combatTag implements Listener {
 
     private final Main plugin = Main.getInstance;
 
@@ -21,8 +21,15 @@ public class CombatTag implements Listener {
             Player player = (Player) entity;
             if (plugin.getConfig().getStringList("Events").contains("combat-log")) {
                 if (event.getDamager() instanceof Player) {
+                    if (!Utils.combatTag.containsKey(player.getUniqueId())) {
+                        player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") + plugin.fileMessage.getConfig().getString("enter-combat").replaceAll("%player%", event.getDamager().getName())));
+                    }
                     Utils.combatTag.put(player.getUniqueId(), System.currentTimeMillis());
-                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") + plugin.fileMessage.getConfig().getString("enter-combat").replaceAll("%player%", event.getDamager().getName())));
+
+                    if (!Utils.combatTag.containsKey(event.getDamager().getUniqueId())) {
+                        event.getDamager().sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") + plugin.fileMessage.getConfig().getString("enter-combat").replaceAll("%player%", player.getName())));
+                    }
+                    Utils.combatTag.put(event.getDamager().getUniqueId(), System.currentTimeMillis());
                 }
             }
         }

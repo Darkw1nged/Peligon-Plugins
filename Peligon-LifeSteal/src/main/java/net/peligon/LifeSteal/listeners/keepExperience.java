@@ -15,8 +15,8 @@ public class keepExperience implements Listener {
         Player player = event.getEntity();
         if (plugin.getConfig().getStringList("Events").contains("keep-experience")) {
             if (player.hasPermission("Peligon.LifeSteal.Keep.Experience") || player.hasPermission("Peligon.LifeSteal.*")) {
-                event.setKeepLevel(true);
                 event.setDroppedExp(0);
+                event.setKeepLevel(true);
             }
         }
     }

@@ -9,7 +9,14 @@
 Storage:
   # Visit 'Plugins/PeligonLifeSteal/Lang/' to see the supported languages.
   Language File: "en_US"
-  database: "SQLite"
+  # Available options: "MySQL", "SQLite"
+  database: "MySQL"
+  MySQL:
+    host: "localhost"
+    port: 3306
+    database: "minecraft"
+    username: "root"
+    password: "password0"
   starting-lives: 5
 
 ###############################################################
@@ -31,7 +38,8 @@ Events:
 #  - auto-respawn
   - custom-death-messages
 #  - combat-log
-  -
+  - death-chest
+  - damage-indicator
 
 combat-tag:
   blocked-commands:
@@ -90,6 +98,19 @@ Lightning-on-death:
   # Only execute lightning when the player reaches a certain amount of lives.
   # -1 means execute lightning on death regardless of lives.
   execute-at-lives: -1
+
+# When a player dies their items will be placed in an inventory for them to pick up.
+Death-Chest:
+  block: SEA_LANTERN
+  inventory-name: "&e%player%'s &7Grave"
+  hologram: true
+  hologram-text: "&e%player%'s &cGrave"
+
+# Show how much damage a player is dealing.
+Damage-Indicator:
+  only-players: false
+  text: "&c+%damage%"
+  length: 2
 
 # This will automatically check for updates
 check-for-updates: true

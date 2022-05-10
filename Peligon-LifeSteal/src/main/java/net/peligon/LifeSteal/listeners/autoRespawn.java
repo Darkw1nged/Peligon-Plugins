@@ -6,7 +6,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
-public class AutoRespawn implements Listener {
+public class autoRespawn implements Listener {
 
     private final Main plugin = Main.getInstance;
 

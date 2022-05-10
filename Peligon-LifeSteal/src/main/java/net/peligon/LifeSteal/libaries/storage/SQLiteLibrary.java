@@ -8,7 +8,7 @@ import java.sql.*;
 
 import static org.bukkit.Bukkit.getServer;
 
-public class SQLite {
+public class SQLiteLibrary {
 
     public static Connection connection;
     private final Main plugin = Main.getInstance;

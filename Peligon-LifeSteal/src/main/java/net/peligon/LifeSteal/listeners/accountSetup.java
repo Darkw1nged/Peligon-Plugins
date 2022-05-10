@@ -6,7 +6,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-public class AccountSetup implements Listener {
+public class accountSetup implements Listener {
 
     private final Main plugin = Main.getInstance;
 

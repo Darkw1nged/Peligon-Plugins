@@ -62,10 +62,10 @@ public class lifeUpdate implements Listener {
                 player.kickPlayer(Utils.chatColor(plugin.fileMessage.getConfig().getString("kick-message")));
             }
             if (plugin.getConfig().getStringList("Out-of-Lives.Actions").contains("change-gamemode-on-death")) {
-                player.setGameMode(GameMode.valueOf(plugin.getConfig().getString("Out-of-Lives.gamemode").toUpperCase()));
+                player.setGameMode(GameMode.valueOf(plugin.getConfig().getString("Out-of-Lives.Settings.gamemode").toUpperCase()));
             }
             if (plugin.getConfig().getStringList("Out-of-Lives.Actions").contains("teleport-player-world")) {
-                World world = Bukkit.getWorld(plugin.getConfig().getString("Out-of-Lives.world"));
+                World world = Bukkit.getWorld(plugin.getConfig().getString("Out-of-Lives.Settings.world"));
                 if (world == null) return;
                 player.teleport(world.getSpawnLocation());
             }

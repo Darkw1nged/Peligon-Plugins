@@ -20,13 +20,15 @@ public class deathPenalty implements Listener {
                if (player.getKiller() != null) {
                    if (plugin.getEconomy().has(player, plugin.getConfig().getDouble("Death-Penalty.amount", 100.0))) {
                        plugin.getEconomy().withdrawPlayer(player, plugin.getConfig().getDouble("Death-Penalty.amount", 100.0));
-                       player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("death-penalty")));
+                       player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
+                               plugin.fileMessage.getConfig().getString("death-penalty"), plugin.getConfig().getDouble("Death-Penalty.amount", 100.0)));
                    }
                }
            } else {
                if (plugin.getEconomy().has(player, plugin.getConfig().getDouble("Death-Penalty.amount", 100.0))) {
                    plugin.getEconomy().withdrawPlayer(player, plugin.getConfig().getDouble("Death-Penalty.amount", 100.0));
-                   player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("death-penalty")));
+                   player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
+                           plugin.fileMessage.getConfig().getString("death-penalty"), plugin.getConfig().getDouble("Death-Penalty.amount", 100.0)));
                }
            }
         }

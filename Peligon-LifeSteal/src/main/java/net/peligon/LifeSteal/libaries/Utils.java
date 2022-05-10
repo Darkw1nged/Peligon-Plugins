@@ -6,8 +6,11 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.text.NumberFormat;
 import java.util.*;
@@ -17,7 +20,9 @@ public class Utils {
     private static final Main plugin = Main.getInstance;
 
     // ---- [ Managing chat color within the plugin ] ----
-    public static String chatColor(String s) { return ChatColor.translateAlternateColorCodes('&', s); }
+    public static String chatColor(String s) {
+        return ChatColor.translateAlternateColorCodes('&', s);
+    }
 
     // ---- [ Managing chat color within the plugin | Supports Amount ] ----
     public static String chatColor(String s, Double amount) {
@@ -59,17 +64,68 @@ public class Utils {
     public static Optional<Block> getNextBlockUnderPlayer(Player player) {
         Location loc = player.getLocation();
         Block block;
-        while(loc.getY() >= 0) {
+        while (loc.getY() >= 0) {
             loc.subtract(0, 0.5, 0);
             block = loc.getBlock();
-            if(block.getType() != Material.AIR) {
+            if (block.getType() != Material.AIR) {
                 return Optional.of(block);
             }
         }
         return Optional.empty();
     }
 
+    // ---- [ Managing holograms for small amount of features ] ----
+    public static ArmorStand hologram(String name, Location loc) {
+        ArmorStand holo = loc.getWorld().spawn(loc, ArmorStand.class);
+
+        // ---- [ Settings flags for entity ] ----
+        holo.setCustomName(chatColor(name));
+        holo.setCustomNameVisible(true);
+        holo.setGravity(false);
+        holo.setInvisible(true);
+        holo.setInvulnerable(false);
+        holo.setSmall(true);
+        holo.setArms(false);
+        holo.setBasePlate(false);
+        holo.setMetadata("hologram", new FixedMetadataValue(plugin, UUID.randomUUID().toString()));
+
+        return holo;
+    }
+
+    // ---- [ Managing holograms for small amount of features ] ----
+    public static void moveUpHologram(String name, Location loc, int length) {
+        ArmorStand holo = loc.getWorld().spawn(loc, ArmorStand.class);
+
+        // ---- [ Settings flags for entity ] ----
+        holo.setCustomName(chatColor(name));
+        holo.setCustomNameVisible(true);
+        holo.setGravity(false);
+        holo.setInvisible(true);
+        holo.setInvulnerable(false);
+        holo.setSmall(true);
+        holo.setArms(false);
+        holo.setBasePlate(false);
+        holo.setMetadata("hologram", new FixedMetadataValue(plugin, UUID.randomUUID().toString()));
+
+        activeHolograms.put(holo, System.currentTimeMillis());
+        new BukkitRunnable() {
+            public void run() {
+                if (!activeHolograms.isEmpty() && activeHolograms.containsKey(holo)) {
+                    long timeLeft = ((activeHolograms.get(holo) / 1000) + length) - (System.currentTimeMillis() / 1000);
+                    if (timeLeft <= 0) {
+                        activeHolograms.remove(holo);
+                        holo.remove();
+                        cancel();
+                    } else {
+                        holo.teleport(new Location(holo.getWorld(), holo.getLocation().getX(), holo.getLocation().getY() + .01, holo.getLocation().getZ()));
+                    }
+                }
+            }
+        }.runTaskTimer(plugin, 1, 1);
+    }
+
     // ---- [ Cached items ] ----
     public static Map<UUID, Long> combatTag = new HashMap<>();
+    public static Map<ArmorStand, Long> activeHolograms = new HashMap<>();
 
 }
