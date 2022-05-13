@@ -3,6 +3,7 @@ package net.peligon.LifeSteal.listeners;
 import net.peligon.LifeSteal.Main;
 import net.peligon.LifeSteal.libaries.Utils;
 import org.bukkit.Location;
+import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -17,6 +18,8 @@ public class damageIndicator implements Listener {
     public void onDamage(EntityDamageByEntityEvent event) {
         if (plugin.getConfig().getStringList("Events").contains("damage-indicator")) {
             Entity entity = event.getEntity();
+            if (entity instanceof ArmorStand) return;
+
             Location entityLocation = entity.getLocation();
             double height = (entityLocation.getY() - 1) + entity.getHeight();
             if (entity.getHeight() > 1.8) {

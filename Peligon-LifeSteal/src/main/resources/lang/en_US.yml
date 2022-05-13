@@ -18,6 +18,8 @@ death-penalty: "&fYou have lost &2$%amount% &fbecause you died."
 combat-tag: "&fIn combat for %time% &fseconds."
 enter-combat: "&fYou have entered combat with &e%player%."
 combat-tag-expired: "&fYour combat tag has expired. You can now safely log out."
+bounty-added: "&fAdded &2$%amount% &fto &e%player%'s &fbounty"
+current-bounty: "&ePeligon >> &e%player%'s &fcurrent bounty is &2$%amount%"
 
 console: "&cError! You are not allowed to perform this inside of the console."
 no-permission: "&cError! You do not have permission to use this command."

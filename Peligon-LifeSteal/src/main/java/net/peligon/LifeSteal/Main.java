@@ -1,10 +1,7 @@
 package net.peligon.LifeSteal;
 
 import net.milkbowl.vault.economy.Economy;
-import net.peligon.LifeSteal.commands.cmdCombatTag;
-import net.peligon.LifeSteal.commands.cmdLifeSteal;
-import net.peligon.LifeSteal.commands.cmdLives;
-import net.peligon.LifeSteal.commands.cmdReload;
+import net.peligon.LifeSteal.commands.*;
 import net.peligon.LifeSteal.libaries.CustomConfig;
 import net.peligon.LifeSteal.libaries.UpdateChecker;
 import net.peligon.LifeSteal.libaries.Utils;
@@ -12,6 +9,7 @@ import net.peligon.LifeSteal.libaries.combatTagTimer;
 import net.peligon.LifeSteal.libaries.storage.SQLibrary;
 import net.peligon.LifeSteal.libaries.storage.SQLiteLibrary;
 import net.peligon.LifeSteal.listeners.*;
+import net.peligon.LifeSteal.manager.mgrBounty;
 import net.peligon.LifeSteal.manager.mgrLives;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.RegisteredServiceProvider;
@@ -24,6 +22,7 @@ public final class Main extends JavaPlugin implements Listener {
 
     public static Main getInstance;
     public mgrLives lives;
+    public mgrBounty bounties;
     public SQLibrary sqlLibrary;
     public String storageType = "SQLite";
 
@@ -79,6 +78,7 @@ public final class Main extends JavaPlugin implements Listener {
         getCommand("lifesteal").setExecutor(new cmdLifeSteal());
         getCommand("lives").setExecutor(new cmdLives());
         getCommand("combattag").setExecutor(new cmdCombatTag());
+        getCommand("bounty").setExecutor(new cmdBounty());
     }
 
     public void loadEvents() {
@@ -93,7 +93,9 @@ public final class Main extends JavaPlugin implements Listener {
                 new customDeathMessages(),
                 new combatTag(),
                 new deathChest(),
-                new damageIndicator()
+                new damageIndicator(),
+                new healthIndicator(),
+                new bountyEvents()
         ).forEach(listener -> getServer().getPluginManager().registerEvents(listener, this));
     }
 
@@ -141,7 +143,10 @@ public final class Main extends JavaPlugin implements Listener {
 
             try {
                 sqlLibrary.getConnection().prepareStatement("CREATE TABLE IF NOT EXISTS LifeSteal" +
-                        " (uuid VARCHAR(36) NOT NULL, lives INT(32) DEFAULT 0, PRIMARY KEY (uuid));").executeUpdate();
+                        " (uuid VARCHAR(36) NOT NULL, lives INT(32) DEFAULT 0, bounty INT(32) DEFAULT 0, PRIMARY KEY (uuid));").executeUpdate();
+
+                // create a collum with bounty INT(32) DEFAULT 0, if it doesn't exist
+                sqlLibrary.getConnection().prepareStatement("ALTER TABLE LifeSteal ADD COLUMN IF NOT EXISTS bounty INT(32) DEFAULT 0;").executeUpdate();
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }

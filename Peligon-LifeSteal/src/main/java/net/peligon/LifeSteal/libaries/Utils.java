@@ -127,5 +127,6 @@ public class Utils {
     // ---- [ Cached items ] ----
     public static Map<UUID, Long> combatTag = new HashMap<>();
     public static Map<ArmorStand, Long> activeHolograms = new HashMap<>();
+    public static Map<UUID, Integer> KillStreak = new HashMap<>();
 
 }

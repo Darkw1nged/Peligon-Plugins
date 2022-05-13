@@ -19,3 +19,7 @@ commands:
     aliases:
       - ct
     description: Allows players to view how long left they have in combat
+  bounty:
+    aliases:
+      - bounties
+    description: Allows players to view their bounty

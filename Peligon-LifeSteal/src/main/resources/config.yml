@@ -39,7 +39,9 @@ Events:
   - custom-death-messages
 #  - combat-log
   - death-chest
-  - damage-indicator
+#  - damage-indicator
+  - health-indicator
+  - bountys
 
 combat-tag:
   blocked-commands:
@@ -109,8 +111,14 @@ Death-Chest:
 # Show how much damage a player is dealing.
 Damage-Indicator:
   only-players: false
-  text: "&c+%damage%"
+  text: "&c%damage%"
   length: 2
+
+# How much a player's bounty increases when they kill a player.
+Bounties:
+  # How many players do they need to kill before the bounty starts to increase.
+  minimum-kill-streak: 3
+  bounty-per-kill: 100
 
 # This will automatically check for updates
 check-for-updates: true

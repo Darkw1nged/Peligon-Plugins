@@ -29,11 +29,13 @@ public class SQLiteLibrary {
         try {
             getSQLConnection();
             String table = "CREATE TABLE IF NOT EXISTS server(uuid PRIMARY KEY, lives INTEGER);";
+            String collum = "ALTER TABLE LifeSteal ADD COLUMN IF NOT EXISTS bounty INT(32) DEFAULT 0;";
 
             try {
                 Statement statement = connection.createStatement();
                 {
                     statement.execute(table);
+                    statement.execute(collum);
                 }
                 statement.close();
             } catch (SQLException e) {

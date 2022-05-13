@@ -54,7 +54,7 @@ public class mgrLives {
     public void createData(OfflinePlayer player, int lives) {
         if (hasData(player)) return;
         if (plugin.storageType.equalsIgnoreCase("sqlite")) {
-            String query = "INSERT INTO server values('" + player.getUniqueId() + "', " + lives + ");";
+            String query = "INSERT INTO server values('" + player.getUniqueId() + "', " + lives + ", 0);";
             try {
                 Statement statement = SQLiteLibrary.connection.createStatement();
                 statement.execute(query);
@@ -62,7 +62,7 @@ public class mgrLives {
                 e.printStackTrace();
             }
         } else if (plugin.storageType.equalsIgnoreCase("mysql")) {
-            String query = "INSERT INTO LifeSteal values('" + player.getUniqueId() + "', " + lives + ");";
+            String query = "INSERT INTO LifeSteal values('" + player.getUniqueId() + "', " + lives + ", 0);";
             try {
                 Statement statement = plugin.sqlLibrary.getConnection().createStatement();
                 statement.execute(query);
