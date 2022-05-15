@@ -39,6 +39,54 @@ public class cmdTimePlayed implements CommandExecutor {
                     sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
                             plugin.fileMessage.getConfig().getString("playtime-reset").replace("%player%", target.getName())));
                     return true;
+                } else if (args.length > 1 && args[0].equalsIgnoreCase("pause")) {
+                        if (args[1].equalsIgnoreCase("*")) {
+                            for (OfflinePlayer player : Bukkit.getServer().getOfflinePlayers()) {
+                                if (player.hasPlayedBefore()) {
+                                    plugin.playerTime.togglePaused(player);
+
+                                    if (!plugin.playerTime.isPaused(player)) {
+                                        plugin.playerTime.togglePaused(player);
+                                    }
+                                }
+                            }
+                            sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
+                                    plugin.fileMessage.getConfig().getString("playtime-paused-all")));
+                            return true;
+                        }
+                        OfflinePlayer target = Bukkit.getOfflinePlayer(args[1]);
+                        plugin.playerTime.togglePaused(target);
+
+                        if (!plugin.playerTime.isPaused(target)) {
+                            plugin.playerTime.togglePaused(target);
+                        }
+                        sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
+                                plugin.fileMessage.getConfig().getString("playtime-paused").replace("%player%", target.getName())));
+                    return true;
+                } else if (args.length > 1 && args[0].equalsIgnoreCase("unpause")) {
+                    if (args[1].equalsIgnoreCase("*")) {
+                        for (OfflinePlayer player : Bukkit.getServer().getOfflinePlayers()) {
+                            if (player.hasPlayedBefore()) {
+                                plugin.playerTime.togglePaused(player);
+
+                                if (plugin.playerTime.isPaused(player)) {
+                                    plugin.playerTime.togglePaused(player);
+                                }
+                            }
+                        }
+                        sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
+                                plugin.fileMessage.getConfig().getString("playtime-unpaused-all")));
+                        return true;
+                    }
+                    OfflinePlayer target = Bukkit.getOfflinePlayer(args[1]);
+                    plugin.playerTime.togglePaused(target);
+
+                    if (plugin.playerTime.isPaused(target)) {
+                        plugin.playerTime.togglePaused(target);
+                    }
+                    sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
+                            plugin.fileMessage.getConfig().getString("playtime-unpaused").replace("%player%", target.getName())));
+                return true;
                 }
                 Player target = Bukkit.getPlayer(args[0]);
                 if (target == null) {
@@ -95,6 +143,75 @@ public class cmdTimePlayed implements CommandExecutor {
                     } else {
                         player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-permission")));
                     }
+                }  else if (args.length > 1 && args[0].equalsIgnoreCase("pause")) {
+                    if (player.hasPermission("Peligon.PlayTime.Pause") || player.hasPermission("Peligon.PlayTime.*")) {
+                        if (args[1].equalsIgnoreCase("*")) {
+                            for (OfflinePlayer online : Bukkit.getServer().getOfflinePlayers()) {
+                                if (online.hasPlayedBefore()) {
+                                    plugin.playerTime.togglePaused(online);
+
+                                    if (!plugin.playerTime.isPaused(online)) {
+                                        plugin.playerTime.togglePaused(online);
+                                    }
+                                }
+                            }
+                            sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
+                                    plugin.fileMessage.getConfig().getString("playtime-paused-all")));
+                            return true;
+                        }
+                        OfflinePlayer target = Bukkit.getOfflinePlayer(args[1]);
+                        plugin.playerTime.togglePaused(target);
+
+                        if (!plugin.playerTime.isPaused(target)) {
+                            plugin.playerTime.togglePaused(target);
+                        }
+                        sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
+                                plugin.fileMessage.getConfig().getString("playtime-paused").replace("%player%", target.getName())));
+                        return true;
+                    } else {
+                        player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-permission")));
+                    }
+                } else if (args.length > 1 && args[0].equalsIgnoreCase("unpause")) {
+                    if (player.hasPermission("Peligon.PlayTime.Unpause") || player.hasPermission("Peligon.PlayTime.*")) {
+                        if (args[1].equalsIgnoreCase("*")) {
+                            for (OfflinePlayer online : Bukkit.getServer().getOfflinePlayers()) {
+                                if (online.hasPlayedBefore()) {
+                                    plugin.playerTime.togglePaused(online);
+
+                                    if (plugin.playerTime.isPaused(online)) {
+                                        plugin.playerTime.togglePaused(online);
+                                    }
+                                }
+                            }
+                            sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
+                                    plugin.fileMessage.getConfig().getString("playtime-unpaused-all")));
+                            return true;
+                        }
+                        OfflinePlayer target = Bukkit.getOfflinePlayer(args[1]);
+                        plugin.playerTime.togglePaused(target);
+
+                        if (plugin.playerTime.isPaused(target)) {
+                            plugin.playerTime.togglePaused(target);
+                        }
+                        sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
+                                plugin.fileMessage.getConfig().getString("playtime-unpaused").replace("%player%", target.getName())));
+                        return true;
+                    } else {
+                        player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-permission")));
+                    }
+                } else if (args.length > 1 && args[0].equalsIgnoreCase("hide")) {
+                    if (player.hasPermission("Peligon.PlayTime.Hide") || player.hasPermission("Peligon.PlayTime.*")) {
+                        if (plugin.playerTime.isHidden(player)) {
+                            plugin.playerTime.toggleHidden(player);
+                            sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
+                                    plugin.fileMessage.getConfig().getString("playtime-unhidden")));
+                            return true;
+                        }
+                        plugin.playerTime.toggleHidden(player);
+                        sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
+                                plugin.fileMessage.getConfig().getString("playtime-hidden")));
+                    }
+                    return true;
                 }
                 if (player.hasPermission("Peligon.PlayTime.View.Other") || player.hasPermission("Peligon.PlayTime.*")) {
                     Player target = Bukkit.getPlayer(args[0]);
@@ -108,6 +225,11 @@ public class cmdTimePlayed implements CommandExecutor {
                     }
                     if (target.isOnline()) {
                         plugin.playerTime.addTime(target);
+                    }
+
+                    if (plugin.playerTime.isHidden(target)) {
+                        player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("player-has-hidden-time")));
+                        return true;
                     }
 
                     long timePlayed = plugin.playerTime.getTimePlayed(target);
@@ -138,6 +260,11 @@ public class cmdTimePlayed implements CommandExecutor {
                     return true;
                 }
                 plugin.playerTime.addTime(player);
+
+                if (plugin.playerTime.isHidden(player)) {
+                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("player-has-hidden-time")));
+                    return true;
+                }
 
                 long timePlayed = plugin.playerTime.getTimePlayed(player);
                 long weeks = TimeUnit.MILLISECONDS.toDays(timePlayed) / 7;

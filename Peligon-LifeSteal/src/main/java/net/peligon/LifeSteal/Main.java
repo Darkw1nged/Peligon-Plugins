@@ -23,6 +23,7 @@ public final class Main extends JavaPlugin implements Listener {
     public static Main getInstance;
     public mgrLives lives;
     public mgrBounty bounties;
+
     public SQLibrary sqlLibrary;
     public String storageType = "SQLite";
 
@@ -137,7 +138,7 @@ public final class Main extends JavaPlugin implements Listener {
                     getConfig().getString("Storage.MySQL.password"));
 
             if (sqlLibrary.getConnection() == null) {
-                System.out.println("[Peligon LifeSteal] Unable to establish a connection to MySQL.");
+                System.out.println("Unable to establish a connection to MySQL.");
                 return;
             }
 

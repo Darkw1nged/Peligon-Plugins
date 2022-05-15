@@ -9,7 +9,14 @@
 Storage:
   # Visit 'Plugins/Playtime/Lang/' to see the supported languages.
   Language File: "en_US"
-  database: "SQLite"
+  # Available options: "MySQL", "SQLite"
+  database: "MySQL"
+  MySQL:
+    host: "localhost"
+    port: 3306
+    database: "minecraft"
+    username: "root"
+    password: ""
 
 format: "%seconds%s, %minutes%m, %hours%hrs, %days%d, %weeks%wks"
 leaderboard:

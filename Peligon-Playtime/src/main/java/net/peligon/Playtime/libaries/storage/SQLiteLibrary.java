@@ -8,7 +8,7 @@ import java.sql.*;
 
 import static org.bukkit.Bukkit.getServer;
 
-public class SQLite {
+public class SQLiteLibrary {
 
     public static Connection connection;
     private final Main plugin = Main.getInstance;
@@ -31,11 +31,15 @@ public class SQLite {
         try {
             getSQLConnection();
             String table = "CREATE TABLE IF NOT EXISTS server(uuid PRIMARY KEY, timePlayed, lastUpdated);";
+            String createCollum = "ALTER TABLE server ADD COLUMN IF NOT EXISTS paused INTEGER DEFAULT 0;";
+            String createCollum2 = "ALTER TABLE server ADD COLUMN IF NOT EXISTS hidden INTEGER DEFAULT 0;";
 
             try {
                 Statement statement = connection.createStatement();
                 {
                     statement.execute(table);
+                    statement.execute(createCollum);
+                    statement.execute(createCollum2);
                 }
                 statement.close();
             } catch (SQLException e) {
