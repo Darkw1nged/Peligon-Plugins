@@ -61,7 +61,7 @@ public class cmdBounty implements CommandExecutor {
 
                     } else sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-permission")));
                 } else if (args.length == 2 && args[0].equalsIgnoreCase("view")) {
-                    if (sender.hasPermission("Peligon.Economy.Bounties") || sender.hasPermission("peligon.Economy.*")) {
+                    if (sender.hasPermission("Peligon.LifeSteal.Bounties") || sender.hasPermission("peligon.LifeSteal.*")) {
                         Player target = Bukkit.getPlayer(args[1]);
                         if (target == null) {
                             sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-player-found")
