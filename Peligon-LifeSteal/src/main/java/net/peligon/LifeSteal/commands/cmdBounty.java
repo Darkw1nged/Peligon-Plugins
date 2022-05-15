@@ -14,10 +14,10 @@ public class cmdBounty implements CommandExecutor {
 
     public boolean onCommand(CommandSender sender, Command cmd, String string, String[] args) {
         if (cmd.getName().equalsIgnoreCase("bounty")) {
-            if (plugin.getConfig().getBoolean("Bounties.enabled", true)) {
+            if (plugin.getConfig().getStringList("Events").contains("bounties")) {
 
                 if (args.length == 3 && args[0].equalsIgnoreCase("set")) {
-                    if (sender.hasPermission("Peligon.Economy.Bounties") || sender.hasPermission("peligon.Economy.*")) {
+                    if (sender.hasPermission("Peligon.LifeSteal.Bounties") || sender.hasPermission("peligon.LifeSteal.*")) {
 
                         Player target = Bukkit.getPlayer(args[1]);
                         double amount;

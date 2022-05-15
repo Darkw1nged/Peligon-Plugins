@@ -41,7 +41,7 @@ Events:
   - death-chest
 #  - damage-indicator
   - health-indicator
-  - bountys
+  - bounties
 
 combat-tag:
   blocked-commands:

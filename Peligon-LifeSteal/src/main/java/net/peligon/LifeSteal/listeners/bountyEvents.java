@@ -16,7 +16,7 @@ public class bountyEvents implements Listener {
     @EventHandler
     public void onDeath(PlayerDeathEvent event) {
         // ---- [ Checking if the feature is enabled ] ----
-        if (plugin.getConfig().getBoolean("Bounties.enabled", true)) {
+        if (plugin.getConfig().getStringList("Events").contains("bounties")) {
             Player player = event.getEntity();
             Player killer = player.getKiller();
             UUID playerUUID = player.getUniqueId();
