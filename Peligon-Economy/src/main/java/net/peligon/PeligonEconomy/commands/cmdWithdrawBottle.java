@@ -22,7 +22,7 @@ public class cmdWithdrawBottle implements CommandExecutor {
     private final Main plugin = Main.getInstance;
 
     public boolean onCommand(CommandSender sender, Command cmd, String string, String[] args) {
-        if (cmd.getName().equalsIgnoreCase("bottle")) {
+        if (cmd.getName().equalsIgnoreCase("experienceBottle")) {
             if (!(sender instanceof Player)) {
                 sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("console")));
                 return true;
@@ -30,7 +30,7 @@ public class cmdWithdrawBottle implements CommandExecutor {
             Player player = (Player)sender;
             if (player.hasPermission("Peligon.Economy.Bottle") || player.hasPermission("Peligon.Economy.*")) {
                 if (args.length < 1) {
-                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("bottle-usage")));
+                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("experience-bottle-usage")));
                     return true;
                 }
                 int amount;
@@ -47,7 +47,7 @@ public class cmdWithdrawBottle implements CommandExecutor {
                 }
 
                 // ---- [ Checking if player has enough ] ----
-                if (player.getTotalExperience() < amount) {
+                if (Utils.getPlayerExp(player) < amount) {
                     sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("not-enough-experience")));
                     return true;
                 }
@@ -76,7 +76,7 @@ public class cmdWithdrawBottle implements CommandExecutor {
                 player.getInventory().addItem(item);
 
                 // ---- [ Removing experience ] ----
-                player.setExp(player.getExp() - amount);
+                Utils.removePlayerExp(player, amount);
             } else {
                 player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-permission")));
                 return true;

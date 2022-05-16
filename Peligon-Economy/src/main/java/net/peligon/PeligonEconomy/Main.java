@@ -22,12 +22,12 @@ public final class Main extends JavaPlugin {
     public mgrEconomy Economy;
     public PeligonEconomy peligonEconomy;
     public mgrSignFactory signFactory;
+
     public SQLibrary sqlLibrary;
     public String storageType = "SQLite";
 
     public CustomConfig fileWorth = new CustomConfig(this, "worth", true);
     public CustomConfig fileSigns = new CustomConfig(this, "signs", true);
-    public CustomConfig fileCoupons = new CustomConfig(this, "coupons", true);
     public CustomConfig fileATM = new CustomConfig(this, "Inventories/ATM", true);
     public CustomConfig fileDailyReward = new CustomConfig(this, "Inventories/daily", true);
     public CustomConfig fileSellGUI = new CustomConfig(this, "Inventories/sellGUI", true);
@@ -43,7 +43,6 @@ public final class Main extends JavaPlugin {
         loadEvents();
         fileWorth.saveDefaultConfig();
         fileSigns.saveDefaultConfig();
-        fileCoupons.saveDefaultConfig();
         fileATM.saveDefaultConfig();
         fileDailyReward.saveDefaultConfig();
         fileSellGUI.saveDefaultConfig();
@@ -105,14 +104,14 @@ public final class Main extends JavaPlugin {
         getCommand("balancetop").setExecutor(new cmdBalanceTop());
         getCommand("pay").setExecutor(new cmdPay());
         getCommand("withdraw").setExecutor(new cmdWithdraw());
-        getCommand("bottle").setExecutor(new cmdWithdrawBottle());
+        getCommand("experience").setExecutor(new cmdExperience());
+        getCommand("experienceBottle").setExecutor(new cmdWithdrawBottle());
         getCommand("sell").setExecutor(new cmdSell());
         getCommand("sellhand").setExecutor(new cmdSellHand());
         getCommand("autosell").setExecutor(new cmdSellAuto());
         getCommand("chestsell").setExecutor(new cmdSellChest());
         getCommand("sellwand").setExecutor(new cmdSellWand());
         getCommand("bounty").setExecutor(new cmdBounty());
-        getCommand("goal").setExecutor(new cmdGoal());
         getCommand("daily").setExecutor(new cmdDaily());
         getCommand("gift").setExecutor(new cmdGift());
         getCommand("box").setExecutor(new cmdBox());

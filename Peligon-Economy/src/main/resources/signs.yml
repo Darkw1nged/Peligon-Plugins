@@ -18,6 +18,12 @@ Bank:
   line-3: "&8Check your"
   line-4: "&8Balance here."
 
+Experience:
+  line-1: "&eView Experience"
+  line-2: ""
+  line-3: "&8Check your"
+  line-4: "&8Experience here."
+
 ATM:
   line-1: "&eOpen ATM"
   line-2: ""

@@ -534,7 +534,7 @@ public class mgrPlayTime {
     /**
      * Gets all players time played and sorts them
      *
-     * @return List of players played time going from shortest to longest
+     * @return List of players played time going from smallest to largest
      */
     public HashMap<UUID, Long> getTimePlayedLeaderboard() {
         if (plugin.storageType.equalsIgnoreCase("sqlite")) {

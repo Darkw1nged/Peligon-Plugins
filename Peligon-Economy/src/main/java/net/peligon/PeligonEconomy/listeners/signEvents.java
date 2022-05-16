@@ -65,6 +65,17 @@ public class signEvents implements Listener {
                 }
             }
         }
+        if (player.hasPermission("Peligon.Economy.Sign.Experience") || player.hasPermission("Peligon.Economy.*")) {
+            String line0 = event.getLine(0);
+            if (line0 == null)
+                return;
+            if (line0.equalsIgnoreCase("[experience]")) {
+                event.setLine(0, Utils.chatColor(plugin.fileSigns.getConfig().getString("Experience.line-1")));
+                event.setLine(1, Utils.chatColor(plugin.fileSigns.getConfig().getString("Experience.line-2")));
+                event.setLine(2, Utils.chatColor(plugin.fileSigns.getConfig().getString("Experience.line-3")));
+                event.setLine(3, Utils.chatColor(plugin.fileSigns.getConfig().getString("Experience.line-4")));
+            }
+        }
     }
 
     @EventHandler
@@ -108,6 +119,8 @@ public class signEvents implements Listener {
                     player.performCommand("balance bank");
                 } else if (line0.contains(Utils.chatColor(plugin.fileSigns.getConfig().getString("ATM.line-1")))) {
                     player.performCommand("atm");
+                } else if (line0.contains(Utils.chatColor(plugin.fileSigns.getConfig().getString("Experience.line-1")))) {
+                    player.performCommand("experience");
                 }
             }
         }

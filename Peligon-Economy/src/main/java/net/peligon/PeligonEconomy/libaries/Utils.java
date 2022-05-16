@@ -238,4 +238,70 @@ public class Utils {
 
     public static int InterestTimer = 0;
 
+    public static int getExpToLevelUp(int level){
+        if(level <= 15){
+            return 2 * level + 7;
+        } else if(level <= 30){
+            return 5 * level - 38;
+        } else {
+            return 9 * level - 158;
+        }
+    }
+
+    public static int getExpAtLevel(int level){
+        if(level <= 16){
+            return (int) (Math.pow(level,2) + 6*level);
+        } else if(level <= 31){
+            return (int) (2.5*Math.pow(level,2) - 40.5*level + 360.0);
+        } else {
+            return (int) (4.5*Math.pow(level,2) - 162.5*level + 2220.0);
+        }
+    }
+
+    public static int getPlayerExp(Player player){
+        int exp = 0;
+        int level = player.getLevel();
+
+        exp += getExpAtLevel(level);
+
+        exp += Math.round(getExpToLevelUp(level) * player.getExp());
+
+        return exp;
+    }
+
+    public static int removePlayerExp(Player player, int exp){
+        // Get player's current exp
+        int currentExp = getPlayerExp(player);
+
+        // Reset player's current exp to 0
+        player.setExp(0);
+        player.setLevel(0);
+
+        // Give the player their exp back, with the difference
+        int newExp = currentExp - exp;
+        player.giveExp(newExp);
+
+        // Return the player's new exp amount
+        return newExp;
+    }
+
+    public void sendPlayerMovingMessage(Player player, Double amount, Boolean money, String title) {
+        String sign = "&2$";
+        String magic = "&k";
+
+        String formatted = Utils.chatColor("%amount%", amount);
+
+        new BukkitRunnable() {
+            int pos = 0;
+            public void run() {
+                if (pos == formatted.length()) {
+                    cancel();
+                }
+                player.sendTitle(Utils.chatColor(title),
+                        Utils.chatColor(money ? sign : "" + formatted.substring(0, pos) + magic + formatted.substring(pos)));
+                pos += 1;
+            }
+        }.runTaskTimer(Main.getInstance,0, 20);
+    }
+
 }

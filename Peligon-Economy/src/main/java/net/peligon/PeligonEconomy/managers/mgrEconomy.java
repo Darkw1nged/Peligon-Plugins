@@ -564,7 +564,7 @@ public class mgrEconomy {
      *
      * @return List of cash going from lowest to largest
      */
-    public HashMap<UUID, Double> getCashFromDescending() {
+    public HashMap<UUID, Double> getCashLeaderboard() {
         if (plugin.storageType.equalsIgnoreCase("sqlite")) {
             String query = "SELECT uuid, cash FROM plg_money ORDER BY cash DESC;";
             try {
@@ -573,9 +573,7 @@ public class mgrEconomy {
                 HashMap<UUID, Double> leaderboard = new HashMap<>();
 
                 while (rs.next()) {
-                    Player player = Bukkit.getPlayer(UUID.fromString(rs.getString("uuid")));
-                    if (player == null) return new HashMap<>();
-                    leaderboard.put(player.getUniqueId(), rs.getDouble("cash"));
+                    leaderboard.put(UUID.fromString(rs.getString("uuid")), rs.getDouble("cash"));
                 }
                 rs.close();
                 return leaderboard;
@@ -590,9 +588,7 @@ public class mgrEconomy {
                 HashMap<UUID, Double> leaderboard = new HashMap<>();
 
                 while (rs.next()) {
-                    Player player = Bukkit.getPlayer(UUID.fromString(rs.getString("uuid")));
-                    if (player == null) return new HashMap<>();
-                    leaderboard.put(player.getUniqueId(), rs.getDouble("cash"));
+                    leaderboard.put(UUID.fromString(rs.getString("uuid")), rs.getDouble("cash"));
                 }
                 rs.close();
                 return leaderboard;
@@ -608,7 +604,7 @@ public class mgrEconomy {
      *
      * @return List of bank going from lowest to largest
      */
-    public HashMap<UUID, Double> getBankFromDescending() {
+    public HashMap<UUID, Double> getBankLeaderboard() {
         if (plugin.storageType.equalsIgnoreCase("sqlite")) {
             String query = "SELECT uuid, bank FROM plg_money ORDER BY bank DESC;";
             try {
@@ -617,9 +613,7 @@ public class mgrEconomy {
                 HashMap<UUID, Double> leaderboard = new HashMap<>();
 
                 while (rs.next()) {
-                    Player player = Bukkit.getPlayer(UUID.fromString(rs.getString("uuid")));
-                    if (player == null) continue;
-                    leaderboard.put(player.getUniqueId(), rs.getDouble("bank"));
+                    leaderboard.put(UUID.fromString(rs.getString("uuid")), rs.getDouble("bank"));
                 }
                 rs.close();
                 return leaderboard;
@@ -634,9 +628,7 @@ public class mgrEconomy {
                 HashMap<UUID, Double> leaderboard = new HashMap<>();
 
                 while (rs.next()) {
-                    Player player = Bukkit.getPlayer(UUID.fromString(rs.getString("uuid")));
-                    if (player == null) continue;
-                    leaderboard.put(player.getUniqueId(), rs.getDouble("bank"));
+                    leaderboard.put(UUID.fromString(rs.getString("uuid")), rs.getDouble("bank"));
                 }
                 rs.close();
                 return leaderboard;
