@@ -19,7 +19,7 @@ public class cmdDaily implements CommandExecutor {
                 return true;
             }
             Player player = (Player) sender;
-            if (player.hasPermission("Peligon.Economy.daily") || player.hasPermission("Peligon.Economy.*")) {
+            if (player.hasPermission("Peligon.Economy.Daily") || player.hasPermission("Peligon.Economy.*")) {
                 menuDaily daily = new menuDaily(player);
                 player.openInventory(daily.getInventory());
             } else {
