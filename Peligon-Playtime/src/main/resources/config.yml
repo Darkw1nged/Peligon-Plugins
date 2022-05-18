@@ -10,7 +10,7 @@ Storage:
   # Visit 'Plugins/Playtime/Lang/' to see the supported languages.
   Language File: "en_US"
   # Available options: "MySQL", "SQLite"
-  database: "MySQL"
+  database: "SQLite"
   MySQL:
     host: "localhost"
     port: 3306

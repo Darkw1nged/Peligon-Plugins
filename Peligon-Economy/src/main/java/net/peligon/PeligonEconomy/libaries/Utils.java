@@ -34,6 +34,17 @@ public class Utils {
                 .replaceAll("%amount%", converted);
     }
 
+    // ---- [ Format numbers ] ----
+    public static String format(Double amount) {
+        NumberFormat nf = NumberFormat.getInstance(new Locale("en", "US"));
+        return nf.format(amount);
+    }
+
+    public static String format(Integer amount) {
+        NumberFormat nf = NumberFormat.getInstance(new Locale("en", "US"));
+        return nf.format(amount);
+    }
+
     // ---- [ Managing holograms for small amount of features ] ----
     public static void moveUpHologram(String name, Location loc, int length) {
         ArmorStand holo = loc.getWorld().spawn(loc, ArmorStand.class);
@@ -269,7 +280,7 @@ public class Utils {
         return exp;
     }
 
-    public static int removePlayerExp(Player player, int exp){
+    public static void removePlayerExp(Player player, int exp){
         // Get player's current exp
         int currentExp = getPlayerExp(player);
 
@@ -280,12 +291,22 @@ public class Utils {
         // Give the player their exp back, with the difference
         int newExp = currentExp - exp;
         player.giveExp(newExp);
-
-        // Return the player's new exp amount
-        return newExp;
     }
 
-    public void sendPlayerMovingMessage(Player player, Double amount, Boolean money, String title) {
+    public static void addPlayerExp(Player player, int exp){
+        // Get player's current exp
+        int currentExp = getPlayerExp(player);
+
+        // Reset player's current exp to 0
+        player.setExp(0);
+        player.setLevel(0);
+
+        // Give the player their exp back, with the difference
+        int newExp = currentExp + exp;
+        player.giveExp(newExp);
+    }
+
+    public static void sendPlayerMovingMessage(Player player, Double amount, String title, Boolean isEconomy) {
         String sign = "&2$";
         String magic = "&k";
 
@@ -296,9 +317,49 @@ public class Utils {
             public void run() {
                 if (pos == formatted.length()) {
                     cancel();
+                    if (isEconomy) {
+                        plugin.Economy.addAccount(player, amount);
+                    } else {
+                        addPlayerExp(player, amount.intValue());
+                    }
                 }
-                player.sendTitle(Utils.chatColor(title),
-                        Utils.chatColor(money ? sign : "" + formatted.substring(0, pos) + magic + formatted.substring(pos)));
+                if (isEconomy) {
+                    player.sendTitle(Utils.chatColor(title),
+                            Utils.chatColor(sign + formatted.substring(0, pos) + magic + formatted.substring(pos)));
+                } else {
+                    player.sendTitle(Utils.chatColor(title),
+                            Utils.chatColor("" + formatted.substring(0, pos) + magic + formatted.substring(pos)));
+                }
+
+                pos += 1;
+            }
+        }.runTaskTimer(Main.getInstance,0, 20);
+    }
+
+    public static void sendPlayerMovingMessage(Player player, Integer amount, String title, Boolean isEconomy) {
+        String sign = "&2$";
+        String magic = "&k";
+
+        String formatted = Utils.chatColor("%amount%", Double.valueOf(amount));
+
+        new BukkitRunnable() {
+            int pos = 0;
+            public void run() {
+                if (pos == formatted.length()) {
+                    cancel();
+                    if (isEconomy) {
+                        plugin.Economy.addAccount(player, amount);
+                    } else {
+                        addPlayerExp(player, amount.intValue());
+                    }
+                }
+                if (isEconomy) {
+                    player.sendTitle(Utils.chatColor(title),
+                            Utils.chatColor(sign + formatted.substring(0, pos) + magic + formatted.substring(pos)));
+                } else {
+                    player.sendTitle(Utils.chatColor(title),
+                            Utils.chatColor("" + formatted.substring(0, pos) + magic + formatted.substring(pos)));
+                }
                 pos += 1;
             }
         }.runTaskTimer(Main.getInstance,0, 20);

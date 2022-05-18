@@ -63,9 +63,11 @@ commands:
     description: Allows users to withdraw experience
   daily:
     description: Allows users to get a daily reward
-  gift:
-    description: Allows users to gift items to other players
-  box:
-    aliases:
-      - giftbox
-    description: Allows users to view their gift box
+#  gift:
+#    description: Allows users to gift items to other players
+#  box:
+#    aliases:
+#      - giftbox
+#    description: Allows users to view their gift box
+  pouches:
+    description: Allows admins to give players pouches

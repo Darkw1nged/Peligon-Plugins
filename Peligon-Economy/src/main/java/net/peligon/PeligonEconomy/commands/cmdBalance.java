@@ -55,7 +55,7 @@ public class cmdBalance implements CommandExecutor {
                     return true;
                 }
                 if (player.hasPermission("Peligon.Economy.Balance.Other") || player.hasPermission("Peligon.Economy.*")) {
-                    Player target = Bukkit.getPlayer(args[1]);
+                    Player target = Bukkit.getPlayer(args[0]);
                     if (target == null) {
                         player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-player-found")));
                         return true;
@@ -68,7 +68,7 @@ public class cmdBalance implements CommandExecutor {
             }
             if (args.length >= 1) {
                 if (player.hasPermission("Peligon.Economy.Balance.Other") || player.hasPermission("Peligon.Economy.*")) {
-                    Player target = Bukkit.getPlayer(args[1]);
+                    Player target = Bukkit.getPlayer(args[0]);
                     if (target == null) {
                         player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-player-found")));
                         return true;

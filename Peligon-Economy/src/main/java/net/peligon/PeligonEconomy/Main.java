@@ -28,6 +28,7 @@ public final class Main extends JavaPlugin {
 
     public CustomConfig fileWorth = new CustomConfig(this, "worth", true);
     public CustomConfig fileSigns = new CustomConfig(this, "signs", true);
+    public CustomConfig filePouches = new CustomConfig(this, "pouches", true);
     public CustomConfig fileATM = new CustomConfig(this, "Inventories/ATM", true);
     public CustomConfig fileDailyReward = new CustomConfig(this, "Inventories/daily", true);
     public CustomConfig fileSellGUI = new CustomConfig(this, "Inventories/sellGUI", true);
@@ -43,6 +44,7 @@ public final class Main extends JavaPlugin {
         loadEvents();
         fileWorth.saveDefaultConfig();
         fileSigns.saveDefaultConfig();
+        filePouches.saveDefaultConfig();
         fileATM.saveDefaultConfig();
         fileDailyReward.saveDefaultConfig();
         fileSellGUI.saveDefaultConfig();
@@ -113,8 +115,9 @@ public final class Main extends JavaPlugin {
         getCommand("sellwand").setExecutor(new cmdSellWand());
         getCommand("bounty").setExecutor(new cmdBounty());
         getCommand("daily").setExecutor(new cmdDaily());
-        getCommand("gift").setExecutor(new cmdGift());
-        getCommand("box").setExecutor(new cmdBox());
+//        getCommand("gift").setExecutor(new cmdGift());
+//        getCommand("box").setExecutor(new cmdBox());
+        getCommand("pouches").setExecutor(new cmdPouches());
     }
 
     public void loadEvents() {
@@ -132,7 +135,9 @@ public final class Main extends JavaPlugin {
                 new DailyInventoryEvents(),
                 new SellGUIEvents(),
                 new GlobalInventoryEvents(),
-                new BoxEvents()
+//                new BoxEvents()
+                new ExperienceBottleEvent(),
+                new PouchesEvent()
         ).forEach(listener -> getServer().getPluginManager().registerEvents(listener, this));
     }
 
@@ -158,7 +163,7 @@ public final class Main extends JavaPlugin {
                     getConfig().getString("Storage.MySQL.password"));
 
             if (sqlLibrary.getConnection() == null) {
-                System.out.println("[Peligon Economy] Unable to establish a connection to MySQL.");
+                System.out.println("Unable to establish a connection to MySQL.");
                 return;
             }
 

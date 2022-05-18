@@ -3,13 +3,16 @@ package net.peligon.PeligonEconomy.commands;
 import net.peligon.PeligonEconomy.Main;
 import net.peligon.PeligonEconomy.libaries.Utils;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.event.entity.ExpBottleEvent;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -22,7 +25,7 @@ public class cmdWithdrawBottle implements CommandExecutor {
     private final Main plugin = Main.getInstance;
 
     public boolean onCommand(CommandSender sender, Command cmd, String string, String[] args) {
-        if (cmd.getName().equalsIgnoreCase("experienceBottle")) {
+        if (cmd.getName().equalsIgnoreCase("experiencebottle")) {
             if (!(sender instanceof Player)) {
                 sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("console")));
                 return true;
@@ -56,6 +59,7 @@ public class cmdWithdrawBottle implements CommandExecutor {
                 String converted = nf.format(amount);
 
                 ItemStack item = new ItemStack(Material.getMaterial(plugin.getConfig().getString("Items.withdraw-experience.item").toUpperCase()));
+
                 ItemMeta meta = item.getItemMeta();
                 meta.setDisplayName(Utils.chatColor(plugin.getConfig().getString("Items.withdraw-experience.name")));
 
@@ -68,8 +72,10 @@ public class cmdWithdrawBottle implements CommandExecutor {
                             .replaceAll("%transaction%", "" + UUID.randomUUID().toString().split("-")[0] + "-" + UUID.randomUUID().toString().split("-")[3]));
                 }
                 meta.setLore(lore);
-                meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-                meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+
+                meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "amount"), PersistentDataType.INTEGER, amount);
+                System.out.println(meta.getPersistentDataContainer().get(new NamespacedKey(plugin, "amount"), PersistentDataType.INTEGER));
+
                 item.setItemMeta(meta);
 
                 // ---- [ Adding item to inventory ] ----

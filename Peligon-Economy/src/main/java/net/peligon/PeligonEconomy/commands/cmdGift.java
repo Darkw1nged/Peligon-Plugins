@@ -21,6 +21,9 @@ public class cmdGift implements CommandExecutor {
 
     private final Main plugin = Main.getInstance;
 
+    // already-claimed: "&cError! You must wait a day before claiming again."
+    // cannot-gift-yourself: "&cError! You cannot gift yourself."
+
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("gift")) {
             if (!(sender instanceof Player)) {

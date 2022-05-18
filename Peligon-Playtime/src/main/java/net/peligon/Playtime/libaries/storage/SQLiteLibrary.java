@@ -31,15 +31,35 @@ public class SQLiteLibrary {
         try {
             getSQLConnection();
             String table = "CREATE TABLE IF NOT EXISTS server(uuid PRIMARY KEY, timePlayed, lastUpdated);";
-            String createCollum = "ALTER TABLE server ADD COLUMN IF NOT EXISTS paused INTEGER DEFAULT 0;";
-            String createCollum2 = "ALTER TABLE server ADD COLUMN IF NOT EXISTS hidden INTEGER DEFAULT 0;";
+            String createCollum = "ALTER TABLE server ADD COLUMN paused INTEGER DEFAULT 0;";
+            String createCollum2 = "ALTER TABLE server ADD COLUMN hidden INTEGER DEFAULT 0 ;";
 
             try {
                 Statement statement = connection.createStatement();
                 {
                     statement.execute(table);
-                    statement.execute(createCollum);
-                    statement.execute(createCollum2);
+                    ResultSet rs = statement.executeQuery("PRAGMA table_info(server)");
+                    boolean columnExists = false;
+
+                    while (rs.next()) {
+                        if (rs.getString("name").equalsIgnoreCase("paused")) {
+                            columnExists = true;
+                        }
+                    }
+                    if (!columnExists) {
+                        statement.execute(createCollum);
+                    }
+                    columnExists = false;
+
+                    rs = statement.executeQuery("PRAGMA table_info(server)");
+                    while (rs.next()) {
+                        if (rs.getString("name").equalsIgnoreCase("hidden")) {
+                            columnExists = true;
+                        }
+                    }
+                    if (!columnExists) {
+                        statement.execute(createCollum2);
+                    }
                 }
                 statement.close();
             } catch (SQLException e) {
