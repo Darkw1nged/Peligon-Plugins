@@ -171,5 +171,36 @@ Mob-Rewards:
       enable: true
       reward: 20
 
+# TODO - REDO SERVER GOALS ======================================================
+# Setup some server wide goals and give players rewards.
+Server-Goals:
+  targets:
+    First_Goal:
+      goal: 10000
+      # This data should not be messed with.
+      data:
+        # Any completed target will be ignored.
+        completed: false
+        raised: 0
+        contributors: []
+      # Rewards will only be given out to contributor to the goal.
+      rewards:
+        - "%econ% 10000"
+        - "%item% diamond 5"
+        - "%message% &aThanks for reaching the goal!"
+        - "%command% say goal reached!"
+    Second_Goal:
+      goal: 100000
+      data:
+        completed: false
+        raised: 0
+        contributors: []
+      rewards:
+        - "%econ% 10000"
+        - "%item% diamond 5"
+        - "%message% &aThanks for reaching the goal!"
+        - "%command% say goal reached!"
+# TODO - END SERVER GOALS ======================================================
+
 # This will automatically check for updates
 check-for-updates: true

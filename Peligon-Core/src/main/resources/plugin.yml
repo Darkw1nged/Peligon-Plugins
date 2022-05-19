@@ -67,6 +67,11 @@ commands:
   clearchat:
     description: Allows admins to clear the chat
   # UTILITY COMMANDS
+  experience:
+    aliases:
+      - xp
+      - exp
+    description: Allows players to see their experience
   spawn:
     description: Teleports a player to spawn
   warps:

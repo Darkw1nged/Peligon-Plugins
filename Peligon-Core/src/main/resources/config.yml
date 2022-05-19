@@ -15,7 +15,7 @@ Disposal-Inventory-Name: "&7Disposal"
 
 ###############################################################
 # +---------------------------------------------------------+ #
-# |                Peligon LifeSteal (Events)               | #
+# |                   Peligon Core (Events)                 | #
 # |    !!! To disable modules, add # before to item !!!     | #
 # +---------------------------------------------------------+ #
 ###############################################################
@@ -31,7 +31,8 @@ Events:
   - sign-color
   - word-filter
   - anti-spam
-  - chat-ping
+#  - chat-ping
+  - no-void
 
 Warnings:
   Tool-Durability:

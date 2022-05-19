@@ -91,6 +91,7 @@ public final class Main extends JavaPlugin {
         getCommand("clearchat").setExecutor(new cmdClearChat());
 
         // ---- [ Player commands ] ----
+        getCommand("experience").setExecutor(new cmdExperience());
         getCommand("spawn").setExecutor(new cmdSpawn());
         getCommand("warp").setExecutor(new cmdWarp());
         getCommand("warps").setExecutor(new cmdWarps());
@@ -126,7 +127,8 @@ public final class Main extends JavaPlugin {
                 new worldProtections(),
                 new bannedItems(),
                 new itemCooldown(),
-                new doubleJump()
+                new doubleJump(),
+                new noVoid()
         ).forEach(listener -> getServer().getPluginManager().registerEvents(listener, this));
     }
 
