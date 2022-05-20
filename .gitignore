@@ -1,6 +1,7 @@
 # User-specific stuff
 .idea/
 *.png
+*.gif
 *.ignore
 
 *.iml
