@@ -1,0 +1,5 @@
+name: PeligonStaff
+version: '${project.version}'
+main: net.peligon.Staff.Main
+api-version: 1.18
+authors: [ darkwinged, Yovez ]
