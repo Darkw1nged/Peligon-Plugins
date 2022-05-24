@@ -1,5 +1,7 @@
 package net.peligon.Teams;
 
+import net.peligon.Teams.commands.cmdExperience;
+import net.peligon.Teams.commands.cmdExperienceBottle;
 import net.peligon.Teams.libaries.CustomConfig;
 import net.peligon.Teams.libaries.UpdateChecker;
 import net.peligon.Teams.libaries.Utils;
@@ -49,6 +51,8 @@ public class Main extends JavaPlugin {
     }
 
     public void loadCommands() {
+        getCommand("experience").setExecutor(new cmdExperience());
+        getCommand("experiencebottle").setExecutor(new cmdExperienceBottle());
     }
 
     public void loadEvents() {

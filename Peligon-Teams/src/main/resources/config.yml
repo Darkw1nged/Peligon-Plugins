@@ -19,10 +19,26 @@ Storage:
 
 ###############################################################
 # +---------------------------------------------------------+ #
-# |                 Peligon Teams (Section)                 | #
-# |    [NOTE or Description]                                | #
+# |                   Peligon Teams (Items)                 | #
+# |    This is where you can manage all custom items that   | #
+# |    are used in the plugin.                              | #
 # +---------------------------------------------------------+ #
 ###############################################################
+Items:
+  # Placeholder Key -------------
+  # %amount% - Shows how much the item holds.
+  # %transaction% - Generates a random ID.
+  # %player% - Gets the players name.
+  # %display_player% - Gets the players display name. e.g "[DEVELOPER] Peligon"
+  # -----------------------------
+  withdraw-experience:
+    item: EXPERIENCE_BOTTLE
+    name: "&5Experience"
+    lore:
+      - "&7(Right-Click) to redeem the &aexperience&7."
+      - "&7Withdrawn by &e%player%&7."
+      - ""
+      - "&7Value: &a%amount%"
 
 # Check for plugin updates.
 check-for-updates: true
