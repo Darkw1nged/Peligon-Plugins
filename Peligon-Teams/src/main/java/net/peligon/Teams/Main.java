@@ -3,17 +3,27 @@ package net.peligon.Teams;
 import net.peligon.Teams.commands.cmdExperience;
 import net.peligon.Teams.commands.cmdExperienceBottle;
 import net.peligon.Teams.libaries.CustomConfig;
+import net.peligon.Teams.libaries.Team;
 import net.peligon.Teams.libaries.UpdateChecker;
 import net.peligon.Teams.libaries.Utils;
 import net.peligon.Teams.libaries.storage.SQLibrary;
 import net.peligon.Teams.libaries.storage.SQLiteLibrary;
+import net.peligon.Teams.libaries.teamSettings.Rank;
+import net.peligon.Teams.libaries.teamSettings.Vault;
+import net.peligon.Teams.managers.mgrTeam;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.sql.SQLException;
+import java.util.*;
 
-public class Main extends JavaPlugin {
+public class Main extends JavaPlugin implements Listener {
 
     public static Main getInstance;
+    public mgrTeam teamManager;
 
     public SQLibrary sqlLibrary;
     public String storageType = "SQLite";
@@ -28,6 +38,12 @@ public class Main extends JavaPlugin {
         loadCommands();
         loadEvents();
         saveDefaultConfig();
+
+        // ----- [ Load all managers ] -----
+        teamManager = new mgrTeam();
+
+        // ---- [ Load all teams ] ----
+        Utils.loadTeams();
 
         // ---- [ Loading lang file ] ----
         fileMessage = new CustomConfig(this, "lang/" + this.getConfig().getString("Storage.lang"), true);
@@ -46,6 +62,11 @@ public class Main extends JavaPlugin {
     }
 
     public void onDisable() {
+        if (!Utils.teams.isEmpty()) {
+            for (Team team : Utils.teams)
+                team.saveTeam();
+        }
+
         // ---- [ shutdown message ] ----
         getServer().getConsoleSender().sendMessage(Utils.chatColor(this.fileMessage.getConfig().getString("shutdown")));
     }
@@ -96,5 +117,7 @@ public class Main extends JavaPlugin {
             this.storageType = "MySQL";
         }
     }
+
+
 
 }

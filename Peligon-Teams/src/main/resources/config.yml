@@ -19,6 +19,26 @@ Storage:
 
 ###############################################################
 # +---------------------------------------------------------+ #
+# |                   Peligon Teams (Teams)                 | #
+# |    This is where you can manage settings about teams    | #
+# +---------------------------------------------------------+ #
+###############################################################
+Teams-Settings:
+  # If this is set to 0 then it will be disabled.
+  creation-fee: 0
+  starter-vaults: 1
+  maximum-vaults: 5
+  vault-settings:
+    # max-vault-size: "54", multiple of 9
+    size: 36
+    title: "&eVault &f#%vault_number%"
+    # Only moderators or the leader can open the vault.
+    # !! Will only work on first vault.
+    secured: true
+
+
+###############################################################
+# +---------------------------------------------------------+ #
 # |                   Peligon Teams (Items)                 | #
 # |    This is where you can manage all custom items that   | #
 # |    are used in the plugin.                              | #

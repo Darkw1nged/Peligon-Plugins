@@ -4,3 +4,13 @@ main: net.peligon.Teams.Main
 api-version: 1.18
 authors: [ darkwinged ]
 description: This is an open-source plugin
+commands:
+  experience:
+    aliases:
+      - xp
+      - exp
+    description: Allows users to see how much experience they have
+  experienceBottle:
+    aliases:
+      - xpbottle
+      - bottle
