@@ -12,7 +12,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 
-public class BoxEvents implements Listener {
+public class boxEvents implements Listener {
 
     private final Main plugin = Main.getInstance;
 

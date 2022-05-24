@@ -10,7 +10,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 
 import java.util.Random;
 
-public class GrassScavengeEvents implements Listener {
+public class grassScavengeEvents implements Listener {
 
     private final Main plugin = Main.getInstance;
 

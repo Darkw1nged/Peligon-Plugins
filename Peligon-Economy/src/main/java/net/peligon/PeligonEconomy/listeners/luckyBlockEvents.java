@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
 
-public class LuckyBlockEvents implements Listener {
+public class luckyBlockEvents implements Listener {
 
     private final Main plugin = Main.getInstance;
     private Map<UUID, Map<Location, Block>> foundBlocks = new HashMap<>();

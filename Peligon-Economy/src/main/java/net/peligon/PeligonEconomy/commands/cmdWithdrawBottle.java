@@ -74,8 +74,6 @@ public class cmdWithdrawBottle implements CommandExecutor {
                 meta.setLore(lore);
 
                 meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "amount"), PersistentDataType.INTEGER, amount);
-                System.out.println(meta.getPersistentDataContainer().get(new NamespacedKey(plugin, "amount"), PersistentDataType.INTEGER));
-
                 item.setItemMeta(meta);
 
                 // ---- [ Adding item to inventory ] ----

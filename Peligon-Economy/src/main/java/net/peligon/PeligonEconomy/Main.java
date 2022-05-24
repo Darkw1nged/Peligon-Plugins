@@ -126,18 +126,19 @@ public final class Main extends JavaPlugin {
                 new bountyEvents(),
                 new redeemEvents(),
                 new signEvents(),
-                new AtmEvents(),
-                new MobMoneyEvent(),
-                new DeathPenaltyEvent(),
-                new GrassScavengeEvents(),
-                new MiningRewardsEvents(),
-                new LuckyBlockEvents(),
-                new DailyInventoryEvents(),
-                new SellGUIEvents(),
-                new GlobalInventoryEvents(),
+                new atmEvents(),
+                new mobMoneyEvent(),
+                new deathPenaltyEvent(),
+                new grassScavengeEvents(),
+                new miningRewardsEvents(),
+                new luckyBlockEvents(),
+                new dailyInventoryEvents(),
+                new sellGUIEvents(),
+                new globalInventoryEvents(),
 //                new BoxEvents()
-                new ExperienceBottleEvent(),
-                new PouchesEvent()
+                new experienceBottleEvent(),
+                new bankNotesEvents(),
+                new pouchesEvent()
         ).forEach(listener -> getServer().getPluginManager().registerEvents(listener, this));
     }
 

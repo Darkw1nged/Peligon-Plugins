@@ -28,66 +28,13 @@ public class redeemEvents implements Listener {
         ItemStack hand = player.getInventory().getItemInHand();
         if (hand.getType() == Material.AIR) return;
 
-        ItemStack money_note = new ItemStack(Material.getMaterial(plugin.getConfig().getString("Items.withdraw-cash.item").toUpperCase()));
-        ItemMeta money_meta = money_note.getItemMeta();
-        money_meta.setDisplayName(Utils.chatColor(plugin.getConfig().getString("Items.withdraw-cash.name")));
-        money_meta.setLore(Utils.getConvertedLore(plugin.getConfig(), "Items.withdraw-cash"));
-        money_note.setItemMeta(money_meta);
-
-        ItemStack experience_bottle = new ItemStack(Material.getMaterial(plugin.getConfig().getString("Items.withdraw-experience.item").toUpperCase()));
-        ItemMeta experience_meta = money_note.getItemMeta();
-        experience_meta.setDisplayName(Utils.chatColor(plugin.getConfig().getString("Items.withdraw-experience.name")));
-        experience_meta.setLore(Utils.getConvertedLore(plugin.getConfig(), "Items.withdraw-experience"));
-        experience_bottle.setItemMeta(experience_meta);
-
         ItemStack sellwand = new ItemStack(Material.getMaterial(plugin.getConfig().getString("Items.sell-wand.item").toUpperCase()));
-        ItemMeta sellwand_meta = money_note.getItemMeta();
+        ItemMeta sellwand_meta = sellwand.getItemMeta();
         sellwand_meta.setDisplayName(Utils.chatColor(plugin.getConfig().getString("Items.sell-wand.name")));
         sellwand_meta.setLore(Utils.getConvertedLore(plugin.getConfig(), "Items.sell-wand"));
         sellwand.setItemMeta(sellwand_meta);
 
-        if (event.getAction() == Action.RIGHT_CLICK_AIR) {
-            if (compareItems(hand, money_note)) {
-                int line_number = 0;
-                for (String line : plugin.getConfig().getStringList("Items.withdraw-cash.lore")) {
-                    if (line.contains("%amount%")) break;
-                    line_number++;
-                }
-
-                double amount;
-                try {
-                    String temp = hand.getItemMeta().getLore().get(line_number).replaceAll("\\D+", "");
-                    temp = temp.replaceAll(String.valueOf(temp.charAt(temp.indexOf("&") + 1)), "");
-
-                    amount = Double.parseDouble(temp);
-                } catch (Exception e) {
-                    return;
-                }
-
-                hand.setAmount(hand.getAmount() - 1);
-                plugin.Economy.addAccount(player, amount);
-
-            } else if (compareItems(hand, experience_bottle)) {
-                int line_number = 0;
-                for (String line : plugin.getConfig().getStringList("Items.withdraw-experience.lore")) {
-                    if (line.contains("%amount%")) break;
-                    line_number++;
-                }
-
-                int amount;
-                try {
-                    String temp = hand.getItemMeta().getLore().get(line_number).replaceAll("\\D+", "");
-                    temp = temp.replaceAll(String.valueOf(temp.charAt(temp.indexOf("&") + 1)), "");
-
-                    amount = Integer.parseInt(temp);
-                } catch (Exception e) {
-                    return;
-                }
-
-                hand.setAmount(hand.getAmount() - 1);
-                player.setTotalExperience(player.getTotalExperience() + amount);
-            }
-        } else if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+        if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
             if (compareItems(hand, sellwand)) {
                 Block block = event.getClickedBlock();
                 if (block.getType() == Material.CHEST || block.getType().equals(Material.TRAPPED_CHEST)) {
@@ -127,8 +74,7 @@ public class redeemEvents implements Listener {
                         List<String> lore = new ArrayList<>();
                         for (String value : plugin.getConfig().getStringList("Items.sell-wand.lore")) {
                             lore.add(Utils.chatColor(value)
-                                    .replaceAll("%uses%", ""
-                                            + uses));
+                                    .replaceAll("%uses%", "" + uses));
                         }
                         meta.setLore(lore);
                         hand.setItemMeta(meta);
@@ -141,47 +87,7 @@ public class redeemEvents implements Listener {
                             plugin.fileMessage.getConfig().getString("sold-items"), amount));
                     plugin.Economy.addAccount(player, amount);
                 }
-            } else if (compareItems(hand, money_note)) {
-                int line_number = 0;
-                for (String line : plugin.getConfig().getStringList("Items.withdraw-cash.lore")) {
-                    if (line.contains("%amount%")) break;
-                    line_number++;
-                }
-
-                double amount;
-                try {
-                    String temp = hand.getItemMeta().getLore().get(line_number).replaceAll("\\D+", "");
-                    temp = temp.replaceAll(String.valueOf(temp.charAt(temp.indexOf("&") + 1)), "");
-
-                    amount = Double.parseDouble(temp);
-                } catch (Exception e) {
-                    return;
-                }
-
-                hand.setAmount(hand.getAmount() - 1);
-                plugin.Economy.addAccount(player, amount);
-
-            } else if (compareItems(hand, experience_bottle)) {
-                int line_number = 0;
-                for (String line : plugin.getConfig().getStringList("Items.withdraw-experience.lore")) {
-                    if (line.contains("%amount%")) break;
-                    line_number++;
-                }
-
-                int amount;
-                try {
-                    String temp = hand.getItemMeta().getLore().get(line_number).replaceAll("\\D+", "");
-                    temp = temp.replaceAll(String.valueOf(temp.charAt(temp.indexOf("&") + 1)), "");
-
-                    amount = Integer.parseInt(temp);
-                } catch (Exception e) {
-                    return;
-                }
-
-                hand.setAmount(hand.getAmount() - 1);
-                player.setTotalExperience(player.getTotalExperience() + amount);
             }
-            return;
         }
     }
 

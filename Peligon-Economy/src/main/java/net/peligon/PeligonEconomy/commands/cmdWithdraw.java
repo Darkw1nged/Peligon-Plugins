@@ -3,6 +3,7 @@ package net.peligon.PeligonEconomy.commands;
 import net.peligon.PeligonEconomy.Main;
 import net.peligon.PeligonEconomy.libaries.Utils;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -10,6 +11,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -74,8 +76,8 @@ public class cmdWithdraw implements CommandExecutor {
                             .replaceAll("%transaction%", "" + UUID.randomUUID().toString().split("-")[0] + "-" + UUID.randomUUID().toString().split("-")[3]));
                 }
                 meta.setLore(lore);
-                meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-                meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+
+                meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "amount"), PersistentDataType.DOUBLE, amount);
                 item.setItemMeta(meta);
 
                 // ---- [ Adding item to inventory ] ----

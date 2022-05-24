@@ -9,7 +9,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 
-public class MobMoneyEvent implements Listener {
+public class mobMoneyEvent implements Listener {
 
     private final Main plugin = Main.getInstance;
 

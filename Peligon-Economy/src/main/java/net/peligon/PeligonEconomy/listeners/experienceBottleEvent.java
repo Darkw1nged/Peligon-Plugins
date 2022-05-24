@@ -11,7 +11,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 
-public class ExperienceBottleEvent implements Listener {
+public class experienceBottleEvent implements Listener {
 
     private final Main plugin = Main.getInstance;
 

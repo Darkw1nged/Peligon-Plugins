@@ -12,7 +12,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import java.util.Random;
 
 
-public class MiningRewardsEvents implements Listener {
+public class miningRewardsEvents implements Listener {
 
     private final Main plugin = Main.getInstance;
 

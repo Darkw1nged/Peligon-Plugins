@@ -14,7 +14,7 @@ import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 
-public class DailyInventoryEvents implements Listener {
+public class dailyInventoryEvents implements Listener {
 
     private final Main plugin = Main.getInstance;
 

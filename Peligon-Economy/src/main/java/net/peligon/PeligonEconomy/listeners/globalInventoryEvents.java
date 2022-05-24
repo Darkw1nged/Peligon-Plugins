@@ -9,7 +9,7 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.inventory.InventoryHolder;
 
-public class GlobalInventoryEvents implements Listener {
+public class globalInventoryEvents implements Listener {
 
     private final Main plugin = Main.getInstance;
 

@@ -40,7 +40,7 @@ Sell-GUI:
 
 Items:
   # Placeholder Key -------------
-  # %amount% - Required for them to work.
+  # %amount% - Shows how much the item holds.
   # %transaction% - Not required. Generates a random ID.
   # %player% - Gets the players name.
   # %display_player% - Gets the players display name. e.g "[DEVELOPER] Peligon"

@@ -11,7 +11,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 
-public class PouchesEvent implements Listener {
+public class pouchesEvent implements Listener {
 
     private final Main plugin = Main.getInstance;
 
