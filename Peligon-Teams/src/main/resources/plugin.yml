@@ -1,0 +1,6 @@
+name: PeligonTeams
+version: '${project.version}'
+main: net.peligon.Teams.Main
+api-version: 1.18
+authors: [ darkwinged ]
+description: This is an open-source plugin

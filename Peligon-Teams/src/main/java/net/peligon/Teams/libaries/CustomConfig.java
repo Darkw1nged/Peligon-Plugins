@@ -1,4 +1,4 @@
-package net.peligon.PeligonSkills.libaries;
+package net.peligon.Teams.libaries;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;

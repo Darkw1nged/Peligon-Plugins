@@ -1,0 +1,28 @@
+#######################################################################################
+#
+#       Welcome to Peligon Teams configuration, This is where you can change
+#       Basic settings that will affect how the plugin preforms.
+#       This plugin does have database support; see 'Storage' for more information.
+#
+#######################################################################################
+Storage:
+  # Visit 'plugins/PeligonTeams/Lang/' to see the supported languages.
+  lang: "en_US"
+  # Available options: "MySQL", "SQLite"
+  database: "SQLite"
+  database-settings:
+    host: "localhost"
+    port: 3306
+    database: "minecraft"
+    username: "root"
+    password: ""
+
+###############################################################
+# +---------------------------------------------------------+ #
+# |                 Peligon Teams (Section)                 | #
+# |    [NOTE or Description]                                | #
+# +---------------------------------------------------------+ #
+###############################################################
+
+# Check for plugin updates.
+check-for-updates: true
