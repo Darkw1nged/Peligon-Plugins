@@ -18,26 +18,26 @@ import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
 
-public class cmdExperienceBottle implements CommandExecutor {
+public class cmdWithdraw implements CommandExecutor {
 
     private final Main plugin = Main.getInstance;
 
     public boolean onCommand(CommandSender sender, Command cmd, String string, String[] args) {
-        if (cmd.getName().equalsIgnoreCase("experiencebottle")) {
+        if (cmd.getName().equalsIgnoreCase("withdraw")) {
             if (!(sender instanceof Player)) {
                 sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("console")));
                 return true;
             }
             Player player = (Player)sender;
-            if (player.hasPermission("Peligon.Teams.Bottle") || player.hasPermission("Peligon.Teams.*")) {
+            if (player.hasPermission("Peligon.Economy.Withdraw") || player.hasPermission("Peligon.Economy.*")) {
                 if (args.length < 1) {
-                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("experience-bottle-usage")));
+                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("withdraw-usage")));
                     return true;
                 }
-                int amount;
+                double amount;
                 // ---- [ Getting the amount ] ----
                 try {
-                    amount = Integer.parseInt(args[0]);
+                    amount = Double.parseDouble(args[0]);
                 } catch (Exception e) {
                     player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("invalid-amount")));
                     return true;
@@ -47,22 +47,27 @@ public class cmdExperienceBottle implements CommandExecutor {
                     return true;
                 }
 
-                // ---- [ Checking if player has enough ] ----
-                if (Utils.getPlayerExp(player) < amount) {
-                    sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("not-enough-experience")));
+                // ---- [ Checking accounts of players ] ----
+                if (!plugin.getEconomy().hasAccount(player)) {
+                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("account-error")
+                            .replaceAll("%player%", player.getName())
+                            .replaceAll("%target%", player.getName())));
+                    return true;
+                }
+                if (!plugin.getEconomy().has(player, amount)) {
+                    sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("not-enough-money")));
                     return true;
                 }
 
                 NumberFormat nf = NumberFormat.getInstance(new Locale("en", "US"));
                 String converted = nf.format(amount);
 
-                ItemStack item = new ItemStack(Material.getMaterial(plugin.getConfig().getString("Items.withdraw-experience.item").toUpperCase()));
-
+                ItemStack item = new ItemStack(Material.getMaterial(plugin.getConfig().getString("Items.withdraw-cash.item").toUpperCase()));
                 ItemMeta meta = item.getItemMeta();
-                meta.setDisplayName(Utils.chatColor(plugin.getConfig().getString("Items.withdraw-experience.name")));
+                meta.setDisplayName(Utils.chatColor(plugin.getConfig().getString("Items.withdraw-cash.name")));
 
                 List<String> lore = new ArrayList<>();
-                for (String value : plugin.getConfig().getStringList("Items.withdraw-experience.lore")) {
+                for (String value : plugin.getConfig().getStringList("Items.withdraw-cash.lore")) {
                     lore.add(Utils.chatColor(value)
                             .replaceAll("%amount%", "" + converted)
                             .replaceAll("%player%", "" + player.getName())
@@ -71,15 +76,14 @@ public class cmdExperienceBottle implements CommandExecutor {
                 }
                 meta.setLore(lore);
 
-                meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "amount"), PersistentDataType.INTEGER, amount);
-
+                meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "amount"), PersistentDataType.DOUBLE, amount);
                 item.setItemMeta(meta);
 
                 // ---- [ Adding item to inventory ] ----
                 player.getInventory().addItem(item);
 
-                // ---- [ Removing experience ] ----
-                Utils.removePlayerExp(player, amount);
+                // ---- [ Removing money ] ----
+                plugin.getEconomy().withdrawPlayer(player, amount);
             } else {
                 player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-permission")));
                 return true;

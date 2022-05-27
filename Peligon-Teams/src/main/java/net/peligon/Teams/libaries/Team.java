@@ -1,21 +1,18 @@
 package net.peligon.Teams.libaries;
 
-import net.md_5.bungee.api.chat.hover.content.ItemSerializer;
 import net.peligon.Teams.Main;
 import net.peligon.Teams.libaries.teamSettings.Rank;
 import net.peligon.Teams.libaries.teamSettings.Upgrade;
 import net.peligon.Teams.libaries.teamSettings.Vault;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class Team {
 
     private final String name;
     private String description;
-    private final UUID leader;
+    private UUID leader;
     private List<UUID> members;
     private List<UUID> banned;
     private Map<UUID, Rank> playerRanks;
@@ -72,6 +69,10 @@ public class Team {
 
     public UUID getLeader() {
         return leader;
+    }
+
+    public void setLeader(UUID leader) {
+        this.leader = leader;
     }
 
     public List<UUID> getMembers() {
@@ -218,7 +219,13 @@ public class Team {
 
         configuration.set("teamBankVault", teamBankVault);
         configuration.set("teamExperienceVault", teamExperienceVault);
+
+        Map<String, String> unlockedUpgrades = new HashMap<>();
+        for (Map.Entry<Upgrade, Boolean> entry : this.unlockedUpgrades.entrySet()) {
+            unlockedUpgrades.put(entry.getKey().toString(), entry.getValue().toString());
+        }
         configuration.set("unlockedUpgrades", unlockedUpgrades);
+
         configuration.set("maximumVaults", maximumVaults);
 
         int position = 0;
@@ -230,10 +237,6 @@ public class Team {
 
             configuration.set("vaults." + position, vaultMap);
             position++;
-        }
-
-        for (String string : configuration.getStringList("members")) {
-            System.out.println(string);
         }
 
         rawConfig.saveConfig();

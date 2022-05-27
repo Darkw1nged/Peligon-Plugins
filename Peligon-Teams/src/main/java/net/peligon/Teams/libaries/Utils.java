@@ -17,6 +17,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.io.File;
 import java.text.NumberFormat;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
 public class Utils {
@@ -109,35 +110,36 @@ public class Utils {
 
     // ---- [ Check if String is only letters ] ----
     public static boolean isOnlyLetters(String s) {
-        return !s.matches("[a-zA-Z]+");
+        return s.matches("[a-zA-Z]+");
     }
 
     // ---- [ Cached Items ] ----
     public static Map<ArmorStand, Long> activeHolograms = new HashMap<>();
     public static List<Team> teams = new ArrayList<>();
+    public static List<UUID> adminMode = new ArrayList<>();
 
     // ---- [ Manage players experience ] ----
-    public static int getExpToLevelUp(int level){
-        if(level <= 15){
+    public static int getExpToLevelUp(int level) {
+        if (level <= 15) {
             return 2 * level + 7;
-        } else if(level <= 30){
+        } else if (level <= 30) {
             return 5 * level - 38;
         } else {
             return 9 * level - 158;
         }
     }
 
-    public static int getExpAtLevel(int level){
-        if(level <= 16){
-            return (int) (Math.pow(level,2) + 6*level);
-        } else if(level <= 31){
-            return (int) (2.5*Math.pow(level,2) - 40.5*level + 360.0);
+    public static int getExpAtLevel(int level) {
+        if (level <= 16) {
+            return (int) (Math.pow(level, 2) + 6 * level);
+        } else if (level <= 31) {
+            return (int) (2.5 * Math.pow(level, 2) - 40.5 * level + 360.0);
         } else {
-            return (int) (4.5*Math.pow(level,2) - 162.5*level + 2220.0);
+            return (int) (4.5 * Math.pow(level, 2) - 162.5 * level + 2220.0);
         }
     }
 
-    public static int getPlayerExp(Player player){
+    public static int getPlayerExp(Player player) {
         int exp = 0;
         int level = player.getLevel();
 
@@ -148,7 +150,7 @@ public class Utils {
         return exp;
     }
 
-    public static void removePlayerExp(Player player, int exp){
+    public static void removePlayerExp(Player player, int exp) {
         // Get player's current exp
         int currentExp = getPlayerExp(player);
 
@@ -161,7 +163,7 @@ public class Utils {
         player.giveExp(newExp);
     }
 
-    public static void addPlayerExp(Player player, int exp){
+    public static void addPlayerExp(Player player, int exp) {
         // Get player's current exp
         int currentExp = getPlayerExp(player);
 
@@ -200,26 +202,34 @@ public class Utils {
                 banned.add(UUID.fromString(bannedMember));
             }
 
-            Map<UUID, Rank> playerRanks = configuration.getConfigurationSection("playerRanks").getKeys(false).stream().collect(Collectors.toMap(
-                    key -> UUID.fromString(key),
-                    key -> Rank.valueOf(configuration.getString("playerRanks." + key))
-            ));
+            Map<UUID, Rank> playerRanks = new HashMap<>();
+            for (String key : configuration.getConfigurationSection("playerRanks").getKeys(false)) {
+                playerRanks.put(
+                        UUID.fromString(key),
+                        Rank.valueOf(configuration.getString("playerRanks." + key))
+                );
+            }
 
             Double teamBankVault = configuration.getDouble("teamBankVault");
             Integer teamExperienceVault = configuration.getInt("teamExperienceVault");
 
-            Map<Upgrade, Boolean> unlockedUpgrades = configuration.getConfigurationSection("unlockedUpgrades").getKeys(false).stream().collect(Collectors.toMap(
-                    key -> Upgrade.valueOf(configuration.getString("unlockedUpgrades." + key)),
-                    key -> configuration.getBoolean("unlockedUpgrades." + key)
-            ));
+            Map<Upgrade, Boolean> unlockedUpgrades = new HashMap<>();
+            for (String key : configuration.getConfigurationSection("unlockedUpgrades").getKeys(false)) {
+                unlockedUpgrades.put(
+                        Upgrade.valueOf(key),
+                        configuration.getBoolean("unlockedUpgrades." + key)
+                );
+            }
 
             Integer maximumVaults = configuration.getInt("maximumVaults");
 
             List<Vault> vaults = new ArrayList<>();
-            for (String vault : configuration.getConfigurationSection("vaults").getKeys(false)) {
-                List<String> rawVault = configuration.getStringList("vaults." + vault);
-                ItemStack[] items = new ItemStack[rawVault.size()];
-                vaults.add(new Vault(items, Integer.parseInt(vault), configuration.getBoolean("vaults." + vault + ".secured")));
+            if (configuration.contains("vaults")) {
+                for (String vault : configuration.getConfigurationSection("vaults").getKeys(false)) {
+                    List<String> rawVault = configuration.getStringList("vaults." + vault);
+                    ItemStack[] items = new ItemStack[rawVault.size()];
+                    vaults.add(new Vault(items, Integer.parseInt(vault), configuration.getBoolean("vaults." + vault + ".secured")));
+                }
             }
 
             teams.add(new Team(name, description, leader, members, banned, playerRanks, teamBankVault, teamExperienceVault, unlockedUpgrades, maximumVaults, vaults));

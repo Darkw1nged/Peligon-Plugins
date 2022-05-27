@@ -1,32 +1,24 @@
 package net.peligon.Teams;
 
-import net.peligon.Teams.commands.cmdExperience;
-import net.peligon.Teams.commands.cmdExperienceBottle;
+import net.milkbowl.vault.economy.Economy;
+import net.peligon.Teams.commands.*;
 import net.peligon.Teams.libaries.CustomConfig;
 import net.peligon.Teams.libaries.Team;
 import net.peligon.Teams.libaries.UpdateChecker;
 import net.peligon.Teams.libaries.Utils;
-import net.peligon.Teams.libaries.storage.SQLibrary;
-import net.peligon.Teams.libaries.storage.SQLiteLibrary;
-import net.peligon.Teams.libaries.teamSettings.Rank;
-import net.peligon.Teams.libaries.teamSettings.Vault;
+import net.peligon.Teams.listeners.experienceBottleEvent;
+import net.peligon.Teams.listeners.teamChat;
 import net.peligon.Teams.managers.mgrTeam;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.sql.SQLException;
 import java.util.*;
 
-public class Main extends JavaPlugin implements Listener {
+public class Main extends JavaPlugin {
 
     public static Main getInstance;
     public mgrTeam teamManager;
-
-    public SQLibrary sqlLibrary;
-    public String storageType = "SQLite";
+    private static Economy econ = null;
 
     public CustomConfig fileMessage;
 
@@ -49,8 +41,8 @@ public class Main extends JavaPlugin implements Listener {
         fileMessage = new CustomConfig(this, "lang/" + this.getConfig().getString("Storage.lang"), true);
         fileMessage.saveDefaultConfig();
 
-        // ---- [ Setting up storage ] ----
-        setupStorage();
+        // ---- [ Setting up economy ] ----
+        setupEconomy();
 
         // ---- [ Startup message ] ----
         getServer().getConsoleSender().sendMessage(Utils.chatColor(this.fileMessage.getConfig().getString("startup")));
@@ -74,11 +66,16 @@ public class Main extends JavaPlugin implements Listener {
     public void loadCommands() {
         getCommand("experience").setExecutor(new cmdExperience());
         getCommand("experiencebottle").setExecutor(new cmdExperienceBottle());
+        getCommand("withdraw").setExecutor(new cmdWithdraw());
+        getCommand("team").setExecutor(new cmdTeam());
+        getCommand("vault").setExecutor(new cmdVault());
     }
 
     public void loadEvents() {
-//        Arrays.asList(
-//        ).forEach(listener -> getServer().getPluginManager().registerEvents(listener, this));
+        Arrays.asList(
+                new experienceBottleEvent(),
+                new teamChat()
+        ).forEach(listener -> getServer().getPluginManager().registerEvents(listener, this));
     }
 
     private void versionChecker() {
@@ -90,34 +87,19 @@ public class Main extends JavaPlugin implements Listener {
         });
     }
 
-    private void setupStorage() {
-        if (getConfig().getString("Storage.database", "SQLite").equalsIgnoreCase("sqlite")) {
-            SQLiteLibrary sqlLite = new SQLiteLibrary();
-            sqlLite.loadTables();
-            this.storageType = "SQLite";
-        } else if (getConfig().getString("Storage.database", "SQLite").equalsIgnoreCase("MySQL")) {
-            sqlLibrary = new SQLibrary(getConfig().getString("Storage.database-settings.host"),
-                    getConfig().getInt("Storage.database-settings.port"),
-                    getConfig().getString("Storage.database-settings.database"),
-                    getConfig().getString("Storage.database-settings.username"),
-                    getConfig().getString("Storage.database-settings.password"));
-
-            if (sqlLibrary.getConnection() == null) {
-                System.out.println("Unable to establish a connection to MySQL.");
-                return;
-            }
-
-            try {
-                sqlLibrary.getConnection().prepareStatement("CREATE TABLE IF NOT EXISTS Staff" +
-                        " (uuid VARCHAR(36) NOT NULL, PRIMARY KEY (uuid));").executeUpdate();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
-
-            this.storageType = "MySQL";
+    private boolean setupEconomy() {
+        if (getServer().getPluginManager().getPlugin("Vault") == null) {
+            return false;
         }
+        RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
+        if (rsp == null) {
+            return false;
+        }
+        econ = rsp.getProvider();
+        return econ != null;
     }
 
-
-
+    public Economy getEconomy() {
+        return econ;
+    }
 }

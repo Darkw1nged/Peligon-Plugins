@@ -14,3 +14,7 @@ commands:
     aliases:
       - xpbottle
       - bottle
+  withdraw:
+    description: Allows users to withdraw money from their bank account
+  team:
+    description: Allows users to create and manage teams
