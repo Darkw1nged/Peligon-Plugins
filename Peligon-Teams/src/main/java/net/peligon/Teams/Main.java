@@ -1,13 +1,11 @@
 package net.peligon.Teams;
 
 import net.milkbowl.vault.economy.Economy;
-import net.peligon.Teams.commands.*;
+import net.peligon.Teams.commands.cmdTeam;
 import net.peligon.Teams.libaries.CustomConfig;
-import net.peligon.Teams.libaries.Team;
+import net.peligon.Teams.Core.Team;
 import net.peligon.Teams.libaries.UpdateChecker;
 import net.peligon.Teams.libaries.Utils;
-import net.peligon.Teams.listeners.experienceBottleEvent;
-import net.peligon.Teams.listeners.teamChat;
 import net.peligon.Teams.managers.mgrTeam;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -35,7 +33,7 @@ public class Main extends JavaPlugin {
         teamManager = new mgrTeam();
 
         // ---- [ Load all teams ] ----
-        Utils.loadTeams();
+//        Utils.loadTeams();
 
         // ---- [ Loading lang file ] ----
         fileMessage = new CustomConfig(this, "lang/" + this.getConfig().getString("Storage.lang"), true);
@@ -56,7 +54,7 @@ public class Main extends JavaPlugin {
     public void onDisable() {
         if (!Utils.teams.isEmpty()) {
             for (Team team : Utils.teams)
-                team.saveTeam();
+                team.save();
         }
 
         // ---- [ shutdown message ] ----
@@ -64,18 +62,12 @@ public class Main extends JavaPlugin {
     }
 
     public void loadCommands() {
-        getCommand("experience").setExecutor(new cmdExperience());
-        getCommand("experiencebottle").setExecutor(new cmdExperienceBottle());
-        getCommand("withdraw").setExecutor(new cmdWithdraw());
         getCommand("team").setExecutor(new cmdTeam());
-        getCommand("vault").setExecutor(new cmdVault());
     }
 
     public void loadEvents() {
-        Arrays.asList(
-                new experienceBottleEvent(),
-                new teamChat()
-        ).forEach(listener -> getServer().getPluginManager().registerEvents(listener, this));
+//        Arrays.asList(
+//        ).forEach(listener -> getServer().getPluginManager().registerEvents(listener, this));
     }
 
     private void versionChecker() {

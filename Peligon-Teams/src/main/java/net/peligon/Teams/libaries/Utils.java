@@ -1,24 +1,18 @@
 package net.peligon.Teams.libaries;
 
+import net.peligon.Teams.Core.Team;
 import net.peligon.Teams.Main;
-import net.peligon.Teams.libaries.teamSettings.Rank;
-import net.peligon.Teams.libaries.teamSettings.Upgrade;
-import net.peligon.Teams.libaries.teamSettings.Vault;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.io.File;
 import java.text.NumberFormat;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicReference;
-import java.util.stream.Collectors;
 
 public class Utils {
 
@@ -176,63 +170,4 @@ public class Utils {
         player.giveExp(newExp);
     }
 
-    // ---- [ Load all teams ] ----
-
-    public static void loadTeams() {
-        File teamsFolder = new File(plugin.getDataFolder(), "teams");
-        File[] teamFiles = teamsFolder.listFiles();
-        if (teamFiles == null) return;
-
-        for (File file : teamFiles) {
-            FileConfiguration configuration = YamlConfiguration.loadConfiguration(file);
-
-            String name = configuration.getString("name");
-            String description = configuration.getString("description");
-            UUID leader = UUID.fromString(configuration.getString("leader"));
-
-            List<String> rawList = configuration.getStringList("members");
-            List<UUID> members = new ArrayList<>();
-            for (String member : rawList) {
-                members.add(UUID.fromString(member));
-            }
-
-            rawList = configuration.getStringList("banned");
-            List<UUID> banned = new ArrayList<>();
-            for (String bannedMember : rawList) {
-                banned.add(UUID.fromString(bannedMember));
-            }
-
-            Map<UUID, Rank> playerRanks = new HashMap<>();
-            for (String key : configuration.getConfigurationSection("playerRanks").getKeys(false)) {
-                playerRanks.put(
-                        UUID.fromString(key),
-                        Rank.valueOf(configuration.getString("playerRanks." + key))
-                );
-            }
-
-            Double teamBankVault = configuration.getDouble("teamBankVault");
-            Integer teamExperienceVault = configuration.getInt("teamExperienceVault");
-
-            Map<Upgrade, Boolean> unlockedUpgrades = new HashMap<>();
-            for (String key : configuration.getConfigurationSection("unlockedUpgrades").getKeys(false)) {
-                unlockedUpgrades.put(
-                        Upgrade.valueOf(key),
-                        configuration.getBoolean("unlockedUpgrades." + key)
-                );
-            }
-
-            Integer maximumVaults = configuration.getInt("maximumVaults");
-
-            List<Vault> vaults = new ArrayList<>();
-            if (configuration.contains("vaults")) {
-                for (String vault : configuration.getConfigurationSection("vaults").getKeys(false)) {
-                    List<String> rawVault = configuration.getStringList("vaults." + vault);
-                    ItemStack[] items = new ItemStack[rawVault.size()];
-                    vaults.add(new Vault(items, Integer.parseInt(vault), configuration.getBoolean("vaults." + vault + ".secured")));
-                }
-            }
-
-            teams.add(new Team(name, description, leader, members, banned, playerRanks, teamBankVault, teamExperienceVault, unlockedUpgrades, maximumVaults, vaults));
-        }
-    }
 }

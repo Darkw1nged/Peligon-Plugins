@@ -1,24 +1,30 @@
 package net.peligon.Teams.managers;
 
-import net.peligon.Teams.libaries.Team;
+import net.peligon.Teams.Core.Channel;
+import net.peligon.Teams.Core.Team;
 import net.peligon.Teams.libaries.Utils;
 import org.bukkit.OfflinePlayer;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class mgrTeam {
 
-    private List<UUID> teamChat = new ArrayList<>();
+    private Map<UUID, Channel> playerChat = new HashMap<>();
 
     public static mgrTeam getInstance;
-
     public mgrTeam() {
         getInstance = this;
     }
 
-    public boolean inTeam(OfflinePlayer player) {
+    public Channel getPlayerChat(OfflinePlayer player) {
+        return playerChat.get(player.getUniqueId());
+    }
+
+    public void changePlayerChannel(OfflinePlayer player, Channel channel) {
+        playerChat.put(player.getUniqueId(), channel);
+    }
+
+    public Boolean inTeam(OfflinePlayer player) {
         for (Team team : Utils.teams) {
             if (team.getMembers().contains(player.getUniqueId())) {
                 return true;
@@ -27,7 +33,7 @@ public class mgrTeam {
         return false;
     }
 
-    public boolean teamAlreadyExists(String name) {
+    public Boolean teamExists(String name) {
         for (Team team : Utils.teams) {
             if (team.getName().equalsIgnoreCase(name)) {
                 return true;
@@ -52,18 +58,6 @@ public class mgrTeam {
             }
         }
         return null;
-    }
-
-    public Boolean inTeamChat(OfflinePlayer player) {
-        return teamChat.contains(player.getUniqueId());
-    }
-
-    public void toggleTeamChat(OfflinePlayer player) {
-        if (inTeamChat(player)) {
-            teamChat.remove(player.getUniqueId());
-        } else {
-            teamChat.add(player.getUniqueId());
-        }
     }
 
 }

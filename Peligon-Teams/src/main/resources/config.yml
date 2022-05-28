@@ -8,14 +8,12 @@
 Storage:
   # Visit 'plugins/PeligonTeams/Lang/' to see the supported languages.
   lang: "en_US"
-  # Available options: "MySQL", "SQLite"
-  database: "SQLite"
-  database-settings:
-    host: "localhost"
-    port: 3306
-    database: "minecraft"
-    username: "root"
-    password: ""
+
+Channels-Format:
+  Team: "&7[&eTeam&7] &f%player%&f: &f%message%"
+  Ally: "&7[&5Ally&7] &f%player%&f: &f%message%"
+  Truce: "&7[&bTruce&7] &f%player%&f: &f%message%"
+  Moderator: "&7[&2Mod&7] &f%player%&f: &f%message%"
 
 ###############################################################
 # +---------------------------------------------------------+ #
@@ -23,52 +21,7 @@ Storage:
 # |    This is where you can manage settings about teams    | #
 # +---------------------------------------------------------+ #
 ###############################################################
-Teams-Settings:
-  # If this is set to 0 then it will be disabled.
-  creation-fee: 0
-  starter-vaults: 1
-  maximum-vaults: 5
-  invite-timeout: 60
-  vault-settings:
-    # max-vault-size: "54", multiple of 9
-    size: 36
-    title: "&eVault &f#%vault_number%"
-    # Only moderators or the leader can open the vault.
-    # !! Will only work on first vault.
-    secured: true
-
-
-###############################################################
-# +---------------------------------------------------------+ #
-# |                   Peligon Teams (Items)                 | #
-# |    This is where you can manage all custom items that   | #
-# |    are used in the plugin.                              | #
-# +---------------------------------------------------------+ #
-###############################################################
-Items:
-  # Placeholder Key -------------
-  # %amount% - Shows how much the item holds.
-  # %transaction% - Generates a random ID.
-  # %player% - Gets the players name.
-  # %display_player% - Gets the players display name. e.g "[DEVELOPER] Peligon"
-  # -----------------------------
-  withdraw-cash:
-    item: PAPER
-    name: "&2Bank Note"
-    lore:
-      - "&7(Right-Click) to redeem this &abanknote&7."
-      - "&7Withdrawn by &e%player%&7."
-      - ""
-      - "&7Value: &a$%amount%"
-      - "&7Transaction ID: &f%transaction%"
-  withdraw-experience:
-    item: EXPERIENCE_BOTTLE
-    name: "&5Experience"
-    lore:
-      - "&7(Right-Click) to redeem the &aexperience&7."
-      - "&7Withdrawn by &e%player%&7."
-      - ""
-      - "&7Value: &a%amount%"
+request-timeout: 120
 
 # Check for plugin updates.
 check-for-updates: true
