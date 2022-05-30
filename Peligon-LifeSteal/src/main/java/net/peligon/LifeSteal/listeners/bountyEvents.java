@@ -23,7 +23,7 @@ public class bountyEvents implements Listener {
 
             // ---- [ Removing players kill streak if they have one ] ----
             Utils.KillStreak.remove(playerUUID);
-            if (plugin.lives.hasData(player)) {
+            if (plugin.bounties.hasData(player)) {
                 plugin.bounties.setBounty(player, 0);
             }
 
@@ -32,7 +32,7 @@ public class bountyEvents implements Listener {
                 UUID killerUUID = killer.getUniqueId();
 
                 // ---- [ Adding money to killers balance if player had a bounty ] ----
-                if (plugin.lives.hasData(player)) {
+                if (plugin.bounties.hasData(player)) {
                     plugin.getEconomy().depositPlayer(killer, plugin.bounties.getBounty(player));
                 }
 
@@ -45,7 +45,7 @@ public class bountyEvents implements Listener {
 
                 // ---- [ Adding money to players bounty if they
                 if (Utils.KillStreak.containsKey(killerUUID) && Utils.KillStreak.get(killerUUID) >= plugin.getConfig().getInt("Bounties.minimum-kill-streak")) {
-                    if (plugin.lives.hasData(player)) {
+                    if (plugin.bounties.hasData(player)) {
                         plugin.bounties.addBounty(player, plugin.getConfig().getInt("Bounties.bounty-per-kill"));
                     }
                 }

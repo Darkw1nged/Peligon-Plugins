@@ -10,7 +10,6 @@ import net.peligon.LifeSteal.libaries.storage.SQLibrary;
 import net.peligon.LifeSteal.libaries.storage.SQLiteLibrary;
 import net.peligon.LifeSteal.listeners.*;
 import net.peligon.LifeSteal.manager.mgrBounty;
-import net.peligon.LifeSteal.manager.mgrLives;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -21,7 +20,6 @@ import java.util.Arrays;
 public final class Main extends JavaPlugin implements Listener {
 
     public static Main getInstance;
-    public mgrLives lives;
     public mgrBounty bounties;
 
     public SQLibrary sqlLibrary;
@@ -43,11 +41,8 @@ public final class Main extends JavaPlugin implements Listener {
         saveDefaultConfig();
 
         // ---- [ Loading lang file ] ----
-        fileMessage = new CustomConfig(this, "lang/" + this.getConfig().getString("Storage.Language File"), true);
+        fileMessage = new CustomConfig(this, "lang/" + this.getConfig().getString("Storage.lang"), true);
         fileMessage.saveDefaultConfig();
-
-        // ---- [ Initializing instance of manager classes ] ----
-        lives = new mgrLives();
 
         // ---- [ Setting up databases ] ----
         setupStorage();
@@ -84,7 +79,6 @@ public final class Main extends JavaPlugin implements Listener {
 
     public void loadEvents() {
         Arrays.asList(
-                new accountSetup(),
                 new lifeUpdate(),
                 new deathPenalty(),
                 new lightningStrike(),
@@ -144,10 +138,7 @@ public final class Main extends JavaPlugin implements Listener {
 
             try {
                 sqlLibrary.getConnection().prepareStatement("CREATE TABLE IF NOT EXISTS LifeSteal" +
-                        " (uuid VARCHAR(36) NOT NULL, lives INT(32) DEFAULT 0, bounty INT(32) DEFAULT 0, PRIMARY KEY (uuid));").executeUpdate();
-
-                // create a collum with bounty INT(32) DEFAULT 0, if it doesn't exist
-                sqlLibrary.getConnection().prepareStatement("ALTER TABLE LifeSteal ADD COLUMN IF NOT EXISTS bounty INT(32) DEFAULT 0;").executeUpdate();
+                        " (uuid VARCHAR(36) NOT NULL, bounty INT(32) DEFAULT 0, PRIMARY KEY (uuid));").executeUpdate();
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }

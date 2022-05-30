@@ -19,12 +19,40 @@ public class mgrBounty {
     }
 
     /**
+     * Checking if player has any data in database
+     *
+     * @return if data exists in database
+     */
+    public boolean hasData(OfflinePlayer player) {
+        if (plugin.storageType.equalsIgnoreCase("sqlite")) {
+            String query = "SELECT 1 FROM server WHERE uuid='" + player.getUniqueId() + "';";
+            try {
+                PreparedStatement statement = SQLiteLibrary.connection.prepareStatement(query);
+                ResultSet rs = statement.executeQuery();
+                return rs.next();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } else if (plugin.storageType.equalsIgnoreCase("mysql")) {
+            String query = "SELECT 1 FROM LifeSteal WHERE uuid='" + player.getUniqueId() + "';";
+            try {
+                PreparedStatement statement = plugin.sqlLibrary.getConnection().prepareStatement(query);
+                ResultSet rs = statement.executeQuery();
+                return rs.next();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return false;
+    }
+
+    /**
      * Sets the player's bounty
      *
      * @param bounty New bounty
      */
     public void setBounty(OfflinePlayer player, double bounty) {
-        if (!plugin.lives.hasData(player)) return;
+        if (!hasData(player)) return;
         if (plugin.storageType.equalsIgnoreCase("sqlite")) {
             String query = "UPDATE server SET bounty=" + bounty + " WHERE uuid='" + player.getUniqueId() + "';";
             try {
@@ -50,7 +78,7 @@ public class mgrBounty {
      * @param bounty to add
      */
     public void addBounty(OfflinePlayer player, double bounty) {
-        if (!plugin.lives.hasData(player)) return;
+        if (!hasData(player)) return;
         if (bounty == 0) return;
         if (plugin.storageType.equalsIgnoreCase("sqlite")) {
             String query = "UPDATE server SET bounty= (SELECT bounty FROM server WHERE uuid='" + player.getUniqueId() + "') +" + bounty + " WHERE uuid='" + player.getUniqueId() + "';";
@@ -78,7 +106,7 @@ public class mgrBounty {
      * @param bounty to remove
      */
     public void removeBounty(OfflinePlayer player, double bounty) {
-        if (!plugin.lives.hasData(player)) return;
+        if (!hasData(player)) return;
         if (bounty == 0) return;
         if (plugin.storageType.equalsIgnoreCase("sqlite")) {
             String query = "UPDATE server SET bounty= (SELECT bounty FROM server WHERE uuid='" + player.getUniqueId() + "') -" + bounty + " WHERE uuid='" + player.getUniqueId() + "';";
@@ -105,7 +133,7 @@ public class mgrBounty {
      * @return Players authentication token
      */
     public Double getBounty(OfflinePlayer player) {
-        if (!plugin.lives.hasData(player)) return null;
+        if (!hasData(player)) return null;
         if (plugin.storageType.equalsIgnoreCase("sqlite")) {
             String query = "SELECT * FROM server WHERE uuid='" + player.getUniqueId() + "';";
             try {

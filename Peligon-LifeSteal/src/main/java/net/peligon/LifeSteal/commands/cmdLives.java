@@ -3,6 +3,7 @@ package net.peligon.LifeSteal.commands;
 import net.peligon.LifeSteal.Main;
 import net.peligon.LifeSteal.libaries.Utils;
 import org.bukkit.Bukkit;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -23,7 +24,7 @@ public class cmdLives implements CommandExecutor {
                     }
                     sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("lives-other"))
                             .replaceAll("%player%", target.getName())
-                            .replaceAll("%amount%", "" + plugin.lives.getLives(target)));
+                            .replaceAll("%amount%", "" + target.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue()));
                 } else {
                     sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("specify-player")));
                 }
@@ -38,14 +39,14 @@ public class cmdLives implements CommandExecutor {
                         return true;
                     }
                     sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("lives-other")
-                                    .replaceAll("%amount%", "" + plugin.lives.getLives(target)))
+                                    .replaceAll("%amount%", "" + target.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue()))
                             .replaceAll("%player%", target.getName()));
                 } else {
                     sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-permission")));
                 }
             } else {
                 sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("lives")
-                        .replaceAll("%amount%", "" + plugin.lives.getLives(player))));
+                        .replaceAll("%amount%", "" + player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue())));
             }
         }
         return false;

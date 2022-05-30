@@ -22,9 +22,7 @@ public class cmdBounty implements CommandExecutor {
                         Player target = Bukkit.getPlayer(args[1]);
                         double amount;
                         if (target == null) {
-                            sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-player-found")
-                                    .replaceAll("%player%", args[1])
-                                    .replaceAll("%target%", args[1])));
+                            sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-player-found")));
                             return true;
                         }
                         try {
@@ -45,7 +43,7 @@ public class cmdBounty implements CommandExecutor {
                             }
                         }
 
-                        if (plugin.lives.hasData(target)) {
+                        if (plugin.bounties.hasData(target)) {
                             plugin.bounties.addBounty(target, amount);
 
                             if (sender instanceof Player) {
@@ -71,7 +69,7 @@ public class cmdBounty implements CommandExecutor {
                         }
                         double bounty = 0.0;
 
-                        if (plugin.lives.hasData(target)) {
+                        if (plugin.bounties.hasData(target)) {
                             bounty = plugin.bounties.getBounty(target);
                         }
 

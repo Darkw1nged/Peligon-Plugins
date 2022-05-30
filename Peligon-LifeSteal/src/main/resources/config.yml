@@ -2,13 +2,12 @@
 #
 #       Welcome to Peligon LifeSteal's configuration, This is where you can change
 #       Basic settings that will affect how the plugin preforms.
-#       This plugin does have database support; see 'Storage' for more information.
 #
 #######################################################################################
 
 Storage:
   # Visit 'Plugins/PeligonLifeSteal/Lang/' to see the supported languages.
-  Language File: "en_US"
+  lang: "en_US"
   # Available options: "MySQL", "SQLite"
   database: "SQLite"
   MySQL:
@@ -17,7 +16,6 @@ Storage:
     database: "minecraft"
     username: "root"
     password: ""
-  starting-lives: 5
 
 ###############################################################
 # +---------------------------------------------------------+ #
@@ -28,34 +26,30 @@ Storage:
 Events:
   # These two settings are protected by permissions.
   # Permissions: "Peligon.LifeSteal.Keep.Inventory", "Peligon.LifeSteal.Keep.Experience"
-#  - keep-inventory
-#  - keep-experience
+  #  - keep-inventory
+  #  - keep-experience
   - lightning-strike-on-death
   - death-penalty
-#  - commands-on-death
+  #  - commands-on-death
   # Only allow players to take away lives.
-#  - players-only
-#  - auto-respawn
+  #  - players-only
+  #  - auto-respawn
   - custom-death-messages
-#  - combat-log
+  #  - combat-log
   - death-chest
-#  - damage-indicator
+  #  - damage-indicator
   - health-indicator
   - bounties
 
-combat-tag:
-  blocked-commands:
-    - "spawn"
-    - "warp"
-    - "home"
-  # How long should the combat tag be active for
-  # !! This is in seconds.
-  duration: 30
-
-blacklisted-mobs:
-  - "ENDERMAN"
-  - "ENDERMITE"
-  - "PHANTOM"
+# What happens to the player after death
+After-Life:
+  ban-user:
+    enabled: true
+    message: "You have died but there is still hope. Try and get someone to revive you."
+  teleport-user:
+    enabled: false
+    message: "You have died but there is still hope. Try and get someone to revive you."
+    world: "world"
 
 # What happens when a player respawns.
 Player-Respawn:
@@ -70,6 +64,53 @@ Player-Respawn:
     fade-in: 20
     stay: 60
     fade-out: 20
+
+# Add an effect to the player when they die.
+Lightning-on-death:
+  only-players: false
+  # Only execute lightning when the player reaches a certain amount of lives.
+  # -1 means execute lightning on death regardless of lives.
+  execute-at-lives: -1
+
+# How much a player's bounty increases when they kill a player.
+Bounties:
+  # How many players do they need to kill before the bounty starts to increase.
+  minimum-kill-streak: 3
+  bounty-per-kill: 100
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+combat-tag:
+  blocked-commands:
+    - "spawn"
+    - "warp"
+    - "home"
+  # How long should the combat tag be active for
+  # !! This is in seconds.
+  duration: 30
+
+blacklisted-mobs:
+  - "ENDERMAN"
+  - "ENDERMITE"
+  - "PHANTOM"
 
 Commands-on-Death:
   # Only execute commands when the player reaches a certain amount of lives.
@@ -94,13 +135,6 @@ Death-Penalty:
   only-players: false
   amount: 100
 
-# Add an effect to the player when they die.
-Lightning-on-death:
-  only-players: false
-  # Only execute lightning when the player reaches a certain amount of lives.
-  # -1 means execute lightning on death regardless of lives.
-  execute-at-lives: -1
-
 # When a player dies their items will be placed in an inventory for them to pick up.
 Death-Chest:
   block: SEA_LANTERN
@@ -113,12 +147,6 @@ Damage-Indicator:
   only-players: false
   text: "&c%damage%"
   length: 2
-
-# How much a player's bounty increases when they kill a player.
-Bounties:
-  # How many players do they need to kill before the bounty starts to increase.
-  minimum-kill-streak: 3
-  bounty-per-kill: 100
 
 # This will automatically check for updates
 check-for-updates: true

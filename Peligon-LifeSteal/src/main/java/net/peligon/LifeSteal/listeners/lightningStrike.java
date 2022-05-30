@@ -1,6 +1,7 @@
 package net.peligon.LifeSteal.listeners;
 
 import net.peligon.LifeSteal.Main;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -20,7 +21,7 @@ public class lightningStrike implements Listener {
                     if (plugin.getConfig().getInt("Lightning-on-death.execute-at-lives", -1) == -1) {
                         player.getWorld().strikeLightning(player.getLocation());
                     } else {
-                        if (plugin.lives.getLives(player) == plugin.getConfig().getInt("Lightning-on-death.execute-at-lives", -1)) {
+                        if (player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue() == plugin.getConfig().getInt("Lightning-on-death.execute-at-lives", -1)) {
                             player.getWorld().strikeLightning(player.getLocation());
                         }
                     }
@@ -29,7 +30,7 @@ public class lightningStrike implements Listener {
                 if (plugin.getConfig().getInt("Lightning-on-death.execute-at-lives", -1) == -1) {
                     player.getWorld().strikeLightning(player.getLocation());
                 } else {
-                    if (plugin.lives.getLives(player) == plugin.getConfig().getInt("Lightning-on-death.execute-at-lives", -1)) {
+                    if (player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue() == plugin.getConfig().getInt("Lightning-on-death.execute-at-lives", -1)) {
                         player.getWorld().strikeLightning(player.getLocation());
                     }
                 }
