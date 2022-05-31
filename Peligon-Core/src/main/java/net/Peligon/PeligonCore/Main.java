@@ -89,6 +89,8 @@ public final class Main extends JavaPlugin {
         getCommand("teleport").setExecutor(new cmdTeleport());
         getCommand("teleporthere").setExecutor(new cmdTeleportHere());
         getCommand("clearchat").setExecutor(new cmdClearChat());
+        getCommand("broadcast").setExecutor(new cmdBroadcast());
+        getCommand("sudo").setExecutor(new cmdSudo());
 
         // ---- [ Player commands ] ----
         getCommand("experience").setExecutor(new cmdExperience());

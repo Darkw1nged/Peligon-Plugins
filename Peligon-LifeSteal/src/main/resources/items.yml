@@ -1,0 +1,37 @@
+Heart:
+  name: "&cHeart"
+  lore:
+    - ""
+    - "&fInformation:"
+    - "&c» &7Adds: &c1❤"
+    - ""
+    - "&eClick to consume"
+  # How many hearts the player gains.
+  add: 1
+Golden_Heart:
+  name: "&6Golden Heart"
+  lore:
+    - ""
+    - "&fInformation:"
+    - "&6» &7Adds: &c2❤"
+    - ""
+    - "&eClick to consume"
+  add: 2
+Exotic_Heart:
+  name: "&bExotic Heart"
+  lore:
+    - ""
+    - "&fInformation:"
+    - "&b» &7Adds: &c3❤"
+    - ""
+    - "&eClick to consume"
+  add: 3
+Mythical_Heart:
+  name: "&5Mythical Heart"
+  lore:
+    - ""
+    - "&fInformation:"
+    - "&5» &7Adds: &c5❤"
+    - ""
+    - "&eClick to consume"
+  add: 5

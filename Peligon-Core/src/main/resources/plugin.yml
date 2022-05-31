@@ -66,6 +66,10 @@ commands:
     description: Allows players to go back to their last location
   clearchat:
     description: Allows admins to clear the chat
+  broadcast:
+    description: Allows admins to broadcast a message
+  sudo:
+    description: Allows admins to send chat messages as other players
   # UTILITY COMMANDS
   experience:
     aliases:

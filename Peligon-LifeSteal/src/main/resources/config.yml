@@ -78,27 +78,9 @@ Bounties:
   minimum-kill-streak: 3
   bounty-per-kill: 100
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+# When a player gets into combat, they will be tagged for a certain amount of time.
 combat-tag:
+  # What commands the player is not allowed to perform
   blocked-commands:
     - "spawn"
     - "warp"
