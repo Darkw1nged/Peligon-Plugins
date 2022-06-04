@@ -20,6 +20,7 @@ public class cmdReload implements CommandExecutor {
                 plugin.filePouches.reloadConfig();
                 plugin.fileSigns.reloadConfig();
                 plugin.fileDailyReward.reloadConfig();
+                plugin.filedailyTaskGUI.reloadConfig();
                 plugin.fileSellGUI.reloadConfig();
                 plugin.fileBoxGUI.reloadConfig();
 

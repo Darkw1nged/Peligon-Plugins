@@ -202,5 +202,43 @@ Server-Goals:
         - "%command% say goal reached!"
 # TODO - END SERVER GOALS ======================================================
 
+# Daily tasks for a player to complete.
+daily-tasks:
+  '1':
+    # The task name.
+    name: "&aDaily Task 1"
+    # The task description.
+    description: "&fYou must &acollect&f 10 &fblocks of &astone&f."
+    # Available options: "collect", "break", "place", "kill", "craft", "use", "smelt", "enchant", "tame", "sheer"
+    Action: "collect"
+    # What block/entity to collect.
+    type: "STONE"
+    # The task reward.
+    reward:
+      - "%econ% 10000"
+      - "%item% diamond 5"
+      - "%message% &aThanks for reaching the goal!"
+      - "%command% say goal reached!"
+  '2':
+    name: "Daily Task 2"
+    description: "&fYou must &achop&f 10 &fblocks of &aoak logs&f."
+    Action: "break"
+    type: "OAK_LOG"
+    reward:
+      - "%econ% 10000"
+      - "%item% diamond 5"
+      - "%message% &aThanks for reaching the goal!"
+      - "%command% say goal reached!"
+  '3':
+    name: "Daily Task 3"
+    description: "&fYou must &akill&f 10 &asheep&f."
+    Action: "kill"
+    type: "SHEEP"
+    reward:
+      - "%econ% 10000"
+      - "%item% diamond 5"
+      - "%message% &aThanks for reaching the goal!"
+      - "%command% say goal reached!"
+
 # This will automatically check for updates
 check-for-updates: true

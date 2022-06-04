@@ -33,6 +33,7 @@ public final class Main extends JavaPlugin {
     public CustomConfig fileDailyReward = new CustomConfig(this, "Inventories/daily", true);
     public CustomConfig fileSellGUI = new CustomConfig(this, "Inventories/sellGUI", true);
     public CustomConfig fileBoxGUI = new CustomConfig(this, "Inventories/box", true);
+    public CustomConfig filedailyTaskGUI = new CustomConfig(this, "Inventories/dauly-tasks", true);
     public CustomConfig fileMessage;
 
     public void onEnable() {
@@ -47,6 +48,7 @@ public final class Main extends JavaPlugin {
         filePouches.saveDefaultConfig();
         fileATM.saveDefaultConfig();
         fileDailyReward.saveDefaultConfig();
+        filedailyTaskGUI.saveDefaultConfig();
         fileSellGUI.saveDefaultConfig();
         fileBoxGUI.saveDefaultConfig();
         saveDefaultConfig();
