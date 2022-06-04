@@ -185,6 +185,46 @@ public class cmdTeam implements CommandExecutor {
                         plugin.fileMessage.getConfig().getString("team-description-set")
                                 .replaceAll("%description%", team.getDescription())));
             }
+            if (args.length >= 1 && args[0].equalsIgnoreCase("join")) {
+                if (plugin.teamManager.inTeam(player)) {
+                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("already-in-team")));
+                    return true;
+                }
+                if (args.length < 2) {
+                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("specify-team")));
+                    return true;
+                }
+                String name = args[1];
+                if (!Utils.isOnlyLetters(name)) {
+                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("invalid-name")));
+                    return true;
+                }
+                if (!plugin.teamManager.teamExists(name)) {
+                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("team-doesnt-exist")));
+                    return true;
+                }
+
+                Team team = plugin.teamManager.getTeam(name);
+                if (team.getMembers().contains(player.getUniqueId())) {
+                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("already-in-team")));
+                    return true;
+                }
+
+                if (team.getMembers().size() >= team.getMaximumMembers()) {
+                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("team-full")));
+                    return true;
+                }
+                if (!team.getOpen()) {
+                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("team-closed")));
+                    return true;
+                }
+
+                team.addMember(player.getUniqueId());
+                player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
+                        plugin.fileMessage.getConfig().getString("team-join-success")
+                                .replaceAll("%team%", team.getName())));
+
+            }
             if (args.length >= 1 && args[0].equalsIgnoreCase("transfer")) {
                 if (!plugin.teamManager.inTeam(player)) {
                     player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("not-in-team")));
@@ -222,6 +262,295 @@ public class cmdTeam implements CommandExecutor {
                         plugin.fileMessage.getConfig().getString("transfer-success")
                                 .replaceAll("%player%", target.getName())));
 
+            }
+            if (args.length >= 1 && args[0].equalsIgnoreCase("promote")) {
+                if (!plugin.teamManager.inTeam(player)) {
+                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("not-in-team")));
+                    return true;
+                }
+
+                Team team = plugin.teamManager.getTeam(player);
+                if (!team.getLeader().equals(player.getUniqueId())) {
+                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("cant-do-that")));
+                    return true;
+                }
+                if (args.length < 2) {
+                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("specify-player")));
+                    return true;
+                }
+
+                Player target = Bukkit.getPlayer(args[1]);
+                if (target == null) {
+                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-player-found")));
+                    return true;
+                }
+
+                if (!team.getLeader().equals(player.getUniqueId())) {
+                    if (team.getRanks().get(player.getUniqueId()) != Ranks.CoLeader) {
+                        player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("cant-do-that")));
+                        return true;
+                    }
+                }
+
+                if (team.getRanks().get(target.getUniqueId()) == Ranks.Leader ||
+                        team.getRanks().get(target.getUniqueId()) == Ranks.CoLeader) {
+                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("cant-do-that")));
+                    return true;
+                }
+
+                if (team.getRanks().get(target.getUniqueId()) == Ranks.Recruit) {
+                    team.getRanks().put(target.getUniqueId(), Ranks.Member);
+                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
+                            plugin.fileMessage.getConfig().getString("promote-success")
+                                    .replaceAll("%player%", target.getName())));
+                    return true;
+                }
+                if (team.getRanks().get(target.getUniqueId()) == Ranks.Member) {
+                    team.getRanks().put(target.getUniqueId(), Ranks.Moderator);
+                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
+                            plugin.fileMessage.getConfig().getString("promote-success")
+                                    .replaceAll("%player%", target.getName())));
+                    return true;
+                }
+                if (team.getRanks().get(target.getUniqueId()) == Ranks.Moderator) {
+                    if (team.getRanks().get(player.getUniqueId()) != Ranks.Leader) {
+                        player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("cant-do-that")));
+                        return true;
+                    }
+
+                    team.getRanks().put(target.getUniqueId(), Ranks.CoLeader);
+                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
+                            plugin.fileMessage.getConfig().getString("promote-success")
+                                    .replaceAll("%player%", target.getName())));
+                    return true;
+                }
+
+            }
+            if (args.length >= 1 && args[0].equalsIgnoreCase("demote")) {
+                if (!plugin.teamManager.inTeam(player)) {
+                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("not-in-team")));
+                    return true;
+                }
+
+                Team team = plugin.teamManager.getTeam(player);
+                if (!team.getLeader().equals(player.getUniqueId())) {
+                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("cant-do-that")));
+                    return true;
+                }
+                if (args.length < 2) {
+                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("specify-player")));
+                    return true;
+                }
+
+                Player target = Bukkit.getPlayer(args[1]);
+                if (target == null) {
+                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-player-found")));
+                    return true;
+                }
+
+                if (!team.getLeader().equals(player.getUniqueId())) {
+                    if (team.getRanks().get(player.getUniqueId()) != Ranks.CoLeader) {
+                        player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("cant-do-that")));
+                        return true;
+                    }
+                }
+
+                if (team.getRanks().get(target.getUniqueId()) == Ranks.Leader ||
+                        team.getRanks().get(target.getUniqueId()) == Ranks.CoLeader) {
+                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("cant-do-that")));
+                    return true;
+                }
+
+                if (team.getRanks().get(target.getUniqueId()) == Ranks.Recruit) {
+                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("cant-do-that")));
+                    return true;
+                }
+
+                if (team.getRanks().get(target.getUniqueId()) == Ranks.Member) {
+                    team.getRanks().put(target.getUniqueId(), Ranks.Recruit);
+                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
+                            plugin.fileMessage.getConfig().getString("demote-success")
+                                    .replaceAll("%player%", target.getName())));
+                    return true;
+                }
+
+                if (team.getRanks().get(target.getUniqueId()) == Ranks.Moderator) {
+                    team.getRanks().put(target.getUniqueId(), Ranks.Member);
+                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
+                            plugin.fileMessage.getConfig().getString("demote-success")
+                                    .replaceAll("%player%", target.getName())));
+                    return true;
+                }
+
+                if (team.getRanks().get(target.getUniqueId()) == Ranks.CoLeader) {
+                    if (team.getRanks().get(player.getUniqueId()) != Ranks.Leader) {
+                        player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("cant-do-that")));
+                        return true;
+                    }
+
+                    team.getRanks().put(target.getUniqueId(), Ranks.Moderator);
+                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
+                            plugin.fileMessage.getConfig().getString("demote-success")
+                                    .replaceAll("%player%", target.getName())));
+                    return true;
+                }
+            }
+            if (args.length >= 1 && args[0].equalsIgnoreCase("kick")) {
+                if (!plugin.teamManager.inTeam(player)) {
+                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("not-in-team")));
+                    return true;
+                }
+                Team team = plugin.teamManager.getTeam(player);
+                if (!team.getLeader().equals(player.getUniqueId())) {
+                    if (team.getRanks().get(player.getUniqueId()) != Ranks.CoLeader) {
+                        if (team.getRanks().get(player.getUniqueId()) != Ranks.Moderator) {
+                            player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("cant-do-that")));
+                            return true;
+                        }
+                    }
+                }
+
+                if (args.length < 2) {
+                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("specify-player")));
+                    return true;
+                }
+
+                Player target = Bukkit.getPlayer(args[1]);
+                if (target == null) {
+                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-player-found")));
+                    return true;
+                }
+                if (target.getUniqueId().equals(player.getUniqueId())
+                        || team.getRanks().get(target.getUniqueId()) == Ranks.Leader ||
+                        team.getRanks().get(target.getUniqueId()) == Ranks.CoLeader) {
+                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("cant-do-that")));
+                    return true;
+                }
+
+                if (plugin.teamManager.getTeam(target) != team) {
+                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("cant-do-that")));
+                    return true;
+                }
+
+                team.getRanks().remove(target.getUniqueId());
+                team.getMembers().remove(target.getUniqueId());
+                player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
+                        plugin.fileMessage.getConfig().getString("player-kicked-success")
+                                .replaceAll("%player%", target.getName())));
+
+                if (target.isOnline()) {
+                    target.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
+                            plugin.fileMessage.getConfig().getString("player-kicked")
+                                    .replaceAll("%team%", team.getName())));
+                }
+            }
+            if (args.length >= 1 && args[0].equalsIgnoreCase("ban")) {
+                if (!plugin.teamManager.inTeam(player)) {
+                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("not-in-team")));
+                    return true;
+                }
+                Team team = plugin.teamManager.getTeam(player);
+                if (!team.getLeader().equals(player.getUniqueId())) {
+                    if (team.getRanks().get(player.getUniqueId()) != Ranks.CoLeader) {
+                        if (team.getRanks().get(player.getUniqueId()) != Ranks.Moderator) {
+                            player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("cant-do-that")));
+                            return true;
+                        }
+                    }
+                }
+                if (args.length < 2) {
+                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("specify-player")));
+                    return true;
+                }
+                Player target = Bukkit.getPlayer(args[1]);
+                if (target == null) {
+                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-player-found")));
+                    return true;
+                }
+
+                if (team.getBanned().contains(target.getUniqueId())) {
+                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("player-already-banned")));
+                    return true;
+                }
+
+                if (target.getUniqueId().equals(player.getUniqueId())
+                        || team.getRanks().get(target.getUniqueId()) == Ranks.Leader ||
+                        team.getRanks().get(target.getUniqueId()) == Ranks.CoLeader) {
+                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("cant-do-that")));
+                    return true;
+                }
+
+                team.getRanks().remove(target.getUniqueId());
+                team.getMembers().remove(target.getUniqueId());
+                team.getBanned().add(target.getUniqueId());
+
+                player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
+                        plugin.fileMessage.getConfig().getString("player-banned-success")
+                                .replaceAll("%player%", target.getName())));
+                target.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
+                        plugin.fileMessage.getConfig().getString("player-banned")
+                                .replaceAll("%team%", team.getName())));
+            }
+            if (args.length >= 1 && args[0].equalsIgnoreCase("unban")) {
+                if (!plugin.teamManager.inTeam(player)) {
+                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("not-in-team")));
+                    return true;
+                }
+                Team team = plugin.teamManager.getTeam(player);
+                if (!team.getLeader().equals(player.getUniqueId())) {
+                    if (team.getRanks().get(player.getUniqueId()) != Ranks.CoLeader) {
+                        if (team.getRanks().get(player.getUniqueId()) != Ranks.Moderator) {
+                            player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("cant-do-that")));
+                            return true;
+                        }
+                    }
+                }
+
+                if (args.length < 2) {
+                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("specify-player")));
+                    return true;
+                }
+                Player target = Bukkit.getPlayer(args[1]);
+                if (target == null) {
+                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-player-found")));
+                    return true;
+                }
+
+                if (!team.getBanned().contains(target.getUniqueId())) {
+                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("player-not-banned")));
+                    return true;
+                }
+
+                team.getRanks().remove(target.getUniqueId());
+                team.getMembers().remove(target.getUniqueId());
+                team.getBanned().remove(target.getUniqueId());
+
+                player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
+                        plugin.fileMessage.getConfig().getString("player-unbanned-success")
+                                .replaceAll("%player%", target.getName())));
+            }
+            if (args.length >= 1 && args[0].equalsIgnoreCase("open")) {
+                if (!plugin.teamManager.inTeam(player)) {
+                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("not-in-team")));
+                    return true;
+                }
+                Team team = plugin.teamManager.getTeam(player);
+                if (!team.getLeader().equals(player.getUniqueId())) {
+                    if (team.getRanks().get(player.getUniqueId()) != Ranks.CoLeader) {
+                        player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("cant-do-that")));
+                        return true;
+                    }
+                }
+
+                if (!team.getOpen()) {
+                    team.setOpen(true);
+                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
+                            plugin.fileMessage.getConfig().getString("team-open-success")));
+                    return true;
+                }
+                team.setOpen(false);
+                player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
+                        plugin.fileMessage.getConfig().getString("team-close-success")));
             }
             if (args.length >= 1 && args[0].equalsIgnoreCase("bank")) {
                 if (!plugin.teamManager.inTeam(player)) {
@@ -322,51 +651,6 @@ public class cmdTeam implements CommandExecutor {
                     return true;
                 }
 
-                if (args[1].equalsIgnoreCase("accept")) {
-                    if (!teamRequests.containsKey(team)) {
-                        player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-pending-requests")));
-                        return true;
-                    }
-
-                    long timeLeft = ((teamRequests.get(team).getTimeSent() / 1000) + plugin.getConfig().getInt("request-timeout")) - (System.currentTimeMillis() / 1000);
-                    if (timeLeft <= 0) {
-                        player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-pending-request")));
-                        teamRequests.remove(team);
-                        return true;
-                    }
-
-                    team.removeAlly(teamRequests.get(team).getSender());
-                    team.removeEnemy(teamRequests.get(team).getSender());
-                    team.removeTruce(teamRequests.get(team).getSender());
-
-                    teamRequests.get(team).getSender().removeTruce(team);
-                    teamRequests.get(team).getSender().removeAlly(team);
-                    teamRequests.get(team).getSender().removeEnemy(team);
-
-                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
-                            plugin.fileMessage.getConfig().getString("team-neutral-success")
-                                    .replaceAll("%player%", teamRequests.get(team).getSender().getName())));
-
-                    teamRequests.remove(team);
-                } else if (args[1].equalsIgnoreCase("deny")) {
-                    if (!teamRequests.containsKey(team)) {
-                        player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-pending-requests")));
-                        return true;
-                    }
-
-                    long timeLeft = ((teamRequests.get(team).getTimeSent() / 1000) + plugin.getConfig().getInt("request-timeout")) - (System.currentTimeMillis() / 1000);
-                    if (timeLeft <= 0) {
-                        player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-pending-request")));
-                        teamRequests.remove(team);
-                        return true;
-                    }
-
-                    teamRequests.remove(team);
-                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
-                            plugin.fileMessage.getConfig().getString("team-neutral-denied")
-                                    .replaceAll("%player%", teamRequests.get(team).getSender().getName())));
-                }
-
                 String targetTeamName = args[1];
                 Team targetTeam = plugin.teamManager.getTeam(targetTeamName);
                 if (targetTeam == null) {
@@ -438,7 +722,7 @@ public class cmdTeam implements CommandExecutor {
 
                 if (team.getEnemies().contains(targetTeam)) {
                     player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("team-already-enemy")
-                                    .replaceAll("%team%", targetTeamName)));
+                            .replaceAll("%team%", targetTeamName)));
                     return true;
                 }
                 team.getTruces().remove(targetTeam);
@@ -533,7 +817,7 @@ public class cmdTeam implements CommandExecutor {
 
                 if (team.getTruces().contains(targetTeam)) {
                     player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("team-already-truce")
-                                    .replaceAll("%team%", targetTeamName)));
+                            .replaceAll("%team%", targetTeamName)));
                     return true;
                 }
                 TeamRequest request = new TeamRequest(RequestType.Truce, team, targetTeam);
@@ -638,7 +922,7 @@ public class cmdTeam implements CommandExecutor {
 
                 if (team.getAllies().contains(targetTeam)) {
                     player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("team-already-ally")
-                                    .replaceAll("%team%", targetTeamName)));
+                            .replaceAll("%team%", targetTeamName)));
                     return true;
                 }
 
@@ -731,6 +1015,38 @@ public class cmdTeam implements CommandExecutor {
 
                 } else {
                     player.sendMessage(plugin.fileMessage.getConfig().getString("no-permission"));
+                }
+            }
+            if (args.length >= 1 && args[0].equalsIgnoreCase("accnounce")) {
+                if (!plugin.teamManager.inTeam(player)) {
+                    player.sendMessage(plugin.fileMessage.getConfig().getString("not-in-team"));
+                    return true;
+                }
+                Team team = plugin.teamManager.getTeam(player);
+                if (!team.getLeader().equals(player.getUniqueId())) {
+                    if (team.getRanks().get(player.getUniqueId()) != Ranks.CoLeader) {
+                        player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("cant-do-that")));
+                        return true;
+                    }
+                }
+
+                if (args.length < 2) {
+                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("specify-message")));
+                    return true;
+                }
+                String message = "";
+                for (int i = 1; i < args.length; i++) {
+                    message += args[i] + " ";
+                }
+                message = message.substring(0, message.length() - 1);
+                for (UUID uuid : team.getMembers()) {
+                    Player member = Bukkit.getPlayer(uuid);
+                    if (member != null) {
+                        member.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
+                                plugin.fileMessage.getConfig().getString("defaults.team-announcement")
+                                        .replaceAll("%team%", team.getName())
+                                        .replaceAll("%message%", message)));
+                    }
                 }
             }
         }

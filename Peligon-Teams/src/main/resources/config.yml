@@ -15,6 +15,10 @@ Channels-Format:
   Truce: "&7[&bTruce&7] &f%player%&f: &f%message%"
   Moderator: "&7[&2Mod&7] &f%player%&f: &f%message%"
 
+defaults:
+  maximum-team-size: 10
+  team-announcement: "&6[TEAM ANNOUNCEMENT] &f%message%"
+
 ###############################################################
 # +---------------------------------------------------------+ #
 # |                   Peligon Teams (Teams)                 | #

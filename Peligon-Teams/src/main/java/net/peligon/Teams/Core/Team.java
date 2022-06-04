@@ -15,6 +15,7 @@ public class Team {
     private final String defaultTag = "&7[&e" + name + "&7]";
     private UUID leader;
     private List<UUID> members;
+    private int maximumMembers;
     private Map<UUID, Ranks> ranks;
     private Map<UUID, String> tags;
     private List<UUID> banned;
@@ -35,6 +36,8 @@ public class Team {
         List<UUID> members = new ArrayList<>();
         members.add(leader);
         this.members = members;
+
+        this.maximumMembers = Main.getInstance.getConfig().getInt("defaults.maximum-team-size");
 
         Map<UUID, Ranks> ranks = new HashMap<>();
         ranks.put(leader, Ranks.Leader);
@@ -70,6 +73,10 @@ public class Team {
 
     public List<UUID> getMembers() {
         return members;
+    }
+
+    public int getMaximumMembers() {
+        return maximumMembers;
     }
 
     public Map<UUID, Ranks> getRanks() {
@@ -132,6 +139,10 @@ public class Team {
         this.members = members;
     }
 
+    public void setMaximumMembers(int maximumMembers) {
+        this.maximumMembers = maximumMembers;
+    }
+
     public void setRanks(Map<UUID, Ranks> ranks) {
         this.ranks = ranks;
     }
@@ -179,7 +190,7 @@ public class Team {
     public void addMember(UUID member) {
         if (!members.contains(member)) {
             members.add(member);
-            ranks.put(member, Ranks.Member);
+            ranks.put(member, Ranks.Recruit);
             tags.put(member, defaultTag);
             save();
         }
@@ -192,6 +203,21 @@ public class Team {
             tags.remove(member);
             save();
         }
+    }
+
+    public void increaseMaximumMembers(int amount) {
+        maximumMembers += amount;
+        save();
+    }
+
+    public void decreaseMaximumMembers(int amount) {
+        maximumMembers -= amount;
+        save();
+    }
+
+    public void resetMaximumMembers() {
+        maximumMembers = Main.getInstance.getConfig().getInt("defaults.maximum-team-size");
+        save();
     }
 
     public void setRank(UUID member, Ranks rank) {
