@@ -4,6 +4,7 @@ import net.peligon.Teams.Core.Channel;
 import net.peligon.Teams.Core.Ranks;
 import net.peligon.Teams.Core.Team;
 import net.peligon.Teams.Main;
+import net.peligon.Teams.libaries.Utils;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -27,15 +28,26 @@ public class chatChannel implements Listener {
             return;
         }
 
+        if (plugin.teamManager.getPlayerChat(player) != Channel.Global) {
+            event.setFormat(Utils.chatColor(
+                    plugin.getConfig().getString("Channels-Format.Global")
+                            .replaceAll("%team%", plugin.teamManager.getTeam(player).getName())
+                            .replaceAll("%player%", player.getDisplayName())
+                            .replaceAll("%message%", event.getMessage())
+            ));
+        }
+
         if (plugin.teamManager.getPlayerChat(player) == Channel.Team) {
             event.setCancelled(true);
 
             for (UUID member : plugin.teamManager.getTeam(player).getMembers()) {
                 Player memberPlayer = plugin.getServer().getPlayer(member);
                 if (memberPlayer != null) {
-                    memberPlayer.sendMessage(plugin.getConfig().getString("Channels-Format.Team")
-                            .replaceAll("%player%", player.getName())
-                            .replaceAll("%message%", event.getMessage()));
+                    memberPlayer.sendMessage(Utils.chatColor(
+                            plugin.getConfig().getString("Channels-Format.Team")
+                                    .replaceAll("%player%", player.getName())
+                                    .replaceAll("%message%", event.getMessage())
+                    ));
                 }
             }
             return;
@@ -52,9 +64,11 @@ public class chatChannel implements Listener {
             for (UUID member : playersToSend) {
                 Player memberPlayer = plugin.getServer().getPlayer(member);
                 if (memberPlayer != null) {
-                    memberPlayer.sendMessage(plugin.getConfig().getString("Channels-Format.Truce")
-                            .replaceAll("%player%", player.getName())
-                            .replaceAll("%message%", event.getMessage()));
+                    memberPlayer.sendMessage(Utils.chatColor(
+                            plugin.getConfig().getString("Channels-Format.Truce")
+                                    .replaceAll("%player%", player.getName())
+                                    .replaceAll("%message%", event.getMessage())
+                    ));
                 }
             }
             return;
@@ -71,9 +85,11 @@ public class chatChannel implements Listener {
             for (UUID member : playersToSend) {
                 Player memberPlayer = plugin.getServer().getPlayer(member);
                 if (memberPlayer != null) {
-                    memberPlayer.sendMessage(plugin.getConfig().getString("Channels-Format.Ally")
-                            .replaceAll("%player%", player.getName())
-                            .replaceAll("%message%", event.getMessage()));
+                    memberPlayer.sendMessage(Utils.chatColor(
+                            plugin.getConfig().getString("Channels-Format.Ally")
+                                    .replaceAll("%player%", player.getName())
+                                    .replaceAll("%message%", event.getMessage())
+                    ));
                 }
             }
             return;
@@ -92,9 +108,11 @@ public class chatChannel implements Listener {
             for (UUID member : playersToSend) {
                 Player memberPlayer = plugin.getServer().getPlayer(member);
                 if (memberPlayer != null) {
-                    memberPlayer.sendMessage(plugin.getConfig().getString("Channels-Format.Moderator")
-                            .replaceAll("%player%", player.getName())
-                            .replaceAll("%message%", event.getMessage()));
+                    memberPlayer.sendMessage(Utils.chatColor(
+                            plugin.getConfig().getString("Channels-Format.Moderator")
+                                    .replaceAll("%player%", player.getName())
+                                    .replaceAll("%message%", event.getMessage())
+                    ));
                 }
             }
         }

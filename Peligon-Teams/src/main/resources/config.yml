@@ -10,14 +10,11 @@ Storage:
   lang: "en_US"
 
 Channels-Format:
+  Global: "&f%team% &f%player%&f: &f%message%"
   Team: "&7[&eTeam&7] &f%player%&f: &f%message%"
   Ally: "&7[&5Ally&7] &f%player%&f: &f%message%"
   Truce: "&7[&bTruce&7] &f%player%&f: &f%message%"
   Moderator: "&7[&2Mod&7] &f%player%&f: &f%message%"
-
-defaults:
-  maximum-team-size: 10
-  team-announcement: "&6[TEAM ANNOUNCEMENT] &f%message%"
 
 ###############################################################
 # +---------------------------------------------------------+ #
@@ -25,7 +22,10 @@ defaults:
 # |    This is where you can manage settings about teams    | #
 # +---------------------------------------------------------+ #
 ###############################################################
-request-timeout: 120
+defaults:
+  maximum-team-size: 10
+  team-announcement: "&6[TEAM ANNOUNCEMENT] &f%message%"
+  request-timeout: 120
 
 # Check for plugin updates.
 check-for-updates: true

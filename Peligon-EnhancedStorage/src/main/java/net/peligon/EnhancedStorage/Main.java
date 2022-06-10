@@ -5,14 +5,13 @@ import net.peligon.EnhancedStorage.libaries.UpdateChecker;
 import net.peligon.EnhancedStorage.libaries.Utils;
 import net.peligon.EnhancedStorage.libaries.storage.SQLibrary;
 import net.peligon.EnhancedStorage.libaries.storage.SQLiteLibrary;
+import net.peligon.EnhancedStorage.listener.backpack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.sql.SQLException;
+import java.util.Arrays;
 
 public class Main extends JavaPlugin {
-
-    // backpack item
-    // http://textures.minecraft.net/texture/1c78ee394bd35b54d260e51dbfc747c128ac1271edbef37992c6cd49d1f9a425
 
     public static Main getInstance;
 
@@ -55,8 +54,9 @@ public class Main extends JavaPlugin {
     }
 
     public void loadEvents() {
-//        Arrays.asList(
-//        ).forEach(listener -> getServer().getPluginManager().registerEvents(listener, this));
+        Arrays.asList(
+                new backpack()
+        ).forEach(listener -> getServer().getPluginManager().registerEvents(listener, this));
     }
 
     private void versionChecker() {

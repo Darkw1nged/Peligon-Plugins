@@ -23,6 +23,16 @@ Storage:
 # |    [NOTE or Description]                                | #
 # +---------------------------------------------------------+ #
 ###############################################################
+Backpack:
+  item: Chest
+  name: "&aBackpack"
+  lore:
+    - "&7You will never lose your backpack!"
+    - ""
+    - "&eContents"
+    - "%contents%"
+  # Will generate a list of items in the backpack.
+  contents-lore-format: "&e ▎ &f%item% &7[ %amount% ]"
 
 # Check for plugin updates.
 check-for-updates: true

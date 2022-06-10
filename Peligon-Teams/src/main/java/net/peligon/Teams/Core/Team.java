@@ -43,7 +43,10 @@ public class Team {
         ranks.put(leader, Ranks.Leader);
         this.ranks = ranks;
 
-        this.tags = new HashMap<>();
+        Map<UUID, String> tags = new HashMap<>();
+        tags.put(leader, defaultTag);
+        this.tags = tags;
+
         this.banned = new ArrayList<>();
         this.warps = new HashMap<>();
         this.home = null;
