@@ -1,7 +1,7 @@
 name: PeligonPlaytime
 version: '${project.version}'
 main: net.peligon.Playtime.Main
-api-version: 1.18
+api-version: 1.13
 authors: [ darkwinged ]
 description: This is an open-source plugin
 commands:

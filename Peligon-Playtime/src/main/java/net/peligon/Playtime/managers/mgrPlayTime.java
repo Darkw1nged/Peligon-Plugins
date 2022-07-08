@@ -77,7 +77,7 @@ public class mgrPlayTime {
     public void createData(OfflinePlayer player) {
         if (hasData(player)) return;
         if (plugin.storageType.equalsIgnoreCase("sqlite")) {
-            String query = "INSERT INTO server values('" + player.getUniqueId() + "'," + 0 + ", " + System.currentTimeMillis() + ");";
+            String query = "INSERT INTO server values('" + player.getUniqueId() + "'," + 0 + ", " + System.currentTimeMillis() + ", 0, 0);";
             try {
                 Statement statement = SQLiteLibrary.connection.createStatement();
                 statement.execute(query);
@@ -85,7 +85,7 @@ public class mgrPlayTime {
                 e.printStackTrace();
             }
         } else if (plugin.storageType.equalsIgnoreCase("mysql")) {
-            String query = "INSERT INTO Playtime values('" + player.getUniqueId() + "'," + 0 + ", " + System.currentTimeMillis() + ");";
+            String query = "INSERT INTO Playtime values('" + player.getUniqueId() + "'," + 0 + ", " + System.currentTimeMillis() + ", 0, 0);";
             try {
                 PreparedStatement statement = plugin.sqlLibrary.getConnection().prepareStatement(query);
                 statement.execute();
@@ -142,29 +142,6 @@ public class mgrPlayTime {
                 PreparedStatement statement = plugin.sqlLibrary.getConnection().prepareStatement(query);
                 statement.execute();
                 setLastUpdated(player);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    public void resetTime(UUID uuid) {
-        if (!hasData(uuid)) return;
-        if (plugin.storageType.equalsIgnoreCase("sqlite")) {
-            String query = "UPDATE server SET timePlayed = 0 WHERE uuid= '" + uuid + "';";
-            try {
-                Statement statement = SQLiteLibrary.connection.createStatement();
-                statement.execute(query);
-                setLastUpdated(uuid);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        } else if (plugin.storageType.equalsIgnoreCase("mysql")) {
-            String query = "UPDATE Playtime SET timePlayed = 0 WHERE uuid= '" + uuid + "';";
-            try {
-                PreparedStatement statement = plugin.sqlLibrary.getConnection().prepareStatement(query);
-                statement.execute();
-                setLastUpdated(uuid);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -330,32 +307,6 @@ public class mgrPlayTime {
             }
         } else if (plugin.storageType.equalsIgnoreCase("mysql")) {
             String query = "SELECT * FROM Playtime WHERE uuid='" + player.getUniqueId() + "';";
-            try {
-                PreparedStatement statement = plugin.sqlLibrary.getConnection().prepareStatement(query);
-                ResultSet rs = statement.executeQuery();
-                rs.next();
-                return rs.getInt("paused") != 0;
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        return true;
-    }
-
-    public boolean isPaused(UUID uuid) {
-        if (!hasData(uuid)) return true;
-        if (plugin.storageType.equalsIgnoreCase("sqlite")) {
-            String query = "SELECT * FROM server WHERE uuid='" + uuid + "';";
-            try {
-                PreparedStatement statement = SQLiteLibrary.connection.prepareStatement(query);
-                ResultSet rs = statement.executeQuery();
-                rs.next();
-                return rs.getInt("paused") != 0;
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        } else if (plugin.storageType.equalsIgnoreCase("mysql")) {
-            String query = "SELECT * FROM Playtime WHERE uuid='" + uuid + "';";
             try {
                 PreparedStatement statement = plugin.sqlLibrary.getConnection().prepareStatement(query);
                 ResultSet rs = statement.executeQuery();

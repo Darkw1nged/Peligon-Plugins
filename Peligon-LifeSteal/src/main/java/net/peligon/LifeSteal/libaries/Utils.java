@@ -46,10 +46,22 @@ public class Utils {
     public static boolean hasSpace(Player player, ItemStack targetItem) {
         for (ItemStack item : player.getInventory().getContents()) {
             if (item == null) continue;
-            if (item.getType() == targetItem.getType()) {
-                if (item.getAmount() != item.getMaxStackSize()) {
-                    item.setAmount(item.getAmount() + 1);
-                    return true;
+            if (item.hasItemMeta() && item.getItemMeta().hasDisplayName() &&
+                targetItem.hasItemMeta() && targetItem.getItemMeta().hasDisplayName()) {
+                if (item.getItemMeta().getDisplayName().equals(targetItem.getItemMeta().getDisplayName())) {
+                    if (item.getType() == targetItem.getType()) {
+                        if (item.getAmount() != item.getMaxStackSize()) {
+                            item.setAmount(item.getAmount() + targetItem.getAmount());
+                            return true;
+                        }
+                    }
+                }
+            } else {
+                if (item.getType() == targetItem.getType()) {
+                    if (item.getAmount() != item.getMaxStackSize()) {
+                        item.setAmount(item.getAmount() + targetItem.getAmount());
+                        return true;
+                    }
                 }
             }
         }

@@ -25,35 +25,4 @@ public class SQLiteLibrary {
         }
     }
 
-    public void loadTables() {
-        try {
-            getSQLConnection();
-            String table = "CREATE TABLE IF NOT EXISTS server(uuid PRIMARY KEY, lives INTEGER);";
-            String collum = "ALTER TABLE server ADD COLUMN bounty INT(32) DEFAULT 0;";
-
-            try {
-                Statement statement = connection.createStatement();
-                {
-                    statement.execute(table);
-                    ResultSet rs = statement.executeQuery("PRAGMA table_info(server)");
-                    boolean columnExists = false;
-                    while (rs.next()) {
-                        if (rs.getString("name").equalsIgnoreCase("bounty")) {
-                            columnExists = true;
-                        }
-                    }
-                    if (!columnExists) {
-                        statement.execute(collum);
-                    }
-                }
-                statement.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        } catch (SQLException e) {
-            throw new Error("Connection to database could not be made.\nPlease notify the developer of this.\n");
-        }
-
-    }
-
 }

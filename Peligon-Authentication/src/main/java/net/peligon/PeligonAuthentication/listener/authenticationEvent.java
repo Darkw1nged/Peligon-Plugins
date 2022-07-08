@@ -8,7 +8,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.*;
 
-public class Authentication implements Listener {
+public class authenticationEvent implements Listener {
 
     @EventHandler
     public void onMove(PlayerMoveEvent event) {

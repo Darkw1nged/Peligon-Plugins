@@ -96,6 +96,7 @@
             <groupId>commons-codec</groupId>
             <artifactId>commons-codec</artifactId>
             <version>LATEST</version>
+            <scope>provided</scope>
         </dependency>
 
 

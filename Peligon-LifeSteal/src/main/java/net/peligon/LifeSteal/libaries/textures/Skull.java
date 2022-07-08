@@ -1,4 +1,4 @@
-package net.peligon.LifeSteal.libaries.Skull;
+package net.peligon.LifeSteal.libaries.textures;
 
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;

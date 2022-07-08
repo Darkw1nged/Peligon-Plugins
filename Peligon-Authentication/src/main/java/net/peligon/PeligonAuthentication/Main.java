@@ -5,8 +5,8 @@ import net.peligon.PeligonAuthentication.libaries.CustomConfig;
 import net.peligon.PeligonAuthentication.libaries.UpdateChecker;
 import net.peligon.PeligonAuthentication.libaries.Utils;
 import net.peligon.PeligonAuthentication.libaries.storage.SQLite;
-import net.peligon.PeligonAuthentication.listener.Authentication;
-import net.peligon.PeligonAuthentication.listener.playerJoin;
+import net.peligon.PeligonAuthentication.listener.authenticationEvent;
+import net.peligon.PeligonAuthentication.listener.accountSetup;
 import net.peligon.PeligonAuthentication.manager.mgrAuthentication;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -58,8 +58,8 @@ public final class Main extends JavaPlugin {
     }
     public void loadEvents() {
         Arrays.asList(
-                new Authentication(),
-                new playerJoin()
+                new authenticationEvent(),
+                new accountSetup()
         ).forEach(listener -> getServer().getPluginManager().registerEvents(listener, this));
     }
 

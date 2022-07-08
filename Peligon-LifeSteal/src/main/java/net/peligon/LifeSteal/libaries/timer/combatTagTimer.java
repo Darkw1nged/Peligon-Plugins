@@ -1,6 +1,7 @@
-package net.peligon.LifeSteal.libaries;
+package net.peligon.LifeSteal.libaries.timer;
 
 import net.peligon.LifeSteal.Main;
+import net.peligon.LifeSteal.libaries.Utils;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 

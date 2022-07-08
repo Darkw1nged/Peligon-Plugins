@@ -34,5 +34,8 @@ Backpack:
   # Will generate a list of items in the backpack.
   contents-lore-format: "&e ▎ &f%item% &7[ %amount% ]"
 
+defaults:
+  player-vault-title: "&ePrivate Vault &8[ %number% &8]"
+
 # Check for plugin updates.
 check-for-updates: true

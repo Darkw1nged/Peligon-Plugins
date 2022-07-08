@@ -13,15 +13,12 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
-import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiPredicate;
 import java.util.stream.Collectors;
-
-import static net.peligon.PeligonEconomy.managers.Reflect.*;
 
 public class mgrSignFactory {
 

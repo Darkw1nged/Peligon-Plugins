@@ -3,9 +3,10 @@ package net.peligon.LifeSteal;
 import net.milkbowl.vault.economy.Economy;
 import net.peligon.LifeSteal.commands.*;
 import net.peligon.LifeSteal.libaries.CustomConfig;
-import net.peligon.LifeSteal.libaries.UpdateChecker;
+import net.peligon.LifeSteal.libaries.items.CustomItems;
+import net.peligon.LifeSteal.libaries.timer.UpdateChecker;
 import net.peligon.LifeSteal.libaries.Utils;
-import net.peligon.LifeSteal.libaries.combatTagTimer;
+import net.peligon.LifeSteal.libaries.timer.combatTagTimer;
 import net.peligon.LifeSteal.libaries.storage.SQLibrary;
 import net.peligon.LifeSteal.libaries.storage.SQLiteLibrary;
 import net.peligon.LifeSteal.listeners.*;
@@ -14,13 +15,18 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Arrays;
+
+import static net.peligon.LifeSteal.libaries.storage.SQLiteLibrary.connection;
 
 public final class Main extends JavaPlugin implements Listener {
 
     public static Main getInstance;
     public mgrBounty bounties;
+    public CustomItems customItems;
 
     public SQLibrary sqlLibrary;
     public String storageType = "SQLite";
@@ -29,15 +35,18 @@ public final class Main extends JavaPlugin implements Listener {
 
     public CustomConfig fileMessage;
     public CustomConfig fileDeathMessage = new CustomConfig(this, "death messages", true);
+    public CustomConfig fileItems = new CustomConfig(this, "items", true);
 
     public void onEnable() {
         // ---- [ Initializing instance of main class] ----
         getInstance = this;
+        customItems = new CustomItems();
 
         // ---- [ Loading Commands | Loading Events | Loading YML Files ] ----
         loadCommands();
         loadEvents();
         fileDeathMessage.saveDefaultConfig();
+        fileItems.saveDefaultConfig();
         saveDefaultConfig();
 
         // ---- [ Loading lang file ] ----
@@ -75,6 +84,7 @@ public final class Main extends JavaPlugin implements Listener {
         getCommand("lives").setExecutor(new cmdLives());
         getCommand("combattag").setExecutor(new cmdCombatTag());
         getCommand("bounty").setExecutor(new cmdBounty());
+        getCommand("heart").setExecutor(new cmdHeart());
     }
 
     public void loadEvents() {
@@ -90,7 +100,9 @@ public final class Main extends JavaPlugin implements Listener {
                 new deathChest(),
                 new damageIndicator(),
                 new healthIndicator(),
-                new bountyEvents()
+                new bountyEvents(),
+                new heartConsume(),
+                new sacrificialConsume()
         ).forEach(listener -> getServer().getPluginManager().registerEvents(listener, this));
     }
 
@@ -122,7 +134,36 @@ public final class Main extends JavaPlugin implements Listener {
     private void setupStorage() {
         if (getConfig().getString("Storage.database", "SQLite").equalsIgnoreCase("sqlite")) {
             SQLiteLibrary sqlLite = new SQLiteLibrary();
-            sqlLite.loadTables();
+
+            try {
+                sqlLite.getSQLConnection();
+
+                if (connection == null) {
+                    getServer().getConsoleSender().sendMessage("Unable to establish a connection to SQLite.");
+                    return;
+                }
+
+                String table = "CREATE TABLE IF NOT EXISTS server(uuid PRIMARY KEY, lives INTEGER, bounty INT(32) DEFAULT 0);";
+                String updateTable = "ALTER TABLE server ADD COLUMN bounty INT(32) DEFAULT 0;";
+
+                Statement statement = connection.createStatement();
+                statement.execute(table);
+
+                ResultSet rs = statement.executeQuery("PRAGMA table_info(server)");
+                boolean bounty = false;
+                while (rs.next()) {
+                    if (rs.getString("name").equals("bounty")) {
+                        bounty = true;
+                    }
+                }
+                if (!bounty) {
+                    statement.execute(updateTable);
+                }
+
+                statement.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
             this.storageType = "SQLite";
         } else if (getConfig().getString("Storage.database", "SQLite").equalsIgnoreCase("MySQL")) {
             sqlLibrary = new SQLibrary(getConfig().getString("Storage.MySQL.host"),

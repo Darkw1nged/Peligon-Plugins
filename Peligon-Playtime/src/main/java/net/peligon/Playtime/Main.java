@@ -15,8 +15,12 @@ import net.peligon.Playtime.managers.mgrPlayTime;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Arrays;
+
+import static net.peligon.Playtime.libaries.storage.SQLiteLibrary.connection;
 
 @SuppressWarnings("ALL")
 public final class Main extends JavaPlugin {
@@ -98,7 +102,46 @@ public final class Main extends JavaPlugin {
     private void setupStorage() {
         if (getConfig().getString("Storage.database", "SQLite").equalsIgnoreCase("sqlite")) {
             SQLiteLibrary sqlLite = new SQLiteLibrary();
-            sqlLite.loadTables();
+
+            try {
+                sqlLite.getSQLConnection();
+
+                if (connection == null) {
+                    getServer().getConsoleSender().sendMessage("Unable to establish a connection to SQLite.");
+                    return;
+                }
+
+                String table = "CREATE TABLE IF NOT EXISTS server(uuid PRIMARY KEY, timePlayed, " +
+                        "lastUpdated, paused INTEGER DEFAULT 0, hidden INTEGER DEFAULT 0);";
+                String updateTable = "ALTER TABLE server ADD COLUMN paused INTEGER DEFAULT 0;";
+                String updateTable2 = "ALTER TABLE server ADD COLUMN hidden INTEGER DEFAULT 0;";
+
+                Statement statement = connection.createStatement();
+                statement.execute(table);
+
+                ResultSet rs = statement.executeQuery("PRAGMA table_info(server)");
+                boolean paused = false;
+                boolean hidden = false;
+                while (rs.next()) {
+                    if (rs.getString("name").equals("paused")) {
+                        paused = true;
+                    }
+                    if (rs.getString("name").equals("hidden")) {
+                        hidden = true;
+                    }
+                }
+                if (!paused) {
+                    statement.execute(updateTable);
+                }
+
+                if (!hidden) {
+                    statement.execute(updateTable2);
+                }
+                statement.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+
             this.storageType = "SQLite";
         } else if (getConfig().getString("Storage.database", "SQLite").equalsIgnoreCase("MySQL")) {
             sqlLibrary = new SQLibrary(getConfig().getString("Storage.MySQL.host"),
@@ -114,7 +157,8 @@ public final class Main extends JavaPlugin {
 
             try {
                 sqlLibrary.getConnection().prepareStatement("CREATE TABLE IF NOT EXISTS Playtime" +
-                        " (uuid VARCHAR(36) NOT NULL, timePlayed, lastUpdated, PRIMARY KEY (uuid));").executeUpdate();
+                        " (uuid VARCHAR(36) NOT NULL, timePlayed, lastUpdated, paused INTEGER DEFAULT 0," +
+                        " hidden INTEGER DEFAULT 0, PRIMARY KEY (uuid));").executeUpdate();
 
                 sqlLibrary.getConnection().prepareStatement("ALTER TABLE Playtime ADD COLUMN IF NOT EXISTS paused INTEGER DEFAULT 0;").executeUpdate();
                 sqlLibrary.getConnection().prepareStatement("ALTER TABLE Playtime ADD COLUMN IF NOT EXISTS hidden INTEGER DEFAULT 0;").executeUpdate();

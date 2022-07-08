@@ -23,3 +23,5 @@ commands:
     aliases:
       - bounties
     description: Allows players to view their bounty
+  heart:
+    description: Allows admins to give hearts to players
