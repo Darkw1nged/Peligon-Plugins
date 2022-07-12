@@ -3,6 +3,7 @@ package net.peligon.EnhancedStorage.commands;
 import net.peligon.EnhancedStorage.Main;
 import net.peligon.EnhancedStorage.libaries.CustomConfig;
 import net.peligon.EnhancedStorage.libaries.Utils;
+import net.peligon.EnhancedStorage.libaries.struts.PlayerVault;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -59,16 +60,9 @@ public class cmdPlayerVault implements CommandExecutor {
                     return true;
                 }
 
-                CustomConfig rawVault = new CustomConfig(plugin, "playerVaults/" + player.getUniqueId().toString() + "/" + number, false);
-                Inventory vault = Bukkit.createInventory(player, 54, Utils.chatColor(plugin.getConfig().getString("player-vault-title").replaceAll("%number%", String.valueOf(number))));
-
-                if (rawVault.getConfig().contains("items")) {
-                    for (String key : rawVault.getConfig().getConfigurationSection("items").getKeys(false)) {
-                        vault.setItem(Integer.parseInt(key), rawVault.getConfig().getItemStack("items." + key));
-                    }
-                }
-
-                player.openInventory(vault);
+                PlayerVault vault = new PlayerVault(number, player.getUniqueId());
+                vault.open(player);
+                Utils.openVaults.put(player.getUniqueId(), vault);
             } else {
                 player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-permission")));
                 return true;

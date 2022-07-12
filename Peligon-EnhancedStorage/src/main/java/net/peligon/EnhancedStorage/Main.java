@@ -1,24 +1,31 @@
 package net.peligon.EnhancedStorage;
 
+import net.peligon.EnhancedStorage.commands.cmdPlayerVault;
+import net.peligon.EnhancedStorage.commands.cmdReload;
+import net.peligon.EnhancedStorage.libaries.BackpackCheck;
 import net.peligon.EnhancedStorage.libaries.CustomConfig;
 import net.peligon.EnhancedStorage.libaries.UpdateChecker;
 import net.peligon.EnhancedStorage.libaries.Utils;
-import net.peligon.EnhancedStorage.libaries.storage.SQLibrary;
-import net.peligon.EnhancedStorage.libaries.storage.SQLiteLibrary;
-import net.peligon.EnhancedStorage.listener.backpack;
+import net.peligon.EnhancedStorage.libaries.struts.Backpack;
+import net.peligon.EnhancedStorage.libaries.struts.BackpackItem;
+import net.peligon.EnhancedStorage.listener.*;
+import org.bukkit.Material;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.sql.SQLException;
+import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.UUID;
 
 public class Main extends JavaPlugin {
 
     public static Main getInstance;
 
-    public SQLibrary sqlLibrary;
-    public String storageType = "SQLite";
-
     public CustomConfig fileMessage;
+    public CustomConfig fileApproveItem = new CustomConfig(this, "Inventories/Approval", true);
+    public CustomConfig fileWithdrawItem = new CustomConfig(this, "Inventories/Withdraw", true);
 
     public void onEnable() {
         // ---- [ Initializing instance of main class ] ----
@@ -28,13 +35,18 @@ public class Main extends JavaPlugin {
         loadCommands();
         loadEvents();
         saveDefaultConfig();
+        fileApproveItem.saveDefaultConfig();
+        fileWithdrawItem.saveDefaultConfig();
+
+        // ---- [ Loading backpacks ] ----
+        loadBackpacks();
 
         // ---- [ Loading lang file ] ----
         fileMessage = new CustomConfig(this, "lang/" + this.getConfig().getString("Storage.lang"), true);
         fileMessage.saveDefaultConfig();
 
-        // ---- [ Setting up storage ] ----
-        setupStorage();
+        // ---- [ Calling Repeating Tasks ] ----
+        new BackpackCheck().runTaskTimer(this, 20 * 5, 20 * 5);
 
         // ---- [ Startup message ] ----
         getServer().getConsoleSender().sendMessage(Utils.chatColor(this.fileMessage.getConfig().getString("startup")));
@@ -46,16 +58,28 @@ public class Main extends JavaPlugin {
     }
 
     public void onDisable() {
+        // ---- [ Save Backpack ] ----
+        saveBackpacks();
+
         // ---- [ shutdown message ] ----
+        if (this.fileMessage == null) return;
         getServer().getConsoleSender().sendMessage(Utils.chatColor(this.fileMessage.getConfig().getString("shutdown")));
     }
 
     public void loadCommands() {
+        getCommand("pelstorage").setExecutor(new cmdReload());
+        getCommand("playervault").setExecutor(new cmdPlayerVault());
     }
 
     public void loadEvents() {
         Arrays.asList(
-                new backpack()
+                new backpackEvents(),
+                new playerVaultEvent(),
+
+                new customGUIEvents(),
+                new backpackInventory(),
+                new approveInventory(),
+                new withdrawInventory()
         ).forEach(listener -> getServer().getPluginManager().registerEvents(listener, this));
     }
 
@@ -68,32 +92,50 @@ public class Main extends JavaPlugin {
         });
     }
 
-    private void setupStorage() {
-        if (getConfig().getString("Storage.database", "SQLite").equalsIgnoreCase("sqlite")) {
-            SQLiteLibrary sqlLite = new SQLiteLibrary();
-            sqlLite.loadTables();
-            this.storageType = "SQLite";
-        } else if (getConfig().getString("Storage.database", "SQLite").equalsIgnoreCase("MySQL")) {
-            sqlLibrary = new SQLibrary(getConfig().getString("Storage.database-settings.host"),
-                    getConfig().getInt("Storage.database-settings.port"),
-                    getConfig().getString("Storage.database-settings.database"),
-                    getConfig().getString("Storage.database-settings.username"),
-                    getConfig().getString("Storage.database-settings.password"));
+    public void saveBackpacks() {
+        for (Backpack backpack : Utils.backpacks.values()) {
+            CustomConfig config = new CustomConfig(this, "backpack", "data/" + backpack.getOwner());
+            YamlConfiguration yaml = config.getConfig();
 
-            if (sqlLibrary.getConnection() == null) {
-                System.out.println("Unable to establish a connection to MySQL.");
-                return;
+            yaml.set("Owner", backpack.getOwner().toString());
+            yaml.set("MaximumStorageLevel", backpack.getMaximumStorageLevel());
+            yaml.set("TypesAllowed", backpack.getTypesAllowed());
+            int pos = 0;
+            for (BackpackItem item : backpack.getContents()) {
+                yaml.set("Contents." + pos + ".Material", item.getMaterial().name());
+                yaml.set("Contents." + pos + ".Amount", item.getAmount());
+                pos++;
             }
-
-            try {
-                sqlLibrary.getConnection().prepareStatement("CREATE TABLE IF NOT EXISTS EnchancedStorage" +
-                        " (uuid VARCHAR(36) NOT NULL, PRIMARY KEY (uuid));").executeUpdate();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
-
-            this.storageType = "MySQL";
+            config.saveConfig();
         }
     }
 
+    public void loadBackpacks() {
+        File folder = new File(this.getDataFolder() + "/data");
+        if (!folder.exists()) return;
+
+        for (String file : new File(getDataFolder() + "/data").list()) {
+            CustomConfig config = new CustomConfig(this, "backpack", "data/" + file);
+            YamlConfiguration yaml = config.getConfig();
+
+            if (yaml.getString("Owner") == null) {
+                continue;
+            }
+
+            UUID owner = UUID.fromString(yaml.getString("Owner"));
+            int maximumStorageLevel = yaml.getInt("MaximumStorageLevel");
+            int typesAllowed = yaml.getInt("TypesAllowed");
+
+            List<BackpackItem> contents = new ArrayList<>();
+            if (yaml.contains("Contents")) {
+                for (String key : yaml.getConfigurationSection("Contents").getKeys(false)) {
+                    contents.add(new BackpackItem(Material.valueOf(yaml.getString("Contents." + key + ".Material")),
+                            yaml.getInt("Contents." + key + ".Amount")));
+                }
+            }
+
+            Backpack backpack = new Backpack(owner, maximumStorageLevel, typesAllowed, contents);
+            Utils.backpacks.put(owner, backpack);
+        }
+    }
 }

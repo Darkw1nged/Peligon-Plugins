@@ -1,0 +1,48 @@
+name: "&eWithdraw Item"
+# This has to be multiple of 9.
+# minimum : 9 || maximum : 54
+size: 36
+contents:
+  1:
+    material: GRAY_STAINED_GLASS_PANE
+    amount: 1
+    name: " "
+    lore: []
+    # Where this item will be placed in the inventory.
+    # -1 meaning all slots.
+    slot: -1
+  2:
+    material: DISPENSER
+    amount: 64
+    name: "&aEverything in Storage"
+    lore: [ ]
+    slot: 10
+    event: "all"
+  3:
+    material: DISPENSER
+    amount: 64
+    name: "&aWithdraw &fx64 &afrom Storage"
+    lore: [ ]
+    slot: 12
+    event: "64"
+  4:
+    material: DISPENSER
+    amount: 32
+    name: "&aWithdraw &fx32 &afrom Storage"
+    lore: [ ]
+    slot: 14
+    event: "32"
+  5:
+    material: DISPENSER
+    amount: 1
+    name: "&aWithdraw &fx1 &afrom Storage"
+    lore: [ ]
+    slot: 16
+    event: "1"
+  6:
+    material: BARRIER
+    amount: 1
+    name: "&cClose"
+    lore: [ ]
+    slot: 31
+    event: "close"

@@ -5,11 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>net.peligon.EnhancedStorage</groupId>
-    <artifactId>EnhancedStorage</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <artifactId>Peligon-EnhancedStorage</artifactId>
+    <version>1.0</version>
     <packaging>jar</packaging>
 
-    <name>EnhancedStorage</name>
+    <name>Peligon-EnhancedStorage</name>
 
     <properties>
         <java.version>1.8</java.version>

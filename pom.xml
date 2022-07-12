@@ -17,16 +17,17 @@
         <module>Peligon-Polls</module>
         <module>Peligon-PlayTime</module>
         <module>Peligon-Economy</module>
+        <module>Peligon-LifeSteal</module>
 
         <!-- Updating Plugin(s) -->
-        <module>Peligon-LifeSteal</module>
+        <module>Peligon-EnhancedStorage</module>
 
         <!-- Development Plugins -->
         <module>Peligon-Core</module>
         <module>Peligon-Enchants</module>
         <module>Peligon-Staff</module>
         <module>Peligon-Teams</module>
-        <module>Peligon-EnhancedStorage</module>
+
     </modules>
 
     <properties>

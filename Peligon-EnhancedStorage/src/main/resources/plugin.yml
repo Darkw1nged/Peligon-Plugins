@@ -1,6 +1,17 @@
-name: EnhancedStorage
+name: PeligonEnhancedStorage
 version: '${project.version}'
 main: net.peligon.EnhancedStorage.Main
-api-version: 1.18
+api-version: 1.13
 authors: [ darkwinged ]
 description: This is an open-source plugin.
+commands:
+  pelstorage:
+    aliases:
+      - pelehancedstorage
+      - plgstorage
+      - plgenchancedstorage
+    description: Allows admins to reload configration files.
+  playervault:
+    aliases:
+      - pv
+    description: Allows players to store items in a vault.

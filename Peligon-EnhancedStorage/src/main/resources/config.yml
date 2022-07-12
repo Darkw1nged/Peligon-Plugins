@@ -2,40 +2,69 @@
 #
 #       Welcome to Peligon Enhanced Storage's configuration, This is where you can change
 #       Basic settings that will affect how the plugin preforms.
-#       This plugin does have database support; see 'Storage' for more information.
+#       This plugin does not have database support.
 #
 #######################################################################################
 Storage:
   # Visit 'plugins/PeligonEnhancedStorage/Lang/' to see the supported languages.
   lang: "en_US"
-  # Available options: "MySQL", "SQLite"
-  database: "SQLite"
-  database-settings:
-    host: "localhost"
-    port: 3306
-    database: "minecraft"
-    username: "root"
-    password: ""
+
 
 ###############################################################
 # +---------------------------------------------------------+ #
-# |            Peligon Enhanced Storage (Section)           | #
-# |    [NOTE or Description]                                | #
+# |        Peligon Enhanced Storage (Default Settings)      | #
+# |    This is where you can change the default settings    | #
+# |    of the plugin and how it will perform.               | #
+# +---------------------------------------------------------+ #
+###############################################################
+defaults:
+  player-vault-title: "&ePrivate Vault &8(%number%)"
+  backpack:
+    enabled: true
+    slot: 9
+    # entry means how the item will go into the backpack.
+    # Available options: "break" (when player breaks a block), "pickup" (When a player picks up an item)
+    # !! NOTE: The item will either not be dropped or added to the player's inventory depending on the entry.
+    entry: break
+
+###############################################################
+# +---------------------------------------------------------+ #
+# |            Peligon Enhanced Storage (Backpack)          | #
+# |    This is where you can change settings and how the    | #
+# |    backpack will look in the game.                      | #
 # +---------------------------------------------------------+ #
 ###############################################################
 Backpack:
   item: Chest
-  name: "&aBackpack"
+  name: "&e&lBackpack &7(Click)"
   lore:
     - "&7You will never lose your backpack!"
     - ""
-    - "&eContents"
+    - "&5&lContents"
     - "%contents%"
+  number-of-contents: 5
   # Will generate a list of items in the backpack.
-  contents-lore-format: "&e ▎ &f%item% &7[ %amount% ]"
+  contents-lore-format: "&e ▎ &f%item% &7(x%amount%)"
+  more-contents: "&8More..."
 
-defaults:
-  player-vault-title: "&ePrivate Vault &8[ %number% &8]"
+Backpack-Inventory:
+  title: "&e&lBackpack &7(%player%)"
+  # This has to be multiple of 9.
+  # minimum : 9 || maximum : 54
+  size: 54
+  # Change how the item is displayed.
+  show-item:
+    name: "&f&l%item%"
+    hide-attributes: true
+    hide-enchants: true
+    lore:
+      - ""
+      - "&e&lInformation"
+      - " &e&l▎ &fAmount Stored &e%amount%"
+      - " &e&l▎ &fStacks Available &e%stacks%"
+      - ""
+      - "&aLeft Click for Withdraw Options"
+      - "   &cRight Click to Dispose Item"
 
 # Check for plugin updates.
 check-for-updates: true

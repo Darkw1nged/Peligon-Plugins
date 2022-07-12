@@ -1,8 +1,12 @@
 package net.peligon.EnhancedStorage.libaries;
 
 import net.peligon.EnhancedStorage.Main;
+import net.peligon.EnhancedStorage.libaries.struts.Backpack;
+import net.peligon.EnhancedStorage.libaries.struts.BackpackItem;
+import net.peligon.EnhancedStorage.libaries.struts.PlayerVault;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
@@ -10,6 +14,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.text.NumberFormat;
 import java.util.*;
 
 public class Utils {
@@ -19,6 +24,27 @@ public class Utils {
     // ---- [ Managing chat color within the plugin ] ----
     public static String chatColor(String s) {
         return s == null ? null : ChatColor.translateAlternateColorCodes('&', s);
+    }
+
+    // ---- [ Format numbers ] ----
+    public static String formatAmount(int amount) {
+        NumberFormat nf = NumberFormat.getInstance(new Locale("en", "US"));
+        return nf.format(amount);
+    }
+
+    public static String formatAmount(double amount) {
+        NumberFormat nf = NumberFormat.getInstance(new Locale("en", "US"));
+        return nf.format(amount);
+    }
+
+    // ---- [ Format word ] ----
+    public static String formatWord(String word) {
+        String[] words = word.toLowerCase().split("_");
+        StringBuilder sb = new StringBuilder();
+        for (String w : words) {
+            sb.append(w.substring(0, 1).toUpperCase()).append(w.substring(1)).append(" ");
+        }
+        return sb.toString().trim();
     }
 
     // ---- [ Managing holograms for small amount of features ] ----
@@ -65,20 +91,50 @@ public class Utils {
 
     // ---- [ Available space ] ----
     public static boolean hasSpace(Player player, ItemStack targetItem) {
-        for (ItemStack item : player.getInventory().getContents()) {
-            if (item == null) continue;
-            if (item.getType() == targetItem.getType()) {
-                if (item.getAmount() != item.getMaxStackSize()) {
-                    item.setAmount(item.getAmount() + 1);
-                    return true;
-                }
-            }
-        }
         if (player.getInventory().firstEmpty() != -1) {
             player.getInventory().addItem(targetItem);
             return true;
         }
+        for (ItemStack item : player.getInventory().getContents()) {
+            if (item == null) {
+                player.getInventory().addItem(targetItem);
+                return true;
+            }
+            if (item.hasItemMeta() && item.getItemMeta().hasDisplayName() &&
+                    targetItem.hasItemMeta() && targetItem.getItemMeta().hasDisplayName()) {
+                if (item.getItemMeta().getDisplayName().equals(targetItem.getItemMeta().getDisplayName())) {
+                    if (item.getType() == targetItem.getType()) {
+                        if (item.getAmount() != item.getMaxStackSize()) {
+                            item.setAmount(item.getAmount() + targetItem.getAmount());
+                            return true;
+                        }
+                    }
+                }
+            } else {
+                if (item.getType() == targetItem.getType()) {
+                    if (item.getAmount() != item.getMaxStackSize()) {
+                        item.setAmount(item.getAmount() + targetItem.getAmount());
+                        return true;
+                    }
+                }
+            }
+        }
         return false;
+    }
+
+    // ---- [ Get maximum amount that can be added to players inventory ] ----
+    public static int getMaxAmount(Player player, Material material, int targetAmount) {
+        int maxAmount = 0;
+        for (int i = 0; i < player.getInventory().getSize(); i++) {
+            if (player.getInventory().getItem(i) == null) {
+                maxAmount += Math.min(backpacks.get(player.getUniqueId()).getItem(material).getAmount(), 64);
+            } else {
+                if (player.getInventory().getItem(i).getType() == material) {
+                    maxAmount += player.getInventory().getItem(i).getMaxStackSize() - Math.min(player.getInventory().getItem(i).getAmount(), 64);
+                }
+            }
+        }
+        return Math.min(maxAmount, targetAmount);
     }
 
     // ---- [ Check if String is only letters ] ----
@@ -88,4 +144,9 @@ public class Utils {
 
     // ---- [ Cached Items ] ----
     public static Map<ArmorStand, Long> activeHolograms = new HashMap<>();
+    public static Map<UUID, PlayerVault> openVaults = new HashMap<>();
+    public static Map<UUID, Backpack> backpacks = new HashMap<>();
+    public static Map<UUID, BackpackItem> backpackItemSelected = new HashMap<>();
+    public static Map<UUID, Map<Integer, String>> itemSlot = new HashMap<>();
+
 }
