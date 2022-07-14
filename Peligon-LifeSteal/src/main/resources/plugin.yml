@@ -25,3 +25,5 @@ commands:
     description: Allows players to view their bounty
   heart:
     description: Allows admins to give hearts to players
+  revival:
+    description: Allows admins to give revival beacons to players

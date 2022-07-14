@@ -85,6 +85,7 @@ public final class Main extends JavaPlugin implements Listener {
         getCommand("combattag").setExecutor(new cmdCombatTag());
         getCommand("bounty").setExecutor(new cmdBounty());
         getCommand("heart").setExecutor(new cmdHeart());
+        getCommand("revival").setExecutor(new cmdRevival());
     }
 
     public void loadEvents() {

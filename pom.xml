@@ -13,20 +13,19 @@
 
     <modules>
         <!-- Released Plugins -->
-<!--        <module>Peligon-Authentication</module>-->
-<!--        <module>Peligon-Polls</module>-->
-<!--        <module>Peligon-PlayTime</module>-->
-<!--        <module>Peligon-Economy</module>-->
-<!--        <module>Peligon-LifeSteal</module>-->
-<!--        <module>Peligon-EnhancedStorage</module>-->
+        <module>Peligon-Authentication</module>
+        <module>Peligon-Polls</module>
+        <module>Peligon-PlayTime</module>
+        <module>Peligon-Economy</module>
+        <module>Peligon-EnhancedStorage</module>
 
         <!-- Updating Plugin(s) -->
-
+        <module>Peligon-LifeSteal</module>
 
         <!-- Development Plugins -->
-<!--        <module>Peligon-Core</module>-->
-<!--        <module>Peligon-Enchants</module>-->
-<!--        <module>Peligon-Staff</module>-->
+        <module>Peligon-Core</module>
+        <module>Peligon-Enchants</module>
+        <module>Peligon-Staff</module>
         <module>Peligon-Teams</module>
 
     </modules>
