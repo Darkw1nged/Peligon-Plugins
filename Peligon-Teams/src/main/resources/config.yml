@@ -10,7 +10,7 @@ Storage:
   lang: "en_US"
 
 Channels-Format:
-  Global: "&f%team% &f%player%&f: &f%message%"
+  Global: "&7[&e%tag%&7] &f%player%&f: &f%message%"
   Team: "&7[&eTeam&7] &f%player%&f: &f%message%"
   Ally: "&7[&5Ally&7] &f%player%&f: &f%message%"
   Truce: "&7[&bTruce&7] &f%player%&f: &f%message%"

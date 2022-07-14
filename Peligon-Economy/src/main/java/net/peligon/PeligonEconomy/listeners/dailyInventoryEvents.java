@@ -43,7 +43,7 @@ public class dailyInventoryEvents implements Listener {
                                         Utils.dailyCooldown.put(player.getUniqueId(), System.currentTimeMillis());
                                     }
                                 } else {
-                                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("already-claimed")));
+                                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("daily-already-claimed")));
                                 }
                                 event.setCancelled(true);
                                 return;

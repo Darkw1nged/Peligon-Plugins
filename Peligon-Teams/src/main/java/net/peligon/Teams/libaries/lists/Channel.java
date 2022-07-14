@@ -1,4 +1,4 @@
-package net.peligon.Teams.Core;
+package net.peligon.Teams.libaries.lists;
 
 public enum Channel {
 

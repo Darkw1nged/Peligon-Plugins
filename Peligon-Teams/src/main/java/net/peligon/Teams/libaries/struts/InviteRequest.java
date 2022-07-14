@@ -1,4 +1,4 @@
-package net.peligon.Teams.Core;
+package net.peligon.Teams.libaries.struts;
 
 import org.bukkit.entity.Player;
 

@@ -1,7 +1,7 @@
 package net.peligon.Teams.managers;
 
-import net.peligon.Teams.Core.Channel;
-import net.peligon.Teams.Core.Team;
+import net.peligon.Teams.libaries.lists.Channel;
+import net.peligon.Teams.libaries.struts.Team;
 import net.peligon.Teams.libaries.Utils;
 import org.bukkit.OfflinePlayer;
 

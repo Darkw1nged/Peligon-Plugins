@@ -1,4 +1,6 @@
-package net.peligon.Teams.Core;
+package net.peligon.Teams.libaries.struts;
+
+import net.peligon.Teams.libaries.lists.RequestType;
 
 public class TeamRequest {
 

@@ -1,18 +1,19 @@
-package net.peligon.Teams.Core;
+package net.peligon.Teams.libaries.struts;
 
 import net.peligon.Teams.Main;
 import net.peligon.Teams.libaries.CustomConfig;
+import net.peligon.Teams.libaries.lists.Ranks;
+import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.YamlConfiguration;
 
-import java.math.BigDecimal;
 import java.util.*;
 
 public class Team {
 
     private String name;
     private String description;
-    private final String defaultTag = "&7[&e" + name + "&7]";
+    private String defaultTag;
     private UUID leader;
     private List<UUID> members;
     private int maximumMembers;
@@ -27,10 +28,12 @@ public class Team {
     private List<Team> enemies;
     private List<Team> truces;
     private Boolean open;
+    private List<Chunk> claimedChunks;
 
     public Team(String name, String description, UUID leader) {
         this.name = name;
         this.description = description;
+        this.defaultTag = name;
         this.leader = leader;
 
         List<UUID> members = new ArrayList<>();
@@ -57,8 +60,31 @@ public class Team {
         this.truces = new ArrayList<>();
         this.ranks.put(leader, Ranks.Leader);
         this.tags.put(leader, defaultTag);
-        this.members.add(leader);
         this.open = false;
+        this.claimedChunks = new ArrayList<>();
+        this.save();
+    }
+
+    public Team(String name, String description, String defaultTag, UUID leader, List<UUID> members, int maximumMembers, Map<UUID, Ranks> ranks, Map<UUID, String> tags, List<UUID> banned,
+                Map<String, Location> warps, Location home, Double bank, Map<String, Integer> upgrades, List<Team> allies, List<Team> enemies, List<Team> truces, Boolean open, List<Chunk> claimedChunks) {
+        this.name = name;
+        this.description = description;
+        this.defaultTag = defaultTag;
+        this.leader = leader;
+        this.members = members;
+        this.maximumMembers = maximumMembers;
+        this.ranks = ranks;
+        this.tags = tags;
+        this.banned = banned;
+        this.warps = warps;
+        this.home = home;
+        this.bank = bank;
+        this.upgrades = upgrades;
+        this.allies = allies;
+        this.enemies = enemies;
+        this.truces = truces;
+        this.open = open;
+        this.claimedChunks = claimedChunks;
         this.save();
     }
 
@@ -68,6 +94,10 @@ public class Team {
 
     public String getDescription() {
         return description;
+    }
+
+    public String getDefaultTag() {
+        return defaultTag;
     }
 
     public UUID getLeader() {
@@ -126,12 +156,20 @@ public class Team {
         return open;
     }
 
+    public List<Chunk> getClaimedChunks() {
+        return claimedChunks;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public void setDefaultTag(String defaultTag) {
+        this.defaultTag = defaultTag;
     }
 
     public void setLeader(UUID leader) {
@@ -188,6 +226,27 @@ public class Team {
 
     public void setOpen(Boolean open) {
         this.open = open;
+    }
+
+    public void setClaimedChunks(List<Chunk> claimedChunks) {
+        this.claimedChunks = claimedChunks;
+    }
+
+    public void addClaim(Chunk chunk) {
+        claimedChunks.add(chunk);
+    }
+
+    public void removeClaim(Chunk chunk) {
+        claimedChunks.remove(chunk);
+    }
+
+    public Chunk getClaim(int x, int z) {
+        for (Chunk chunk : claimedChunks) {
+            if (chunk.getX() == x && chunk.getZ() == z) {
+                return chunk;
+            }
+        }
+        return null;
     }
 
     public void addMember(UUID member) {
@@ -338,13 +397,15 @@ public class Team {
         configuration.set("name", name);
         configuration.set("description", description);
         configuration.set("default-tag", defaultTag);
-        configuration.set("leader", leader);
+        configuration.set("leader", leader.toString());
 
         List<String> members = new ArrayList<>();
         for (UUID member : this.members) {
             members.add(member.toString());
         }
         configuration.set("members", members);
+
+        configuration.set("maximum-members", maximumMembers);
 
         List<String> ranks = new ArrayList<>();
         for (Map.Entry<UUID, Ranks> entry : this.ranks.entrySet()) {
@@ -400,7 +461,12 @@ public class Team {
         }
         configuration.set("truces", truces);
 
-        configuration.set("open", open);
+        configuration.set("open", this.open);
+
+        List<Chunk> chunks = new ArrayList<>();
+        chunks.addAll(this.claimedChunks);
+
+        configuration.set("claimed-chunks", chunks);
 
         rawConfig.saveConfig();
     }

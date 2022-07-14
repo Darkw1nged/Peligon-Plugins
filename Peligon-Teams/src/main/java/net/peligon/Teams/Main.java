@@ -3,9 +3,10 @@ package net.peligon.Teams;
 import net.milkbowl.vault.economy.Economy;
 import net.peligon.Teams.commands.cmdTeam;
 import net.peligon.Teams.libaries.CustomConfig;
-import net.peligon.Teams.Core.Team;
+import net.peligon.Teams.libaries.struts.Team;
 import net.peligon.Teams.libaries.UpdateChecker;
 import net.peligon.Teams.libaries.Utils;
+import net.peligon.Teams.listeners.chatChannel;
 import net.peligon.Teams.managers.mgrTeam;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -33,7 +34,7 @@ public class Main extends JavaPlugin {
         teamManager = new mgrTeam();
 
         // ---- [ Load all teams ] ----
-//        Utils.loadTeams();
+        Utils.loadTeams();
 
         // ---- [ Loading lang file ] ----
         fileMessage = new CustomConfig(this, "lang/" + this.getConfig().getString("Storage.lang"), true);
@@ -66,8 +67,9 @@ public class Main extends JavaPlugin {
     }
 
     public void loadEvents() {
-//        Arrays.asList(
-//        ).forEach(listener -> getServer().getPluginManager().registerEvents(listener, this));
+        Arrays.asList(
+                new chatChannel()
+        ).forEach(listener -> getServer().getPluginManager().registerEvents(listener, this));
     }
 
     private void versionChecker() {

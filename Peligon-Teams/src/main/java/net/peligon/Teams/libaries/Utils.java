@@ -1,16 +1,21 @@
 package net.peligon.Teams.libaries;
 
-import net.peligon.Teams.Core.Team;
+import net.peligon.Teams.libaries.lists.Ranks;
+import net.peligon.Teams.libaries.struts.Team;
 import net.peligon.Teams.Main;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.io.File;
 import java.text.NumberFormat;
 import java.util.*;
 
@@ -168,6 +173,97 @@ public class Utils {
         // Give the player their exp back, with the difference
         int newExp = currentExp + exp;
         player.giveExp(newExp);
+    }
+
+    public static void loadTeams() {
+        File folder = new File(plugin.getDataFolder() + "/teams");
+        if (!folder.exists()) return;
+
+        for (String file : new File(plugin.getDataFolder() + "/teams").list()) {
+            FileConfiguration config = YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder() + "/teams/" + file));
+
+            System.out.println(config.getString("name"));
+
+            List<UUID> members = new ArrayList<>();
+            for (String member : config.getStringList("members")) {
+                members.add(UUID.fromString(member));
+            }
+
+            Map<UUID, Ranks> ranks = new HashMap<>();
+            for (String member : config.getStringList("ranks")) {
+                String[] split = member.split(":");
+                ranks.put(UUID.fromString(split[0]), Ranks.valueOf(split[1]));
+            }
+
+            Map<UUID, String> tags = new HashMap<>();
+            for (String member : config.getStringList("tags")) {
+                String[] split = member.split(":");
+                tags.put(UUID.fromString(split[0]), split[1]);
+            }
+
+            List<UUID> banned = new ArrayList<>();
+            for (String member : config.getStringList("banned")) {
+                banned.add(UUID.fromString(member));
+            }
+
+            Map<String, Location> warps = new HashMap<>();
+            for (String member : config.getStringList("warps")) {
+                String[] split = member.split(":");
+                warps.put(split[0], new Location(Bukkit.getWorld(split[1]), Double.parseDouble(split[2]), Double.parseDouble(split[3]), Double.parseDouble(split[4]), Float.parseFloat(split[5]), Float.parseFloat(split[6])));
+            }
+
+            Map<String, Integer> upgrades = new HashMap<>();
+            for (String member : config.getStringList("upgrades")) {
+                String[] split = member.split(":");
+                upgrades.put(split[0], Integer.parseInt(split[1]));
+            }
+
+            List<Team> allies = new ArrayList<>();
+            for (String name : config.getStringList("allies")) {
+                allies.add(plugin.teamManager.getTeam(name));
+            }
+
+            List<Team> enemies = new ArrayList<>();
+            for (String name : config.getStringList("enemies")) {
+                enemies.add(plugin.teamManager.getTeam(name));
+            }
+
+            List<Team> truces = new ArrayList<>();
+            for (String name : config.getStringList("truces")) {
+                truces.add(plugin.teamManager.getTeam(name));
+            }
+
+            List<Chunk> claimed = new ArrayList<>();
+            for (String chunk : config.getStringList("claimed")) {
+                String[] split = chunk.split(":");
+                claimed.add(Bukkit.getWorld(split[0]).getChunkAt(Integer.parseInt(split[1]), Integer.parseInt(split[2])));
+            }
+
+            Location home = config.contains("home") ? new Location(Bukkit.getWorld(config.getString("home.world")), Double.parseDouble(config.getString("home.x")), Double.parseDouble(config.getString("home.y")), Double.parseDouble(config.getString("home.z")), Float.parseFloat(config.getString("home.yaw")), Float.parseFloat(config.getString("home.pitch"))) : null;
+
+            Team team = new Team(
+                    config.getString("name"),
+                    config.getString("descriptiom"),
+                    config.getString("default-tag"),
+                    UUID.fromString(config.getString("leader")),
+                    members,
+                    config.getInt("max-members"),
+                    ranks,
+                    tags,
+                    banned,
+                    warps,
+                    home,
+                    config.getDouble("bank"),
+                    upgrades,
+                    allies,
+                    enemies,
+                    truces,
+                    config.getBoolean("open"),
+                    claimed
+            );
+
+            teams.add(team);
+        }
     }
 
 }

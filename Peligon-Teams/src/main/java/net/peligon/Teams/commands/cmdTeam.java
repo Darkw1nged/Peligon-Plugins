@@ -1,20 +1,26 @@
 package net.peligon.Teams.commands;
 
-import net.peligon.Teams.Core.*;
 import net.peligon.Teams.Main;
 import net.peligon.Teams.libaries.Utils;
+import net.peligon.Teams.libaries.lists.Channel;
+import net.peligon.Teams.libaries.lists.Ranks;
+import net.peligon.Teams.libaries.lists.RequestType;
+import net.peligon.Teams.libaries.struts.InviteRequest;
+import net.peligon.Teams.libaries.struts.Team;
+import net.peligon.Teams.libaries.struts.TeamRequest;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
 import java.io.File;
 import java.util.*;
 
 @SuppressWarnings("ALL")
-public class cmdTeam implements CommandExecutor {
+public class cmdTeam implements CommandExecutor, TabCompleter {
 
     private final Main plugin = Main.getInstance;
     private final Map<Team, TeamRequest> teamRequests = new HashMap<>();
@@ -23,14 +29,14 @@ public class cmdTeam implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String string, String[] args) {
         if (cmd.getName().equalsIgnoreCase("team")) {
             if (!(sender instanceof Player)) {
-                // TODO console commands
+                sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("console")));
                 return true;
             }
             Player player = (Player) sender;
             if (args.length == 0 && !plugin.teamManager.inTeam(player)) {
                 if (player.hasPermission("Peligon.Teams.Help") || player.hasPermission("Peligon.Teams.*")) {
                     player.sendMessage(Utils.chatColor("&7----------{ &6Teams | &aHelp &7}----------"));
-                    player.sendMessage(Utils.chatColor("&a/team create <teamname> - Creates a team"));
+                    player.sendMessage(Utils.chatColor("&a/team create <teamname> &7- Creates a team"));
                     player.sendMessage(Utils.chatColor("&a/team delete &7- Deletes your team"));
                     player.sendMessage(Utils.chatColor("&a/team leave &7- Leaves your team"));
                     player.sendMessage(Utils.chatColor("&a/team sethome &7- Sets your team's home"));
@@ -59,11 +65,15 @@ public class cmdTeam implements CommandExecutor {
                     player.sendMessage(Utils.chatColor("&a/team chat <channel> &7- Changes current chat channel"));
                     player.sendMessage(Utils.chatColor("&a/team announce <message> &7- Announce a message to your team"));
                     player.sendMessage(Utils.chatColor("&7---------------------------------"));
+                    return true;
                 } else {
                     player.sendMessage(plugin.fileMessage.getConfig().getString("no-permission"));
                 }
-            } else {
-                // TODO send player team info
+            }
+            if (args.length == 0 && plugin.teamManager.inTeam(player)) {
+                player.sendMessage(Utils.chatColor("&7----------{ &6Teams | &a" + plugin.teamManager.getTeam(player).getName() + " &7}----------"));
+                // TODO team info
+                return true;
             }
             if (args.length >= 1 && args[0].equalsIgnoreCase("create")) {
                 if (plugin.teamManager.inTeam(player)) {
@@ -128,7 +138,7 @@ public class cmdTeam implements CommandExecutor {
                     plugin.teamManager.changePlayerChannel(player, Channel.Global);
                 }
                 player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
-                        plugin.fileMessage.getConfig().getString("left-team")
+                        plugin.fileMessage.getConfig().getString("team-left")
                                 .replaceAll("%team%", team.getName())));
             }
             if (args.length >= 1 && args[0].equalsIgnoreCase("sethome")) {
@@ -225,7 +235,7 @@ public class cmdTeam implements CommandExecutor {
                 }
                 team.setDescription(description);
                 player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
-                        plugin.fileMessage.getConfig().getString("team-description-set")
+                        plugin.fileMessage.getConfig().getString("team-description-changed")
                                 .replaceAll("%description%", team.getDescription())));
             }
             if (args.length >= 1 && args[0].equalsIgnoreCase("join")) {
@@ -253,6 +263,12 @@ public class cmdTeam implements CommandExecutor {
                     return true;
                 }
 
+                if (team.getBanned().contains(player.getUniqueId())) {
+                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("banned-from-team")
+                            .replaceAll("%team%", team.getName())));
+                    return true;
+                }
+
                 if (team.getMembers().size() >= team.getMaximumMembers()) {
                     player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("team-full")));
                     return true;
@@ -267,6 +283,15 @@ public class cmdTeam implements CommandExecutor {
                         plugin.fileMessage.getConfig().getString("team-join-success")
                                 .replaceAll("%team%", team.getName())));
 
+                for (UUID member : team.getMembers()) {
+                    Player memberPlayer = Bukkit.getPlayer(member);
+                    if (memberPlayer != null) {
+                        if (memberPlayer == player) continue;
+                        memberPlayer.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
+                                plugin.fileMessage.getConfig().getString("team-member-joined")
+                                        .replaceAll("%player%", player.getName())));
+                    }
+                }
             }
             if (args.length >= 1 && args[0].equalsIgnoreCase("transfer")) {
                 if (!plugin.teamManager.inTeam(player)) {
@@ -334,8 +359,21 @@ public class cmdTeam implements CommandExecutor {
                     player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("cant-do-that")));
                     return true;
                 }
+
                 if (plugin.teamManager.getTeam(target) != null) {
                     player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("already-in-team")));
+                    return true;
+                }
+
+                if (plugin.teamManager.getTeam(target) == team) {
+                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("player-already-in-team")
+                            .replaceAll("%player%", target.getName())));
+                    return true;
+                }
+
+                if (team.getBanned().contains(target.getUniqueId())) {
+                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("player-banned-team")
+                            .replaceAll("%player%", target.getName())));
                     return true;
                 }
 
@@ -364,7 +402,7 @@ public class cmdTeam implements CommandExecutor {
 
                 for (InviteRequest request : invites) {
                     if (request.getReceiver() == player) {
-                        long timeLeft = ((request.getTimeSent() / 1000) + plugin.getConfig().getInt("defaults.request-timeout")) - (System.currentTimeMillis() / 1000);
+                        long timeLeft = ((request.getTimeSent() / 1000) + plugin.getConfig().getInt("defaults.defaults.request-timeout")) - (System.currentTimeMillis() / 1000);
                         if (timeLeft > 0) {
                             Team team = request.getSender();
                             if (team.getMembers().size() >= team.getMaximumMembers()) {
@@ -378,6 +416,16 @@ public class cmdTeam implements CommandExecutor {
                             player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
                                     plugin.fileMessage.getConfig().getString("accept-success")
                                             .replaceAll("%team%", team.getName())));
+
+                            for (UUID member : team.getMembers()) {
+                                Player memberPlayer = Bukkit.getPlayer(member);
+                                if (memberPlayer != null) {
+                                    if (memberPlayer == player) continue;
+                                    memberPlayer.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
+                                            plugin.fileMessage.getConfig().getString("team-member-joined")
+                                                    .replaceAll("%player%", player.getName())));
+                                }
+                            }
                         } else {
                             player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-pending-invite")));
                             invites.remove(request);
@@ -395,11 +443,12 @@ public class cmdTeam implements CommandExecutor {
 
                 for (InviteRequest request : invites) {
                     if (request.getReceiver() == player) {
-                        long timeLeft = ((request.getTimeSent() / 1000) + plugin.getConfig().getInt("defaults.request-timeout")) - (System.currentTimeMillis() / 1000);
+                        long timeLeft = ((request.getTimeSent() / 1000) + plugin.getConfig().getInt("defaults.defaults.request-timeout")) - (System.currentTimeMillis() / 1000);
                         if (timeLeft > 0) {
                             invites.remove(request);
                             player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
-                                    plugin.fileMessage.getConfig().getString("deny-success")));
+                                    plugin.fileMessage.getConfig().getString("deny-success")
+                                            .replaceAll("%team%", request.getSender().getName())));
                         } else {
                             player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-pending-invite")));
                             invites.remove(request);
@@ -448,14 +497,16 @@ public class cmdTeam implements CommandExecutor {
                     team.getRanks().put(target.getUniqueId(), Ranks.Member);
                     player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
                             plugin.fileMessage.getConfig().getString("promote-success")
-                                    .replaceAll("%player%", target.getName())));
+                                    .replaceAll("%player%", target.getName())
+                                    .replaceAll("%rank%", Ranks.Member.toString())));
                     return true;
                 }
                 if (team.getRanks().get(target.getUniqueId()) == Ranks.Member) {
                     team.getRanks().put(target.getUniqueId(), Ranks.Moderator);
                     player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
                             plugin.fileMessage.getConfig().getString("promote-success")
-                                    .replaceAll("%player%", target.getName())));
+                                    .replaceAll("%player%", target.getName())
+                                    .replaceAll("%rank%", Ranks.Moderator.toString())));
                     return true;
                 }
                 if (team.getRanks().get(target.getUniqueId()) == Ranks.Moderator) {
@@ -467,7 +518,8 @@ public class cmdTeam implements CommandExecutor {
                     team.getRanks().put(target.getUniqueId(), Ranks.CoLeader);
                     player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
                             plugin.fileMessage.getConfig().getString("promote-success")
-                                    .replaceAll("%player%", target.getName())));
+                                    .replaceAll("%player%", target.getName())
+                                    .replaceAll("%rank%", Ranks.CoLeader.toString())));
                     return true;
                 }
 
@@ -501,8 +553,7 @@ public class cmdTeam implements CommandExecutor {
                     }
                 }
 
-                if (team.getRanks().get(target.getUniqueId()) == Ranks.Leader ||
-                        team.getRanks().get(target.getUniqueId()) == Ranks.CoLeader) {
+                if (team.getRanks().get(target.getUniqueId()) == Ranks.Leader) {
                     player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("cant-do-that")));
                     return true;
                 }
@@ -516,7 +567,8 @@ public class cmdTeam implements CommandExecutor {
                     team.getRanks().put(target.getUniqueId(), Ranks.Recruit);
                     player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
                             plugin.fileMessage.getConfig().getString("demote-success")
-                                    .replaceAll("%player%", target.getName())));
+                                    .replaceAll("%player%", target.getName())
+                                    .replaceAll("%rank%", Ranks.Recruit.toString())));
                     return true;
                 }
 
@@ -524,7 +576,8 @@ public class cmdTeam implements CommandExecutor {
                     team.getRanks().put(target.getUniqueId(), Ranks.Member);
                     player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
                             plugin.fileMessage.getConfig().getString("demote-success")
-                                    .replaceAll("%player%", target.getName())));
+                                    .replaceAll("%player%", target.getName())
+                                    .replaceAll("%rank%", Ranks.Member.toString())));
                     return true;
                 }
 
@@ -537,7 +590,8 @@ public class cmdTeam implements CommandExecutor {
                     team.getRanks().put(target.getUniqueId(), Ranks.Moderator);
                     player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
                             plugin.fileMessage.getConfig().getString("demote-success")
-                                    .replaceAll("%player%", target.getName())));
+                                    .replaceAll("%player%", target.getName())
+                                    .replaceAll("%rank%", Ranks.Moderator.toString())));
                     return true;
                 }
             }
@@ -851,17 +905,6 @@ public class cmdTeam implements CommandExecutor {
                 if (team.getTruces().contains(targetTeam) || team.getEnemies().contains(targetTeam) ||
                         team.getAllies().contains(targetTeam) || targetTeam.getTruces().contains(team) ||
                         targetTeam.getEnemies().contains(team) || targetTeam.getAllies().contains(team)) {
-                    TeamRequest request = new TeamRequest(RequestType.Neutral, team, targetTeam);
-
-                    if (teamRequests.containsKey(targetTeam)) {
-                        player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("request-already-pending")));
-                        return true;
-                    }
-
-                    teamRequests.put(targetTeam, request);
-                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
-                            plugin.fileMessage.getConfig().getString("team-neutral-request")
-                                    .replaceAll("%team%", targetTeam.getName())));
 
                     List<UUID> members = new ArrayList<>();
                     for (UUID uuid : targetTeam.getMembers()) {
@@ -875,10 +918,14 @@ public class cmdTeam implements CommandExecutor {
                         Player member = Bukkit.getPlayer(uuid);
                         if (member != null) {
                             member.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
-                                    plugin.fileMessage.getConfig().getString("team-neutral-request-received")
+                                    plugin.fileMessage.getConfig().getString("team-neutral-success")
                                             .replaceAll("%team%", team.getName())));
                         }
                     }
+
+                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
+                            plugin.fileMessage.getConfig().getString("team-neutral-success")
+                                    .replaceAll("%team%", targetTeam.getName())));
                 } else {
                     player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("team-already-neutral")));
                 }
@@ -956,7 +1003,7 @@ public class cmdTeam implements CommandExecutor {
                         return true;
                     }
 
-                    long timeLeft = ((teamRequests.get(team).getTimeSent() / 1000) + plugin.getConfig().getInt("request-timeout")) - (System.currentTimeMillis() / 1000);
+                    long timeLeft = ((teamRequests.get(team).getTimeSent() / 1000) + plugin.getConfig().getInt("defaults.request-timeout")) - (System.currentTimeMillis() / 1000);
                     if (timeLeft <= 0) {
                         player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-pending-request")));
                         teamRequests.remove(team);
@@ -979,23 +1026,25 @@ public class cmdTeam implements CommandExecutor {
                                     .replaceAll("%player%", teamRequests.get(team).getSender().getName())));
 
                     teamRequests.remove(team);
+                    return true;
                 } else if (args[1].equalsIgnoreCase("deny")) {
                     if (!teamRequests.containsKey(team)) {
                         player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-pending-requests")));
                         return true;
                     }
 
-                    long timeLeft = ((teamRequests.get(team).getTimeSent() / 1000) + plugin.getConfig().getInt("request-timeout")) - (System.currentTimeMillis() / 1000);
+                    long timeLeft = ((teamRequests.get(team).getTimeSent() / 1000) + plugin.getConfig().getInt("defaults.request-timeout")) - (System.currentTimeMillis() / 1000);
                     if (timeLeft <= 0) {
                         player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-pending-request")));
                         teamRequests.remove(team);
                         return true;
                     }
 
-                    teamRequests.remove(team);
                     player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
                             plugin.fileMessage.getConfig().getString("team-truce-denied")
-                                    .replaceAll("%player%", teamRequests.get(team).getSender().getName())));
+                                    .replaceAll("%team%", teamRequests.get(team).getSender().getName())));
+                    teamRequests.remove(team);
+                    return true;
                 }
 
                 String targetTeamName = args[1];
@@ -1029,7 +1078,7 @@ public class cmdTeam implements CommandExecutor {
                     Player member = Bukkit.getPlayer(uuid);
                     if (member != null) {
                         member.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
-                                plugin.fileMessage.getConfig().getString("team-truce-request-received")
+                                plugin.fileMessage.getConfig().getString("team-truce-received")
                                         .replaceAll("%team%", team.getName())));
                     }
                 }
@@ -1050,13 +1099,18 @@ public class cmdTeam implements CommandExecutor {
                     }
                 }
 
+                if (args.length < 2) {
+                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("team-status-usage")));
+                    return true;
+                }
+
                 if (args[1].equalsIgnoreCase("accept")) {
                     if (!teamRequests.containsKey(team)) {
                         player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-pending-requests")));
                         return true;
                     }
 
-                    long timeLeft = ((teamRequests.get(team).getTimeSent() / 1000) + plugin.getConfig().getInt("request-timeout")) - (System.currentTimeMillis() / 1000);
+                    long timeLeft = ((teamRequests.get(team).getTimeSent() / 1000) + plugin.getConfig().getInt("defaults.request-timeout")) - (System.currentTimeMillis() / 1000);
                     if (timeLeft <= 0) {
                         player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-pending-request")));
                         teamRequests.remove(team);
@@ -1076,30 +1130,28 @@ public class cmdTeam implements CommandExecutor {
 
                     player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
                             plugin.fileMessage.getConfig().getString("team-ally-success")
-                                    .replaceAll("%player%", teamRequests.get(team).getSender().getName())));
+                                    .replaceAll("%player%", teamRequests.get(team).getSender().getName())
+                                    .replaceAll("%team%", team.getName())));
 
                     teamRequests.remove(team);
+                    return true;
                 } else if (args[1].equalsIgnoreCase("deny")) {
                     if (!teamRequests.containsKey(team)) {
                         player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-pending-requests")));
                         return true;
                     }
 
-                    long timeLeft = ((teamRequests.get(team).getTimeSent() / 1000) + plugin.getConfig().getInt("request-timeout")) - (System.currentTimeMillis() / 1000);
+                    long timeLeft = ((teamRequests.get(team).getTimeSent() / 1000) + plugin.getConfig().getInt("defaults.request-timeout")) - (System.currentTimeMillis() / 1000);
                     if (timeLeft <= 0) {
                         player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-pending-request")));
                         teamRequests.remove(team);
                         return true;
                     }
 
-                    teamRequests.remove(team);
                     player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
                             plugin.fileMessage.getConfig().getString("team-ally-denied")
                                     .replaceAll("%player%", teamRequests.get(team).getSender().getName())));
-                }
-
-                if (args.length < 2) {
-                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("team-status-usage")));
+                    teamRequests.remove(team);
                     return true;
                 }
 
@@ -1134,7 +1186,7 @@ public class cmdTeam implements CommandExecutor {
                     Player member = Bukkit.getPlayer(uuid);
                     if (member != null) {
                         member.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
-                                plugin.fileMessage.getConfig().getString("team-ally-request-received")
+                                plugin.fileMessage.getConfig().getString("team-ally-received")
                                         .replaceAll("%team%", team.getName())));
                     }
                 }
@@ -1142,7 +1194,7 @@ public class cmdTeam implements CommandExecutor {
             if (args.length >= 1 && args[0].equalsIgnoreCase("chat")) {
                 if (player.hasPermission("Peligon.Teams.Chat") || player.hasPermission("Peligon.Teams.*")) {
                     if (!plugin.teamManager.inTeam(player)) {
-                        player.sendMessage(plugin.fileMessage.getConfig().getString("no-in-team"));
+                        player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("not-in-team")));
                         return true;
                     }
 
@@ -1181,7 +1233,7 @@ public class cmdTeam implements CommandExecutor {
                         player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
                                 plugin.fileMessage.getConfig().getString("channel-changed")
                                         .replaceAll("%channel%", "ally")));
-                    } else if (args[1].equalsIgnoreCase("mod") || args[1].equalsIgnoreCase("m")) {
+                    } else if (args[1].equalsIgnoreCase("moderator") || args[1].equalsIgnoreCase("mod")) {
                         if (plugin.teamManager.getPlayerChat(player) == Channel.Moderator) {
                             player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("already-in-chat")));
                             return true;
@@ -1191,7 +1243,7 @@ public class cmdTeam implements CommandExecutor {
                         player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
                                 plugin.fileMessage.getConfig().getString("channel-changed")
                                         .replaceAll("%channel%", "moderator")));
-                    } else if (args[1].equalsIgnoreCase("public") || args[1].equalsIgnoreCase("p")) {
+                    } else if (args[1].equalsIgnoreCase("global") || args[1].equalsIgnoreCase("public")) {
                         if (plugin.teamManager.getPlayerChat(player) == Channel.Global) {
                             player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("already-in-chat")));
                             return true;
@@ -1207,9 +1259,9 @@ public class cmdTeam implements CommandExecutor {
                     player.sendMessage(plugin.fileMessage.getConfig().getString("no-permission"));
                 }
             }
-            if (args.length >= 1 && args[0].equalsIgnoreCase("accnounce")) {
+            if (args.length >= 1 && args[0].equalsIgnoreCase("announce")) {
                 if (!plugin.teamManager.inTeam(player)) {
-                    player.sendMessage(plugin.fileMessage.getConfig().getString("not-in-team"));
+                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("not-in-team")));
                     return true;
                 }
                 Team team = plugin.teamManager.getTeam(player);
@@ -1224,22 +1276,70 @@ public class cmdTeam implements CommandExecutor {
                     player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("specify-message")));
                     return true;
                 }
+
                 String message = "";
                 for (int i = 1; i < args.length; i++) {
                     message += args[i] + " ";
                 }
                 message = message.substring(0, message.length() - 1);
+                System.out.println(team.getMembers());
                 for (UUID uuid : team.getMembers()) {
                     Player member = Bukkit.getPlayer(uuid);
                     if (member != null) {
-                        member.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
-                                plugin.fileMessage.getConfig().getString("defaults.team-announcement")
-                                        .replaceAll("%team%", team.getName())
-                                        .replaceAll("%message%", message)));
+                        member.sendMessage(Utils.chatColor(plugin.getConfig().getString("defaults.team-announcement")
+                                .replaceAll("%team%", plugin.teamManager.getTeam(player).getName())
+                                .replaceAll("%message%", message)));
                     }
                 }
             }
         }
         return false;
+    }
+
+    public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args) {
+        List<String> list = new ArrayList<>();
+        if (cmd.getName().equalsIgnoreCase("team")) {
+            if (args.length <= 1) {
+                list.add("create");
+                list.add("delete");
+                list.add("leave");
+                list.add("sethome");
+                list.add("home");
+                list.add("name");
+                list.add("description");
+                list.add("join");
+                list.add("transfer");
+                list.add("invite");
+                list.add("accept");
+                list.add("deny");
+                list.add("promote");
+                list.add("demote");
+                list.add("title");
+                list.add("kick");
+                list.add("ban");
+                list.add("unban");
+                list.add("open");
+                list.add("bank");
+                list.add("neutral");
+                list.add("enemy");
+                list.add("truce");
+                list.add("ally");
+                list.add("chat");
+                list.add("announce");
+            } else if (args.length <= 2) {
+                if (args[0].equalsIgnoreCase("chat")) {
+                    list.add("team");
+                    list.add("truce");
+                    list.add("ally");
+                    list.add("moderator");
+                    list.add("public");
+                }
+            } else {
+                for (Player player : Bukkit.getOnlinePlayers()) {
+                    list.add(player.getName());
+                }
+            }
+        }
+        return list;
     }
 }

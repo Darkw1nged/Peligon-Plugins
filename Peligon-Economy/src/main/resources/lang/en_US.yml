@@ -44,6 +44,7 @@ invalid-amount: "&cError! Invalid Amount."
 no-items: "&cError! No items could be found."
 account-error: "&cError! %player% dont seem to have a bank account."
 no-item-in-hand: "&cError! You must be holding an item in your hand."
+daily-already-claimed: "&cError! You have already claimed your daily reward."
 
 economy-usage: "&cIncorrect Command Usage: &f/economy [add|remove|set|reset] [cash|bank] [player] [amount]"
 bounty-usage: "&cIncorrect Command Usage: &f/bounty [set|view] [player] [amount]"

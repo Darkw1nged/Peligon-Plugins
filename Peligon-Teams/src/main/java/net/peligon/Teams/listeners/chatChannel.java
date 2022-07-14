@@ -1,8 +1,8 @@
 package net.peligon.Teams.listeners;
 
-import net.peligon.Teams.Core.Channel;
-import net.peligon.Teams.Core.Ranks;
-import net.peligon.Teams.Core.Team;
+import net.peligon.Teams.libaries.lists.Channel;
+import net.peligon.Teams.libaries.lists.Ranks;
+import net.peligon.Teams.libaries.struts.Team;
 import net.peligon.Teams.Main;
 import net.peligon.Teams.libaries.Utils;
 import org.bukkit.entity.Player;
@@ -32,6 +32,7 @@ public class chatChannel implements Listener {
             event.setFormat(Utils.chatColor(
                     plugin.getConfig().getString("Channels-Format.Global")
                             .replaceAll("%team%", plugin.teamManager.getTeam(player).getName())
+                            .replaceAll("%tag%", plugin.teamManager.getTeam(player).getTags().get(player.getUniqueId()))
                             .replaceAll("%player%", player.getDisplayName())
                             .replaceAll("%message%", event.getMessage())
             ));
@@ -56,7 +57,7 @@ public class chatChannel implements Listener {
         if (plugin.teamManager.getPlayerChat(player) == Channel.Truce) {
             event.setCancelled(true);
             List<UUID> playersToSend = new ArrayList<>();
-
+            playersToSend.add(player.getUniqueId());
             for (Team team : plugin.teamManager.getTeam(player).getTruces()) {
                 playersToSend.addAll(team.getMembers());
             }
@@ -77,7 +78,7 @@ public class chatChannel implements Listener {
         if (plugin.teamManager.getPlayerChat(player) == Channel.Ally) {
             event.setCancelled(true);
             List<UUID> playersToSend = new ArrayList<>();
-
+            playersToSend.add(player.getUniqueId());
             for (Team team : plugin.teamManager.getTeam(player).getAllies()) {
                 playersToSend.addAll(team.getMembers());
             }
