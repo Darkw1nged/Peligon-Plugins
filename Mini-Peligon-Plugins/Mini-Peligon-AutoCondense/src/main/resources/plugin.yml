@@ -1,0 +1,5 @@
+name: PeligonAutoCondense
+version: '${project.version}'
+main: net.peligon.AutoCondense.Main
+api-version: 1.19
+authors: [ darkwinged ]

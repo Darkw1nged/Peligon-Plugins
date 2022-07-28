@@ -1,6 +1,6 @@
 main:
   size: 54
-  title: "&5Enchantments"
+  title: "&7Enchantments"
   contents:
     1:
       item: GRAY_STAINED_GLASS_PANE
@@ -11,57 +11,17 @@ main:
       # -1 means all slots will be filled with this item.
       slot: -1
     2:
-      item: RED_STAINED_GLASS_PANE
-      name: " "
-      item-flags:
-        - "HIDE_ATTRIBUTES"
-      # All items that can be enchanted and player does not have will be replaced with this.
-      type: "NoItem"
+      item: BOOK
+      name: "&f&l%player%"
+      lore:
+        - ""
+        - "&6&lStatistics"
+        - " &6&l▎ &7Level: &f%level%"
+        - " &6&l▎ &7Experience: &f%exp%"
+        - " &6&l▎ &7Free Enchants: &f%free-enchants%"
+        - " &6&l▎ &7Booster: &f%booster%"
+      slot: 5
     3:
-      # WIll be replaced with players helmet and its data.
-      slot: 12
-      type: "Helmet"
-    4:
-      # WIll be replaced with players sword and its data.
-      slot: 16
-      type: "Sword"
-    5:
-      # WIll be replaced with players bow and its data.
-      slot: 17
-      type: "Bow"
-    6:
-      # WIll be replaced with players elytra and its data.
-      slot: 20
-      type: "Elytra"
-    7:
-      # WIll be replaced with players chestplate and its data.
-      slot: 21
-      type: "Chestplate"
-    8:
-      # WIll be replaced with players pickaxe and its data.
-      slot: 25
-      type: "Pickaxe"
-    9:
-      # WIll be replaced with players leggings and its data.
-      slot: 30
-      type: "Leggings"
-    10:
-      # WIll be replaced with players Axe and its data.
-      slot: 34
-      type: "Axe"
-    11:
-      # WIll be replaced with players boots and its data.
-      slot: 39
-      type: "Boots"
-    12:
-      # WIll be replaced with players Shovel and its data.
-      slot: 43
-      type: "Shovel"
-    13:
-      # WIll be replaced with players Hoe and its data.
-      slot: 44
-      type: "Hoe"
-    14:
       item: BARRIER
       name: "&cClose"
       item-flags:
@@ -69,3 +29,40 @@ main:
         - "HIDE_ENCHANTS"
       slot: 50
       type: "Close"
+  enchantment-slots: [9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44]
+  no-item:
+    item: RED_STAINED_GLASS_PANE
+    name: " "
+
+enchantment:
+  size: 45
+  title: "&7%item%"
+  contents:
+    1:
+      item: GRAY_STAINED_GLASS_PANE
+      name: " "
+      item-flags:
+        - "HIDE_ATTRIBUTES"
+      slot: -1
+    2:
+      item: BARRIER
+      name: "&cClose"
+      item-flags:
+        - "HIDE_ATTRIBUTES"
+        - "HIDE_ENCHANTS"
+      slot: 41
+      type: "Close"
+    3:
+      item: BOOK
+      name: "&f&l%player%"
+      lore:
+        - ""
+        - "&6&lStatistics"
+        - " &6&l▎ &7Level: &f%level%"
+        - " &6&l▎ &7Experience: &f%exp%"
+        - " &6&l▎ &7Free Enchants: &f%free-enchants%"
+        - " &6&l▎ &7Booster: &f%booster%"
+      slot: 45
+  # Whatever item you select will be put in this slot.
+  selected-item-slot: 5
+  enchantment-slots: [10, 11, 12, 13, 14, 15, 16, 19, 20, 21, 22, 23, 24, 25, 28, 29, 30, 31, 32, 33, 34]

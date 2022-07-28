@@ -1,0 +1,9 @@
+startup: "[Mini] Peligon JoinLeaveMessage has successfully loaded."
+shutdown: "[Mini] Peligon JoinLeaveMessage has successfully unloaded."
+version-check-error: "There was a problem when checking the plugin version"
+plugin-outdated: "There is a new version of [Mini] Peligon JoinLeaveMessage available."
+plugin-link: ""
+
+first-join-message: "&eWelcome %player% to the server! &6(%count%)"
+join-message: "&e%player% has joined the server"
+leave-message: "&c%player% has left the server"

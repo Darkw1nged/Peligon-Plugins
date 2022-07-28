@@ -1,0 +1,8 @@
+startup: "[Mini] Peligon ClearChat has successfully loaded."
+shutdown: "[Mini] Peligon ClearChat has successfully unloaded."
+version-check-error: "There was a problem when checking the plugin version"
+plugin-outdated: "There is a new version of [Mini] Peligon ClearChat available."
+plugin-link: ""
+
+cleared-chat: "&c&lChat has been cleared by &f&l%player%."
+no-permission: "&cError! You do not have permission to use this command."

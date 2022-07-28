@@ -12,6 +12,9 @@
     <name>Peligon</name>
 
     <modules>
+        <!-- Mini Series -->
+        <module>Mini-Peligon-Plugins</module>
+
         <!-- Released Plugins -->
         <module>Peligon-Authentication</module>
         <module>Peligon-Polls</module>
@@ -27,7 +30,6 @@
         <module>Peligon-Enchants</module>
         <module>Peligon-Staff</module>
         <module>Peligon-Teams</module>
-
     </modules>
 
     <properties>

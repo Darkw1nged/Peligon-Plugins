@@ -1,0 +1,17 @@
+#######################################################################################
+#
+#       Welcome to Mini Peligon ClearChat's configuration, This is where you can change
+#       Basic settings that will affect how the plugin preforms.
+#       As this plugin is a mini plugin, The configuration will be small as there is
+#       only one main feature to the plugin.
+#
+#######################################################################################
+Storage:
+  # Visit 'Plugins/PeligonAutoDisposal/Lang/' to see the supported languages.
+  Language File: "en_US"
+
+# How many lines of chat will be cleared.
+lines: 150
+
+# This will automatically check for updates
+check-for-updates: true

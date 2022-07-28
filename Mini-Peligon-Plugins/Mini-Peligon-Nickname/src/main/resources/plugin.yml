@@ -1,0 +1,5 @@
+name: PeligonNickname
+version: '${project.version}'
+main: net.peligon.Nickname.Main
+api-version: 1.19
+authors: [ darkwinged ]

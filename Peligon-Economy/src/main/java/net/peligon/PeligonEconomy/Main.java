@@ -137,7 +137,6 @@ public final class Main extends JavaPlugin {
                 new dailyInventoryEvents(),
                 new sellGUIEvents(),
                 new globalInventoryEvents(),
-//                new BoxEvents(),
                 new experienceBottleEvent(),
                 new bankNotesEvents(),
                 new pouchesEvent()

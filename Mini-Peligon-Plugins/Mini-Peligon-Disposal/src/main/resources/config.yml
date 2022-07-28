@@ -1,0 +1,29 @@
+#######################################################################################
+#
+#       Welcome to Mini Peligon Disposal's configuration, This is where you can change
+#       Basic settings that will affect how the plugin preforms.
+#       As this plugin is a mini plugin, The configuration will be small as there is
+#       only one main feature to the plugin.
+#
+#######################################################################################
+Storage:
+  # Visit 'Plugins/PeligonAutoDisposal/Lang/' to see the supported languages.
+  Language File: "en_US"
+
+# You can enable a sign to open the disposal GUI.
+disposal-sign: true
+# Change what the sign will look like once activated.
+Sign:
+  line-1: "&1Disposal"
+  line-2: ""
+  line-3: "&8Throw your"
+  line-4: "&8Items away."
+
+# Change how the disposal inventory will look.
+inventory:
+  title: "&aDisposal"
+  # has to be multiples of 9
+  size: 36
+
+# This will automatically check for updates
+check-for-updates: true

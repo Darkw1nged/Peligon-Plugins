@@ -1,0 +1,5 @@
+name: PeligonVeinMiner
+version: '${project.version}'
+main: net.peligon.VeinMiner.Main
+api-version: 1.19
+authors: [ darkwinged ]

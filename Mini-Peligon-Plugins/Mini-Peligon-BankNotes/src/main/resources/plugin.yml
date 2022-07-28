@@ -1,0 +1,5 @@
+name: PeligonBankNotes
+version: '${project.version}'
+main: net.peligon.BankNotes.Main
+api-version: 1.19
+authors: [ darkwinged ]

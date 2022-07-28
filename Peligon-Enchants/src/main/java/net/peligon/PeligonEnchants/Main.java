@@ -2,11 +2,13 @@ package net.peligon.PeligonEnchants;
 
 import com.jeff_media.armorequipevent.ArmorEquipEvent;
 import net.milkbowl.vault.economy.Economy;
-import net.peligon.PeligonEnchants.Events.*;
+import net.peligon.PeligonEnchants.listeners.*;
 import net.peligon.PeligonEnchants.commands.cmdEnchants;
 import net.peligon.PeligonEnchants.libaries.CustomConfig;
 import net.peligon.PeligonEnchants.libaries.CustomEnchants;
 import net.peligon.PeligonEnchants.libaries.Utils;
+import net.peligon.PeligonEnchants.listeners.inventories.customGUIEvents;
+import net.peligon.PeligonEnchants.listeners.inventories.enchantInventory;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -52,6 +54,10 @@ public final class Main extends JavaPlugin {
     }
 
     public void loadEvents() {
+        getServer().getPluginManager().registerEvents(new customGUIEvents(), this);
+        getServer().getPluginManager().registerEvents(new enchantInventory(), this);
+
+
         getServer().getPluginManager().registerEvents(new encTelepathy(), this);
         getServer().getPluginManager().registerEvents(new encAutoSell(), this);
         getServer().getPluginManager().registerEvents(new encGlowing(), this);

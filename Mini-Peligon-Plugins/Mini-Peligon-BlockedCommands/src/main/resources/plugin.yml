@@ -1,0 +1,5 @@
+name: PeligonBlockedCommands
+version: '${project.version}'
+main: net.peligon.BlockedCommands.Main
+api-version: 1.13
+authors: [ darkwinged ]

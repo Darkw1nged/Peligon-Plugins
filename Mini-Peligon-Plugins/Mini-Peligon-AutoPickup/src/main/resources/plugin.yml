@@ -1,0 +1,5 @@
+name: PeligonAutoPickup
+version: '${project.version}'
+main: net.peligon.AutoPickup.Main
+api-version: 1.13
+authors: [ darkwinged ]

@@ -1,0 +1,10 @@
+name: PeligonClearChat
+version: '${project.version}'
+main: net.peligon.ClearChat.Main
+api-version: 1.13
+authors: [ darkwinged ]
+commands:
+  clearchat:
+    aliases:
+      - cc
+    description: Allows admins to clear the chat.

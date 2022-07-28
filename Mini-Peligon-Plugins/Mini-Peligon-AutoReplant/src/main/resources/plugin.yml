@@ -1,0 +1,5 @@
+name: PeligonAutoReplant
+version: '${project.version}'
+main: net.peligon.AutoReplant.Main
+api-version: 1.19
+authors: [ darkwinged ]

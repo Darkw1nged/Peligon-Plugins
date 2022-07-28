@@ -1,0 +1,5 @@
+name: Peligon-Autosell
+version: '${project.version}'
+main: net.peligon.Autosell.Main
+api-version: 1.19
+authors: [ darkwinged ]

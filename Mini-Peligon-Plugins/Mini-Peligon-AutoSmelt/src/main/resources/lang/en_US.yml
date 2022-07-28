@@ -1,0 +1,7 @@
+startup: "[Mini] Peligon AutoSmelt has successfully loaded."
+shutdown: "[Mini] Peligon AutoSmelt has successfully unloaded."
+version-check-error: "There was a problem when checking the plugin version"
+plugin-outdated: "There is a new version of [Mini] Peligon AutoSmelt available."
+plugin-link: ""
+
+no-space: "&cYou do not have enough space in your inventory!"

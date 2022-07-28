@@ -1,0 +1,5 @@
+name: PeligonHomes
+version: '${project.version}'
+main: net.peligon.Homes.Main
+api-version: 1.19
+authors: [ darkwinged ]

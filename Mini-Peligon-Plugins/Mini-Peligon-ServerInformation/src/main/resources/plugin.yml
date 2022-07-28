@@ -1,0 +1,5 @@
+name: PeligonServerInformation
+version: '${project.version}'
+main: net.peligon.ServerInformation.Main
+api-version: 1.19
+authors: [ darkwinged ]

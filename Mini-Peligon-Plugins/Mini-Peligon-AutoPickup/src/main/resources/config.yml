@@ -1,0 +1,15 @@
+#######################################################################################
+#
+#       Welcome to Mini Peligon AutoPickup's configuration, This is where you can change
+#       Basic settings that will affect how the plugin preforms.
+#       This plugin does have database support; see 'Storage' for more information.
+#       As this plugin is a mini plugin, The configuration will be small as there is
+#       only one main feature to the plugin.
+#
+#######################################################################################
+Storage:
+  # Visit 'Plugins/PeligonAutoPickup/Lang/' to see the supported languages.
+  Language File: "en_US"
+
+# This will automatically check for updates
+check-for-updates: true

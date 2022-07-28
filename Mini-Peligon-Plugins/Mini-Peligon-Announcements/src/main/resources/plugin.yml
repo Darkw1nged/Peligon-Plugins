@@ -1,0 +1,5 @@
+name: PeligonAnnouncements
+version: '${project.version}'
+main: net.peligon.Announcements.Main
+api-version: 1.19
+authors: [ darkwinged ]

@@ -1,0 +1,12 @@
+name: PeligonDisposal
+version: '${project.version}'
+main: net.peligon.Disposal.Main
+api-version: 1.13
+authors: [darkwinged]
+commands:
+  disposal:
+    aliases:
+      - trashcan
+      - trash
+      - bin
+    description: Allow players to throw away items.

@@ -1,0 +1,5 @@
+name: PeligonChatColor
+version: '${project.version}'
+main: net.peligon.ChatColor.Main
+api-version: 1.19
+authors: [ darkwinged ]

@@ -1,0 +1,8 @@
+startup: "[Mini] Peligon Disposal has successfully loaded."
+shutdown: "[Mini] Peligon Disposal has successfully unloaded."
+version-check-error: "There was a problem when checking the plugin version"
+plugin-outdated: "There is a new version of [Mini] Peligon Disposal available."
+plugin-link: ""
+
+console: "&cError! You are not allowed to perform this inside of the console."
+no-permission: "&cError! You do not have permission to use this command."

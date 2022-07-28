@@ -1,0 +1,5 @@
+name: PeligonAutoSmelt
+version: '${project.version}'
+main: net.peligon.Autosmelt.Main
+api-version: 1.13
+authors: [darkwinged]

@@ -1,0 +1,5 @@
+name: PeligonInstantRespawn
+version: '${project.version}'
+main: net.peligon.InstantRespawn.Main
+api-version: 1.13
+authors: [ darkwinged ]

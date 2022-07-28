@@ -1,0 +1,5 @@
+startup: "[Mini] Peligon InstantRespawn has successfully loaded."
+shutdown: "[Mini] Peligon InstantRespawn has successfully unloaded."
+version-check-error: "There was a problem when checking the plugin version"
+plugin-outdated: "There is a new version of [Mini] Peligon InstantRespawn available."
+plugin-link: ""

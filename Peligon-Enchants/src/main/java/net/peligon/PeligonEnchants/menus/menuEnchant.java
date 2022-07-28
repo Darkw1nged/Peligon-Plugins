@@ -13,6 +13,9 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class menuEnchant implements Menu {
 
     private final Main plugin = Main.getInstance;
@@ -33,9 +36,18 @@ public class menuEnchant implements Menu {
             }
 
             ItemMeta meta = item.getItemMeta();
-            meta.setDisplayName(Utils.chatColor(plugin.fileUI.getConfig().getString("main.contents." + key + ".name")));
+            meta.setDisplayName(Utils.chatColor(plugin.fileUI.getConfig().getString("main.contents." + key + ".name").replaceAll("%player%", player.getName())));
             if (plugin.fileUI.getConfig().contains("main.contents." + key + ".lore")) {
-                meta.setLore(Utils.getConvertedLore(plugin.fileUI.getConfig(), "main.contents." + key));
+                List<String> lore = new ArrayList<>();
+                for (String line : plugin.fileUI.getConfig().getStringList("main.contents." + key + ".lore")) {
+                    lore.add(Utils.chatColor(line)
+                            .replaceAll("%player%", player.getName())
+                            .replaceAll("%level%", Utils.format(player.getLevel()))
+                            .replaceAll("%exp%", Utils.format(Utils.getPlayerExp(player)))
+                            .replaceAll("%free-enchants%", Utils.format(0))
+                            .replaceAll("%booster%", "x1.0"));
+                }
+                meta.setLore(lore);
             }
 
             if (plugin.fileUI.getConfig().contains("main.contents." + key + ".item-flags")) {
@@ -54,20 +66,61 @@ public class menuEnchant implements Menu {
             item.setItemMeta(meta);
 
             if (plugin.fileUI.getConfig().getInt("main.contents." + key + ".slot") == -1) {
-                for (int i=0; i<plugin.fileUI.getConfig().getInt("main.size"); i++) {
+                for (int i = 0; i < plugin.fileUI.getConfig().getInt("main.size"); i++) {
                     inventory.setItem(i, item);
                 }
             } else {
                 inventory.setItem(plugin.fileUI.getConfig().getInt("main.contents." + key + ".slot") - 1, item);
             }
         }
+
+        int pos = 0;
+        for (String s : plugin.fileUI.getConfig().getStringList("main.enchantment-slots")) {
+            if (player.getInventory().getItem(pos) == null) {
+                ItemStack item = new ItemStack(Material.getMaterial(plugin.fileUI.getConfig().getString("main.no-item.item")));
+                ItemMeta meta = item.getItemMeta();
+                meta.setDisplayName(Utils.chatColor(plugin.fileUI.getConfig().getString("main.no-item.name")));
+                item.setItemMeta(meta);
+
+                inventory.setItem(Integer.parseInt(s), item);
+                pos++;
+                continue;
+            }
+            if (player.getInventory().getItem(pos).getType().name().endsWith("_PICKAXE") ||
+                    player.getInventory().getItem(pos).getType().name().endsWith("_AXE") ||
+                    player.getInventory().getItem(pos).getType().name().endsWith("_SHOVEL") ||
+                    player.getInventory().getItem(pos).getType().name().endsWith("_HOE") ||
+                    player.getInventory().getItem(pos).getType().name().endsWith("_SWORD") ||
+                    player.getInventory().getItem(pos).getType().name().endsWith("BOW") ||
+                    player.getInventory().getItem(pos).getType().name().endsWith("_HELMET") ||
+                    player.getInventory().getItem(pos).getType().name().endsWith("_CHESTPLATE") ||
+                    player.getInventory().getItem(pos).getType().name().endsWith("_LEGGINGS") ||
+                    player.getInventory().getItem(pos).getType().name().endsWith("_BOOTS") ||
+                    player.getInventory().getItem(pos).getType().name().endsWith("SHIELD") ||
+                    player.getInventory().getItem(pos).getType().name().endsWith("ELYTRA")) {
+                inventory.setItem(Integer.parseInt(s), player.getInventory().getItem(pos));
+                pos++;
+                continue;
+            }
+            ItemStack item = new ItemStack(Material.getMaterial(plugin.fileUI.getConfig().getString("main.no-item.item")));
+            ItemMeta meta = item.getItemMeta();
+            meta.setDisplayName(Utils.chatColor(plugin.fileUI.getConfig().getString("main.no-item.name")));
+            item.setItemMeta(meta);
+
+            inventory.setItem(Integer.parseInt(s), item);
+            pos++;
+        }
+
     }
 
-    public void onClick(Main plugin, Player player, int slot, ClickType type) { }
+    public void onClick(Main plugin, Player player, int slot, ClickType type) {
+    }
 
-    public void onOpen(Main plugin, Player player) { }
+    public void onOpen(Main plugin, Player player) {
+    }
 
-    public void onClose(Main plugin, Player player) { }
+    public void onClose(Main plugin, Player player) {
+    }
 
     public Inventory getInventory() {
         return this.inventory;

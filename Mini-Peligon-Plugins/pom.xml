@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>me.darkwinged</groupId>
+    <artifactId>mini-peligon</artifactId>
+    <version>1.0</version>
+    <packaging>pom</packaging>
+
+    <name>MiniPeligon</name>
+
+    <modules>
+        <!-- Ready to release -->
+        <module>Mini-Peligon-AutoPickup</module>
+        <module>Mini-Peligon-BlockedCommands</module>
+        <module>Mini-Peligon-ClearChat</module>
+        <module>Mini-Peligon-Disposal</module>
+        <module>Mini-Peligon-InstantRespawn</module>
+        <module>Mini-Peligon-JoinLeaveMessage</module>
+
+        <!-- Urgent -->
+        <module>Mini-Peligon-ChatFilter</module>
+        <module>Mini-Peligon-BankNotes</module>
+        <module>Mini-Peligon-ChatColor</module>
+        <module>Mini-Peligon-Nickname</module>
+        <module>Mini-Peligon-EXPBottle</module>
+
+        <!-- Not ready to release -->
+        <module>Mini-Peligon-Announcements</module>
+        <module>Mini-Peligon-AutoCondense</module>
+        <module>Mini-Peligon-AutoMessage</module>
+        <module>Mini-Peligon-AutoReplant</module>
+        <module>Mini-Peligon-Autosell</module>
+        <module>Mini-Peligon-ChestSell</module>
+        <module>Mini-Peligon-DeathMessages</module>
+        <module>Mini-Peligon-Homes</module>
+        <module>Mini-Peligon-OmniTool</module>
+        <module>Mini-Peligon-OnePlayerSleep</module>
+        <module>Mini-Peligon-Rules</module>
+        <module>Mini-Peligon-ServerInformation</module>
+        <module>Mini-Peligon-Spawn</module>
+        <module>Mini-Peligon-StaffChat</module>
+        <module>Mini-Peligon-StaffList</module>
+        <module>Mini-Peligon-VeinMiner</module>
+        <module>Mini-Peligon-Warps</module>
+    </modules>
+
+    <properties>
+        <java.version>1.8</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.22</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <defaultGoal>clean package</defaultGoal>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.7.0</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.1.0</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <createDependencyReducedPom>false</createDependencyReducedPom>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
