@@ -2,6 +2,7 @@ package net.peligon.PeligonCore.commands;
 
 import net.peligon.PeligonCore.Main;
 import net.peligon.PeligonCore.libaries.Utils;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -19,11 +20,11 @@ public class cmdHeal implements CommandExecutor {
                     return true;
                 }
                 if (args[0].equalsIgnoreCase("all") || args[0].equalsIgnoreCase("*")) {
-                    for (Player player : plugin.getServer().getOnlinePlayers()) {
-                        player.setHealth(20);
-                        player.setFoodLevel(20);
-                        player.getActivePotionEffects().removeAll(player.getActivePotionEffects());
-                        player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
+                    for (Player online : plugin.getServer().getOnlinePlayers()) {
+                        online.setHealth(online.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
+                        online.setFoodLevel(20);
+                        online.getActivePotionEffects().removeAll(online.getActivePotionEffects());
+                        sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
                                 plugin.fileMessage.getConfig().getString("all-players-healed")));
                     }
                     return true;
@@ -33,7 +34,7 @@ public class cmdHeal implements CommandExecutor {
                     sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-player-found")));
                     return true;
                 }
-                target.setHealth(20);
+                target.setHealth(target.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
                 target.setFoodLevel(20);
                 target.getActivePotionEffects().removeAll(target.getActivePotionEffects());
                 sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
@@ -45,7 +46,7 @@ public class cmdHeal implements CommandExecutor {
                 if (player.hasPermission("Peligon.Core.Heal.Other") || player.hasPermission("Peligon.Core.*")) {
                     if (args[0].equalsIgnoreCase("all") || args[0].equalsIgnoreCase("*")) {
                         for (Player online : plugin.getServer().getOnlinePlayers()) {
-                            online.setHealth(20);
+                            online.setHealth(online.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
                             online.setFoodLevel(20);
                             online.getActivePotionEffects().removeAll(online.getActivePotionEffects());
                             player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
@@ -58,7 +59,7 @@ public class cmdHeal implements CommandExecutor {
                         sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-player-found")));
                         return true;
                     }
-                    target.setHealth(20);
+                    target.setHealth(target.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
                     target.setFoodLevel(20);
                     target.getActivePotionEffects().removeAll(target.getActivePotionEffects());
                     player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
@@ -69,7 +70,7 @@ public class cmdHeal implements CommandExecutor {
                 return true;
             }
             if (player.hasPermission("Peligon.Core.Heal") || player.hasPermission("Peligon.Core.*")) {
-                player.setHealth(20);
+                player.setHealth(player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
                 player.setFoodLevel(20);
                 player.getActivePotionEffects().removeAll(player.getActivePotionEffects());
                 player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +

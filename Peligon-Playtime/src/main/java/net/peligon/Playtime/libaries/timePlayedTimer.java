@@ -22,19 +22,11 @@ public class timePlayedTimer extends BukkitRunnable {
                     int timesClaimed = plugin.getConfig().getInt("rewards." + reward + ".claimed." + online.getUniqueId());
                     if (seconds >= (long) plugin.getConfig().getInt("rewards." + reward + ".time") * timesClaimed) {
                         online.sendMessage(Utils.chatColor(plugin.getConfig().getString(Utils.chatColor("rewards." + reward + ".message.chat"))));
-                        BukkitScheduler scheduler = Bukkit.getServer().getScheduler();
-                        scheduler.scheduleSyncDelayedTask(plugin, new Runnable() {
-                            @Override
-                            public void run() {
-                                int pos = 0;
-                                for (; pos < plugin.getConfig().getStringList("rewards." + reward + ".commands").size(); pos++) {
-                                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), plugin.getConfig().getStringList("rewards." + reward + ".commands").get(pos).replace("%player%", online.getName()));
-                                }
-                                if (pos == plugin.getConfig().getStringList("rewards." + reward + ".coomands").size()) {
-                                    scheduler.cancelTask(getTaskId());
-                                }
-                            }
-                        }, 10L);
+
+                        for (String command : plugin.getConfig().getStringList("rewards." + reward + ".commands")) {
+                            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replaceAll("%player%", online.getName()));
+                        }
+
                         online.sendTitle(Utils.chatColor(plugin.getConfig().getString("rewards." + reward + ".message.title")),
                                 Utils.chatColor(plugin.getConfig().getString("rewards." + reward + ".message.subtitle")),
                                 plugin.getConfig().getInt("rewards." + reward + ".message.title-fade-in"),
@@ -48,19 +40,10 @@ public class timePlayedTimer extends BukkitRunnable {
                 if (seconds >= (long) plugin.getConfig().getInt("rewards." + reward + ".time")) {
                     online.sendMessage(Utils.chatColor(plugin.getConfig().getString(Utils.chatColor("rewards." + reward + ".message.chat"))));
 
-                    BukkitScheduler scheduler = Bukkit.getServer().getScheduler();
-                    scheduler.scheduleSyncDelayedTask(plugin, new Runnable() {
-                        @Override
-                        public void run() {
-                            int pos = 0;
-                            for (; pos < plugin.getConfig().getStringList("rewards." + reward + ".commands").size(); pos++) {
-                                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), plugin.getConfig().getStringList("rewards." + reward + ".commands").get(pos).replace("%player%", online.getName()));
-                            }
-                            if (pos == plugin.getConfig().getStringList("rewards." + reward + ".coomands").size()) {
-                                scheduler.cancelTask(getTaskId());
-                            }
-                        }
-                    }, 10L);
+                    for (String command : plugin.getConfig().getStringList("rewards." + reward + ".commands")) {
+                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replaceAll("%player%", online.getName()));
+                    }
+
                     online.sendTitle(Utils.chatColor(plugin.getConfig().getString("rewards." + reward + ".message.title")),
                             Utils.chatColor(plugin.getConfig().getString("rewards." + reward + ".message.subtitle")),
                             plugin.getConfig().getInt("rewards." + reward + ".message.title-fade-in"),

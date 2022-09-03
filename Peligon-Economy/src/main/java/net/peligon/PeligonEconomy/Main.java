@@ -125,6 +125,7 @@ public final class Main extends JavaPlugin {
     public void loadEvents() {
         Arrays.asList(
                 new accountSetup(),
+                new menuListener(),
                 new bountyEvents(),
                 new redeemEvents(),
                 new signEvents(),
@@ -134,7 +135,6 @@ public final class Main extends JavaPlugin {
                 new grassScavengeEvents(),
                 new miningRewardsEvents(),
                 new luckyBlockEvents(),
-                new dailyInventoryEvents(),
                 new sellGUIEvents(),
                 new globalInventoryEvents(),
                 new experienceBottleEvent(),
