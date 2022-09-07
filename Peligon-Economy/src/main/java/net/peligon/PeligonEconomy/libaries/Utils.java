@@ -1,6 +1,7 @@
 package net.peligon.PeligonEconomy.libaries;
 
 import net.peligon.PeligonEconomy.Main;
+import net.peligon.PeligonEconomy.libaries.struts.MenuOwnerUtil;
 import net.peligon.PeligonEconomy.managers.mgrSignFactory;
 import net.peligon.PeligonEconomy.menu.menuATM;
 import org.bukkit.ChatColor;
@@ -170,7 +171,7 @@ public class Utils {
                                 .replaceAll("%player%", player.getName()));
 
                     }
-                    player.openInventory(new menuATM(player).getInventory());
+                    player.openInventory(new menuATM(new MenuOwnerUtil(player)).getInventory());
                     return true;
                 });
 

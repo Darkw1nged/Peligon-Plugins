@@ -2,13 +2,13 @@ package net.peligon.PeligonEconomy.menu;
 
 import net.peligon.PeligonEconomy.Main;
 import net.peligon.PeligonEconomy.libaries.Utils;
-import net.peligon.PeligonEconomy.managers.Menu;
+import net.peligon.PeligonEconomy.libaries.struts.Menu;
+import net.peligon.PeligonEconomy.libaries.struts.MenuOwnerUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.ClickType;
-import org.bukkit.inventory.Inventory;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -17,16 +17,59 @@ import java.text.NumberFormat;
 import java.time.LocalDateTime;
 import java.util.*;
 
-public class menuATM implements Menu {
+public class menuATM extends Menu {
 
     private final Main plugin = Main.getInstance;
-    private final Player player;
-    private final Inventory inventory;
+    public menuATM(MenuOwnerUtil menuOwnerUtil) {
+        super(menuOwnerUtil);
+    }
 
-    public menuATM(Player player) {
-        this.player = player;
-        this.inventory = Bukkit.createInventory(this, plugin.fileATM.getConfig().getInt("atm-inventory.size"),
-                Utils.chatColor(plugin.fileATM.getConfig().getString("atm-inventory.title")));
+    @Override
+    public String getMenuName() {
+        return Utils.chatColor(plugin.fileATM.getConfig().getString("atm-inventory.title"));
+    }
+
+    @Override
+    public int getSlots() {
+        return Math.min(plugin.fileATM.getConfig().getInt("atm-inventory.size"), 54);
+    }
+
+    @Override
+    public void handleMenu(InventoryClickEvent event) {
+        ItemStack item = event.getCurrentItem();
+        Player player = (Player) event.getWhoClicked();
+
+        for (String key : plugin.fileATM.getConfig().getConfigurationSection("atm-inventory.contents").getKeys(false)) {
+            if (item.getType().equals(Material.getMaterial(plugin.fileATM.getConfig().getString("atm-inventory.contents." + key + ".item").toUpperCase()))
+                    && item.getItemMeta().getDisplayName().equals(Utils.chatColor(plugin.fileATM.getConfig().getString("atm-inventory.contents." + key + ".name")))) {
+                if (plugin.fileATM.getConfig().contains("atm-inventory.contents." + key + ".event")) {
+                    switch (plugin.fileATM.getConfig().getString("atm-inventory.contents." + key + ".event").toLowerCase()) {
+                        case "deposit":
+                            player.openInventory(new menuDeposit(new MenuOwnerUtil(player)).getInventory());
+                            return;
+                        case "withdraw":
+                            player.openInventory(new menuWithdraw(new MenuOwnerUtil(player)).getInventory());
+                            return;
+                        case "close":
+                            player.closeInventory();
+                            event.setCancelled(true);
+                            return;
+                        case "transactions":
+                            event.setCancelled(true);
+                            return;
+                    }
+                } else {
+                    event.setCancelled(true);
+                    return;
+                }
+            }
+        }
+    }
+
+    @Override
+    public void setMenuItems() {
+        Player player = menuOwnerUtil.getOwner();
+
         for (String key : plugin.fileATM.getConfig().getConfigurationSection("atm-inventory.contents").getKeys(false)) {
             ItemStack item = new ItemStack(Material.getMaterial(plugin.fileATM.getConfig().getString("atm-inventory.contents." + key + ".item").toUpperCase()));
             if (plugin.fileATM.getConfig().contains("atm-inventory.contents." + key + ".amount")) {
@@ -113,16 +156,6 @@ public class menuATM implements Menu {
                 inventory.setItem(plugin.fileATM.getConfig().getInt("atm-inventory.contents." + key + ".slot") - 1, item);
             }
         }
-    }
-
-    public void onClick(Main plugin, Player player, int slot, ClickType type) { }
-
-    public void onOpen(Main plugin, Player player) { }
-
-    public void onClose(Main plugin, Player player) { }
-
-    public Inventory getInventory() {
-        return this.inventory;
     }
 
     private String formatted(double amount) {

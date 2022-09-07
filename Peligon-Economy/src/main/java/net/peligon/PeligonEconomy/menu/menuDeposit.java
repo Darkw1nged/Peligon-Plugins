@@ -2,31 +2,101 @@ package net.peligon.PeligonEconomy.menu;
 
 import net.peligon.PeligonEconomy.Main;
 import net.peligon.PeligonEconomy.libaries.Utils;
-import net.peligon.PeligonEconomy.managers.Menu;
+import net.peligon.PeligonEconomy.libaries.struts.Menu;
+import net.peligon.PeligonEconomy.libaries.struts.MenuOwnerUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.ClickType;
-import org.bukkit.inventory.Inventory;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
-public class menuDeposit implements Menu {
+public class menuDeposit extends Menu {
 
     private final Main plugin = Main.getInstance;
-    private final Player player;
-    private final Inventory inventory;
+    public menuDeposit(MenuOwnerUtil menuOwnerUtil) {
+        super(menuOwnerUtil);
+    }
 
-    public menuDeposit(Player player) {
-        this.player = player;
-        this.inventory = Bukkit.createInventory(this, plugin.fileATM.getConfig().getInt("deposit-inventory.size"),
-                Utils.chatColor(plugin.fileATM.getConfig().getString("deposit-inventory.title")));
+    @Override
+    public String getMenuName() {
+        return Utils.chatColor(plugin.fileATM.getConfig().getString("deposit-inventory.title"));
+    }
+
+    @Override
+    public int getSlots() {
+        return plugin.fileATM.getConfig().getInt("deposit-inventory.size");
+    }
+
+    @Override
+    public void handleMenu(InventoryClickEvent event) {
+        Player player = (Player) event.getWhoClicked();
+        ItemStack item = event.getCurrentItem();
+
+        for (String key : plugin.fileATM.getConfig().getConfigurationSection("deposit-inventory.contents").getKeys(false)) {
+            if (item.getType().equals(Material.getMaterial(plugin.fileATM.getConfig().getString("deposit-inventory.contents." + key + ".item").toUpperCase()))
+                    && item.getItemMeta().getDisplayName().equals(Utils.chatColor((plugin.fileATM.getConfig().getString("deposit-inventory.contents." + key + ".name"))))) {
+                if (plugin.fileATM.getConfig().contains("deposit-inventory.contents." + key + ".event")) {
+                    double amount;
+                    switch (plugin.fileATM.getConfig().getString("deposit-inventory.contents." + key + ".event").toLowerCase()) {
+                        case "depositall":
+                            amount = plugin.Economy.getAccount(player);
+                            if (amount <= 0) event.setCancelled(true);
+
+                            plugin.Economy.removeAccount(player, amount);
+                            plugin.Economy.addBankAccount(player, amount);
+
+                            player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") + plugin.fileMessage.getConfig().getString("deposited-money"), amount));
+                            Utils.addTransaction(player, Utils.chatColor(plugin.fileATM.getConfig().getString("Options.transaction-add"), amount)
+                                    .replaceAll("%player%", player.getName()));
+
+                            player.openInventory(new menuATM(new MenuOwnerUtil(player)).getInventory());
+                            return;
+                        case "deposithalf":
+                            amount = (plugin.Economy.getAccount(player) * (50 / 100.0f));
+                            if (amount <= 0) event.setCancelled(true);
+
+                            plugin.Economy.removeAccount(player, amount);
+                            plugin.Economy.addBankAccount(player, amount);
+                            player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") + plugin.fileMessage.getConfig().getString("deposited-money"), amount));
+                            Utils.addTransaction(player, Utils.chatColor(plugin.fileATM.getConfig().getString("Options.transaction-add"), amount)
+                                    .replaceAll("%player%", player.getName()));
+
+                            player.openInventory(new menuATM(new MenuOwnerUtil(player)).getInventory());
+                            return;
+                        case "depositspecific":
+                            if (Bukkit.getPluginManager().getPlugin("ProtocolLib") == null) return;
+                            List<String> lines = new ArrayList<>();
+                            lines.add("");
+                            lines.add("^^^^^^^^^^^^^^^");
+                            lines.add("Enter the amount");
+                            lines.add("to deposit");
+                            Utils.openSign(player, 0, "deposit", lines);
+                            event.setCancelled(true);
+                            return;
+                        case "goback":
+                            player.openInventory(new menuATM(new MenuOwnerUtil(player)).getInventory());
+                            return;
+                    }
+                } else {
+                    event.setCancelled(true);
+                    return;
+                }
+            }
+        }
+    }
+
+    @Override
+    public void setMenuItems() {
+        Player player = menuOwnerUtil.getOwner();
+
         for (String key : plugin.fileATM.getConfig().getConfigurationSection("deposit-inventory.contents").getKeys(false)) {
             ItemStack item = new ItemStack(Material.getMaterial(plugin.fileATM.getConfig().getString("deposit-inventory.contents." + key + ".item").toUpperCase()));
             if (plugin.fileATM.getConfig().contains("deposit-inventory.contents." + key + ".amount")) {
@@ -68,16 +138,6 @@ public class menuDeposit implements Menu {
                 inventory.setItem(plugin.fileATM.getConfig().getInt("deposit-inventory.contents." + key + ".slot") - 1, item);
             }
         }
-    }
-
-    public void onClick(Main plugin, Player player, int slot, ClickType type) { }
-
-    public void onOpen(Main plugin, Player player) { }
-
-    public void onClose(Main plugin, Player player) {}
-
-    public Inventory getInventory() {
-        return this.inventory;
     }
 
     private String formatted(double amount) {

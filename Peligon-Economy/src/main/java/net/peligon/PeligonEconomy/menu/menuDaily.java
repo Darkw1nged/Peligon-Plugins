@@ -28,7 +28,7 @@ public class menuDaily extends Menu {
 
     @Override
     public int getSlots() {
-        return plugin.fileDailyReward.getConfig().getInt("inventory.size");
+        return Math.min(plugin.fileDailyReward.getConfig().getInt("inventory.size"), 54);
     }
 
     @Override
