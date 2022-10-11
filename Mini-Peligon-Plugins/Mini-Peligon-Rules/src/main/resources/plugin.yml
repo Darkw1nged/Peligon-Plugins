@@ -1,5 +1,0 @@
-name: PeligonRules
-version: '${project.version}'
-main: net.peligon.Rules.Main
-api-version: 1.19
-authors: [ darkwinged ]

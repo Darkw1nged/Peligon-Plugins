@@ -1,66 +1,37 @@
 package net.peligon.BlockedCommands;
 
-import net.peligon.BlockedCommands.Listeners.playerChat;
-import net.peligon.BlockedCommands.Utilities.PlayerUtils;
-import net.peligon.BlockedCommands.Utilities.Storage.CustomConfig;
-import net.peligon.BlockedCommands.Utilities.Utils;
-import net.peligon.BlockedCommands.Utilities.WorldUtils;
+import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.Arrays;
-
-public final class Main extends JavaPlugin {
-
-    public static Main getInstance;
-    public Utils utils;
-    public WorldUtils worldUtils;
-    public PlayerUtils playerUtils;
-
-    public CustomConfig fileMessage;
+public final class Main extends JavaPlugin implements Listener {
 
     public void onEnable() {
-        // ---- [ Creating Instance ] ----
-        getInstance = this;
-
-        // ---- [ Creating Utilities ] ----
-        utils = new Utils();
-        worldUtils = new WorldUtils();
-        playerUtils = new PlayerUtils();
-
-        // ---- [ Saving Default Configs ] ----
+        getServer().getPluginManager().registerEvents(this, this);
         saveDefaultConfig();
-        /** File Message */ {
-            fileMessage = new CustomConfig(this, "lang/" + this.getConfig().getString("Storage.Language File"), true);
-            fileMessage.saveDefaultConfig();
-        }
 
-        // ---- [ Registering Listeners ] ----
-        registerEvents();
-
-        // ---- [ Startup Message ] ----
-        utils.log(fileMessage.getConfig().getString("startup"));
-
-        // ---- [ Check for Updates ] ----
-        if (getConfig().getBoolean("check-for-updates", true)) {
-//            new UpdateChecker(0).getVersion(version -> {
-//                if (!version.equals(this.getDescription().getVersion())) {
-//                    getServer().getConsoleSender().sendMessage(utils.chatColor(fileMessage.getConfig().getString("plugin-outdated")));
-//                    getServer().getConsoleSender().sendMessage(utils.chatColor(fileMessage.getConfig().getString("plugin-link")));
-//                }
-//            });
-        }
-
+        log("[Peligon Mini] BlockedCommands has been enabled.");
     }
 
     public void onDisable() {
-        // ---- [ Shutdown Message ] ----
-        if (this.fileMessage == null) return;
-        utils.log(fileMessage.getConfig().getString("shutdown"));
+        log("[Peligon Mini] BlockedCommands has been disabled.");
     }
 
-    private void registerEvents() {
-        Arrays.asList(
-            new playerChat()
-        ).forEach(listener -> getServer().getPluginManager().registerEvents(listener, this));
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void onPlayerCommand(PlayerCommandPreprocessEvent event) {
+        Player player = event.getPlayer();
+        if (player.hasPermission("Peligon.BlockedCommands.bypass")) return;
+        for (String s : getConfig().getStringList("blocked-commands")) {
+            if (event.getMessage().toLowerCase().startsWith(s.toLowerCase())) {
+                event.setCancelled(true);
+                event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', getConfig().getString("messages.blocked-command")));
+            }
+        }
     }
+
+    private static void log(String message) { System.out.println(message); }
 }

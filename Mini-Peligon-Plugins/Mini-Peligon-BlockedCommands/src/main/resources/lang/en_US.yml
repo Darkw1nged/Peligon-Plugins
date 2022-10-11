@@ -1,7 +1,0 @@
-startup: "[Mini] Peligon BlockedCommands has successfully loaded."
-shutdown: "[Mini] Peligon BlockedCommands has successfully unloaded."
-version-check-error: "There was a problem when checking the plugin version"
-plugin-outdated: "There is a new version of [Mini] Peligon BlockedCommands available."
-plugin-link: ""
-
-command-block: "Sorry but you can't use this command right now. If you think this is a mistake, please contact a server administrator."

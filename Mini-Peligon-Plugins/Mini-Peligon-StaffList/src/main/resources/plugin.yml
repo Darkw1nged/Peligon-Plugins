@@ -1,5 +1,0 @@
-name: PeligonStaffList
-version: '${project.version}'
-main: net.peligon.StaffList.Main
-api-version: 1.19
-authors: [ darkwinged ]

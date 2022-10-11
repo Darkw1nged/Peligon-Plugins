@@ -1,5 +1,0 @@
-name: PeligonStaffChat
-version: '${project.version}'
-main: net.peligon.StaffChat.Main
-api-version: 1.19
-authors: [ darkwinged ]

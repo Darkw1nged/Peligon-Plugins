@@ -6,12 +6,9 @@
 #       only one main feature to the plugin.
 #
 #######################################################################################
-Storage:
-  # Visit 'Plugins/PeligonAutoDisposal/Lang/' to see the supported languages.
-  Language File: "en_US"
-
 # You can enable a sign to open the disposal GUI.
 disposal-sign: true
+
 # Change what the sign will look like once activated.
 Sign:
   line-1: "&1Disposal"
@@ -25,5 +22,7 @@ inventory:
   # has to be multiples of 9
   size: 36
 
-# This will automatically check for updates
-check-for-updates: true
+
+messages:
+  console: "&cError! You are not allowed to perform this inside of the console."
+  no-permission: "&cError! You do not have permission to use this command."

@@ -14,7 +14,7 @@ public class cmdGamemodeAdventure implements CommandExecutor {
     private final Main plugin = Main.getInstance;
 
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        if (cmd.getName().equalsIgnoreCase("gmadventure")) {
+        if (cmd.getName().equalsIgnoreCase("gadventure")) {
             if (!(sender instanceof Player)) {
                 if (args.length == 0) {
                     sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("specify-player")));

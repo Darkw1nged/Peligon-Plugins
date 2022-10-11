@@ -14,17 +14,22 @@
     <modules>
         <!-- Ready to release -->
         <module>Mini-Peligon-AutoPickup</module>
+        <module>Mini-Peligon-AutoSmelt</module>
         <module>Mini-Peligon-BlockedCommands</module>
+        <module>Mini-Peligon-ChatColor</module>
+        <module>Mini-Peligon-ChatFilter</module>
         <module>Mini-Peligon-ClearChat</module>
         <module>Mini-Peligon-Disposal</module>
         <module>Mini-Peligon-InstantRespawn</module>
         <module>Mini-Peligon-JoinLeaveMessage</module>
+        <module>Mini-Peligon-Homes</module>
+
+        <module>Mini-Peligon-Autosell</module>
+        <module>Mini-Peligon-ChestSell</module>
+        <module>Mini-Peligon-ServerInformation</module>
 
         <!-- Urgent -->
-        <module>Mini-Peligon-ChatFilter</module>
         <module>Mini-Peligon-BankNotes</module>
-        <module>Mini-Peligon-ChatColor</module>
-        <module>Mini-Peligon-Nickname</module>
         <module>Mini-Peligon-EXPBottle</module>
 
         <!-- Not ready to release -->
@@ -32,17 +37,14 @@
         <module>Mini-Peligon-AutoCondense</module>
         <module>Mini-Peligon-AutoMessage</module>
         <module>Mini-Peligon-AutoReplant</module>
-        <module>Mini-Peligon-Autosell</module>
-        <module>Mini-Peligon-ChestSell</module>
+
+
         <module>Mini-Peligon-DeathMessages</module>
-        <module>Mini-Peligon-Homes</module>
+
         <module>Mini-Peligon-OmniTool</module>
         <module>Mini-Peligon-OnePlayerSleep</module>
-        <module>Mini-Peligon-Rules</module>
-        <module>Mini-Peligon-ServerInformation</module>
+
         <module>Mini-Peligon-Spawn</module>
-        <module>Mini-Peligon-StaffChat</module>
-        <module>Mini-Peligon-StaffList</module>
         <module>Mini-Peligon-VeinMiner</module>
         <module>Mini-Peligon-Warps</module>
     </modules>

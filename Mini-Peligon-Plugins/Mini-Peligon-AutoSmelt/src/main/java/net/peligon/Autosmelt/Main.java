@@ -1,67 +1,99 @@
 package net.peligon.Autosmelt;
 
-import net.peligon.Autosmelt.Listeners.coreEvent;
-import net.peligon.Autosmelt.Utilities.PlayerUtils;
-import net.peligon.Autosmelt.Utilities.Storage.CustomConfig;
-import net.peligon.Autosmelt.Utilities.Storage.UpdateChecker;
-import net.peligon.Autosmelt.Utilities.Utils;
-import net.peligon.Autosmelt.Utilities.WorldUtils;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Arrays;
 
-public final class Main extends JavaPlugin {
-
-    public static Main getInstance;
-    public Utils utils;
-    public WorldUtils worldUtils;
-    public PlayerUtils playerUtils;
-
-    public CustomConfig fileMessage;
+public final class Main extends JavaPlugin implements Listener {
 
     public void onEnable() {
-        // ---- [ Creating Instance ] ----
-        getInstance = this;
-
-        // ---- [ Creating Utilities ] ----
-        utils = new Utils();
-        worldUtils = new WorldUtils();
-        playerUtils = new PlayerUtils();
-
-        // ---- [ Saving Default Configs ] ----
-        saveDefaultConfig();
-        /** File Message */ {
-            fileMessage = new CustomConfig(this, "lang/" + this.getConfig().getString("Storage.Language File"), true);
-            fileMessage.saveDefaultConfig();
-        }
-
-        // ---- [ Registering Listeners ] ----
-        registerEvents();
-
-        // ---- [ Startup Message ] ----
-        utils.log(fileMessage.getConfig().getString("startup"));
-
-        // ---- [ Check for Updates ] ----
-        if (getConfig().getBoolean("check-for-updates", true)) {
-//            new UpdateChecker(0).getVersion(version -> {
-//                if (!version.equals(this.getDescription().getVersion())) {
-//                    getServer().getConsoleSender().sendMessage(utils.chatColor(fileMessage.getConfig().getString("plugin-outdated")));
-//                    getServer().getConsoleSender().sendMessage(utils.chatColor(fileMessage.getConfig().getString("plugin-link")));
-//                }
-//            });
-        }
-
+        getServer().getPluginManager().registerEvents(this, this);
+        log("[Peligon Mini] AutoSmelt has been enabled.");
     }
 
     public void onDisable() {
-        // ---- [ Shutdown Message ] ----
-        if (this.fileMessage == null) return;
-        utils.log(fileMessage.getConfig().getString("shutdown"));
+        log("[Peligon Mini] AutoSmelt has been disabled.");
     }
 
-    private void registerEvents() {
-        Arrays.asList(
-            new coreEvent()
-        ).forEach(listener -> getServer().getPluginManager().registerEvents(listener, this));
+    public boolean hasSpace(Player player, ItemStack targetItem) {
+        for (ItemStack item : player.getInventory().getContents()) {
+            if (item == null) continue;
+            if (item.hasItemMeta() && item.getItemMeta().hasDisplayName() &&
+                    targetItem.hasItemMeta() && targetItem.getItemMeta().hasDisplayName()) {
+                if (item.getItemMeta().getDisplayName().equals(targetItem.getItemMeta().getDisplayName())) {
+                    if (item.getType() == targetItem.getType()) {
+                        if (item.getAmount() != item.getMaxStackSize()) {
+                            item.setAmount(item.getAmount() + targetItem.getAmount());
+                            return true;
+                        }
+                    }
+                }
+            } else {
+                if (item.getType() == targetItem.getType()) {
+                    if (item.getAmount() != item.getMaxStackSize()) {
+                        item.setAmount(item.getAmount() + targetItem.getAmount());
+                        return true;
+                    }
+                }
+            }
+        }
+        if (player.getInventory().firstEmpty() != -1) {
+            player.getInventory().addItem(targetItem);
+            return true;
+        }
+        return false;
     }
+
+    @EventHandler
+    public void onBreak(BlockBreakEvent event) {
+        Block block = event.getBlock();
+        Player player = event.getPlayer();
+        if (player.hasPermission("Peligon.AutoSmelt.use") || player.hasPermission("Peligon.AutoSmelt.*")) {
+            for (ItemStack drop : block.getDrops(player.getInventory().getItemInMainHand())) {
+                switch (drop.getType()) {
+                    case RAW_COPPER:
+                        drop.setType(Material.COPPER_INGOT);
+                        break;
+                    case RAW_COPPER_BLOCK:
+                        drop.setType(Material.COPPER_BLOCK);
+                        break;
+                    case RAW_IRON:
+                        drop.setType(Material.IRON_INGOT);
+                        break;
+                    case RAW_IRON_BLOCK:
+                        drop.setType(Material.IRON_BLOCK);
+                        break;
+                    case RAW_GOLD:
+                        drop.setType(Material.GOLD_INGOT);
+                        break;
+                    case RAW_GOLD_BLOCK:
+                        drop.setType(Material.GOLD_BLOCK);
+                        break;
+                }
+
+                if (getConfig().getBoolean("auto-pickup", false)) {
+                    if (player.hasPermission("Peligon.AutoSmelt.pickup") || player.hasPermission("Peligon.AutoSmelt.*")) {
+                        if (!hasSpace(player, drop)) {
+                            player.sendMessage(ChatColor.translateAlternateColorCodes('&', getConfig().getString("messages.no-space")));
+                            continue;
+                        }
+                        drop.setType(Material.AIR);
+                    }
+                }
+            }
+        }
+    }
+
+    private static void log(String message) {
+        System.out.println(message);
+    }
+
 }

@@ -6,12 +6,9 @@
 #       only one main feature to the plugin.
 #
 #######################################################################################
-Storage:
-  # Visit 'Plugins/PeligonAutoDisposal/Lang/' to see the supported languages.
-  Language File: "en_US"
-
 # How many lines of chat will be cleared.
 lines: 150
 
-# This will automatically check for updates
-check-for-updates: true
+messages:
+  cleared-chat: "&c&lChat has been cleared by &f&l%player%."
+  no-permission: "&cError! You do not have permission to use this command."
