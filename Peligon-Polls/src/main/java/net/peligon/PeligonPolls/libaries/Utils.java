@@ -2,6 +2,7 @@ package net.peligon.PeligonPolls.libaries;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.peligon.PeligonPolls.Main;
+import net.peligon.PeligonPolls.libaries.struts.Poll;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -23,14 +24,6 @@ public class Utils {
         return ChatColor.translateAlternateColorCodes('&', s);
     }
 
-    // ---- [ Managing chat color within the plugin | Supports Amount ] ----
-    public static String chatColor(String s, Double amount) {
-        NumberFormat nf = NumberFormat.getInstance(new Locale("en", "US"));
-        String converted = nf.format(amount);
-        return ChatColor.translateAlternateColorCodes('&', s)
-                .replaceAll("%amount%", converted);
-    }
-
     // ---- [ Converting a lore to include colors ] ----
     public static List<String> getConvertedLore(FileConfiguration config, String path) {
         if (config == null) return null;
@@ -39,24 +32,6 @@ public class Utils {
         for (String a : oldList)
             newList.add(ChatColor.translateAlternateColorCodes('&', a));
         return newList;
-    }
-
-    // ---- [ Available space ] ----
-    public static boolean hasSpace(Player player, ItemStack targetItem) {
-        for (ItemStack item : player.getInventory().getContents()) {
-            if (item == null) continue;
-            if (item.getType() == targetItem.getType()) {
-                if (item.getAmount() != item.getMaxStackSize()) {
-                    item.setAmount(item.getAmount() + 1);
-                    return true;
-                }
-            }
-        }
-        if (player.getInventory().firstEmpty() != -1) {
-            player.getInventory().addItem(targetItem);
-            return true;
-        }
-        return false;
     }
 
     // ---- [ Send an Embed to discord ] ----
@@ -177,26 +152,5 @@ public class Utils {
                     list)
             );
         }
-    }
-
-    // ---- [ Method for working out position of poll in array ] ----
-    public static int slotToArrayIndex(int slot) {
-        switch (slot) {
-            case 10:
-                return 0;
-            case 11:
-                return 1;
-            case 12:
-                return 2;
-            case 13:
-                return 3;
-            case 14:
-                return 4;
-            case 15:
-                return 5;
-            case 16:
-                return 6;
-        }
-        return 0;
     }
 }

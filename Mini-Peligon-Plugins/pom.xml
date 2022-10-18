@@ -20,13 +20,13 @@
         <module>Mini-Peligon-ChatFilter</module>
         <module>Mini-Peligon-ClearChat</module>
         <module>Mini-Peligon-Disposal</module>
+        <module>Mini-Peligon-Homes</module>
         <module>Mini-Peligon-InstantRespawn</module>
         <module>Mini-Peligon-JoinLeaveMessage</module>
-        <module>Mini-Peligon-Homes</module>
+        <module>Mini-Peligon-ServerInformation</module>
 
         <module>Mini-Peligon-Autosell</module>
         <module>Mini-Peligon-ChestSell</module>
-        <module>Mini-Peligon-ServerInformation</module>
 
         <!-- Urgent -->
         <module>Mini-Peligon-BankNotes</module>
@@ -37,13 +37,9 @@
         <module>Mini-Peligon-AutoCondense</module>
         <module>Mini-Peligon-AutoMessage</module>
         <module>Mini-Peligon-AutoReplant</module>
-
-
         <module>Mini-Peligon-DeathMessages</module>
-
         <module>Mini-Peligon-OmniTool</module>
         <module>Mini-Peligon-OnePlayerSleep</module>
-
         <module>Mini-Peligon-Spawn</module>
         <module>Mini-Peligon-VeinMiner</module>
         <module>Mini-Peligon-Warps</module>

@@ -3,3 +3,14 @@ version: '${project.version}'
 main: net.peligon.Homes.Main
 api-version: 1.19
 authors: [ darkwinged ]
+commands:
+  sethome:
+    description: Allows players to set a home
+  deletehome:
+    description: Allows players to delete a home
+  home:
+    description: Allows players to teleport to their home
+  homes:
+    aliases:
+      - homelist
+    description: Allows players to see a list of their homes

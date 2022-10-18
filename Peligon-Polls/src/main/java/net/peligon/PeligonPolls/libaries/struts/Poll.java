@@ -1,4 +1,4 @@
-package net.peligon.PeligonPolls.libaries;
+package net.peligon.PeligonPolls.libaries.struts;
 
 import org.bukkit.entity.Player;
 
@@ -18,17 +18,6 @@ public class Poll {
     private LocalDateTime created;
     private long messageID;
     private List<UUID> votes = new ArrayList<>();
-
-    public Poll() {}
-
-    public Poll(String title, String description, String author, int upVotes, int downVotes, LocalDateTime created) {
-        this.title = title;
-        this.description = description;
-        this.author = author;
-        this.upVotes = upVotes;
-        this.downVotes = downVotes;
-        this.created = created;
-    }
 
     public Poll(String title, String description, String author, UUID authorID, int upVotes, int downVotes, LocalDateTime created, long messageID) {
         this.title = title;

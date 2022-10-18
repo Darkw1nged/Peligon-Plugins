@@ -5,7 +5,7 @@ import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.peligon.PeligonPolls.commands.cmdPoll;
 import net.peligon.PeligonPolls.commands.cmdReload;
-import net.peligon.PeligonPolls.events.menuEvents;
+import net.peligon.PeligonPolls.listeners.menuListener;
 import net.peligon.PeligonPolls.libaries.CustomConfig;
 import net.peligon.PeligonPolls.libaries.UpdateChecker;
 import net.peligon.PeligonPolls.libaries.Utils;
@@ -22,6 +22,7 @@ public class Main extends JavaPlugin {
 
     public CustomConfig fileMessage;
     public CustomConfig fileCache = new CustomConfig(this, "cache", true);
+    public CustomConfig fileCustomItems = new CustomConfig(this, "customItems", true);
 
     public void onEnable() {
         // ---- [ Initializing instance of main class | manager classes | register placeholder ] ----
@@ -32,6 +33,7 @@ public class Main extends JavaPlugin {
         loadEvents();
         saveDefaultConfig();
         fileCache.saveDefaultConfig();
+        fileCustomItems.saveDefaultConfig();
 
         // ---- [ Loading Active Polls ] ----
         Utils.loadActivePolls();
@@ -71,7 +73,7 @@ public class Main extends JavaPlugin {
         getCommand("pelpoll").setExecutor(new cmdReload());
     }
     public void loadEvents() {
-        getServer().getPluginManager().registerEvents(new menuEvents(), this);
+        getServer().getPluginManager().registerEvents(new menuListener(), this);
     }
 
     public void initializeConnection() {

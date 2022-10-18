@@ -1,157 +1,128 @@
 package net.peligon.PeligonPolls.menus;
 
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.TextComponent;
 import net.peligon.PeligonPolls.Main;
-import net.peligon.PeligonPolls.libaries.Menu;
 import net.peligon.PeligonPolls.libaries.Utils;
-import net.peligon.PeligonPolls.libaries.Poll;
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
+import net.peligon.PeligonPolls.libaries.struts.PaginatedMenu;
+import net.peligon.PeligonPolls.libaries.struts.Poll;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.ClickType;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemFlag;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
-public class menuPolls implements Menu {
+public class menuPolls extends PaginatedMenu {
 
     private final Main plugin = Main.getInstance;
-    private final Player player;
-    private final Inventory inventory;
+    private List<Poll> poll_Position;
 
     public menuPolls(Player player) {
-        this.player = player;
-        this.inventory = Bukkit.createInventory(this, plugin.getConfig().getInt("polls-inventory.size"),
-                Utils.chatColor(plugin.getConfig().getString("polls-inventory.title")));
+        super(player);
+        poll_Position = new ArrayList<>();
+    }
 
-        int pos = 0;
-        for (String key : plugin.getConfig().getConfigurationSection("polls-inventory.contents").getKeys(false)) {
-            if (!plugin.getConfig().contains("polls-inventory.contents." + key + ".item") && plugin.getConfig().getString("polls-inventory.contents." + key + ".type").equalsIgnoreCase("poll")) {
-                if (Utils.polls.isEmpty() || Utils.polls.size() == pos) {
-                    ItemStack item = new ItemStack(Material.AIR);
-                    if (plugin.getConfig().getInt("polls-inventory.contents." + key + ".slot") == -1) {
-                        for (int i = 0; i < plugin.getConfig().getInt("polls-inventory.size"); i++) {
-                            inventory.setItem(i, item);
-                        }
-                    } else {
-                        inventory.setItem(plugin.getConfig().getInt("polls-inventory.contents." + key + ".slot") - 1, item);
-                    }
-                    continue;
-                }
-                ItemStack item = new ItemStack(Material.getMaterial(plugin.getConfig().getString("polls-inventory.poll-gui-item.item").toUpperCase()));
-                if (plugin.getConfig().contains("polls-inventory.poll-gui-item.amount")) {
-                    item.setAmount(plugin.getConfig().getInt("polls-inventory.poll-gui-item.amount"));
-                }
+    @Override
+    public String getMenuName() {
+        return plugin.getConfig().getString("polls-inventory.title");
+    }
 
-                ItemMeta meta = item.getItemMeta();
-                Poll pollInfo = Utils.polls.get(pos);
+    @Override
+    public int getSlots() {
+        if (Utils.polls.isEmpty()) return 9;
+        if (Utils.polls.size() > 36) {
+            return 54;
+        } else if (Utils.polls.size() > 27) {
+            return 45;
+        } else if (Utils.polls.size() > 18) {
+            return 36;
+        }  else if (Utils.polls.size() > 9) {
+            return 27;
+        } else if (Utils.polls.size() >= 1) {
+            return 18;
+        }
+        return 9;
+    }
 
-                meta.setDisplayName(Utils.chatColor(plugin.getConfig().getString("polls-inventory.poll-gui-item.name")
-                        .replaceAll("%title%", pollInfo.getTitle())));
+    @Override
+    public void handleMenu(InventoryClickEvent event) {
+        ItemStack item = event.getCurrentItem();
+        Player player = (Player) event.getWhoClicked();
 
-                if (plugin.getConfig().contains("polls-inventory.poll-gui-item.lore")) {
-                    List<String> lore = new ArrayList<>();
-                    for (String line : plugin.getConfig().getStringList("polls-inventory.poll-gui-item.lore")) {
-
-                        if (line.contains("%description%")) {
-                            for (String s : getDescription(pollInfo.getDescription().trim())) {
-                                lore.add(Utils.chatColor(s));
-                            }
-                            line = line.replaceAll("%description%", "");
-                        }
-
-                        lore.add(Utils.chatColor(line)
-                                .replaceAll("%author%", pollInfo.getAuthor())
-                                .replaceAll("%created%", pollInfo.getCreated().getDayOfMonth() + "-" + pollInfo.getCreated().getMonthValue() + "-" + pollInfo.getCreated().getYear())
-                                .replaceAll("%upVote%", "" + pollInfo.getUpVotes())
-                                .replaceAll("%downVote%", "" + pollInfo.getDownVotes())
-                        );
-                    }
-
-                    meta.setLore(lore);
-                }
-
-                if (plugin.getConfig().contains("polls-inventory.poll-gui-item.item-flags")) {
-                    for (String flag : plugin.getConfig().getStringList("polls-inventory.poll-gui-item.item-flags")) {
-                        meta.addItemFlags(ItemFlag.valueOf(flag.toUpperCase()));
-                    }
-                }
-
-                item.setItemMeta(meta);
-
-                if (plugin.getConfig().getInt("polls-inventory.contents." + key + ".slot") == -1) {
-                    for (int i=0; i<plugin.getConfig().getInt("polls-inventory.size"); i++) {
-                        inventory.setItem(i, item);
-                    }
-                } else {
-                    inventory.setItem(plugin.getConfig().getInt("polls-inventory.contents." + key + ".slot") - 1, item);
-                }
-                pos++;
-            } else {
-                ItemStack item = new ItemStack(Material.getMaterial(plugin.getConfig().getString("polls-inventory.contents." + key + ".item").toUpperCase()));
-                if (plugin.getConfig().contains("polls-inventory.contents." + key + ".amount")) {
-                    item.setAmount(plugin.getConfig().getInt("polls-inventory.contents." + key + ".amount"));
-                }
-
-                ItemMeta meta = item.getItemMeta();
-                meta.setDisplayName(Utils.chatColor(plugin.getConfig().getString("polls-inventory.contents." + key + ".name")));
-                if (plugin.getConfig().contains("polls-inventory.contents." + key + ".lore")) {
-                    meta.setLore(Utils.getConvertedLore(plugin.getConfig(), "polls-inventory.contents." + key));
-                }
-
-                if (plugin.getConfig().contains("polls-inventory.contents." + key + ".item-flags")) {
-                    for (String flag : plugin.getConfig().getStringList("polls-inventory.contents." + key + ".item-flags")) {
-                        meta.addItemFlags(ItemFlag.valueOf(flag.toUpperCase()));
-                    }
-                }
-
-                item.setItemMeta(meta);
-
-                if (plugin.getConfig().getInt("polls-inventory.contents." + key + ".slot") == -1) {
-                    for (int i=0; i<plugin.getConfig().getInt("polls-inventory.size"); i++) {
-                        inventory.setItem(i, item);
-                    }
-                } else {
-                    inventory.setItem(plugin.getConfig().getInt("polls-inventory.contents." + key + ".slot") - 1, item);
-                }
+        if (item.equals(CustomItems.closeButton())) {
+            player.closeInventory();
+        } else if (item.equals(CustomItems.refreshButton())) {
+            player.closeInventory();
+            new menuPolls(player).open();
+        } else if (item.equals(CustomItems.nextPage())) {
+            if (!((index + 1) >= Utils.polls.size())) {
+                page = page + 1;
             }
+            super.open();
+        } else if (item.equals(CustomItems.previousPage())) {
+            if (page != 0) {
+                page = page - 1;
+            }
+            super.open();
+        } else if (item.equals(CustomItems.background())) {
+            event.setCancelled(true);
+        } else {
+            Utils.polls_temp.put(player.getUniqueId(), event.getSlot() * (page + 1));
+            Utils.poll_ID.put(player.getUniqueId(), poll_Position.get(event.getSlot()));
+
+            TextComponent yesComponent = new TextComponent(Utils.chatColor("&a&l [ YES ] "));
+            TextComponent noComponent = new TextComponent(Utils.chatColor("&c&l [ NO ]"));
+            TextComponent cancelComponent = new TextComponent(Utils.chatColor("&4&l [ CANCEL ]"));
+
+            yesComponent.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/poll vote " + poll_Position.get(event.getSlot()).getMessageID() + " yes"));
+            noComponent.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/poll vote " + poll_Position.get(event.getSlot()).getMessageID() + " no"));
+            cancelComponent.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/poll vote cancel"));
+
+            player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
+                    plugin.fileMessage.getConfig().getString("vote-status")));
+            player.spigot().sendMessage(yesComponent, noComponent, cancelComponent);
+
+            player.closeInventory();
         }
     }
 
-    public void onClick(Main plugin, Player player, int slot, ClickType type) { }
-
-    public void onOpen(Main plugin, Player player) { }
-
-    public void onClose(Main plugin, Player player) { }
-
-    public Inventory getInventory() {
-        return this.inventory;
-    }
-
-    private List<String> getDescription(String description) {
-        int wordsPerLine = plugin.getConfig().getInt("polls-inventory.poll-gui-item.description-word-per-line");
-        String[] words = description.split(" ");
-        StringBuilder line = new StringBuilder("&f");
-
-        List<String> lore = new ArrayList<>();
-        for (String word : words) {
-            if (word.contains(" ")) continue;
-
-            line.append(word).append(" ");
-            if (line.toString().split(" ").length == wordsPerLine) {
-                if (!lore.isEmpty() && (lore.get(0).length() + line.length()) >= lore.get(0).length()) continue;
-                lore.add(Utils.chatColor(line.toString()));
-                line = new StringBuilder("&f");
+    @Override
+    public void setMenuItems() {
+        for (int i = 0; i < getMaxItemsPerPage(); i++) {
+            index = getMaxItemsPerPage() * page + i;
+            if (index >= Utils.polls.size()) break;
+            if (Utils.polls.get(index) != null) {
+                poll_Position.add(Utils.polls.get(index));
+                inventory.setItem(i, CustomItems.pollItem(Utils.polls.get(index)));
             }
         }
 
-        if (!line.toString().equals("&7")) {
-            lore.add(Utils.chatColor(line.toString()));
-        }
-
-        return lore;
+        inventory.setItem(getLines() == 1 ? 0 : (9 * getLines()) - 9, CustomItems.background());
+        inventory.setItem(getLines() == 1 ? 1 : (9 * getLines()) - 8, CustomItems.background());
+        inventory.setItem(getLines() == 1 ? 2 : (9 * getLines()) - 7, page == 0 ? CustomItems.background() : CustomItems.previousPage());
+        inventory.setItem(getLines() == 1 ? 3 : (9 * getLines()) - 6, CustomItems.background());
+        inventory.setItem(getLines() == 1 ? 4 : (9 * getLines()) - 5, CustomItems.closeButton());
+        inventory.setItem(getLines() == 1 ? 5 : (9 * getLines()) - 4, CustomItems.background());
+        inventory.setItem(getLines() == 1 ? 6 : (9 * getLines()) - 3, !((index + 1) >= Utils.polls.size()) ? CustomItems.nextPage() : CustomItems.background());
+        inventory.setItem(getLines() == 1 ? 7 : (9 * getLines()) - 2, CustomItems.background());
+        inventory.setItem(getLines() == 1 ? 8 : (9 * getLines()) - 1, CustomItems.refreshButton());
     }
+
+    private int getLines() {
+        if (this.inventory.getSize() == 54) {
+            return 6;
+        } else if (this.inventory.getSize() == 45) {
+            return 5;
+        } else if (this.inventory.getSize() == 36) {
+            return 4;
+        } else if (this.inventory.getSize() == 27) {
+            return 3;
+        } else if (this.inventory.getSize() == 18) {
+            return 2;
+        }
+        return 1;
+    }
+
 }

@@ -4,7 +4,7 @@ import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.peligon.PeligonPolls.Main;
 import net.peligon.PeligonPolls.libaries.Utils;
-import net.peligon.PeligonPolls.libaries.Poll;
+import net.peligon.PeligonPolls.libaries.struts.Poll;
 import net.peligon.PeligonPolls.menus.menuPolls;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -96,6 +96,7 @@ public class cmdPoll implements CommandExecutor {
                     } else if (args[1].equals(String.valueOf(Utils.poll_ID.get(player.getUniqueId()).getMessageID()))) {
                         if (Utils.poll_ID.get(player.getUniqueId()).getVotes() != null && Utils.poll_ID.get(player.getUniqueId()).alreadyVoted(player)) {
                             sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("already-voted")));
+                            Utils.poll_ID.remove(player.getUniqueId());
                             return true;
                         }
                         if (args[2].equals("yes")) {
@@ -117,8 +118,7 @@ public class cmdPoll implements CommandExecutor {
                 }
                 if (sender.hasPermission("Peligon.Polls.view") || sender.hasPermission("Peligon.Polls.*")) {
                     Player player = (Player)sender;
-                    menuPolls polls = new menuPolls(player);
-                    player.openInventory(polls.getInventory());
+                    new menuPolls(player).open();
 
                 } else {
                     sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-permission")));

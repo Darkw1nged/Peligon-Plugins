@@ -129,7 +129,6 @@ public final class Main extends JavaPlugin {
                 new bountyEvents(),
                 new redeemEvents(),
                 new signEvents(),
-                new atmEvents(),
                 new mobMoneyEvent(),
                 new deathPenaltyEvent(),
                 new grassScavengeEvents(),

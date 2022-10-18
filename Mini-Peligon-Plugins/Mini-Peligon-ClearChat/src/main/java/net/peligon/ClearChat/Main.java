@@ -1,6 +1,5 @@
 package net.peligon.ClearChat;
 
-import net.peligon.ClearChat.Utilities.Lists.Permissions;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -22,7 +21,7 @@ public final class Main extends JavaPlugin implements CommandExecutor {
 
     public boolean onCommand(CommandSender sender, Command cmd, String string, String[] args) {
         if (cmd.getName().equalsIgnoreCase("clearchat")) {
-            if (sender.hasPermission(Permissions.use_permission.getPermission())) {
+            if (sender.hasPermission("Peligon.ClearChat.Use")) {
                 for (int i=0; i<getConfig().getInt("lines", 150); i++) {
                     Bukkit.broadcastMessage("");
                 }
