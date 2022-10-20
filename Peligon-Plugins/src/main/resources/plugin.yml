@@ -1,0 +1,5 @@
+name: PeligonPlugins
+version: '${project.version}'
+main: net.peligon.Plugins.PeligonPluginsMenu
+api-version: 1.13
+authors: [ darkwinged ]

@@ -11,13 +11,13 @@ public class cmdReload implements CommandExecutor {
     private final Main plugin = Main.getInstance;
 
     public boolean onCommand(CommandSender sender, Command cmd, String string, String[] args) {
-        if (cmd.getName().equalsIgnoreCase("pelcore")) {
+        if (cmd.getName().equalsIgnoreCase("pelplaytime")) {
             if (sender.hasPermission("Peligon.Core.Reload") || sender.hasPermission("Peligon.Core.*")) {
 
                 plugin.reloadConfig();
-                plugin.fileMessage.reloadConfig();
+                plugin.LanguageFile.reloadConfig();
 
-                sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("admin-reload")));
+                sender.sendMessage(Utils.chatColor(plugin.LanguageFile.getConfig().getString("admin-reload")));
             }
 
         }

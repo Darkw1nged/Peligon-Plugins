@@ -15,6 +15,9 @@
         <!-- Mini Series -->
         <module>Mini-Peligon-Plugins</module>
 
+        <!-- Included Plugins -->
+        <module>Peligon-Plugins</module>
+
         <!-- Released Plugins -->
         <module>Peligon-Authentication</module>
         <module>Peligon-Polls</module>

@@ -25,7 +25,7 @@ public class cmdLeaderboard implements CommandExecutor {
                         plugin.playerTime.addTime(online);
                     }
                 }
-                sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("playtime-top")
+                sender.sendMessage(Utils.chatColor(plugin.LanguageFile.getConfig().getString("playtime-top")
                         .replaceAll("%number%", String.valueOf(plugin.getConfig().getInt("leaderboard.players")))));
 
                 AtomicInteger i = new AtomicInteger();
@@ -51,7 +51,7 @@ public class cmdLeaderboard implements CommandExecutor {
                             .replaceAll("%time_played%", time)));
                 });
             } else {
-                sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-permission")));
+                sender.sendMessage(Utils.chatColor(plugin.LanguageFile.getConfig().getString("no-permission")));
             }
         }
         return false;

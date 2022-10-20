@@ -5,6 +5,10 @@ api-version: 1.13
 authors: [ darkwinged ]
 description: This is an open-source plugin
 commands:
+  peligon:
+    aliases:
+      - pel
+    description: Allows admins to view all available peligon plugins
   pelplaytime:
     aliases:
       - pplaytime

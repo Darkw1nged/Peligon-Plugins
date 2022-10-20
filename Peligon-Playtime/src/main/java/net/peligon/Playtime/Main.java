@@ -9,9 +9,13 @@ import net.peligon.Playtime.libaries.Utils;
 import net.peligon.Playtime.libaries.storage.SQLibrary;
 import net.peligon.Playtime.libaries.storage.SQLiteLibrary;
 import net.peligon.Playtime.libaries.timePlayedTimer;
+import net.peligon.Playtime.listeners.menuListener;
 import net.peligon.Playtime.listeners.playTimeManage;
 import net.peligon.Playtime.managers.mgrPlaceholders;
 import net.peligon.Playtime.managers.mgrPlayTime;
+import net.peligon.Plugins.PeligonPluginsMenu;
+import net.peligon.Plugins.commands.peligonPluginsMenuCommand;
+import net.peligon.Plugins.listeners.PeligonPluginMenuEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -31,7 +35,7 @@ public final class Main extends JavaPlugin {
     public SQLibrary sqlLibrary;
     public String storageType = "SQLite";
 
-    public CustomConfig fileMessage;
+    public CustomConfig LanguageFile;
 
     public void onEnable() {
         // ---- [ Initializing instance of main class ] ----
@@ -43,12 +47,12 @@ public final class Main extends JavaPlugin {
         saveDefaultConfig();
 
         // ---- [ Loading lang file ] ----
-        fileMessage = new CustomConfig(this, "lang/" + this.getConfig().getString("Storage.Language File"), true);
-        fileMessage.saveDefaultConfig();
+        LanguageFile = new CustomConfig(this, "lang/" + this.getConfig().getString("Storage.Language File"), true);
+        LanguageFile.saveDefaultConfig();
 
         // ---- [ Checking if the server has the dependencies, if not disable ] ----
         if (Bukkit.getPluginManager().getPlugin("Vault") == null) {
-            getServer().getConsoleSender().sendMessage(Utils.chatColor(this.fileMessage.getConfig().getString("no-plugin-dependency")));
+            getServer().getConsoleSender().sendMessage(Utils.chatColor(this.LanguageFile.getConfig().getString("no-plugin-dependency")));
             getServer().getPluginManager().disablePlugin(this);
         }
 
@@ -65,7 +69,7 @@ public final class Main extends JavaPlugin {
         new timePlayedTimer().runTaskTimer(this, 20 * 5, 20 * 5);
 
         // ---- [ Startup message ] ----
-        getServer().getConsoleSender().sendMessage(Utils.chatColor(this.fileMessage.getConfig().getString("startup")));
+        getServer().getConsoleSender().sendMessage(Utils.chatColor(this.LanguageFile.getConfig().getString("startup")));
 
         // ---- [ Check if server has most updated version ] ----
         if (getConfig().getBoolean("check-for-updates", true)) {
@@ -75,10 +79,11 @@ public final class Main extends JavaPlugin {
 
     public void onDisable() {
         // ---- [ shutdown message ] ----
-        getServer().getConsoleSender().sendMessage(Utils.chatColor(this.fileMessage.getConfig().getString("shutdown")));
+        getServer().getConsoleSender().sendMessage(Utils.chatColor(this.LanguageFile.getConfig().getString("shutdown")));
     }
 
     public void loadCommands() {
+        getCommand("peligon").setExecutor(new peligonPluginsMenuCommand());
         getCommand("pelplaytime").setExecutor(new cmdReload());
         getCommand("playtime").setExecutor(new cmdTimePlayed());
         getCommand("playtimetop").setExecutor(new cmdLeaderboard());
@@ -86,15 +91,17 @@ public final class Main extends JavaPlugin {
 
     public void loadEvents() {
         Arrays.asList(
-                new playTimeManage()
+                new PeligonPluginMenuEvent(),
+                new playTimeManage(),
+                new menuListener()
         ).forEach(listener -> getServer().getPluginManager().registerEvents(listener, this));
     }
 
     private void versionChecker() {
         new UpdateChecker(this, 101707).getVersion(version -> {
             if (!version.equals(this.getDescription().getVersion())) {
-                getServer().getConsoleSender().sendMessage(Utils.chatColor(fileMessage.getConfig().getString("plugin-outdated")));
-                getServer().getConsoleSender().sendMessage(Utils.chatColor(fileMessage.getConfig().getString("plugin-link")));
+                getServer().getConsoleSender().sendMessage(Utils.chatColor(LanguageFile.getConfig().getString("plugin-outdated")));
+                getServer().getConsoleSender().sendMessage(Utils.chatColor(LanguageFile.getConfig().getString("plugin-link")));
             }
         });
     }
