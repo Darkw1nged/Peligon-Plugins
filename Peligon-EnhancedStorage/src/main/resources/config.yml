@@ -9,7 +9,6 @@ Storage:
   # Visit 'plugins/PeligonEnhancedStorage/Lang/' to see the supported languages.
   lang: "en_US"
 
-
 ###############################################################
 # +---------------------------------------------------------+ #
 # |        Peligon Enhanced Storage (Default Settings)      | #
@@ -19,13 +18,60 @@ Storage:
 ###############################################################
 defaults:
   player-vault-title: "&ePrivate Vault &8(%number%)"
-  backpack:
-    enabled: true
-    slot: 9
-    # entry means how the item will go into the backpack.
-    # Available options: "break" (when player breaks a block), "pickup" (When a player picks up an item)
-    # !! NOTE: The item will either not be dropped or added to the player's inventory depending on the entry.
-    entry: break
+
+###############################################################
+# +---------------------------------------------------------+ #
+# |           Peligon Enhanced Storage (Backpacks)          | #
+# |    This is where you can change settings for the        | #
+# |    backpack(s) and how they look.                       | #
+# +---------------------------------------------------------+ #
+###############################################################
+Backpacks:
+  enabled: true
+  normal-settings:
+    small:
+      # Must be multiples of 9 (Minimum is 9 | Maximum is 54)
+      size: 9
+      title: "&eSmall Backpack"
+    medium:
+      size: 18
+      title: "&eMedium Backpack"
+    large:
+      size: 36
+      title: "&eLarge Backpack"
+    massive:
+      size: 54
+      title: "&eMassive Backpack"
+  adventure-backpack-settings:
+    beginner:
+      inventory:
+        # Must be multiples of 9 (Minimum is 9 | Maximum is 54)
+        size: 27
+        title: "&7Beginner Adventurer Backpack"
+      # Will certain items be restricted from going inside the
+      # backpack.
+      filtering: true
+      # When a player picks up an item will it automatically go
+      # inside the backpack.
+      automatic-pickup: true
+      # Allow players to grab food from their backpack without
+      # actually going inside it.
+      keep-food-restocked: false
+    experienced:
+      invetory:
+        size: 54
+        title: "&5Experienced Adventurer Backpack"
+      filtering: true
+      automatic-pickup: true
+      keep-food-restocked: true
+
+
+
+
+
+
+
+
 
 ###############################################################
 # +---------------------------------------------------------+ #

@@ -19,12 +19,28 @@ import java.util.*;
 
 public class Utils {
 
+    // Getting the main class.
     private static final Main plugin = Main.getInstance;
 
-    // ---- [ Managing chat color within the plugin ] ----
+    // Translating all color codes in a string.
     public static String chatColor(String s) {
         return s == null ? null : ChatColor.translateAlternateColorCodes('&', s);
     }
+
+    // Opened vaults HashMap<>.
+    public static Map<UUID, PlayerVault> openVaults = new HashMap<>();
+
+
+
+
+
+
+
+
+
+
+
+
 
     // ---- [ Format numbers ] ----
     public static String formatAmount(int amount) {
@@ -144,7 +160,6 @@ public class Utils {
 
     // ---- [ Cached Items ] ----
     public static Map<ArmorStand, Long> activeHolograms = new HashMap<>();
-    public static Map<UUID, PlayerVault> openVaults = new HashMap<>();
     public static Map<UUID, Backpack> backpacks = new HashMap<>();
     public static Map<UUID, BackpackItem> backpackItemSelected = new HashMap<>();
     public static Map<UUID, Map<Integer, String>> itemSlot = new HashMap<>();

@@ -1,21 +1,28 @@
 startup: "Peligon Enhanced Storage has successfully loaded."
 shutdown: "Peligon Enhanced Storage has successfully unloaded."
-no-plugin-dependency: "Peligon Enhanced Storage has been disabled due to missing dependency."
 version-check-error: "There was a problem when checking the plugin version"
 plugin-outdated: "There is a new version of Peligon Enhanced Storage available."
-plugin-link: "Updated version: "
+plugin-link: "Updated version: https://www.spigotmc.org/resources/peligon-enhancedstorage.103322/"
+
+
+
+error-console: "&cError! You are not allowed to perform this inside of the console."
+error-no-permission: "&cError! You do not have permission to use this command."
+error-invalid-number: "&cError! Invalid Number."
+
+usage-vault: "&cIncorrect Command Usage! &f/pv [number]"
+
+
 
 prefix: "&ePeligon >> "
 admin-reload: "&eAll configuration files have been reloaded."
 
-console: "&cError! You are not allowed to perform this inside of the console."
-no-permission: "&cError! You do not have permission to use this command."
+
 no-player-found: "&cError! player could not be found."
 command-disabled: "&cError! The current command is disabled on the server."
 specify-player: "&cError! Please specify a player."
 specify-number: "&cError! Please specify a number."
 not-enough-space: "&cError! You do not have enough space for this item."
 invalid-amount: "&cError! Invalid Amount."
-invalid-number: "&cError! Invalid Number."
 no-data-found: "&cError! No data found."
 player-vault-locked: "&cError! The player's vault is locked. Please contact an administrator if you believe this is a mistake."

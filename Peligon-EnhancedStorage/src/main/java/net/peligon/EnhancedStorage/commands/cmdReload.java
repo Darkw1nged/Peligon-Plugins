@@ -15,11 +15,11 @@ public class cmdReload implements CommandExecutor {
             if (sender.hasPermission("Peligon.EnhancedStorage.Reload") || sender.hasPermission("Peligon.EnhancedStorage.*")) {
 
                 plugin.reloadConfig();
-                plugin.fileMessage.reloadConfig();
+                plugin.languageFile.reloadConfig();
                 plugin.fileApproveItem.reloadConfig();
                 plugin.fileWithdrawItem.reloadConfig();
 
-                sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("admin-reload")));
+                sender.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("admin-reload")));
             }
 
         }

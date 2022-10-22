@@ -10,34 +10,39 @@ import java.util.UUID;
 
 public class PlayerVault {
 
-    private final int number;
-    private final UUID owner;
-    private final CustomConfig config;
+    // Creating variables
+    private final int vaultNumber;
+    private final UUID vaultOwner;
+    private final CustomConfig vaultConfig;
 
+    // Constructor
     public PlayerVault(int number, UUID owner) {
-        this.number = number;
-        this.owner = owner;
-        this.config = new CustomConfig(Main.getInstance, "playerVaults/" + owner.toString() + "/" + number, false);
+        this.vaultNumber = number;
+        this.vaultOwner = owner;
+        this.vaultConfig = new CustomConfig(Main.getInstance, "playerVaults/" + owner.toString() + "/" + number, false);
     }
 
+    // Getters
     public int getNumber() {
-        return number;
+        return vaultNumber;
     }
 
     public UUID getOwner() {
-        return owner;
+        return vaultOwner;
     }
 
     public CustomConfig getSaveLocation() {
-        return config;
+        return vaultConfig;
     }
 
+    // Loading the vault items and opening it for the player.
     public void open(Player player) {
-        Inventory vault = Bukkit.createInventory(player, 54, Utils.chatColor(Main.getInstance.getConfig().getString("defaults.player-vault-title").replaceAll("%number%", String.valueOf(number))));
+        Inventory vault = Bukkit.createInventory(player, 54, Utils.chatColor(Main.getInstance.getConfig().getString("defaults.player-vault-title")
+                .replaceAll("%number%", String.valueOf(vaultNumber))));
 
-        if (config.getConfig().contains("items")) {
-            for (String key : config.getConfig().getConfigurationSection("items").getKeys(false)) {
-                vault.setItem(Integer.parseInt(key), config.getConfig().getItemStack("items." + key));
+        if (vaultConfig.getConfig().contains("items")) {
+            for (String key : vaultConfig.getConfig().getConfigurationSection("items").getKeys(false)) {
+                vault.setItem(Integer.parseInt(key), vaultConfig.getConfig().getItemStack("items." + key));
             }
         }
 

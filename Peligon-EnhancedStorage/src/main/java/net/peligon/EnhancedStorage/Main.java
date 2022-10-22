@@ -1,7 +1,6 @@
 package net.peligon.EnhancedStorage;
 
-import net.peligon.EnhancedStorage.commands.cmdPlayerVault;
-import net.peligon.EnhancedStorage.commands.cmdReload;
+import net.peligon.EnhancedStorage.commands.playerVaultCommand;
 import net.peligon.EnhancedStorage.libaries.BackpackCheck;
 import net.peligon.EnhancedStorage.libaries.CustomConfig;
 import net.peligon.EnhancedStorage.libaries.UpdateChecker;
@@ -9,6 +8,8 @@ import net.peligon.EnhancedStorage.libaries.Utils;
 import net.peligon.EnhancedStorage.libaries.struts.Backpack;
 import net.peligon.EnhancedStorage.libaries.struts.BackpackItem;
 import net.peligon.EnhancedStorage.listener.*;
+import net.peligon.Plugins.commands.peligonPluginsMenuCommand;
+import net.peligon.Plugins.listeners.PeligonPluginMenuEvent;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -21,77 +22,100 @@ import java.util.UUID;
 
 public class Main extends JavaPlugin {
 
+    // Create an instance of the main class
     public static Main getInstance;
 
-    public CustomConfig fileMessage;
+    // Creating instances of customConfig files
+    public CustomConfig languageFile;
     public CustomConfig fileApproveItem = new CustomConfig(this, "Inventories/Approval", true);
     public CustomConfig fileWithdrawItem = new CustomConfig(this, "Inventories/Withdraw", true);
 
     public void onEnable() {
-        // ---- [ Initializing instance of main class ] ----
+        // Initializing instance of main class.
         getInstance = this;
 
-        // ---- [ Loading Commands | Loading Events | Loading YML Files ] ----
-        loadCommands();
-        loadEvents();
+        // Loading customConfig files.
         saveDefaultConfig();
         fileApproveItem.saveDefaultConfig();
         fileWithdrawItem.saveDefaultConfig();
 
-        // ---- [ Loading backpacks ] ----
-        loadBackpacks();
+        // Initializing lang file and saving the default version.
+        languageFile = new CustomConfig(this, "lang/" + this.getConfig().getString("Storage.lang"), true);
+        languageFile.saveDefaultConfig();
 
-        // ---- [ Loading lang file ] ----
-        fileMessage = new CustomConfig(this, "lang/" + this.getConfig().getString("Storage.lang"), true);
-        fileMessage.saveDefaultConfig();
+        // Loading all commands and events.
+        loadEvents();
+        loadCommands();
 
-        // ---- [ Calling Repeating Tasks ] ----
-        new BackpackCheck().runTaskTimer(this, 20 * 5, 20 * 5);
+        // Checking for updates.
+        if (getConfig().getBoolean("check-for-updates", true)) versionChecker();
 
-        // ---- [ Startup message ] ----
-        getServer().getConsoleSender().sendMessage(Utils.chatColor(this.fileMessage.getConfig().getString("startup")));
-
-        // ---- [ Check if server has most updated version ] ----
-        if (getConfig().getBoolean("check-for-updates", true)) {
-            versionChecker();
-        }
+        // Sending startup message to console.
+        if (this.languageFile != null)
+            getServer().getConsoleSender().sendMessage(Utils.chatColor(this.languageFile.getConfig().getString("startup")));
     }
 
     public void onDisable() {
-        // ---- [ Save Backpack ] ----
-        saveBackpacks();
-
-        // ---- [ shutdown message ] ----
-        if (this.fileMessage == null) return;
-        getServer().getConsoleSender().sendMessage(Utils.chatColor(this.fileMessage.getConfig().getString("shutdown")));
+        // Sending plugin shutdown message if messages file is not null
+        if (this.languageFile == null)
+            getServer().getConsoleSender().sendMessage(Utils.chatColor(this.languageFile.getConfig().getString("shutdown")));
     }
 
-    public void loadCommands() {
-        getCommand("pelstorage").setExecutor(new cmdReload());
-        getCommand("playervault").setExecutor(new cmdPlayerVault());
-    }
-
-    public void loadEvents() {
-        Arrays.asList(
-                new backpackEvents(),
-                new playerVaultEvent(),
-
-                new customGUIEvents(),
-                new backpackInventory(),
-                new approveInventory(),
-                new withdrawInventory()
-        ).forEach(listener -> getServer().getPluginManager().registerEvents(listener, this));
-    }
-
+    // Getting the version from https://www.spigot.org and comparing the version to current version.
     private void versionChecker() {
         new UpdateChecker(this, 103322).getVersion(version -> {
-            if (!version.equals(this.getDescription().getVersion())) {
-                getServer().getConsoleSender().sendMessage(Utils.chatColor(fileMessage.getConfig().getString("plugin-outdated")));
-                getServer().getConsoleSender().sendMessage(Utils.chatColor(fileMessage.getConfig().getString("plugin-link")));
+            // Creating variables to store version to make it easily readable.
+            double spigotVersion = Double.parseDouble(version);
+            double pluginVersion = Double.parseDouble(this.getDescription().getVersion());
+
+            // If spigot version is greater than the current plugin version then send console a message
+            // saving that new version is available along with the link to it.
+            if (spigotVersion > pluginVersion) {
+                getServer().getConsoleSender().sendMessage(Utils.chatColor(languageFile.getConfig().getString("plugin-outdated")));
+                getServer().getConsoleSender().sendMessage(Utils.chatColor(languageFile.getConfig().getString("plugin-link")));
             }
         });
     }
 
+    // Registering all events.
+    public void loadEvents() {
+        Arrays.asList(
+                // Listener for peligon plugin menu.
+                new PeligonPluginMenuEvent(),
+
+                // Other listeners.
+                new playerVaultEvent(),
+                new autoFill()
+        ).forEach(listener -> getServer().getPluginManager().registerEvents(listener, this));
+    }
+
+    // Registering all commands : Can ignore capitals.
+    public void loadCommands() {
+        // Command for peligon plugin menu.
+        getCommand("peligon").setExecutor(new peligonPluginsMenuCommand());
+
+        // Other commands.
+        getCommand("playervault").setExecutor(new playerVaultCommand());
+    }
+
+
+    // TODO --------------------------- Subject to be removed ---------------------------
+//    public void loadCommands() {
+//        getCommand("pelstorage").setExecutor(new cmdReload());
+//    }
+//
+//    public void loadEvents() {
+//        Arrays.asList(
+//                new backpackEvents(),
+//
+//                new customGUIEvents(),
+//                new backpackInventory(),
+//                new approveInventory(),
+//                new withdrawInventory()
+//        ).forEach(listener -> getServer().getPluginManager().registerEvents(listener, this));
+//    }
+
+    // TODO --------------------------- Subject to be removed ---------------------------
     public void saveBackpacks() {
         for (Backpack backpack : Utils.backpacks.values()) {
             CustomConfig config = new CustomConfig(this, "backpack", "data/" + backpack.getOwner());
@@ -110,6 +134,7 @@ public class Main extends JavaPlugin {
         }
     }
 
+    // TODO --------------------------- Subject to be removed ---------------------------
     public void loadBackpacks() {
         File folder = new File(this.getDataFolder() + "/data");
         if (!folder.exists()) return;
