@@ -96,7 +96,7 @@ public class menuCore extends Menu {
                     message.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://www.spigotmc.org/resources/peligon-playtime.101707/"));
                     player.spigot().sendMessage(message);
                 } else if (event.isLeftClick()) {
-                    Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), "pelplaytime");
+                    Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), "peligonplaytime");
                 } else if (event.isRightClick()) {
                     TextComponent message = new TextComponent(Utils.chatColor("\n&a&nPeligon Playtime Documentation Link\n"));
                     message.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://github.com/Darkw1nged/Peligon-Plugins/wiki/Peligon-Playtime-:-Commands-and-Permissions"));

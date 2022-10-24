@@ -8,16 +8,17 @@ commands:
   peligon:
     aliases:
       - pel
-    description: Allows admins to view all available peligon plugins
-  pelplaytime:
+    description: Allows admins to view all available peligon plugins.
+  peligonplaytime:
     aliases:
       - pplaytime
-      - pptime
+      - pelplaytime
     description: Allows admins to reload configuration files
   playtime:
     aliases:
       - tplayed
       - timeplayed
+      - pt
     description: Allows players to see how much time they have played on the server
   playtimetop:
     aliases:
