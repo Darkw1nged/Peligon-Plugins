@@ -7,9 +7,9 @@
 #######################################################################################
 
 Storage:
-  # Visit 'Plugins/Playtime/Lang/' to see the supported languages.
+  # Visit 'Plugins/PeligonPlaytime/Lang/' to see the supported languages.
   Language File: "en_US"
-  # Available options: "MySQL", "SQLite"
+  # Available options: "File", "MySQL", "SQLite"
   database: "SQLite"
   MySQL:
     host: "localhost"
@@ -17,6 +17,24 @@ Storage:
     database: "minecraft"
     username: "root"
     password: ""
+
+###############################################################
+# +---------------------------------------------------------+ #
+# |            Peligon Playtime (Default Settings)          | #
+# |    This is where you can change the default settings    | #
+# |    of the plugin and how it will perform.               | #
+# +---------------------------------------------------------+ #
+###############################################################
+check-for-updates: true
+
+
+
+
+
+
+
+
+
 
 format: "%seconds%s, %minutes%m, %hours%hrs, %days%d, %weeks%wks"
 leaderboard:
@@ -65,5 +83,3 @@ rewards:
       - "give %player% diamond 5"
       - "eco give %player% 5000"
     claimed: []
-
-check-for-updates: true

@@ -23,10 +23,8 @@ public class SQLibrary {
             openConnection();
         } catch (ClassNotFoundException | SQLException e) {
             log("An error occured when trying to connect to the MySQL database.");
-            log(
-                    "Make sure the MySQL settings are correct in the config.yml file, and that the MySQL server is online!");
-            log(
-                    "If this error persists please report the following Error code to the plugin developer: ERSQL-100-A");
+            log("Make sure the MySQL settings are correct in the config.yml file, and that the MySQL server is online!");
+            log("If this error persists please report the following Error code to the plugin developer: ERSQL-100-A");
         } finally {
             try {
                 if (connection != null && !connection.isClosed()) {
@@ -34,8 +32,7 @@ public class SQLibrary {
                 }
             } catch (SQLException e) {
                 log("An error occured when trying to close the MySQL database connection.");
-                log(
-                        "If this error persists please report the following Error code to the plugin developer: ERSQL-101-A");
+                log("If this error persists please report the following Error code to the plugin developer: ERSQL-101-A");
             }
         }
     }

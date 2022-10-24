@@ -1,4 +1,4 @@
-package net.peligon.Playtime.libaries;
+package net.peligon.Playtime.libaries.storage;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;

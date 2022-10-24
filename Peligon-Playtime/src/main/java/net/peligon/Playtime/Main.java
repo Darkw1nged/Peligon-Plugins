@@ -2,8 +2,8 @@ package net.peligon.Playtime;
 
 import net.peligon.Playtime.commands.cmdLeaderboard;
 import net.peligon.Playtime.commands.cmdReload;
-import net.peligon.Playtime.commands.cmdTimePlayed;
-import net.peligon.Playtime.libaries.CustomConfig;
+import net.peligon.Playtime.commands.playtimeCommand;
+import net.peligon.Playtime.libaries.storage.CustomConfig;
 import net.peligon.Playtime.libaries.UpdateChecker;
 import net.peligon.Playtime.libaries.Utils;
 import net.peligon.Playtime.libaries.storage.SQLibrary;
@@ -11,9 +11,8 @@ import net.peligon.Playtime.libaries.storage.SQLiteLibrary;
 import net.peligon.Playtime.libaries.timePlayedTimer;
 import net.peligon.Playtime.listeners.menuListener;
 import net.peligon.Playtime.listeners.playTimeManage;
-import net.peligon.Playtime.managers.mgrPlaceholders;
+import net.peligon.Playtime.managers.placeholderAPI;
 import net.peligon.Playtime.managers.mgrPlayTime;
-import net.peligon.Plugins.PeligonPluginsMenu;
 import net.peligon.Plugins.commands.peligonPluginsMenuCommand;
 import net.peligon.Plugins.listeners.PeligonPluginMenuEvent;
 import org.bukkit.Bukkit;
@@ -29,81 +28,163 @@ import static net.peligon.Playtime.libaries.storage.SQLiteLibrary.connection;
 @SuppressWarnings("ALL")
 public final class Main extends JavaPlugin {
 
+    // Create an instance of the main class
     public static Main getInstance;
+
+    // Creating instances of customConfig files
+    public CustomConfig languageFile;
+
+    // Storage type; File, MySQL, SQLite
+    public String storageType = "file";
+
+    public void onEnable() {
+        // Initializing instance of main class.
+        getInstance = this;
+
+        // Loading customConfig files.
+        saveDefaultConfig();
+
+        // Initializing lang file and saving the default version.
+        languageFile = new CustomConfig(this, "lang/" + this.getConfig().getString("Storage.lang"), true);
+        languageFile.saveDefaultConfig();
+
+        // Getting storage type from config
+        if (getConfig().contains("Storage.database") && getConfig().getString("Storage.database").equalsIgnoreCase("File") ||
+                getConfig().getString("Storage.database").equalsIgnoreCase("MySQL") ||
+                getConfig().getString("Storage.database").equalsIgnoreCase("SQLite"))
+            storageType = getConfig().getString("Storage.database").toLowerCase();
+
+        // Loading all commands and events.
+        loadEvents();
+        loadCommands();
+
+        // Registering placeholderAPI
+        if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
+            new placeholderAPI().register();
+        }
+
+        // Checking for updates.
+        if (getConfig().getBoolean("check-for-updates", true)) versionChecker();
+
+        // Sending startup message to console.
+        if (this.languageFile != null)
+            getServer().getConsoleSender().sendMessage(Utils.chatColor(this.languageFile.getConfig().getString("startup")));
+    }
+
+    public void onDisable() {
+        // Sending plugin shutdown message if messages file is not null
+        if (this.languageFile == null)
+            getServer().getConsoleSender().sendMessage(Utils.chatColor(this.languageFile.getConfig().getString("shutdown")));
+    }
+
+    // Getting the version from https://www.spigot.org and comparing the version to current version.
+    private void versionChecker() {
+        new UpdateChecker(this, 101707).getVersion(version -> {
+            // Creating variables to store version to make it easily readable.
+            double spigotVersion = Double.parseDouble(version);
+            double pluginVersion = Double.parseDouble(this.getDescription().getVersion());
+
+            // If spigot version is greater than the current plugin version then send console a message
+            // saving that new version is available along with the link to it.
+            if (spigotVersion > pluginVersion) {
+                getServer().getConsoleSender().sendMessage(Utils.chatColor(languageFile.getConfig().getString("plugin-outdated")));
+                getServer().getConsoleSender().sendMessage(Utils.chatColor(languageFile.getConfig().getString("plugin-link")));
+            }
+        });
+    }
+
+    // Registering all events.
+    public void loadEvents() {
+        Arrays.asList(
+                // Listener for peligon plugin menu.
+                new PeligonPluginMenuEvent()
+
+                // Other listeners.
+        ).forEach(listener -> getServer().getPluginManager().registerEvents(listener, this));
+    }
+
+    // Registering all commands : Can ignore capitals.
+    public void loadCommands() {
+        // Command for peligon plugin menu.
+        getCommand("peligon").setExecutor(new peligonPluginsMenuCommand());
+
+        // Other commands.
+        getCommand("playtime").setExecutor(new playtimeCommand());
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     public mgrPlayTime playerTime;
 
     public SQLibrary sqlLibrary;
-    public String storageType = "SQLite";
 
-    public CustomConfig LanguageFile;
-
-    public void onEnable() {
-        // ---- [ Initializing instance of main class ] ----
-        getInstance = this;
-
-        // ---- [ Loading Commands | Loading Events | Loading YML Files ] ----
-        loadCommands();
-        loadEvents();
-        saveDefaultConfig();
-
-        // ---- [ Loading lang file ] ----
-        LanguageFile = new CustomConfig(this, "lang/" + this.getConfig().getString("Storage.Language File"), true);
-        LanguageFile.saveDefaultConfig();
-
-        // ---- [ Checking if the server has the dependencies, if not disable ] ----
-        if (Bukkit.getPluginManager().getPlugin("Vault") == null) {
-            getServer().getConsoleSender().sendMessage(Utils.chatColor(this.LanguageFile.getConfig().getString("no-plugin-dependency")));
-            getServer().getPluginManager().disablePlugin(this);
-        }
-
+    public void onEsdfnable() {
         // ---- [ Setting up storage ] ----
         setupStorage();
 
         // ---- [ Initializing instance of manager classes | register placeholder ] ----
         playerTime = new mgrPlayTime();
-        if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
-            new mgrPlaceholders().register();
-        }
+
 
         // ---- [ Calling repeating tasks ] ----
         new timePlayedTimer().runTaskTimer(this, 20 * 5, 20 * 5);
 
-        // ---- [ Startup message ] ----
-        getServer().getConsoleSender().sendMessage(Utils.chatColor(this.LanguageFile.getConfig().getString("startup")));
-
-        // ---- [ Check if server has most updated version ] ----
-        if (getConfig().getBoolean("check-for-updates", true)) {
-            versionChecker();
-        }
     }
 
-    public void onDisable() {
-        // ---- [ shutdown message ] ----
-        getServer().getConsoleSender().sendMessage(Utils.chatColor(this.LanguageFile.getConfig().getString("shutdown")));
-    }
-
-    public void loadCommands() {
-        getCommand("peligon").setExecutor(new peligonPluginsMenuCommand());
+    public void loadCosdfmmands() {
         getCommand("pelplaytime").setExecutor(new cmdReload());
-        getCommand("playtime").setExecutor(new cmdTimePlayed());
+//        getCommand("playtime").setExecutor(new cmdTimePlayed());
         getCommand("playtimetop").setExecutor(new cmdLeaderboard());
     }
 
-    public void loadEvents() {
+    public void loadEvsfents() {
         Arrays.asList(
                 new PeligonPluginMenuEvent(),
                 new playTimeManage(),
                 new menuListener()
         ).forEach(listener -> getServer().getPluginManager().registerEvents(listener, this));
-    }
-
-    private void versionChecker() {
-        new UpdateChecker(this, 101707).getVersion(version -> {
-            if (!version.equals(this.getDescription().getVersion())) {
-                getServer().getConsoleSender().sendMessage(Utils.chatColor(LanguageFile.getConfig().getString("plugin-outdated")));
-                getServer().getConsoleSender().sendMessage(Utils.chatColor(LanguageFile.getConfig().getString("plugin-link")));
-            }
-        });
     }
 
     private void setupStorage() {

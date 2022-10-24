@@ -2,17 +2,14 @@ package net.peligon.Playtime.managers;
 
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import net.peligon.Playtime.Main;
+import net.peligon.Playtime.libaries.playerUtils;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public class mgrPlaceholders extends PlaceholderExpansion {
+public class placeholderAPI extends PlaceholderExpansion {
 
-    private Main plugin = Main.getInstance;
-
-    public static mgrPlaceholders getInstance;
-    public mgrPlaceholders() {
-        getInstance = this;
-    }
+    // Getting the main instance of the main class.
+    private final Main plugin = Main.getInstance;
 
     /**
      * The placeholder identifier of this expansion. May not contain {@literal %},
@@ -47,7 +44,7 @@ public class mgrPlaceholders extends PlaceholderExpansion {
 
     @Override
     public String onPlaceholderRequest(Player player, String identifier) {
-        long timePlayed = plugin.playerTime.getTimePlayed(player);
+        long timePlayed = playerUtils.getPlaytime(player);
         long seconds = timePlayed % 1000L;
         long minutes = timePlayed / 1000L % 60L;
         long hours = timePlayed / 1000L / 60L % 60L;
