@@ -1,4 +1,4 @@
-package net.peligon.Playtime.managers;
+package net.peligon.Playtime.libaries;
 
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import net.peligon.Playtime.Main;

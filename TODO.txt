@@ -27,17 +27,16 @@ TODO -   -> /playtime view (player*Optional) [timeplayed | pt] (Peligon.Playtime
 TODO -   -> /playtime reset (player*Optional) [timeplayed | pt] (Peligon.Playtime.Reset)
 TODO -   -> /playtime hide (player*Optional) [timeplayed | pt] (Peligon.Playtime.Hide)
 TODO -   -> /playtime pause (player*Optional) [timeplayed | pt] (Peligon.Playtime.Pause)
-
-
----- { In Progress } ----
-TODO - Peligon Playtime (Rewrite)
-TODO - -> Add player to activeTimes HashMap when they join the server
-TODO - -> Remove player from activeTimes HashMap when they leave the server
-TODO - -> Upon plugin startup check if any players are on the server
-TODO -   -> If any players are on the server then add them to activeTimes HashMap
 TODO - -> Commands:
 TODO -   -> /playtimetop [timeplayedtop | pttop] (Peligon.Playtime.Leaderboard)
 TODO - -> Global permission (Peligon.Playtime.*)
+TODO - -> Add player to activeTimes HashMap when they join the server
+TODO - -> Remove player from activeTimes HashMap when they leave the server
+
+---- { In Progress } ----
+TODO - Peligon Playtime (Rewrite)
+TODO - -> Upon plugin startup check if any players are on the server
+TODO -   -> If any players are on the server then add them to activeTimes HashMap
 TODO - -> Add playtime reached goals
 TODO -   -> Editable inside the config.yml
 TODO - -> Add a timer to the player that will check for goals reached (2-second interval)

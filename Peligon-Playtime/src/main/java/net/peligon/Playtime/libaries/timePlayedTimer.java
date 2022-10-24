@@ -10,14 +10,12 @@ public class timePlayedTimer extends BukkitRunnable {
 
     private final Main plugin = Main.getInstance;
 
-    public timePlayedTimer() { }
-
     @Override
     public void run() {
         for (Player online : Bukkit.getOnlinePlayers()) {
-            plugin.playerTime.addTime(online);
+            playerUtils.addPlaytime(online);
             for (String reward : plugin.getConfig().getConfigurationSection("rewards").getKeys(false)) {
-                long seconds = plugin.playerTime.getTimePlayed(online) / 1000;
+                long seconds = playerUtils.getPlaytime(online) / 1000;
                 if (plugin.getConfig().contains("rewards." + reward + ".claimed." + online.getUniqueId().toString())) {
                     int timesClaimed = plugin.getConfig().getInt("rewards." + reward + ".claimed." + online.getUniqueId());
                     if (seconds >= (long) plugin.getConfig().getInt("rewards." + reward + ".time") * timesClaimed) {

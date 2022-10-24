@@ -25,6 +25,14 @@ Storage:
 # |    of the plugin and how it will perform.               | #
 # +---------------------------------------------------------+ #
 ###############################################################
+leaderboard:
+  players: 10
+  format: "%position%. &e%player% &f- &a%time_played%"
+
+# Any worlds that are disabled. If the player goes inside of one of these worlds,
+# their playtime will not be counted.
+disabled-words: []
+
 check-for-updates: true
 
 
@@ -36,10 +44,6 @@ check-for-updates: true
 
 
 
-format: "%seconds%s, %minutes%m, %hours%hrs, %days%d, %weeks%wks"
-leaderboard:
-  players: 10
-  format: "%position%. &e%player% &f- &a%time_played%"
 
 rewards:
   1:
