@@ -16,22 +16,26 @@ TODO -   -> /playervault [number] (player*Optional) [pv | vault] : Permission (P
 TODO - -> If a player runs through a stack of blocks/items inside their HotBar, and they have more inside their
           inventory move the first stack found into their current slot: Permission (Peligon.EnhancedStorage.AutoFill)
 
----- { In Progress } ----
-
----- { Not Started } ----
 TODO - Peligon Playtime (Rewrite)
 TODO - -> Include PeligonPlugins into compile
 TODO - -> Storage types:
 TODO -   -> File
 TODO -   -> SQLite
 TODO -   -> MySQL
-TODO -   -> MongoDB
+TODO - -> Commands:
+TODO -   -> /playtime view (player*Optional) [timeplayed | pt] (Peligon.Playtime.View)
+TODO -   -> /playtime reset (player*Optional) [timeplayed | pt] (Peligon.Playtime.Reset)
+TODO -   -> /playtime hide (player*Optional) [timeplayed | pt] (Peligon.Playtime.Hide)
+TODO -   -> /playtime pause (player*Optional) [timeplayed | pt] (Peligon.Playtime.Pause)
+
+
+---- { In Progress } ----
+TODO - Peligon Playtime (Rewrite)
 TODO - -> Add player to activeTimes HashMap when they join the server
 TODO - -> Remove player from activeTimes HashMap when they leave the server
 TODO - -> Upon plugin startup check if any players are on the server
 TODO -   -> If any players are on the server then add them to activeTimes HashMap
 TODO - -> Commands:
-TODO -   -> /playtime (player*Optional) [timeplayed | pt] (Peligon.Playtime.View)
 TODO -   -> /playtimetop [timeplayedtop | pttop] (Peligon.Playtime.Leaderboard)
 TODO - -> Global permission (Peligon.Playtime.*)
 TODO - -> Add playtime reached goals
@@ -45,7 +49,7 @@ TODO -   -> Broadcast message
 TODO -   -> Add money
 TODO -   -> Give Items
 
-
+---- { Not Started } ----
 TODO - Peligon EnhancedStorage (Rewrite)
 TODO - -> Backpacks:
 TODO -   -> Add recipes
@@ -95,7 +99,6 @@ TODO - -> Storage types:
 TODO -   -> File
 TODO -   -> SQLite
 TODO -   -> MySQL
-TODO -   -> MongoDB
 TODO - -> Allow for password login
 TODO - -> Allow for Google Authenticator login
 TODO - -> Allow for dispenser password login
