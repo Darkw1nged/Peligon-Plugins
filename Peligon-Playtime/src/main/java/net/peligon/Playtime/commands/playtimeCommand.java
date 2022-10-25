@@ -334,7 +334,7 @@ public class playtimeCommand implements CommandExecutor {
         return target;
     }
 
-    private String sendPlaytime(CommandSender sender, Player player) {
+    private void sendPlaytime(CommandSender sender, Player player) {
         // If the player is online then update their playtime.
         if (player.isOnline()) playerUtils.addPlaytime(player);
 
@@ -358,7 +358,6 @@ public class playtimeCommand implements CommandExecutor {
                 plugin.languageFile.getConfig().getString("playtime-player")
                         .replaceAll("%player%", player.getName())
                         .replaceAll("%time%", playtime)));
-        return playtime;
     }
 
 }

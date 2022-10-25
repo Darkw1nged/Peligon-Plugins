@@ -4,17 +4,20 @@ import net.peligon.Playtime.Main;
 import net.peligon.Playtime.libaries.storage.SQLibrary;
 import net.peligon.Playtime.libaries.storage.SQLiteLibrary;
 import net.peligon.Playtime.libaries.struts.leaderboardResult;
+import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 
+import java.io.File;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.HashMap;
-import java.util.UUID;
+import java.util.*;
 
+import static java.util.stream.Collectors.toMap;
 import static net.peligon.Playtime.libaries.storage.SQLiteLibrary.connection;
 
-public class SystemUtils {
+public class systemUtils {
 
     private final static Main plugin = Main.getInstance;
     private static SQLibrary sqlLibrary;
@@ -40,7 +43,7 @@ public class SystemUtils {
 
                     // Creating the query.
                     String sqlQuery = "CREATE TABLE IF NOT EXISTS peligonPlaytime (" +
-                            "uuid VARCHAR(36) NOT NULL PRIMARY KEY," +
+                            "uuid VARCHAR(36) NOT NULL," +
                             "playtime BIGINT NOT NULL," +
                             "lastUpdated BIGINT NOT NULL," +
                             "paused INT NOT NULL DEFAULT 0," +
@@ -69,7 +72,7 @@ public class SystemUtils {
 
                     // Creating the query.
                     String sqlQuery = "CREATE TABLE IF NOT EXISTS peligonPlaytime (" +
-                            "uuid VARCHAR(36) NOT NULL PRIMARY KEY," +
+                            "uuid VARCHAR(36) NOT NULL," +
                             "playtime BIGINT NOT NULL," +
                             "lastUpdated BIGINT NOT NULL," +
                             "paused INT NOT NULL DEFAULT 0," +
@@ -115,13 +118,7 @@ public class SystemUtils {
                     e.printStackTrace();
                 }
             case "sqlite":
-                // Getting an instance of the SQLiteLibrary.
-                SQLiteLibrary sql = new SQLiteLibrary();
-
                 try {
-                    // Getting the connection.
-                    sql.getSQLConnection();
-
                     // Check if the connection is null.
                     if (connection == null) {
                         System.out.println("Unable to establish a connection to SQLite.");
@@ -156,6 +153,56 @@ public class SystemUtils {
         String sqlQuery = "SELECT uuid, playtime, hidden FROM peligonPlaytime ORDER BY playtime DESC";
 
         switch (plugin.storageType) {
+            case "file":
+                // Getting the data folder.
+                File dataFolder = new File(plugin.getDataFolder() + "/data");
+                File[] files = dataFolder.listFiles();
+
+                // If files are null, return the results.
+                if (files == null) return results;
+
+                // Create a temporary list to store the results.
+                Map<UUID, Long> tempResults = new HashMap<>();
+
+                // Loop through all files.
+                for (File file : files) {
+                    // Getting the UUID from the file name.
+                    UUID uuid = UUID.fromString(file.getName().replace(".yml", ""));
+
+                    // Get player from uuid.
+                    OfflinePlayer player = Bukkit.getOfflinePlayer(uuid);
+
+                    // If the player's playtime is hidden, skip.
+                    if (playerUtils.isHidden(player)) continue;
+
+                    // If the player is online, update the playtime.
+                    if (player.isOnline()) playerUtils.addPlaytime(player);
+
+                    // Getting the player's playtime.
+                    long playtime = playerUtils.getPlaytime(player);
+                    tempResults.put(uuid, playtime);
+                }
+
+                // Sorting the results by playtime in descending order.
+                tempResults = tempResults
+                        .entrySet()
+                        .stream()
+                        .sorted(Collections.reverseOrder(Map.Entry.comparingByValue()))
+                        .collect(toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e2, LinkedHashMap::new));
+
+                // Loop through the results.
+                int i = 0;
+                for (Map.Entry<UUID, Long> entry : tempResults.entrySet()) {
+                    // Check if results is full.
+                    if (i > Math.min(plugin.getConfig().getInt("leaderboard.players"), tempResults.size())) break;
+
+                    // Adding the results to the hashmap.
+                    results.put(entry.getKey(), new leaderboardResult(entry.getKey(), i + 1, entry.getValue()));
+
+                    // Incrementing the counter.
+                    i++;
+                }
+                return results;
             case "mysql":
                 try {
                     // Checking if the connection is null.
@@ -175,13 +222,7 @@ public class SystemUtils {
                 }
                 break;
             case "sqlite":
-                // Getting an instance of the SQLiteLibrary.
-                SQLiteLibrary sql = new SQLiteLibrary();
-
                 try {
-                    // Getting the connection.
-                    sql.getSQLConnection();
-
                     // Check if the connection is null.
                     if (connection == null) {
                         System.out.println("Unable to establish a connection to SQLite.");
@@ -217,6 +258,7 @@ public class SystemUtils {
 
                 // Create a new LeaderboardResult object.
                 leaderboardResult result = new leaderboardResult(
+                        UUID.fromString(resultSet.getString("uuid")),
                         position,
                         resultSet.getLong("playtime")
                 );

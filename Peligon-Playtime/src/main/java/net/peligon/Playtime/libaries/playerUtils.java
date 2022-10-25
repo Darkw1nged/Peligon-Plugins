@@ -3,23 +3,16 @@ package net.peligon.Playtime.libaries;
 import net.peligon.Playtime.Main;
 import net.peligon.Playtime.libaries.storage.CustomConfig;
 import net.peligon.Playtime.libaries.storage.SQLiteLibrary;
-import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.UUID;
 
 public class playerUtils {
 
     // Getting instance of the main class.
     private static final Main plugin = Main.getInstance;
-
-    // Getting the players datafile
-    public static CustomConfig playerDataFile(OfflinePlayer player) {
-        return new CustomConfig(plugin, "data/" + player.getUniqueId(), false);
-    }
 
     // If the player does not have any data then we can use this method to create some.
     public static void createPlayerData(OfflinePlayer player) {
@@ -31,15 +24,16 @@ public class playerUtils {
 
         switch (plugin.storageType) {
             case "file":
-                playerDataFile(player).getConfig().set("playtime", 0);
-                playerDataFile(player).getConfig().set("lastUpdated", 0);
-                playerDataFile(player).getConfig().set("paused", false);
-                playerDataFile(player).getConfig().set("hidden", false);
-                playerDataFile(player).saveConfig();
+                CustomConfig record = new CustomConfig(plugin, "data/" + player.getUniqueId(), false);
+                record.getConfig().set("playtime", 0);
+                record.getConfig().set("lastUpdated", System.currentTimeMillis());
+                record.getConfig().set("paused", false);
+                record.getConfig().set("hidden", false);
+                record.saveConfig();
                 break;
             case "mysql":
                 try {
-                    PreparedStatement statement = SystemUtils.getSqlLibrary().getConnection().prepareStatement(SQLQuery);
+                    PreparedStatement statement = systemUtils.getSqlLibrary().getConnection().prepareStatement(SQLQuery);
                     statement.execute();
                 } catch (SQLException e) {
                     e.printStackTrace();
@@ -63,10 +57,11 @@ public class playerUtils {
 
         switch (plugin.storageType) {
             case "file":
-                return playerDataFile(player).getConfig() != null;
+                CustomConfig record = new CustomConfig(plugin, "data/" + player.getUniqueId(), false);
+                return record.getConfig().contains("playtime");
             case "mysql":
                 try {
-                    PreparedStatement statement = SystemUtils.getSqlLibrary().getConnection().prepareStatement(SQLQuery);
+                    PreparedStatement statement = systemUtils.getSqlLibrary().getConnection().prepareStatement(SQLQuery);
                     ResultSet rs = statement.executeQuery();
                     return rs.next();
                 } catch (SQLException e) {
@@ -89,17 +84,18 @@ public class playerUtils {
     // Getting players playtime.
     public static long getPlaytime(OfflinePlayer player) {
         // Check if the player has data first, If not then return 0.
-        if (hasData(player)) return 0;
+        if (!hasData(player)) return 0;
 
         // Setting up the query for SQL
         String SQLQuery = "SELECT * FROM peligonPlaytime WHERE uuid='" + player.getUniqueId() + "';";
 
         switch (plugin.storageType) {
             case "file":
-                return playerDataFile(player).getConfig().getLong("playtime");
+                CustomConfig record = new CustomConfig(plugin, "data/" + player.getUniqueId(), false);
+                return record.getConfig().getLong("playtime");
             case "mysql":
                 try {
-                    PreparedStatement statement = SystemUtils.getSqlLibrary().getConnection().prepareStatement(SQLQuery);
+                    PreparedStatement statement = systemUtils.getSqlLibrary().getConnection().prepareStatement(SQLQuery);
                     ResultSet rs = statement.executeQuery();
                     rs.next();
                     return rs.getLong("playtime");
@@ -130,15 +126,18 @@ public class playerUtils {
         long difference = System.currentTimeMillis() - getLastUpdated(player);
 
         // Setting up the query for SQL
-        String SQLQuery = "UPDATE server SET peligonPlaytime = (SELECT playtime FROM server WHERE uuid='" + player.getUniqueId() + "') +" + difference + " WHERE uuid= '" + player.getUniqueId() + "';";
+        String SQLQuery = "UPDATE peligonPlaytime SET playtime = (SELECT playtime FROM peligonPlaytime WHERE uuid='" + player.getUniqueId() + "') +" + difference + " WHERE uuid= '" + player.getUniqueId() + "';";
 
         switch (plugin.storageType) {
             case "file":
-                playerDataFile(player).getConfig().set("playtime", difference);
+                CustomConfig record = new CustomConfig(plugin, "data/" + player.getUniqueId(), false);
+                record.getConfig().set("playtime", getPlaytime(player) + difference);
+                record.saveConfig();
+                setLastUpdated(player);
                 break;
             case "mysql":
                 try {
-                    PreparedStatement statement = SystemUtils.getSqlLibrary().getConnection().prepareStatement(SQLQuery);
+                    PreparedStatement statement = systemUtils.getSqlLibrary().getConnection().prepareStatement(SQLQuery);
                     statement.execute();
                     setLastUpdated(player);
                 } catch (SQLException e) {
@@ -167,11 +166,13 @@ public class playerUtils {
 
         switch (plugin.storageType) {
             case "file":
-                playerDataFile(player).getConfig().set("playtime", 0);
+                CustomConfig record = new CustomConfig(plugin, "data/" + player.getUniqueId(), false);
+                record.getConfig().set("playtime", 0);
+                record.saveConfig();
                 break;
             case "mysql":
                 try {
-                    PreparedStatement statement = SystemUtils.getSqlLibrary().getConnection().prepareStatement(SQLQuery);
+                    PreparedStatement statement = systemUtils.getSqlLibrary().getConnection().prepareStatement(SQLQuery);
                     statement.execute();
                     setLastUpdated(player);
                 } catch (SQLException e) {
@@ -200,10 +201,11 @@ public class playerUtils {
 
         switch (plugin.storageType) {
             case "file":
-                return playerDataFile(player).getConfig().getLong("lastUpdated");
+                CustomConfig record = new CustomConfig(plugin, "data/" + player.getUniqueId(), false);
+                return record.getConfig().getLong("lastUpdated");
             case "mysql":
                 try {
-                    PreparedStatement statement = SystemUtils.getSqlLibrary().getConnection().prepareStatement(SQLQuery);
+                    PreparedStatement statement = systemUtils.getSqlLibrary().getConnection().prepareStatement(SQLQuery);
                     ResultSet rs = statement.executeQuery();
                     rs.next();
                     return rs.getLong("lastUpdated");
@@ -236,11 +238,13 @@ public class playerUtils {
 
         switch (plugin.storageType) {
             case "file":
-                playerDataFile(player).getConfig().set("lastUpdated", System.currentTimeMillis());
+                CustomConfig record = new CustomConfig(plugin, "data/" + player.getUniqueId(), false);
+                record.getConfig().set("lastUpdated", System.currentTimeMillis());
+                record.saveConfig();
                 break;
             case "mysql":
                 try {
-                    PreparedStatement statement = SystemUtils.getSqlLibrary().getConnection().prepareStatement(SQLQuery);
+                    PreparedStatement statement = systemUtils.getSqlLibrary().getConnection().prepareStatement(SQLQuery);
                     statement.execute();
                 } catch (SQLException e) {
                     e.printStackTrace();
@@ -267,10 +271,11 @@ public class playerUtils {
 
         switch (plugin.storageType) {
             case "file":
-                return playerDataFile(player).getConfig().getBoolean("paused");
+                CustomConfig record = new CustomConfig(plugin, "data/" + player.getUniqueId(), false);
+                return record.getConfig().getBoolean("paused");
             case "mysql":
                 try {
-                    PreparedStatement statement = SystemUtils.getSqlLibrary().getConnection().prepareStatement(SQLQuery);
+                    PreparedStatement statement = systemUtils.getSqlLibrary().getConnection().prepareStatement(SQLQuery);
                     ResultSet rs = statement.executeQuery();
                     rs.next();
                     return rs.getInt("paused") != 0;
@@ -305,11 +310,13 @@ public class playerUtils {
 
         switch (plugin.storageType) {
             case "file":
-                playerDataFile(player).getConfig().set("paused", state);
+                CustomConfig record = new CustomConfig(plugin, "data/" + player.getUniqueId(), false);
+                record.getConfig().set("paused", !isPaused(player));
+                record.saveConfig();
                 break;
             case "mysql":
                 try {
-                    PreparedStatement statement = SystemUtils.getSqlLibrary().getConnection().prepareStatement(SQLQuery);
+                    PreparedStatement statement = systemUtils.getSqlLibrary().getConnection().prepareStatement(SQLQuery);
                     // Not sure if this will be a bug. If so then modify `statement.execute();` to the line below.
                     // TODO - statement.executeUpdate();
                     statement.execute();
@@ -338,10 +345,11 @@ public class playerUtils {
 
         switch (plugin.storageType) {
             case "file":
-                return playerDataFile(player).getConfig().getBoolean("hidden");
+                CustomConfig record = new CustomConfig(plugin, "data/" + player.getUniqueId(), false);
+                return record.getConfig().getBoolean("hidden");
             case "mysql":
                 try {
-                    PreparedStatement statement = SystemUtils.getSqlLibrary().getConnection().prepareStatement(SQLQuery);
+                    PreparedStatement statement = systemUtils.getSqlLibrary().getConnection().prepareStatement(SQLQuery);
                     ResultSet rs = statement.executeQuery();
                     rs.next();
                     return rs.getInt("hidden") != 0;
@@ -376,11 +384,13 @@ public class playerUtils {
 
         switch (plugin.storageType) {
             case "file":
-                playerDataFile(player).getConfig().set("hidden", state);
+                CustomConfig record = new CustomConfig(plugin, "data/" + player.getUniqueId(), false);
+                record.getConfig().set("hidden", !isHidden(player));
+                record.saveConfig();
                 break;
             case "mysql":
                 try {
-                    PreparedStatement statement = SystemUtils.getSqlLibrary().getConnection().prepareStatement(SQLQuery);
+                    PreparedStatement statement = systemUtils.getSqlLibrary().getConnection().prepareStatement(SQLQuery);
                     // Not sure if this will be a bug. If so then modify `statement.execute();` to the line below.
                     // TODO - statement.executeUpdate();
                     statement.execute();

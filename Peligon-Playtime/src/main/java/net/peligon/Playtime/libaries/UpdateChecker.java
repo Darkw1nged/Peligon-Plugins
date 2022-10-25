@@ -27,7 +27,7 @@ public class UpdateChecker {
                     consumer.accept(scanner.next());
                 }
             } catch (IOException exception) {
-                plugin.getServer().getConsoleSender().sendMessage(Utils.chatColor(Main.getInstance.LanguageFile.getConfig().getString("version-check-error")));
+                plugin.getServer().getConsoleSender().sendMessage(Utils.chatColor(Main.getInstance.languageFile.getConfig().getString("version-check-error")));
             }
         });
     }

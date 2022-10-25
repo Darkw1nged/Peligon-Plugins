@@ -1,7 +1,7 @@
 package net.peligon.Playtime.commands;
 
 import net.peligon.Playtime.Main;
-import net.peligon.Playtime.libaries.SystemUtils;
+import net.peligon.Playtime.libaries.systemUtils;
 import net.peligon.Playtime.libaries.Utils;
 import net.peligon.Playtime.libaries.playerUtils;
 import net.peligon.Playtime.libaries.struts.leaderboardResult;
@@ -25,7 +25,7 @@ public class playtimeTopCommand implements CommandExecutor {
 
                 sender.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("playtime-top").replaceAll("%number%", String.valueOf(plugin.getConfig().getInt("leaderboard.players")))));
 
-                SystemUtils.getPlaytimeLeaderboard().entrySet().stream().sorted(Collections.reverseOrder(Map.Entry.comparingByValue())).forEach(entry -> {
+                systemUtils.getPlaytimeLeaderboard().entrySet().stream().sorted(Map.Entry.comparingByValue()).forEach(entry -> {
                     leaderboardResult result = entry.getValue();
                     OfflinePlayer player = Bukkit.getOfflinePlayer(result.getUUID());
 

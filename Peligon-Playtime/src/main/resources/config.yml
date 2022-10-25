@@ -8,9 +8,9 @@
 
 Storage:
   # Visit 'Plugins/PeligonPlaytime/Lang/' to see the supported languages.
-  Language File: "en_US"
+  lang: "en_US"
   # Available options: "File", "MySQL", "SQLite"
-  database: "SQLite"
+  database: "File"
   MySQL:
     host: "localhost"
     port: 3306
@@ -33,57 +33,80 @@ leaderboard:
 # their playtime will not be counted.
 disabled-words: []
 
-check-for-updates: true
-
-
-
-
-
-
-
-
-
-
-
-rewards:
+# Award players for playing on the server.
+playtime-rewards:
   1:
-    # The amount of seconds before the reward is given.
-    time: 3600
-    message:
-      chat: "&aYou have been rewarded for playing for 1 hour!"
-      title: "&aYou have been rewarded!"
-      subtitle: "&aYou have been rewarded for playing for 1 hour!"
-      title-fade-in: 20
-      title-stay: 60
-      title-fade-out: 20
+    # How long the player must play for to receive the reward.
+    delay: 1h
+    # Allow the player to receive the reward multiple times.
+    repeatable: false
+    # A list of commands to be executed when the player reaches the required time.
     commands:
-      - "give %player% diamond 1"
-      - "eco give %player% 100"
-    # This will keep track how many times the player has been rewarded.
-    claimed: []
+      - "%msg% &eYou have reached 1 hour of playtime!"
+      - "%broadcast% &e%player% has reached 1 hour of playtime!"
+      - "%command% give %player% diamond 1"
+    title-message:
+      # Send a title message to the player when they reach the required time.
+      send-title: true
+      # The title message to be displayed to the player.
+      title: "&eYou have reached 1 hour of playtime!"
+      # The subtitle message to be displayed to the player.
+      subtitle: "&eYou have been rewarded with a diamond!"
+      # The fade in time of the title.
+      fade-in: 10
+      # The stay time of the title.
+      stay: 20
+      # The fade out time of the title.
+      fade-out: 10
+    # This will keep track of the amount of times the player has received the reward.
+    # Warning! Do not change/remove this unless you know what you are doing.
+    awarded: []
   2:
-    time: 86400
-    message:
-      chat: "&aYou have been rewarded for playing for 1 day!"
-      title: "&aYou have been rewarded!"
-      subtitle: "&aYou have been rewarded for playing for 1 day!"
-      title-fade-in: 20
-      title-stay: 60
-      title-fade-out: 20
+    delay: 6h
+    repeatable: false
     commands:
-      - "give %player% diamond 3"
-      - "eco give %player% 1000"
-    claimed: []
+      - "%msg% &eYou have reached 6 hours of playtime!"
+      - "%broadcast% &e%player% has reached 6 hours of playtime!"
+      - "%command% give %player% diamond 2"
+    title-message:
+      send-title: true
+      title: "&eYou have reached 6 hours of playtime!"
+      subtitle: "&eYou have been rewarded with 2 diamonds!"
+      fade-in: 10
+      stay: 20
+      fade-out: 10
+    awarded: []
   3:
-    time: 604800
-    message:
-      chat: "&aYou have been rewarded for playing for 1 week!"
-      title: "&aYou have been rewarded!"
-      subtitle: "&aYou have been rewarded for playing for 1 week!"
-      title-fade-in: 20
-      title-stay: 60
-      title-fade-out: 20
+    delay: 1d
+    repeatable: true
     commands:
-      - "give %player% diamond 5"
-      - "eco give %player% 5000"
-    claimed: []
+      - "%msg% &eYou have reached 1 day of playtime!"
+      - "%broadcast% &e%player% has reached 1 day of playtime!"
+      - "%command% give %player% diamond 3"
+      - "%command% eco give %player% 150"
+    title-message:
+      send-title: true
+      title: "&eYou have reached 1 day of playtime!"
+      subtitle: "&eYou have been rewarded with 3 diamonds!"
+      fade-in: 10
+      stay: 20
+      fade-out: 10
+    awarded: []
+  4:
+    delay: 1w
+    repeatable: true
+    commands:
+      - "%msg% &eYou have reached 1 week of playtime!"
+      - "%broadcast% &e%player% has reached 1 week of playtime!"
+      - "%command% give %player% diamond 4"
+      - "%command% eco give %player% 500"
+    title-message:
+      send-title: true
+      title: "&eYou have reached 1 week of playtime!"
+      subtitle: "&eYou have been rewarded with 4 diamonds!"
+      fade-in: 10
+      stay: 20
+      fade-out: 10
+    awarded: []
+
+check-for-updates: true

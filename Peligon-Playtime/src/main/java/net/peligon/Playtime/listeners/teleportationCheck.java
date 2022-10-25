@@ -22,12 +22,12 @@ public class teleportationCheck implements Listener {
             if (Utils.activeTimes.contains(player.getUniqueId())) {
                 playerUtils.addPlaytime(player);
             }
-            Utils.activeTimes.remove(event.getPlayer().getUniqueId());
+            Utils.activeTimes.remove(player.getUniqueId());
             return;
         }
 
-        if (!Utils.activeTimes.contains(event.getPlayer().getUniqueId())) {
-            Utils.activeTimes.add(event.getPlayer().getUniqueId());
+        if (!Utils.activeTimes.contains(player.getUniqueId())) {
+            Utils.activeTimes.add(player.getUniqueId());
         }
     }
 

@@ -44,17 +44,18 @@ public final class Main extends JavaPlugin {
             storageType = getConfig().getString("Storage.database").toLowerCase();
 
         // Setting up and checking storage.
-        SystemUtils.createDatabase();
-        SystemUtils.checkDatabase();
+        systemUtils.createDatabase();
+        systemUtils.checkDatabase();
 
         // Loading all commands and events.
         loadEvents();
         loadCommands();
 
-        // TODO ---- Subject to be removed -----
-        // ---- [ Calling repeating tasks ] ----
-        new timePlayedTimer().runTaskTimer(this, 20 * 5, 20 * 5);
-        // TODO ---- Subject to be removed -----
+        // Load all active times.
+        loadActiveTimes();
+
+        // Checking for playtime rewards.
+        new playtimeRewardTimer().runTaskTimer(this, 20 * 2, 20 * 2);
 
         // Registering placeholderAPI
         if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
@@ -78,13 +79,9 @@ public final class Main extends JavaPlugin {
     // Getting the version from https://www.spigot.org and comparing the version to current version.
     private void versionChecker() {
         new UpdateChecker(this, 101707).getVersion(version -> {
-            // Creating variables to store version to make it easily readable.
-            double spigotVersion = Double.parseDouble(version);
-            double pluginVersion = Double.parseDouble(this.getDescription().getVersion());
-
-            // If spigot version is greater than the current plugin version then send console a message
+            // If spigot version does not equal than the current plugin version then send console a message
             // saving that new version is available along with the link to it.
-            if (spigotVersion > pluginVersion) {
+            if (!version.equals(this.getDescription().getVersion())) {
                 getServer().getConsoleSender().sendMessage(Utils.chatColor(languageFile.getConfig().getString("plugin-outdated")));
                 getServer().getConsoleSender().sendMessage(Utils.chatColor(languageFile.getConfig().getString("plugin-link")));
             }
@@ -103,7 +100,7 @@ public final class Main extends JavaPlugin {
         ).forEach(listener -> getServer().getPluginManager().registerEvents(listener, this));
     }
 
-    // Registering all commands : Can ignore capitals.
+    // Registering all commands.
     public void loadCommands() {
         // Command for peligon plugin menu.
         getCommand("peligon").setExecutor(new peligonPluginsMenuCommand());
@@ -112,5 +109,14 @@ public final class Main extends JavaPlugin {
         getCommand("peligonplaytime").setExecutor(new reloadCommand());
         getCommand("playtime").setExecutor(new playtimeCommand());
         getCommand("playtimetop").setExecutor(new playtimeTopCommand());
+    }
+
+    // After plugin reload, load all online players into activeTimes list.
+    // If they are in a disabled world, do not add them to the list.
+    private void loadActiveTimes() {
+        Bukkit.getOnlinePlayers().forEach(player -> {
+            if (!getConfig().getStringList("disabled-worlds").contains(player.getWorld().getName()))
+                Utils.activeTimes.add(player.getUniqueId());
+        });
     }
 }

@@ -19,15 +19,15 @@ public class updatePlayerPlaytime implements Listener {
             Utils.activeTimes.add(player.getUniqueId());
             return;
         }
-        playerUtils.setLastUpdated(event.getPlayer());
-        Utils.activeTimes.add(event.getPlayer().getUniqueId());
+        playerUtils.setLastUpdated(player);
+        Utils.activeTimes.add(player.getUniqueId());
     }
 
     @EventHandler
     public void onQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
 
-        if (playerUtils.hasData(player) && Utils.activeTimes.contains(player.getUniqueId())) {
+        if (Utils.activeTimes.contains(player.getUniqueId())) {
             playerUtils.addPlaytime(player);
         }
         Utils.activeTimes.remove(player.getUniqueId());
