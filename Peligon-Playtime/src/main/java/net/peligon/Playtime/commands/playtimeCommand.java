@@ -149,7 +149,7 @@ public class playtimeCommand implements CommandExecutor {
 
                 }
                 else if (args[0].equalsIgnoreCase("reset")) {
-                    if (player.hasPermission("Peligon.Playtime.Reset") || player.hasPermission("Peligon.Playtime.*")) {
+                    if (player.hasPermission("Peligon.Playtime.Reset.Other") || player.hasPermission("Peligon.Playtime.*")) {
                         // If the command sender has specified that they want all players.
                         // If so reset all player's playtime.
                         if (args[1].equalsIgnoreCase("@a") || args[1].equalsIgnoreCase("*")) {
@@ -177,7 +177,7 @@ public class playtimeCommand implements CommandExecutor {
                     }
                 }
                 else if (args[0].equalsIgnoreCase("pause")) {
-                    if (player.hasPermission("Peligon.Playtime.Pause") || player.hasPermission("Peligon.Playtime.*")) {
+                    if (player.hasPermission("Peligon.Playtime.Pause.Other") || player.hasPermission("Peligon.Playtime.*")) {
                         if (args[1].equalsIgnoreCase("@a") || args[1].equalsIgnoreCase("*")) {
                             // Pause all player's playtime.
                             for (OfflinePlayer offlinePlayer : Bukkit.getOfflinePlayers()) {
@@ -207,7 +207,7 @@ public class playtimeCommand implements CommandExecutor {
                     }
                 }
                 else if (args[0].equalsIgnoreCase("unpause")) {
-                    if (player.hasPermission("Peligon.Playtime.Pause") || player.hasPermission("Peligon.Playtime.*")) {
+                    if (player.hasPermission("Peligon.Playtime.Pause.Other") || player.hasPermission("Peligon.Playtime.*")) {
                         if (args[1].equalsIgnoreCase("@a") || args[1].equalsIgnoreCase("*")) {
                             // Unpause all player's playtime.
                             for (OfflinePlayer offlinePlayer : Bukkit.getOfflinePlayers()) {
