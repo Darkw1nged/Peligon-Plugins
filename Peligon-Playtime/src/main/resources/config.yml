@@ -42,9 +42,9 @@ playtime-rewards:
     repeatable: false
     # A list of commands to be executed when the player reaches the required time.
     commands:
-      - "%msg% &eYou have reached 1 hour of playtime!"
-      - "%broadcast% &e%player% has reached 1 hour of playtime!"
-      - "%command% give %player% diamond 1"
+      - "%message%&eYou have reached 1 hour of playtime!"
+      - "%broadcast%&e%player% has reached 1 hour of playtime!"
+      - "%command%give %player% diamond 1"
     title-message:
       # Send a title message to the player when they reach the required time.
       send-title: true
@@ -65,9 +65,9 @@ playtime-rewards:
     delay: 6h
     repeatable: false
     commands:
-      - "%msg% &eYou have reached 6 hours of playtime!"
-      - "%broadcast% &e%player% has reached 6 hours of playtime!"
-      - "%command% give %player% diamond 2"
+      - "%msg%&eYou have reached 6 hours of playtime!"
+      - "%broadcast%&e%player% has reached 6 hours of playtime!"
+      - "%cmd%give %player% diamond 2"
     title-message:
       send-title: true
       title: "&eYou have reached 6 hours of playtime!"
@@ -80,10 +80,10 @@ playtime-rewards:
     delay: 1d
     repeatable: true
     commands:
-      - "%msg% &eYou have reached 1 day of playtime!"
-      - "%broadcast% &e%player% has reached 1 day of playtime!"
-      - "%command% give %player% diamond 3"
-      - "%command% eco give %player% 150"
+      - "%msg%&eYou have reached 1 day of playtime!"
+      - "%broadcast%&e%player% has reached 1 day of playtime!"
+      - "%command%give %player% diamond 3"
+      - "%command%eco give %player% 150"
     title-message:
       send-title: true
       title: "&eYou have reached 1 day of playtime!"
@@ -96,10 +96,10 @@ playtime-rewards:
     delay: 1w
     repeatable: true
     commands:
-      - "%msg% &eYou have reached 1 week of playtime!"
-      - "%broadcast% &e%player% has reached 1 week of playtime!"
-      - "%command% give %player% diamond 4"
-      - "%command% eco give %player% 500"
+      - "%msg%&eYou have reached 1 week of playtime!"
+      - "%broadcast%&e%player% has reached 1 week of playtime!"
+      - "%command%give %player% diamond 4"
+      - "%command%eco give %player% 500"
     title-message:
       send-title: true
       title: "&eYou have reached 1 week of playtime!"

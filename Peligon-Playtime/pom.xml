@@ -6,7 +6,7 @@
 
     <groupId>net.peligon.Playtime</groupId>
     <artifactId>Peligon-Playtime</artifactId>
-    <version>1.4</version>
+    <version>1.4.1</version>
     <packaging>jar</packaging>
 
     <name>Peligon-Playtime</name>

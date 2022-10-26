@@ -46,18 +46,18 @@ public class playtimeRewardTimer extends BukkitRunnable {
                         // Looping through all commands.
                         for (String action : plugin.getConfig().getStringList("playtime-rewards." + reward + ".commands")) {
                             // Replacing %player% with the player's name.
-                            action = action.replace("%player%", player.getName());
+                            action = action.replaceAll("%player%", player.getName());
                             // If the action contains %msg% OR %message%, send the player a message.
                             if (action.contains("%message%") || action.contains("%msg%")) {
-                                player.sendMessage(action.replace("%msg%", ""));
+                                player.sendMessage(Utils.chatColor(action.replaceAll("%message%", "").replaceAll("%msg%", "")));
                             }
                             // If the action contains %broadcast%, broadcast the message.
                             else if (action.contains("%broadcast%")) {
-                                Bukkit.broadcastMessage(action.replace("%broadcast%", ""));
+                                Bukkit.broadcastMessage(Utils.chatColor(action.replaceAll("%broadcast%", "")));
                             }
                             // If the action contains %command% OR %cmd%, run the command.
                             else if (action.contains("%command%") || action.contains("%cmd%")) {
-                                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), action.replace("%command%", ""));
+                                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), action.replaceAll("%command%", "").replaceAll("%cmd%", ""));
                             }
                         }
 
@@ -85,18 +85,18 @@ public class playtimeRewardTimer extends BukkitRunnable {
                         // Looping through all commands.
                         for (String action : plugin.getConfig().getStringList("playtime-rewards." + reward + ".commands")) {
                             // Replacing %player% with the player's name.
-                            action = action.replace("%player%", player.getName());
+                            action = action.replaceAll("%player%", player.getName());
                             // If the action contains %msg% OR %message%, send the player a message.
                             if (action.contains("%message%") || action.contains("%msg%")) {
-                                player.sendMessage(action.replace("%msg%", ""));
+                                player.sendMessage(Utils.chatColor(action.replaceAll("%message%", "").replaceAll("%msg%", "")));
                             }
                             // If the action contains %broadcast%, broadcast the message.
                             else if (action.contains("%broadcast%")) {
-                                Bukkit.broadcastMessage(action.replace("%broadcast%", ""));
+                                Bukkit.broadcastMessage(Utils.chatColor(action.replaceAll("%broadcast%", "")));
                             }
                             // If the action contains %command% OR %cmd%, run the command.
                             else if (action.contains("%command%") || action.contains("%cmd%")) {
-                                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), action.replace("%command%", ""));
+                                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), action.replaceAll("%command%", "").replaceAll("%cmd%", ""));
                             }
                         }
 
