@@ -9,16 +9,16 @@ commands:
     aliases:
       - pel
     description: Allows admins to view all available peligon plugins.
+  peligonstorage:
+    aliases:
+      - pelstorage
+    description: Allows admins to reload the plugin.
+  giveitem:
+    aliases:
+      - gi
+    description: Allows admins to give items to players.
   playervault:
     aliases:
       - pv
       - vault
     description: Allows players to store items in a private vault.
-
-
-  pelstorage:
-    aliases:
-      - pelehancedstorage
-      - plgstorage
-      - plgenchancedstorage
-    description: Allows admins to reload configration files.

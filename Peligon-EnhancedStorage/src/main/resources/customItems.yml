@@ -25,11 +25,16 @@ backpacks:
       - "This can hold 54 items"
   adventure-beginner:
     material: CHEST
-    name: "&aSmall Backpack"
+    name: "&7Adventurer Beginner Backpack"
     lore:
-      - "This is a small backpack."
+      - "This is a adventurers backpack."
   adventure-experienced:
     material: CHEST
-    name: "&aSmall Backpack"
+    name: "&eAdventurer Advanced Backpack"
     lore:
-      - "This is a small backpack."
+      - "This is a adventurers backpack."
+  miners-backpack:
+    material: CHEST
+    name: "&7Miner Backpack"
+    lore:
+      - "This is a miners backpack."

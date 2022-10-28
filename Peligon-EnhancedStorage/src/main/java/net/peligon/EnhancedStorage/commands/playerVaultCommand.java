@@ -2,7 +2,7 @@ package net.peligon.EnhancedStorage.commands;
 
 import net.peligon.EnhancedStorage.Main;
 import net.peligon.EnhancedStorage.libaries.Utils;
-import net.peligon.EnhancedStorage.libaries.struts.PlayerVault;
+import net.peligon.EnhancedStorage.libaries.struts.playerVault;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -62,7 +62,7 @@ public class playerVaultCommand implements CommandExecutor {
             }
 
             // Creating and opening the vault.
-            PlayerVault vault = new PlayerVault(vaultNumber, player.getUniqueId());
+            playerVault vault = new playerVault(vaultNumber, player.getUniqueId());
             vault.open(player);
 
             // Putting the player inside a temporary map checking for all open vaults.

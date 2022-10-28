@@ -70,7 +70,7 @@ public class menuCore extends Menu {
                     message.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://www.spigotmc.org/resources/peligon-enhancedstorage.103322/"));
                     player.spigot().sendMessage(message);
                 } else if (event.isLeftClick()) {
-                    Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), "pelstorage");
+                    Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), "peligonstorage");
                 } else if (event.isRightClick()) {
                     TextComponent message = new TextComponent(Utils.chatColor("\n&a&nPeligon EnhancedStorage Documentation Link\n"));
                     message.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://github.com/Darkw1nged/Peligon-Plugins/wiki/Peligon-EnhancedStorage-:-Commands-and-Permissions"));

@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import java.util.UUID;
 
-public class PlayerVault {
+public class playerVault {
 
     // Creating variables
     private final int vaultNumber;
@@ -16,7 +16,7 @@ public class PlayerVault {
     private final CustomConfig vaultConfig;
 
     // Constructor
-    public PlayerVault(int number, UUID owner) {
+    public playerVault(int number, UUID owner) {
         this.vaultNumber = number;
         this.vaultOwner = owner;
         this.vaultConfig = new CustomConfig(Main.getInstance, "playerVaults/" + owner.toString() + "/" + number, false);

@@ -7,15 +7,6 @@ TODO - This will open up a GUI that will have all plugins inside it.
 TODO - If the plugin is installed, they can left-click to reload or install (This will send them a clickable link inside chat).
 TODO - Or they can right-click to view documentation (This will send them a clickable link inside chat).
 
-TODO - Peligon EnhancedStorage (Rewrite)
-TODO - -> Include PeligonPlugins into compile
-TODO - -> !! Will not have any database support !!
-TODO - -> Player vaults (Peligon.Playtime.NUMBER)
-TODO - -> Commands:
-TODO -   -> /playervault [number] (player*Optional) [pv | vault] : Permission (Peligon.EnhancedStorage.Vaults.NUMBER)
-TODO - -> If a player runs through a stack of blocks/items inside their HotBar, and they have more inside their
-          inventory move the first stack found into their current slot: Permission (Peligon.EnhancedStorage.AutoFill)
-
 TODO - Peligon Playtime (Rewrite)
 TODO - -> Include PeligonPlugins into compile
 TODO - -> Storage types:
@@ -43,20 +34,32 @@ TODO -   -> Message player
 TODO -   -> Broadcast message
 TODO -   -> Add money
 TODO -   -> Give Items
-TODO - Peligon Playtime (Rewrite)
 TODO - -> Add a timer to the player that will check for goals reached (2-second interval)
 
----- { In Progress } ----
-
----- { Not Started } ----
 TODO - Peligon EnhancedStorage (Rewrite)
+TODO - -> Include PeligonPlugins into compile
+TODO - -> !! Will not have any database support !!
+TODO - -> Player vaults (Peligon.Playtime.NUMBER)
+TODO - -> Commands:
+TODO -   -> /playervault [number] (player*Optional) [pv | vault] : Permission (Peligon.EnhancedStorage.Vaults.NUMBER)
+TODO -   -> /giveitem [player] [item] (amount): Permission (Peligon.EnhancedStorage.GiveItem)
+TODO - -> If a player runs through a stack of blocks/items inside their HotBar, and they have more inside their
+          inventory move the first stack found into their current slot: Permission (Peligon.EnhancedStorage.AutoFill)
+TODO - -> Automatically add lapis-lazuli to enchantment table : Permission (Peligon.EnhancedStorage.AutoLapis)
+TODO - -> Shift + Right-Click on a brewing stand with water bottles will automatically place them inside :
+          Permission (Peligon.EnhancedStorage.AutoBottle)
 TODO - -> Backpacks:
-TODO -   -> Add recipes
 TODO -   -> 4 Normal Backpack types:
 TODO -     -> Small (9 slots) *configurable
 TODO -     -> Medium (27 slots) *configurable
 TODO -     -> Large (36 slots) *configurable
 TODO -     -> Massive (54 slots) *configurable
+
+---- { In Progress } ----
+
+TODO - Peligon EnhancedStorage (Rewrite)
+TODO - -> Backpacks:
+TODO -   -> Add recipes
 TODO -   -> Miners backpack (18 slots) *configurable:
 TODO -     -> Only allow for ores to be added inside it
 TODO -     -> Allow for auto pickup inside the backpack
@@ -79,10 +82,8 @@ TODO -     -> Obsidian chest - 54 (page 1) 54 (page 2) [recipe - https://gyazo.c
 TODO -       -> This chest can not be blown up or moved with anything, Only a player can destroy it.
 TODO - -> Chest Lock
 TODO - -> Death Chests
-TODO - -> Automatically add lapis-lazuli to enchantment table : Permission (Peligon.EnhancedStorage.AutoLapis)
-TODO - -> Shift + Right-Click on a brewing stand with water bottles will automatically place them inside :
-          Permission (Peligon.EnhancedStorage.AutoBottle)
 
+---- { Not Started } ----
 
 TODO - Peligon Polls (Update)
 TODO - -> Include PeligonPlugins into compile

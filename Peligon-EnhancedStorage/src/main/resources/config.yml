@@ -19,6 +19,9 @@ Storage:
 defaults:
   player-vault-title: "&ePrivate Vault &8(%number%)"
 
+# Check for plugin updates.
+check-for-updates: true
+
 ###############################################################
 # +---------------------------------------------------------+ #
 # |           Peligon Enhanced Storage (Backpacks)          | #
@@ -32,6 +35,7 @@ Backpacks:
     small:
       # Must be multiples of 9 (Minimum is 9 | Maximum is 54)
       size: 9
+      # The title that will be shown when the player opens the backpack.
       title: "&eSmall Backpack"
     medium:
       size: 18
@@ -42,10 +46,9 @@ Backpacks:
     massive:
       size: 54
       title: "&eMassive Backpack"
-  adventure-backpack-settings:
+  adventure-settings:
     beginner:
       inventory:
-        # Must be multiples of 9 (Minimum is 9 | Maximum is 54)
         size: 27
         title: "&7Beginner Adventurer Backpack"
       # Will certain items be restricted from going inside the
@@ -58,59 +61,12 @@ Backpacks:
       # actually going inside it.
       keep-food-restocked: false
     experienced:
-      invetory:
+      inventory:
         size: 54
         title: "&5Experienced Adventurer Backpack"
       filtering: true
       automatic-pickup: true
       keep-food-restocked: true
-
-
-
-
-
-
-
-
-
-###############################################################
-# +---------------------------------------------------------+ #
-# |            Peligon Enhanced Storage (Backpack)          | #
-# |    This is where you can change settings and how the    | #
-# |    backpack will look in the game.                      | #
-# +---------------------------------------------------------+ #
-###############################################################
-Backpack:
-  item: Chest
-  name: "&e&lBackpack &7(Click)"
-  lore:
-    - "&7You will never lose your backpack!"
-    - ""
-    - "&5&lContents"
-    - "%contents%"
-  number-of-contents: 5
-  # Will generate a list of items in the backpack.
-  contents-lore-format: "&e ▎ &f%item% &7(x%amount%)"
-  more-contents: "&8More..."
-
-Backpack-Inventory:
-  title: "&e&lBackpack &7(%player%)"
-  # This has to be multiple of 9.
-  # minimum : 9 || maximum : 54
-  size: 54
-  # Change how the item is displayed.
-  show-item:
-    name: "&f&l%item%"
-    hide-attributes: true
-    hide-enchants: true
-    lore:
-      - ""
-      - "&e&lInformation"
-      - " &e&l▎ &fAmount Stored &e%amount%"
-      - " &e&l▎ &fStacks Available &e%stacks%"
-      - ""
-      - "&aLeft Click for Withdraw Options"
-      - "   &cRight Click to Dispose Item"
-
-# Check for plugin updates.
-check-for-updates: true
+  miners-settings:
+    size: 18
+    title: "&6Miner Backpack"

@@ -2,7 +2,7 @@ package net.peligon.EnhancedStorage.listener;
 
 import net.peligon.EnhancedStorage.Main;
 import net.peligon.EnhancedStorage.libaries.Utils;
-import net.peligon.EnhancedStorage.libaries.struts.PlayerVault;
+import net.peligon.EnhancedStorage.libaries.struts.playerVault;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -26,7 +26,7 @@ public class playerVaultEvent implements Listener {
         if (!Utils.openVaults.containsKey(player.getUniqueId())) return;
 
         // Getting the vault and title.
-        PlayerVault vault = Utils.openVaults.get(player.getUniqueId());
+        playerVault vault = Utils.openVaults.get(player.getUniqueId());
         String vaultTitle = Utils.chatColor(plugin.getConfig().getString("defaults.player-vault-title").replaceAll("%number%", vault.getNumber() + ""));
 
         // Checking if the inventory closed title is equal to vaultTitle.
