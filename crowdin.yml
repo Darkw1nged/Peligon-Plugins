@@ -8,4 +8,9 @@ files:
       - LICENSE
       - TODO.txt
       - '*.md'
-    translation: /**/%locale_with_underscore%/%original_file_name%
+      - config.yml
+      - Peligon-Enchants
+      - Peligon-Teams
+      - Peligon-Staff
+      - Peligon-Core
+    translation: '%original_path%/lang/%locale_with_underscore%'
