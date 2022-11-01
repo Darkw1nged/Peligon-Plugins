@@ -1,8 +1,21 @@
-inventory:
-  title: "&7Daily Reward"
+Options:
+  #How much money the bank can hold.
+  #!! -1 means that there is no limit
+  bank-limit: -1
+  transaction-add: "&a+ &6$%amount%&7, &e%time% ago &7by &e%player%"
+  transaction-remove: "&c- &6$%amount%&7, &e%time% ago &7by &e%player%"
+  interest:
+    percentage: 2
+    #The maximum amount of money the interest will affect
+    cash: 1000000
+    #Time before the interest applies
+    #!! Days - d | Hours - h | Minutes - m | Seconds - s
+    time: "24h"
+atm-inventory:
+  title: "&7Bank Account"
   #!! Must be multiples of 9 | Maximum is 54
-  size: 54
-  #There is 2 type of item event(s): Reward | Close
+  size: 36
+  #There is 4 types of item event(s): Deposit | Withdraw | Transactions | Close
   #If you want the item to be interacted with then please add a type to the item.
   contents:
     1:
@@ -14,21 +27,234 @@ inventory:
       #-1 means all slots will be filled with this item.
       slot: -1
     2:
-      item: DIAMOND
-      name: "&3Diamond"
+      item: CHEST
+      name: "&aDeposit Cash"
       lore:
-        - "&7Reward: &a+1 Diamond"
-        - "&7Click to get your reward"
+        - "&7Current Cash Balance: &6$%cash%"
+        - "&7Current Bank Balance: &6$%bank%"
+        - ""
+        - "&7Store cash in the bank to keep"
+        - "&7them safe while you go on"
+        - "&7adventures!"
+        - ""
+        - "&7You will earn &b%interest%% &7interest every"
+        - "&7day for your first &6%interest_cash%"
+        - "&7banked cash."
+        - ""
+        - "&7Until Interest: &b%raw_time%"
+        - ""
+        - "&eClick to make a deposit!"
       item-flags:
         - "HIDE_ATTRIBUTES"
-      commands:
-        - "give %player% diamond 1"
-      slot: 23
-      event: "Item"
+      slot: 12
+      event: "Deposit"
     3:
+      item: DROPPER
+      name: "&aWithdraw Cash"
+      lore:
+        - "&7Current Cash Balance: &6$%cash%"
+        - "&7Current Bank Balance: &6$%bank%"
+        - ""
+        - "&7Take your cash out of the bank"
+        - "&7in order to spend them."
+        - ""
+        - "&eClick to withdraw cash!"
+      item-flags:
+        - "HIDE_ATTRIBUTES"
+        - "HIDE_ENCHANTS"
+      slot: 14
+      event: "Withdraw"
+    4:
+      item: MAP
+      name: "&aRecent Transactions"
+      lore:
+        - "%transactions%"
+      item-flags:
+        - "HIDE_ATTRIBUTES"
+        - "HIDE_ENCHANTS"
+      enchantments:
+        1:
+          type: LUCK
+          level: 1
+      slot: 16
+      event: "Transactions"
+    5:
       item: BARRIER
       name: "&cClose"
       item-flags:
         - "HIDE_ATTRIBUTES"
-      slot: 50
+        - "HIDE_ENCHANTS"
+      slot: 32
       event: "Close"
+    6:
+      item: REDSTONE_TORCH
+      name: "&aInformation"
+      lore:
+        - "&7Keep your cash safe in the bank!"
+        - ""
+        - "&7Bank limit: &6%bank_limit%"
+        - ""
+        - "&7The banker rewards you every %time%"
+        - "&7hours with interest for the cash"
+        - "&7in your bank balance."
+        - ""
+        - "&7Until Interest: &b%raw_time%"
+      item-flags:
+        - "HIDE_ATTRIBUTES"
+        - "HIDE_ENCHANTS"
+      slot: 33
+deposit-inventory:
+  title: "&7Bank Deposit"
+  #!! Must be multiples of 9 | Maximum is 54
+  size: 36
+  #There is 4 types of item events: DepositAll | DepositHalf | DepositSpecific | GoBack
+  #If you want the item to be interacted with then please add a type to the item.
+  contents:
+    1:
+      item: BLACK_STAINED_GLASS_PANE
+      name: " "
+      #See the full list here: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/inventory/ItemFlag.html
+      item-flags:
+        - "HIDE_ATTRIBUTES"
+      #-1 means all slots will be filled with this item.
+      slot: -1
+    2:
+      item: CHEST
+      name: "&aYour whole cash"
+      amount: 64
+      lore:
+        - "&8Bank deposit"
+        - ""
+        - "&7Current Cash Balance: &6$%cash%"
+        - "&7Current Bank Balance: &6$%bank%"
+        - ""
+        - "&eClick to deposit Coins!"
+      item-flags:
+        - "HIDE_ATTRIBUTES"
+        - "HIDE_ENCHANTS"
+      slot: 12
+      event: "DepositAll"
+    3:
+      item: CHEST
+      name: "&aHalf your cash"
+      amount: 32
+      lore:
+        - "&8Bank deposit"
+        - ""
+        - "&7Current Cash Balance: &6$%cash%"
+        - "&7Current Bank Balance: &6$%bank%"
+        - ""
+        - "&eClick to deposit Coins!"
+      item-flags:
+        - "HIDE_ATTRIBUTES"
+        - "HIDE_ENCHANTS"
+      slot: 14
+      event: "DepositHalf"
+    4:
+      item: OAK_SIGN
+      name: "&aSpecific amount"
+      lore:
+        - "&7Current Cash Balance: &6$%cash%"
+        - "&7Current Bank Balance: &6$%bank%"
+        - ""
+        - "&eClick to deposit Coins!"
+      item-flags:
+        - "HIDE_ATTRIBUTES"
+        - "HIDE_ENCHANTS"
+      slot: 16
+      event: "DepositSpecific"
+    5:
+      item: ARROW
+      name: "&aGo Back"
+      lore:
+        - "&7To Bank Account"
+      item-flags:
+        - "HIDE_ATTRIBUTES"
+        - "HIDE_ENCHANTS"
+      slot: 32
+      event: "GoBack"
+withdraw-inventory:
+  title: "&7Bank Withdrawal"
+  #!! Must be multiples of 9 | Maximum is 54
+  size: 36
+  #There is 5 types of items: WithdrawAll | WithdrawHalf | Withdraw20 | WithdrawSpecific | GoBack
+  #If you want the item to be interacted with then please add a type to the item.
+  contents:
+    1:
+      item: BLACK_STAINED_GLASS_PANE
+      name: " "
+      #See the full list here: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/inventory/ItemFlag.html
+      item-flags:
+        - "HIDE_ATTRIBUTES"
+      #-1 means all slots will be filled with this item.
+      slot: -1
+    2:
+      item: DROPPER
+      name: "&aEverything in the account"
+      amount: 64
+      lore:
+        - "&8Bank withdrawal"
+        - ""
+        - "&7Current Cash Balance: &6$%cash%"
+        - "&7Current Bank Balance: &6$%bank%"
+        - ""
+        - "&eClick to withdraw Coins!"
+      item-flags:
+        - "HIDE_ATTRIBUTES"
+        - "HIDE_ENCHANTS"
+      slot: 11
+      event: "WithdrawAll"
+    3:
+      item: DROPPER
+      name: "&aHalf the account"
+      amount: 32
+      lore:
+        - "&8Bank withdrawal"
+        - ""
+        - "&7Current Cash Balance: &6$%cash%"
+        - "&7Current Bank Balance: &6$%bank%"
+        - ""
+        - "&eClick to withdraw Coins!"
+      item-flags:
+        - "HIDE_ATTRIBUTES"
+        - "HIDE_ENCHANTS"
+      slot: 13
+      event: "WithdrawHalf"
+    4:
+      item: DROPPER
+      name: "&aWithdraw 20%"
+      lore:
+        - "&8Bank withdrawal"
+        - ""
+        - "&7Current Cash Balance: &6$%cash%"
+        - "&7Current Bank Balance: &6$%bank%"
+        - ""
+        - "&eClick to withdraw Coins!"
+      item-flags:
+        - "HIDE_ATTRIBUTES"
+        - "HIDE_ENCHANTS"
+      slot: 15
+      event: "Withdraw20"
+    5:
+      item: OAK_SIGN
+      name: "&aSpecific amount"
+      lore:
+        - "&7Current Cash Balance: &6$%cash%"
+        - "&7Current Bank Balance: &6$%bank%"
+        - ""
+        - "&eClick to withdraw Coins!"
+      item-flags:
+        - "HIDE_ATTRIBUTES"
+        - "HIDE_ENCHANTS"
+      slot: 17
+      event: "WithdrawSpecific"
+    6:
+      item: ARROW
+      name: "&aGo Back"
+      lore:
+        - "&7To Bank Account"
+      item-flags:
+        - "HIDE_ATTRIBUTES"
+        - "HIDE_ENCHANTS"
+      slot: 32
+      event: "GoBack"
