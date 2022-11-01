@@ -1,23 +1,8 @@
 #######################################################################################
-#Welcome to Mini Peligon Home's configuration, This is where you can change
+#Welcome to Mini Peligon ServerInformation's configuration, This is where you can change
 #Basic settings that will affect how the plugin preforms.
 #As this plugin is a mini plugin, The configuration will be small as there is
 #only one main feature to the plugin.
 #######################################################################################
-#How long before the player is teleported
-teleportation-delay: 5
-messages:
-  console: "&cError! You are not allowed to perform this inside of the console."
-  prefix: "&ePeligon >> "
-  home-set: "&fHome &e%home%&f has been set to your current location."
-  home-delete: "&fHome &e%home%&f has been deleted."
-  homes: "&6Homes: &f%list%"
-  home-teleported: "&fYou have been teleported to &e%home%&f."
-  no-homes-found: "&cError! No homes found."
-  home-not-found: "&cError! Home could not be found."
-  delete-home-usage: "&cIncorrect Command Usage: &f/deletehome (player) <home>"
-  no-permission: "&cError! You do not have permission to use this command."
-  specify-player: "&cError! Please specify a player."
-  specify-name: "&cError! Please specify a name."
-  no-player-found: "&cError! player could not be found."
-  teleport-cancelled: "&cError! Teleport has been cancelled."
+Blocks-Broken: 0
+Blocks-Placed: 0
