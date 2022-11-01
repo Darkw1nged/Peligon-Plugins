@@ -1,11 +1,8 @@
 #######################################################################################
-#Welcome to Mini Peligon AutoSmelt's configuration, This is where you can change
+#Welcome to Mini Peligon AutoPickup's configuration, This is where you can change
 #Basic settings that will affect how the plugin preforms.
 #As this plugin is a mini plugin, The configuration will be small as there is
 #only one main feature to the plugin.
 #######################################################################################
-#Allow players to automatically pickup items when mined.
-#Only applies to players with the permission; 'Peligon.AutoSmelt.pickup'
-auto-pickup: false
 messages:
   no-space: "&cYou do not have enough space in your inventory!"
