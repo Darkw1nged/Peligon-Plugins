@@ -1,1 +1,11 @@
-files: []
+files:
+  - source: '*.yml'
+    ignore:
+      - '*.java'
+      - '*.xml'
+      - plugin.yml
+      - .gitignore
+      - LICENSE
+      - TODO.txt
+      - '*.md'
+    translation: /**/%locale_with_underscore%/%original_file_name%
