@@ -1,22 +1,60 @@
-#######################################################################################
-#In here you can add, remove and modify different coupons that you have on
-#your server, giving players access to certain features and more.
-#All items do support color codes check the line below for more information:
-#[ https://www.digminecraft.com/lists/color_list_pc.php ]
-#######################################################################################
-coupons:
-  permanent-fly:
-    #The item for the coupon
-    item:
-      material: PAPER
-      name: "&eFly &fCoupon"
-      lore:
-        - "&7This is a &efly &7coupon."
-        - ""
-        - "&eRight-Click to claim."
-    #Commands that will be executed once interacted with
-    commands:
-      - "say Please update the command before trying again!"
-    #Messages that are sent to the payer once interacted with
-    messages:
-      - "&fYou have claimed a &efly coupon"
+#What will be displayed when player opens a pouch
+title: "&eOpening pouch..."
+#! Subtext will display the amount of money/exp in the pouch
+#! money is automatically formatted
+Money:
+  tier1:
+    item: "ENDER_CHEST"
+    name: "&2&lTier I Money Pouch &r&7(Right Click)"
+    lore:
+      - "&7Open this pouch to receive money!"
+    values:
+      minimum: 1000
+      maximum: 10000
+    permission-required: false
+  tier2:
+    item: "ENDER_CHEST"
+    name: "&2&lTier II Money Pouch &r&7(Right Click)"
+    lore:
+      - "&7Open this pouch to receive money!"
+    values:
+      minimum: 10000
+      maximum: 50000
+    permission-required: false
+  tier3:
+    item: "ENDER_CHEST"
+    name: "&2&lTier III Money Pouch &r&7(Right Click)"
+    lore:
+      - "&7Open this pouch to receive money!"
+    values:
+      minimum: 50000
+      maximum: 100000
+    permission-required: false
+Experience:
+  tier1:
+    item: "ARMOR_STAND"
+    name: "&2&lTier I Experience Pouch &r&7(Right Click)"
+    lore:
+      - "&7Open this pouch to receive experience!"
+    values:
+      minimum: 20
+      maximum: 400
+    permission-required: false
+  tier2:
+    item: "ARMOR_STAND"
+    name: "&2&lTier II Experience Pouch &r&7(Right Click)"
+    lore:
+      - "&7Open this pouch to receive experience!"
+    values:
+      minimum: 400
+      maximum: 1000
+    permission-required: false
+  tier3:
+    item: "ARMOR_STAND"
+    name: "&2&lTier III Experience Pouch &r&7(Right Click)"
+    lore:
+      - "&7Open this pouch to receive experience!"
+    values:
+      minimum: 1000
+      maximum: 2000
+    permission-required: false
