@@ -1,55 +1,8 @@
 inventory:
-  title: "&7Sell GUI"
+  title: "&7Daily Reward"
   #!! Must be multiples of 9 | Maximum is 54
   size: 54
-  #What slots are meant to be sold.
-  sell-slots:
-    - 1
-    - 2
-    - 3
-    - 4
-    - 5
-    - 6
-    - 7
-    - 8
-    - 9
-    - 10
-    - 11
-    - 12
-    - 13
-    - 14
-    - 15
-    - 16
-    - 17
-    - 18
-    - 19
-    - 20
-    - 21
-    - 22
-    - 23
-    - 24
-    - 25
-    - 26
-    - 27
-    - 28
-    - 29
-    - 30
-    - 31
-    - 32
-    - 33
-    - 34
-    - 35
-    - 36
-    - 37
-    - 38
-    - 39
-    - 40
-    - 41
-    - 42
-    - 43
-    - 44
-    - 45
-  #There is 1 type of item event(s): Close
+  #There is 2 type of item event(s): Reward | Close
   #If you want the item to be interacted with then please add a type to the item.
   contents:
     1:
@@ -59,50 +12,20 @@ inventory:
       item-flags:
         - "HIDE_ATTRIBUTES"
       #-1 means all slots will be filled with this item.
-      slot: 46
+      slot: -1
     2:
-      item: BLACK_STAINED_GLASS_PANE
-      name: " "
+      item: DIAMOND
+      name: "&3Diamond"
+      lore:
+        - "&7Reward: &a+1 Diamond"
+        - "&7Click to get your reward"
       item-flags:
         - "HIDE_ATTRIBUTES"
-      slot: 47
+      commands:
+        - "give %player% diamond 1"
+      slot: 23
+      event: "Item"
     3:
-      item: BLACK_STAINED_GLASS_PANE
-      name: " "
-      item-flags:
-        - "HIDE_ATTRIBUTES"
-      slot: 48
-    4:
-      item: BLACK_STAINED_GLASS_PANE
-      name: " "
-      item-flags:
-        - "HIDE_ATTRIBUTES"
-      slot: 49
-    5:
-      item: BLACK_STAINED_GLASS_PANE
-      name: " "
-      item-flags:
-        - "HIDE_ATTRIBUTES"
-      slot: 51
-    6:
-      item: BLACK_STAINED_GLASS_PANE
-      name: " "
-      item-flags:
-        - "HIDE_ATTRIBUTES"
-      slot: 52
-    7:
-      item: BLACK_STAINED_GLASS_PANE
-      name: " "
-      item-flags:
-        - "HIDE_ATTRIBUTES"
-      slot: 53
-    8:
-      item: BLACK_STAINED_GLASS_PANE
-      name: " "
-      item-flags:
-        - "HIDE_ATTRIBUTES"
-      slot: 54
-    9:
       item: BARRIER
       name: "&cClose"
       item-flags:
