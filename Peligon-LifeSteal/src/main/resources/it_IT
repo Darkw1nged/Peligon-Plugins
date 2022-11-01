@@ -1,133 +1,29 @@
-Heart:
-  name: "&4&lHeart"
-  lore:
-    - "&8By consuming this item,"
-    - "&8you will gain extra hearts"
-    - "&8making you live longer."
-    - ""
-    - "&c&lInformation"
-    - " &c&l▎ &fGives &c❤"
-    - ""
-    - "&eRight Click to consume"
-  #How many hearts the player gains.
-  add: 1
-Golden_Heart:
-  name: "&6&l&lGolden Heart"
-  lore:
-    - "&8By consuming this item,"
-    - "&8you will gain extra hearts"
-    - "&8making you live longer."
-    - ""
-    - "&c&lInformation"
-    - " &c&l▎ &fGives &c❤❤"
-    - ""
-    - "&eRight Click to consume"
-  add: 2
-Exotic_Heart:
-  name: "&b&lExotic Heart"
-  lore:
-    - "&8By consuming this item,"
-    - "&8you will gain extra hearts"
-    - "&8making you live longer."
-    - ""
-    - "&c&lInformation"
-    - " &c&l▎ &fGives &c❤❤❤"
-    - ""
-    - "&eRight Click to consume"
-  add: 3
-Mythical_Heart:
-  name: "&5&lMythical Heart"
-  lore:
-    - "&8By consuming this item,"
-    - "&8you will gain extra hearts"
-    - "&8making you live longer."
-    - ""
-    - "&c&lInformation"
-    - " &c&l▎ &fGives &c❤❤❤❤❤"
-    - ""
-    - "&eRight Click to consume"
-  add: 5
-Scarce_Heart:
-  name: "&4&lSacrificial Scarce Heart"
-  lore:
-    - "&8By consuming this item,"
-    - "&8you will sacrifice hearts"
-    - "&8in exchange for buffs."
-    - ""
-    - "&c&lInformation"
-    - " &c&l▎ &fSacrifice &c❤"
-    - " &c&l▎ &fBuff Duration &e10s"
-    - ""
-    - "&5&lBuffs"
-    - " &5&l▎ &fJump"
-    - " &5&l▎ &fSpeed"
-    - " &5&l▎ &fInvisibility"
-    - ""
-    - "&eRight Click to consume"
-  #How many hearts the player loses.
-  consume: 1
-  buffs:
-    1:
-      type: jump
-      amplifier: 1
-      duration: 10
-    2:
-      type: speed
-      amplifier: 1
-      duration: 10
-    3:
-      type: invisibility
-      amplifier: 1
-      duration: 10
-Shock_Heart:
-  name: "&2&lSacrificial Shock Heart"
-  lore:
-    - "&8By consuming this item,"
-    - "&8you will sacrifice hearts"
-    - "&8in exchange for buffs."
-    - ""
-    - "&a&lInformation"
-    - " &a&l▎ &fSacrifice &c❤❤"
-    - " &a&l▎ &fBuff Duration &e10s"
-    - ""
-    - "&5&lBuffs"
-    - " &5&l▎ &fResistance"
-    - " &5&l▎ &fFire Resistance"
-    - ""
-    - "&eRight Click to consume"
-  consume: 2
-  buffs:
-    1:
-      type: damage_resistance
-      amplifier: 1
-      duration: 10
-    2:
-      type: fire_resistance
-      amplifier: 1
-      duration: 10
-Rage_Heart:
-  name: "&3&lSacrificial Rage Heart"
-  lore:
-    - "&8By consuming this item,"
-    - "&8you will sacrifice hearts"
-    - "&8in exchange for buffs."
-    - ""
-    - "&b&lInformation"
-    - " &b&l▎ &fSacrifice &c❤❤❤"
-    - " &b&l▎ &fBuff Duration &e10s"
-    - ""
-    - "&5&lBuffs"
-    - " &5&l▎ &fStrength"
-    - " &5&l▎ &fHaste"
-    - ""
-    - "&eRight Click to consume"
-  consume: 3
-  buffs:
-    1:
-      type: increase_damage
-      amplifier: 1
-      duration: 10
-    2:
-      type: fast_digging
-      amplifier: 1
-      duration: 10
+BLOCK_EXPLOSION: "%s was blown up by a creeper and died."
+CUSTOM: "%s died from a custom reason."
+CONTACT: "%s was pricked to death."
+CRAMMING: "%s was pricked to death."
+DROWNING: "%s drowned and died."
+DRAGON_BREATH: "%s was roasted to death."
+DRYOUT: "%s couldn't swim and died."
+ENTITY_ATTACK: "%s was slain by %s."
+ENTITY_SWEEP_ATTACK: "%s was swiped by a creeper and died."
+ENTITY_EXPLOSION: "%s blew up."
+FALLING_BLOCK: "%s was blown up by a falling block."
+FREEZE: "%s was frozen to death."
+FALL: "%s fell from a high place and died."
+FIRE: "%s burned to death."
+FIRE_TICK: "%s burned to death."
+FLY_INTO_WALL: "%s hit the ground too hard and fell from a high place and died."
+HOT_FLOOR: "%s walked into a pool of lava and died."
+LAVA: "%s tried to swim in lava and died."
+LIGHTNING: "%s walked into a lightning and died."
+MAGIC: "%s died because magic was too strong."
+MELTING: "%s melted and died."
+POISON: "%s died from poison."
+PROJECTILE: "%s died from a projectile."
+SUICIDE: "%s has killed themselves."
+STARVATION: "%s starved to death."
+SUFFOCATION: "%s suffocated in a wall and died."
+THORNS: "%s was pricked to death."
+VOID: "%s fell out of the world and died."
+WITHER: "%s withered away."
