@@ -1,22 +1,31 @@
 #######################################################################################
-#In here you can add, remove and modify different coupons that you have on
-#your server, giving players access to certain features and more.
-#All items do support color codes check the line below for more information:
+#In here you can change what the signs will say after a player places one.
+#All lines do support color codes check the line below for more information:
 #[ https://www.digminecraft.com/lists/color_list_pc.php ]
 #######################################################################################
-coupons:
-  permanent-fly:
-    #The item for the coupon
-    item:
-      material: PAPER
-      name: "&eFly &fCoupon"
-      lore:
-        - "&7This is a &efly &7coupon."
-        - ""
-        - "&eRight-Click to claim."
-    #Commands that will be executed once interacted with
-    commands:
-      - "say Please update the command before trying again!"
-    #Messages that are sent to the payer once interacted with
-    messages:
-      - "&fYou have claimed a &efly coupon"
+Cash:
+  line-1: "&eView Cash"
+  line-2: ""
+  line-3: "&8Check your"
+  line-4: "&8Balance here."
+Bank:
+  line-1: "&eView Bank"
+  line-2: ""
+  line-3: "&8Check your"
+  line-4: "&8Balance here."
+Experience:
+  line-1: "&eView Experience"
+  line-2: ""
+  line-3: "&8Check your"
+  line-4: "&8Experience here."
+ATM:
+  line-1: "&eOpen ATM"
+  line-2: ""
+  line-3: "&8Check your"
+  line-4: "&8bank account."
+Chestsell:
+  line-1: "&e[!] &6Chestsell"
+  line-2: ""
+  line-3: "&8(Right Click or"
+  line-4: "&8Punch to Sell.)"
+  invalid: "&cInvalid Chestsell!"
