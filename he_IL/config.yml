@@ -1,12 +1,13 @@
 #######################################################################################
-#Welcome to Peligon LifeSteal's configuration, This is where you can change
+#Welcome to Peligon Playtime's configuration, This is where you can change
 #Basic settings that will affect how the plugin preforms.
+#This plugin does have database support; see 'Storage' for more information.
 #######################################################################################
 Storage:
-  #Visit 'Plugins/PeligonLifeSteal/Lang/' to see the supported languages.
+  #Visit 'Plugins/PeligonPlaytime/Lang/' to see the supported languages.
   lang: "en_US"
-  #Available options: "MySQL", "SQLite"
-  database: "SQLite"
+  #Available options: "File", "MySQL", "SQLite"
+  database: "File"
   MySQL:
     host: "localhost"
     port: 3306
@@ -15,94 +16,90 @@ Storage:
     password: ""
 ###############################################################
 #+---------------------------------------------------------+ #
-#|                Peligon LifeSteal (Events)               | #
-#|    !!! To disable modules, add # before to item !!!     | #
+#|            Peligon Playtime (Default Settings)          | #
+#|    This is where you can change the default settings    | #
+#|    of the plugin and how it will perform.               | #
 #+---------------------------------------------------------+ #
 ###############################################################
-Events:
-  - lightning-strike-on-death
-  - death-penalty
-  - custom-death-messages
-  - death-chest
-  - health-indicator
-  - bounties
-#What happens to the player after death
-After-Life:
-  ban-user:
-    enabled: true
-    message: "You have died but there is still hope. Try and get someone to revive you."
-  teleport-user:
-    enabled: false
-    message: "You have died but there is still hope. Try and get someone to revive you."
-    world: "world"
-#What happens when a player respawns.
-Player-Respawn:
-  title:
-    send-title: true
-    has-lives-left:
-      title: "&7%player%"
-      subtitle: "&cYou have &e%lives% &clives left!"
-    no-lives-left:
-      title: "&7%player%"
-      subtitle: "&cYou have no lives left!"
-    fade-in: 20
-    stay: 60
-    fade-out: 20
-#Add an effect to the player when they die.
-Lightning-on-death:
-  only-players: false
-  #Only execute lightning when the player reaches a certain amount of lives.
-  #-1 means execute lightning on death regardless of lives.
-  execute-at-lives: -1
-#How much a player's bounty increases when they kill a player.
-Bounties:
-  #How many players do they need to kill before the bounty starts to increase.
-  minimum-kill-streak: 3
-  bounty-per-kill: 100
-#When a player gets into combat, they will be tagged for a certain amount of time.
-combat-tag:
-  #What commands the player is not allowed to perform
-  blocked-commands:
-    - "spawn"
-    - "warp"
-    - "home"
-  #How long should the combat tag be active for
-  #!! This is in seconds.
-  duration: 30
-blacklisted-mobs:
-  - "ENDERMAN"
-  - "ENDERMITE"
-  - "PHANTOM"
-Commands-on-Death:
-  #Only execute commands when the player reaches a certain amount of lives.
-  execute-at-lives: 0
-  commands:
-    - "say &c%player% has just died! They have %lives% lives left!"
-    - "say Second message!"
-#What will be executed when the player runs out of lives.
-Out-of-Lives:
-  Actions:
-    - ban-on-death
-    - kick-on-death
-    - change-gamemode-on-death
-    - teleport-player-world
-  Settings:
-    gamemode: SPECTATOR
-    world: "world"
-#If the player dies the amount will be removed from their bank.
-Death-Penalty:
-  only-players: false
-  amount: 100
-#When a player dies their items will be placed in an inventory for them to pick up.
-Death-Chest:
-  block: SEA_LANTERN
-  inventory-name: "&e%player%'s &7Grave"
-  hologram: true
-  hologram-text: "&e%player%'s &cGrave"
-#Show how much damage a player is dealing.
-Damage-Indicator:
-  only-players: false
-  text: "&c%damage%"
-  length: 2
-#This will automatically check for updates
+leaderboard:
+  players: 10
+  format: "%position%. &e%player% &f- &a%time_played%"
+#Any worlds that are disabled. If the player goes inside of one of these worlds,
+#their playtime will not be counted.
+disabled-words: [ ]
+#Award players for playing on the server.
+playtime-rewards:
+  1:
+    #How long the player must play for to receive the reward.
+    delay: 1h
+    #Allow the player to receive the reward multiple times.
+    repeatable: false
+    #A list of commands to be executed when the player reaches the required time.
+    commands:
+      - "%message%&eYou have reached 1 hour of playtime!"
+      - "%broadcast%&e%player% has reached 1 hour of playtime!"
+      - "%command%give %player% diamond 1"
+    title-message:
+      #Send a title message to the player when they reach the required time.
+      send-title: true
+      #The title message to be displayed to the player.
+      title: "&eYou have reached 1 hour of playtime!"
+      #The subtitle message to be displayed to the player.
+      subtitle: "&eYou have been rewarded with a diamond!"
+      #The fade in time of the title.
+      fade-in: 10
+      #The stay time of the title.
+      stay: 20
+      #The fade out time of the title.
+      fade-out: 10
+    #This will keep track of the amount of times the player has received the reward.
+    #Warning! Do not change/remove this unless you know what you are doing.
+    awarded: [ ]
+  2:
+    delay: 6h
+    repeatable: false
+    commands:
+      - "%msg%&eYou have reached 6 hours of playtime!"
+      - "%broadcast%&e%player% has reached 6 hours of playtime!"
+      - "%cmd%give %player% diamond 2"
+    title-message:
+      send-title: true
+      title: "&eYou have reached 6 hours of playtime!"
+      subtitle: "&eYou have been rewarded with 2 diamonds!"
+      fade-in: 10
+      stay: 20
+      fade-out: 10
+    awarded: [ ]
+  3:
+    delay: 1d
+    repeatable: true
+    commands:
+      - "%msg%&eYou have reached 1 day of playtime!"
+      - "%broadcast%&e%player% has reached 1 day of playtime!"
+      - "%command%give %player% diamond 3"
+      - "%command%eco give %player% 150"
+    title-message:
+      send-title: true
+      title: "&eYou have reached 1 day of playtime!"
+      subtitle: "&eYou have been rewarded with 3 diamonds!"
+      fade-in: 10
+      stay: 20
+      fade-out: 10
+    awarded: [ ]
+  4:
+    delay: 1w
+    repeatable: true
+    commands:
+      - "%msg%&eYou have reached 1 week of playtime!"
+      - "%broadcast%&e%player% has reached 1 week of playtime!"
+      - "%command%give %player% diamond 4"
+      - "%command%eco give %player% 500"
+    title-message:
+      send-title: true
+      title: "&eYou have reached 1 week of playtime!"
+      subtitle: "&eYou have been rewarded with 4 diamonds!"
+      fade-in: 10
+      stay: 20
+      fade-out: 10
+    awarded: [ ]
 check-for-updates: true
