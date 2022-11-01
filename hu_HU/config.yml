@@ -1,14 +1,9 @@
 #######################################################################################
-#Welcome to Mini Peligon BlockedCommands configuration, This is where you can change
+#Welcome to Mini Peligon ChatFilter configuration, This is where you can change
 #Basic settings that will affect how the plugin preforms.
 #As this plugin is a mini plugin, The configuration will be small as there is
 #only one main feature to the plugin.
 #######################################################################################
-blocked-commands:
-  - "/plugins"
-  - "/pl"
-  - "/help"
-  - "/Bukkit:"
-  - "/minecraft:"
-messages:
-  command-block: "Sorry but you can't use this command right now. If you think this is a mistake, please contact a server administrator."
+Filter:
+  - fuck
+  - shit
