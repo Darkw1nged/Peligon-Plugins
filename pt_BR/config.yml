@@ -1,18 +1,23 @@
 #######################################################################################
-#Welcome to Mini Peligon JoinLeaveMessage's configuration, This is where you can
-#change basic settings that will affect how the plugin preforms.
+#Welcome to Mini Peligon Home's configuration, This is where you can change
+#Basic settings that will affect how the plugin preforms.
 #As this plugin is a mini plugin, The configuration will be small as there is
 #only one main feature to the plugin.
 #######################################################################################
-#Disable join and/or leave messages altogether.
-disable-join-message: false
-disable-leave-message: false
-#A join/leave message will only be sent if the player has the following permission;
-#'Peligon.JoinLeave.VIP.join' and 'Peligon.JoinLeave.VIP.leave' respectively.
-requires-permission: false
-#When a new player join a server it will welcome them and show the following count;
-counter: 0
+#How long before the player is teleported
+teleportation-delay: 5
 messages:
-  first-join-message: "&eWelcome %player% to the server! &6(%count%)"
-  join-message: "&e%player% has joined the server"
-  leave-message: "&c%player% has left the server"
+  console: "&cError! You are not allowed to perform this inside of the console."
+  prefix: "&ePeligon >> "
+  home-set: "&fHome &e%home%&f has been set to your current location."
+  home-delete: "&fHome &e%home%&f has been deleted."
+  homes: "&6Homes: &f%list%"
+  home-teleported: "&fYou have been teleported to &e%home%&f."
+  no-homes-found: "&cError! No homes found."
+  home-not-found: "&cError! Home could not be found."
+  delete-home-usage: "&cIncorrect Command Usage: &f/deletehome (player) <home>"
+  no-permission: "&cError! You do not have permission to use this command."
+  specify-player: "&cError! Please specify a player."
+  specify-name: "&cError! Please specify a name."
+  no-player-found: "&cError! player could not be found."
+  teleport-cancelled: "&cError! Teleport has been cancelled."
