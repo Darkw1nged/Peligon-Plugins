@@ -1,0 +1,40 @@
+backpacks:
+  normal-small:
+    material: CHEST
+    name: "&aSmall Backpack"
+    lore:
+      - "This is a small backpack."
+      - "This can hold 9 items"
+  normal-medium:
+    material: CHEST
+    name: "&eMedium Backpack"
+    lore:
+      - "This is a medium backpack."
+      - "This can hold 18 items"
+  normal-large:
+    material: CHEST
+    name: "&6Large Backpack"
+    lore:
+      - "This is a large backpack."
+      - "This can hold 36 items"
+  normal-massive:
+    material: CHEST
+    name: "&cMassive Backpack"
+    lore:
+      - "This is a massive backpack."
+      - "This can hold 54 items"
+  adventure-beginner:
+    material: CHEST
+    name: "&7Adventurer Beginner Backpack"
+    lore:
+      - "This is a adventurers backpack."
+  adventure-experienced:
+    material: CHEST
+    name: "&eAdventurer Advanced Backpack"
+    lore:
+      - "This is a adventurers backpack."
+  miners-backpack:
+    material: CHEST
+    name: "&7Miner Backpack"
+    lore:
+      - "This is a miners backpack."
