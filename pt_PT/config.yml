@@ -1,67 +1,108 @@
 #######################################################################################
-#Welcome to Peligon Enhanced Storage's configuration, This is where you can change
+#Welcome to Peligon LifeSteal's configuration, This is where you can change
 #Basic settings that will affect how the plugin preforms.
-#This plugin does not have database support.
 #######################################################################################
 Storage:
-  #Visit 'plugins/PeligonEnhancedStorage/Lang/' to see the supported languages.
+  #Visit 'Plugins/PeligonLifeSteal/Lang/' to see the supported languages.
   lang: "en_US"
+  #Available options: "MySQL", "SQLite"
+  database: "SQLite"
+  MySQL:
+    host: "localhost"
+    port: 3306
+    database: "minecraft"
+    username: "root"
+    password: ""
 ###############################################################
 #+---------------------------------------------------------+ #
-#|        Peligon Enhanced Storage (Default Settings)      | #
-#|    This is where you can change the default settings    | #
-#|    of the plugin and how it will perform.               | #
+#|                Peligon LifeSteal (Events)               | #
+#|    !!! To disable modules, add # before to item !!!     | #
 #+---------------------------------------------------------+ #
 ###############################################################
-defaults:
-  player-vault-title: "&ePrivate Vault &8(%number%)"
-#Check for plugin updates.
+Events:
+  - lightning-strike-on-death
+  - death-penalty
+  - custom-death-messages
+  - death-chest
+  - health-indicator
+  - bounties
+#What happens to the player after death
+After-Life:
+  ban-user:
+    enabled: true
+    message: "You have died but there is still hope. Try and get someone to revive you."
+  teleport-user:
+    enabled: false
+    message: "You have died but there is still hope. Try and get someone to revive you."
+    world: "world"
+#What happens when a player respawns.
+Player-Respawn:
+  title:
+    send-title: true
+    has-lives-left:
+      title: "&7%player%"
+      subtitle: "&cYou have &e%lives% &clives left!"
+    no-lives-left:
+      title: "&7%player%"
+      subtitle: "&cYou have no lives left!"
+    fade-in: 20
+    stay: 60
+    fade-out: 20
+#Add an effect to the player when they die.
+Lightning-on-death:
+  only-players: false
+  #Only execute lightning when the player reaches a certain amount of lives.
+  #-1 means execute lightning on death regardless of lives.
+  execute-at-lives: -1
+#How much a player's bounty increases when they kill a player.
+Bounties:
+  #How many players do they need to kill before the bounty starts to increase.
+  minimum-kill-streak: 3
+  bounty-per-kill: 100
+#When a player gets into combat, they will be tagged for a certain amount of time.
+combat-tag:
+  #What commands the player is not allowed to perform
+  blocked-commands:
+    - "spawn"
+    - "warp"
+    - "home"
+  #How long should the combat tag be active for
+  #!! This is in seconds.
+  duration: 30
+blacklisted-mobs:
+  - "ENDERMAN"
+  - "ENDERMITE"
+  - "PHANTOM"
+Commands-on-Death:
+  #Only execute commands when the player reaches a certain amount of lives.
+  execute-at-lives: 0
+  commands:
+    - "say &c%player% has just died! They have %lives% lives left!"
+    - "say Second message!"
+#What will be executed when the player runs out of lives.
+Out-of-Lives:
+  Actions:
+    - ban-on-death
+    - kick-on-death
+    - change-gamemode-on-death
+    - teleport-player-world
+  Settings:
+    gamemode: SPECTATOR
+    world: "world"
+#If the player dies the amount will be removed from their bank.
+Death-Penalty:
+  only-players: false
+  amount: 100
+#When a player dies their items will be placed in an inventory for them to pick up.
+Death-Chest:
+  block: SEA_LANTERN
+  inventory-name: "&e%player%'s &7Grave"
+  hologram: true
+  hologram-text: "&e%player%'s &cGrave"
+#Show how much damage a player is dealing.
+Damage-Indicator:
+  only-players: false
+  text: "&c%damage%"
+  length: 2
+#This will automatically check for updates
 check-for-updates: true
-###############################################################
-#+---------------------------------------------------------+ #
-#|           Peligon Enhanced Storage (Backpacks)          | #
-#|    This is where you can change settings for the        | #
-#|    backpack(s) and how they look.                       | #
-#+---------------------------------------------------------+ #
-###############################################################
-Backpacks:
-  enabled: true
-  normal-settings:
-    small:
-      #Must be multiples of 9 (Minimum is 9 | Maximum is 54)
-      size: 9
-      #The title that will be shown when the player opens the backpack.
-      title: "&eSmall Backpack"
-    medium:
-      size: 18
-      title: "&eMedium Backpack"
-    large:
-      size: 36
-      title: "&eLarge Backpack"
-    massive:
-      size: 54
-      title: "&eMassive Backpack"
-  adventure-settings:
-    beginner:
-      inventory:
-        size: 27
-        title: "&7Beginner Adventurer Backpack"
-      #Will certain items be restricted from going inside the
-      #backpack.
-      filtering: true
-      #When a player picks up an item will it automatically go
-      #inside the backpack.
-      automatic-pickup: true
-      #Allow players to grab food from their backpack without
-      #actually going inside it.
-      keep-food-restocked: false
-    experienced:
-      inventory:
-        size: 54
-        title: "&5Experienced Adventurer Backpack"
-      filtering: true
-      automatic-pickup: true
-      keep-food-restocked: true
-  miners-settings:
-    size: 18
-    title: "&6Miner Backpack"
