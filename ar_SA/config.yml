@@ -1,11 +1,67 @@
 #######################################################################################
-#Welcome to Peligon Authentication's configuration, This is where you can change
+#Welcome to Peligon Core's configuration, This is where you can change
 #Basic settings that will affect how the plugin preforms.
 #This plugin does have database support; see 'Storage' for more information.
 #######################################################################################
 Storage:
-  #Visit 'Plugins/PeligonChat/Lang/' to see the supported languages.
+  #Visit 'Plugins/PeligonCore/Lang/' to see the supported languages.
   Language File: "en_US"
   database: "SQLite"
-#This will automatically check for updates
-check-for-updates: true
+Disposal-Inventory-Name: "&7Disposal"
+###############################################################
+#+---------------------------------------------------------+ #
+#|                   Peligon Core (Events)                 | #
+#|    !!! To disable modules, add # before to item !!!     | #
+#+---------------------------------------------------------+ #
+###############################################################
+Events:
+  - player-join-message
+  - player-leave-message
+  - chat-color
+  - sign-color
+  - word-filter
+  - anti-spam
+  - no-void
+Warnings:
+  Tool-Durability:
+    #percentage of tool durability at which a warning will be displayed.
+    percentage:
+      - 100
+      - 75
+      - 50
+      - 25
+      - 10
+      - 5
+    sound:
+      enabled: true
+      id: BLOCK_ANVIL_FALL #pre 1.13.2 use ( ANVIL_LAND )
+      volume: 1.0
+      pitch: 1.0
+World-Protection:
+  blacklisted-worlds: [ ]
+  events:
+    - block-break
+    - block-place
+    - item-pickup
+    - item-drop
+    - interact
+    - redstone
+    - explosions
+    - fall-damage
+    - player-damage
+    - mob-damage
+    - mob-spawn
+    - animal-spawn
+    - experience-drop
+banned-items:
+  - END_PORTAL_FRAME
+  - BEDROCK
+#The item and how long before it can be used again.
+item-cooldown:
+  STONE_SWORD: 5
+  STONE_PICKAXE: 5
+  STONE_AXE: 5
+  STONE_SHOVEL: 5
+  STONE_HOE: 5
+#How long before can double jump again.
+Double-Jump-Delay: 3
