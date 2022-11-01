@@ -1,8 +1,11 @@
 #######################################################################################
-#Welcome to Mini Peligon ServerInformation's configuration, This is where you can change
+#Welcome to Peligon Authentication's configuration, This is where you can change
 #Basic settings that will affect how the plugin preforms.
-#As this plugin is a mini plugin, The configuration will be small as there is
-#only one main feature to the plugin.
+#This plugin does have database support; see 'Storage' for more information.
 #######################################################################################
-Blocks-Broken: 0
-Blocks-Placed: 0
+Storage:
+  #Visit 'Plugins/PeligonChat/Lang/' to see the supported languages.
+  Language File: "en_US"
+  database: "SQLite"
+#This will automatically check for updates
+check-for-updates: true
