@@ -1,60 +1,9 @@
-#What will be displayed when player opens a pouch
-title: "&eOpening pouch..."
-#! Subtext will display the amount of money/exp in the pouch
-#! money is automatically formatted
-Money:
-  tier1:
-    item: "ENDER_CHEST"
-    name: "&2&lTier I Money Pouch &r&7(Right Click)"
-    lore:
-      - "&7Open this pouch to receive money!"
-    values:
-      minimum: 1000
-      maximum: 10000
-    permission-required: false
-  tier2:
-    item: "ENDER_CHEST"
-    name: "&2&lTier II Money Pouch &r&7(Right Click)"
-    lore:
-      - "&7Open this pouch to receive money!"
-    values:
-      minimum: 10000
-      maximum: 50000
-    permission-required: false
-  tier3:
-    item: "ENDER_CHEST"
-    name: "&2&lTier III Money Pouch &r&7(Right Click)"
-    lore:
-      - "&7Open this pouch to receive money!"
-    values:
-      minimum: 50000
-      maximum: 100000
-    permission-required: false
-Experience:
-  tier1:
-    item: "ARMOR_STAND"
-    name: "&2&lTier I Experience Pouch &r&7(Right Click)"
-    lore:
-      - "&7Open this pouch to receive experience!"
-    values:
-      minimum: 20
-      maximum: 400
-    permission-required: false
-  tier2:
-    item: "ARMOR_STAND"
-    name: "&2&lTier II Experience Pouch &r&7(Right Click)"
-    lore:
-      - "&7Open this pouch to receive experience!"
-    values:
-      minimum: 400
-      maximum: 1000
-    permission-required: false
-  tier3:
-    item: "ARMOR_STAND"
-    name: "&2&lTier III Experience Pouch &r&7(Right Click)"
-    lore:
-      - "&7Open this pouch to receive experience!"
-    values:
-      minimum: 1000
-      maximum: 2000
-    permission-required: false
+worth:
+  #This has to be the exact material.
+  #What you put after the material is the amount it will be sold for.
+  IRON_INGOT: 20.0
+  DIRT: 1.0
+  COBBLESTONE: 1.0
+  STONE: 1.0
+  COAL: 100.0
+  GOLD_INGOT: 100.0
