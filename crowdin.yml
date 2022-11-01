@@ -13,4 +13,4 @@ files:
       - Peligon-Teams
       - Peligon-Staff
       - Peligon-Core
-    translation: '%original_path%/lang/%locale_with_underscore%'
+    translation: /%original_path%/%locale_with_underscore%
