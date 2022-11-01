@@ -1,105 +1,30 @@
 #######################################################################################
-#Welcome to Peligon Playtime's configuration, This is where you can change
+#Welcome to Peligon Polls configuration, This is where you can change
 #Basic settings that will affect how the plugin preforms.
-#This plugin does have database support; see 'Storage' for more information.
 #######################################################################################
 Storage:
-  #Visit 'Plugins/PeligonPlaytime/Lang/' to see the supported languages.
-  lang: "en_US"
-  #Available options: "File", "MySQL", "SQLite"
-  database: "File"
-  MySQL:
-    host: "localhost"
-    port: 3306
-    database: "minecraft"
-    username: "root"
-    password: ""
-###############################################################
-#+---------------------------------------------------------+ #
-#|            Peligon Playtime (Default Settings)          | #
-#|    This is where you can change the default settings    | #
-#|    of the plugin and how it will perform.               | #
-#+---------------------------------------------------------+ #
-###############################################################
-leaderboard:
-  players: 10
-  format: "%position%. &e%player% &f- &a%time_played%"
-#Any worlds that are disabled. If the player goes inside of one of these worlds,
-#their playtime will not be counted.
-disabled-words: [ ]
-#Award players for playing on the server.
-playtime-rewards:
-  1:
-    #How long the player must play for to receive the reward.
-    delay: 1h
-    #Allow the player to receive the reward multiple times.
-    repeatable: false
-    #A list of commands to be executed when the player reaches the required time.
-    commands:
-      - "%message%&eYou have reached 1 hour of playtime!"
-      - "%broadcast%&e%player% has reached 1 hour of playtime!"
-      - "%command%give %player% diamond 1"
-    title-message:
-      #Send a title message to the player when they reach the required time.
-      send-title: true
-      #The title message to be displayed to the player.
-      title: "&eYou have reached 1 hour of playtime!"
-      #The subtitle message to be displayed to the player.
-      subtitle: "&eYou have been rewarded with a diamond!"
-      #The fade in time of the title.
-      fade-in: 10
-      #The stay time of the title.
-      stay: 20
-      #The fade out time of the title.
-      fade-out: 10
-    #This will keep track of the amount of times the player has received the reward.
-    #Warning! Do not change/remove this unless you know what you are doing.
-    awarded: [ ]
-  2:
-    delay: 6h
-    repeatable: false
-    commands:
-      - "%msg%&eYou have reached 6 hours of playtime!"
-      - "%broadcast%&e%player% has reached 6 hours of playtime!"
-      - "%cmd%give %player% diamond 2"
-    title-message:
-      send-title: true
-      title: "&eYou have reached 6 hours of playtime!"
-      subtitle: "&eYou have been rewarded with 2 diamonds!"
-      fade-in: 10
-      stay: 20
-      fade-out: 10
-    awarded: [ ]
-  3:
-    delay: 1d
-    repeatable: true
-    commands:
-      - "%msg%&eYou have reached 1 day of playtime!"
-      - "%broadcast%&e%player% has reached 1 day of playtime!"
-      - "%command%give %player% diamond 3"
-      - "%command%eco give %player% 150"
-    title-message:
-      send-title: true
-      title: "&eYou have reached 1 day of playtime!"
-      subtitle: "&eYou have been rewarded with 3 diamonds!"
-      fade-in: 10
-      stay: 20
-      fade-out: 10
-    awarded: [ ]
-  4:
-    delay: 1w
-    repeatable: true
-    commands:
-      - "%msg%&eYou have reached 1 week of playtime!"
-      - "%broadcast%&e%player% has reached 1 week of playtime!"
-      - "%command%give %player% diamond 4"
-      - "%command%eco give %player% 500"
-    title-message:
-      send-title: true
-      title: "&eYou have reached 1 week of playtime!"
-      subtitle: "&eYou have been rewarded with 4 diamonds!"
-      fade-in: 10
-      stay: 20
-      fade-out: 10
-    awarded: [ ]
+  #Visit 'Plugins/PeligonPolls/Lang/' to see the supported languages.
+  Language File: "en_US"
+  #Replace with the bot client ID
+  client-token: ""
+  #Where the polls will be posted
+  text-channel-id: ""
+polls-inventory:
+  title: "&aPolls"
+  size: 27
+polls-placeholder:
+  material: BOOK
+  name: "&ePoll - &6%title%"
+  #!! This will only affect %description%
+  description-word-per-line: 5
+  #!! Spacing will automatically be added under the description.
+  lore:
+    - "&7%description%"
+    - "&7Created by: &c%author%"
+    - "&7Created on: &c%created%"
+    - ""
+    - "&7Votes: &a↑%upVote% &7| &4↓%downVote%"
+    - ""
+    - "&eClick to cast vote"
+#This will automatically check for updates
 check-for-updates: true
