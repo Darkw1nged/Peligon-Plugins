@@ -1,8 +1,8 @@
 inventory:
-  title: "&7Daily Reward"
+  title: "&7Daily Tasks"
   #!! Must be multiples of 9 | Maximum is 54
-  size: 54
-  #There is 2 type of item event(s): Reward | Close
+  size: 27
+  #There is 2 type of item event(s): Task | Close
   #If you want the item to be interacted with then please add a type to the item.
   contents:
     1:
@@ -14,21 +14,54 @@ inventory:
       #-1 means all slots will be filled with this item.
       slot: -1
     2:
-      item: DIAMOND
-      name: "&3Diamond"
+      item: STONE
+      name: "&bTask 1"
       lore:
-        - "&7Reward: &a+1 Diamond"
-        - "&7Click to get your reward"
+        - "&7%description%"
+        - ""
+        - "&fProgress: &a%progress%"
+        - "&fCompleted: &e%completed%"
+        - ""
+        - "&fClaimed: &a%claimed%"
+        - "&7Click to start the task"
       item-flags:
         - "HIDE_ATTRIBUTES"
-      commands:
-        - "give %player% diamond 1"
-      slot: 23
-      event: "Item"
+      slot: 13
+      event: "Task"
     3:
+      item: OAK_LOG
+      name: "&bTask 2"
+      lore:
+        - "&7%description%"
+        - ""
+        - "&fProgress: &a%progress%"
+        - "&fCompleted: &e%completed%"
+        - ""
+        - "&fClaimed: &a%claimed%"
+        - "&7Click to start the task"
+      item-flags:
+        - "HIDE_ATTRIBUTES"
+      slot: 14
+      event: "Task"
+    4:
+      item: WHITE_WOOL
+      name: "&bTask 3"
+      lore:
+        - "&7%description%"
+        - ""
+        - "&fProgress: &a%progress%"
+        - "&fCompleted: &e%completed%"
+        - ""
+        - "&fClaimed: &a%claimed%"
+        - "&7Click to start the task"
+      item-flags:
+        - "HIDE_ATTRIBUTES"
+      slot: 15
+      event: "Task"
+    5:
       item: BARRIER
       name: "&cClose"
       item-flags:
         - "HIDE_ATTRIBUTES"
-      slot: 50
+      slot: 23
       event: "Close"
