@@ -1,11 +1,9 @@
 #######################################################################################
-#Welcome to Mini Peligon ClearChat's configuration, This is where you can change
+#Welcome to Mini Peligon ChatFilter configuration, This is where you can change
 #Basic settings that will affect how the plugin preforms.
 #As this plugin is a mini plugin, The configuration will be small as there is
 #only one main feature to the plugin.
 #######################################################################################
-#How many lines of chat will be cleared.
-lines: 150
-messages:
-  cleared-chat: "&c&lChat has been cleared by &f&l%player%."
-  no-permission: "&cError! You do not have permission to use this command."
+Filter:
+  - fuck
+  - shit
