@@ -1,8 +1,9 @@
 #######################################################################################
-#Welcome to Mini Peligon AutoPickup's configuration, This is where you can change
+#Welcome to Mini Peligon ChatFilter configuration, This is where you can change
 #Basic settings that will affect how the plugin preforms.
 #As this plugin is a mini plugin, The configuration will be small as there is
 #only one main feature to the plugin.
 #######################################################################################
-messages:
-  no-space: "&cYou do not have enough space in your inventory!"
+Filter:
+  - fuck
+  - shit
