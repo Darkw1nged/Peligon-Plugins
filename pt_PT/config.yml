@@ -1,61 +1,67 @@
 #######################################################################################
-#Welcome to Peligon Enchants configuration, This is where you can change
+#Welcome to Peligon Enhanced Storage's configuration, This is where you can change
 #Basic settings that will affect how the plugin preforms.
-#This plugin does have database support; see 'Storage' for more information.
+#This plugin does not have database support.
 #######################################################################################
 Storage:
-  #Visit 'Plugins/PeligonEnchants/Lang/' to see the supported languages.
-  Language File: "en_US"
-  database: "SQLite"
-Enchantments:
-  #!! All enchants are enabled by default
-  Aquatic:
-    enabled: true
-    type: "Simple"
-    description:
-      - "&fGives water breathing"
-  Autosell:
-    #This hooks into one of 2 files to check for a worth.yml file.
-    #!! Vault and EssentialsX or PeligonEconomy is required for this to work.
-    enabled: true
-    type: "Unique"
-    description:
-      - "&fAutomatically sells items"
-  Autosmelt:
-    enabled: true
-    type: "Simple"
-    description:
-      - "&fAutomatically smelts items"
-  Blind:
-    description:
-      - "&fA chance to give players blindness"
-    sword:
-      enabled: true
-      level:
-        one:
-          chance: 80 #percentage
-          duration: 8
-          amplifier: 10
-        two:
-          chance: 70 #percentage
-          duration: 8
-          amplifier: 10
-        three:
-          chance: 60 #percentage
-          duration: 8
-          amplifier: 10
-    bow:
-      enabled: true
-      level:
-        one:
-          chance: 80 #percentage
-          duration: 8
-          amplifier: 10
-        two:
-          chance: 70 #percentage
-          duration: 8
-          amplifier: 10
-        three:
-          chance: 60 #percentage
-          duration: 8
-          amplifier: 10
+  #Visit 'plugins/PeligonEnhancedStorage/Lang/' to see the supported languages.
+  lang: "en_US"
+###############################################################
+#+---------------------------------------------------------+ #
+#|        Peligon Enhanced Storage (Default Settings)      | #
+#|    This is where you can change the default settings    | #
+#|    of the plugin and how it will perform.               | #
+#+---------------------------------------------------------+ #
+###############################################################
+defaults:
+  player-vault-title: "&ePrivate Vault &8(%number%)"
+#Check for plugin updates.
+check-for-updates: true
+###############################################################
+#+---------------------------------------------------------+ #
+#|           Peligon Enhanced Storage (Backpacks)          | #
+#|    This is where you can change settings for the        | #
+#|    backpack(s) and how they look.                       | #
+#+---------------------------------------------------------+ #
+###############################################################
+Backpacks:
+  enabled: true
+  normal-settings:
+    small:
+      #Must be multiples of 9 (Minimum is 9 | Maximum is 54)
+      size: 9
+      #The title that will be shown when the player opens the backpack.
+      title: "&eSmall Backpack"
+    medium:
+      size: 18
+      title: "&eMedium Backpack"
+    large:
+      size: 36
+      title: "&eLarge Backpack"
+    massive:
+      size: 54
+      title: "&eMassive Backpack"
+  adventure-settings:
+    beginner:
+      inventory:
+        size: 27
+        title: "&7Beginner Adventurer Backpack"
+      #Will certain items be restricted from going inside the
+      #backpack.
+      filtering: true
+      #When a player picks up an item will it automatically go
+      #inside the backpack.
+      automatic-pickup: true
+      #Allow players to grab food from their backpack without
+      #actually going inside it.
+      keep-food-restocked: false
+    experienced:
+      inventory:
+        size: 54
+        title: "&5Experienced Adventurer Backpack"
+      filtering: true
+      automatic-pickup: true
+      keep-food-restocked: true
+  miners-settings:
+    size: 18
+    title: "&6Miner Backpack"
