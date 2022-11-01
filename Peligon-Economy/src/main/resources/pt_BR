@@ -1,22 +1,9 @@
-#######################################################################################
-#In here you can add, remove and modify different coupons that you have on
-#your server, giving players access to certain features and more.
-#All items do support color codes check the line below for more information:
-#[ https://www.digminecraft.com/lists/color_list_pc.php ]
-#######################################################################################
-coupons:
-  permanent-fly:
-    #The item for the coupon
-    item:
-      material: PAPER
-      name: "&eFly &fCoupon"
-      lore:
-        - "&7This is a &efly &7coupon."
-        - ""
-        - "&eRight-Click to claim."
-    #Commands that will be executed once interacted with
-    commands:
-      - "say Please update the command before trying again!"
-    #Messages that are sent to the payer once interacted with
-    messages:
-      - "&fYou have claimed a &efly coupon"
+worth:
+  #This has to be the exact material.
+  #What you put after the material is the amount it will be sold for.
+  IRON_INGOT: 20.0
+  DIRT: 1.0
+  COBBLESTONE: 1.0
+  STONE: 1.0
+  COAL: 100.0
+  GOLD_INGOT: 100.0
