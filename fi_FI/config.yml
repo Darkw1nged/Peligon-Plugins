@@ -1,30 +1,24 @@
 #######################################################################################
-#Welcome to Peligon Polls configuration, This is where you can change
+#Welcome to Peligon Staff's configuration, This is where you can change
 #Basic settings that will affect how the plugin preforms.
+#This plugin does have database support; see 'Storage' for more information.
 #######################################################################################
 Storage:
-  #Visit 'Plugins/PeligonPolls/Lang/' to see the supported languages.
-  Language File: "en_US"
-  #Replace with the bot client ID
-  client-token: ""
-  #Where the polls will be posted
-  text-channel-id: ""
-polls-inventory:
-  title: "&aPolls"
-  size: 27
-polls-placeholder:
-  material: BOOK
-  name: "&ePoll - &6%title%"
-  #!! This will only affect %description%
-  description-word-per-line: 5
-  #!! Spacing will automatically be added under the description.
-  lore:
-    - "&7%description%"
-    - "&7Created by: &c%author%"
-    - "&7Created on: &c%created%"
-    - ""
-    - "&7Votes: &a↑%upVote% &7| &4↓%downVote%"
-    - ""
-    - "&eClick to cast vote"
-#This will automatically check for updates
+  #Visit 'plugins/PeligonStaff/Lang/' to see the supported languages.
+  lang: "en_US"
+  #Available options: "MySQL", "SQLite"
+  database: "SQLite"
+  database-settings:
+    host: "localhost"
+    port: 3306
+    database: "minecraft"
+    username: "root"
+    password: ""
+###############################################################
+#+---------------------------------------------------------+ #
+#|                 Peligon Staff (Section)                 | #
+#|    [NOTE or Description]                                | #
+#+---------------------------------------------------------+ #
+###############################################################
+#Check for plugin updates.
 check-for-updates: true
