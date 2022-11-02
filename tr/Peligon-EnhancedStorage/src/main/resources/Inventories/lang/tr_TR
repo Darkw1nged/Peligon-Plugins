@@ -1,0 +1,139 @@
+name: "&aAre you sure?"
+#This has to be multiple of 9.
+#minimum : 9 || maximum : 54
+size: 27
+contents:
+  1:
+    material: GRAY_STAINED_GLASS_PANE
+    amount: 1
+    name: " "
+    lore: [ ]
+    #Where this item will be placed in the inventory.
+    #-1 meaning all slots.
+    slot: -1
+  2:
+    material: LIME_STAINED_GLASS_PANE
+    amount: 1
+    name: "&a&lYes"
+    lore: [ ]
+    slot: 1
+    event: "yes"
+  3:
+    material: LIME_STAINED_GLASS_PANE
+    amount: 1
+    name: "&a&lYes"
+    lore: [ ]
+    slot: 2
+    event: "yes"
+  4:
+    material: LIME_STAINED_GLASS_PANE
+    amount: 1
+    name: "&a&lYes"
+    lore: [ ]
+    slot: 3
+    event: "yes"
+  5:
+    material: LIME_STAINED_GLASS_PANE
+    amount: 1
+    name: "&a&lYes"
+    lore: [ ]
+    slot: 10
+    event: "yes"
+  6:
+    material: LIME_STAINED_GLASS_PANE
+    amount: 1
+    name: "&a&lYes"
+    lore: [ ]
+    slot: 11
+    event: "yes"
+  7:
+    material: LIME_STAINED_GLASS_PANE
+    amount: 1
+    name: "&a&lYes"
+    lore: [ ]
+    slot: 12
+    event: "yes"
+  8:
+    material: LIME_STAINED_GLASS_PANE
+    amount: 1
+    name: "&a&lYes"
+    lore: [ ]
+    slot: 19
+    event: "yes"
+  9:
+    material: LIME_STAINED_GLASS_PANE
+    amount: 1
+    name: "&a&lYes"
+    lore: [ ]
+    slot: 20
+    event: "yes"
+  10:
+    material: LIME_STAINED_GLASS_PANE
+    amount: 1
+    name: "&a&lYes"
+    lore: [ ]
+    slot: 21
+    event: "yes"
+  11:
+    material: RED_STAINED_GLASS_PANE
+    amount: 1
+    name: "&c&lNo"
+    lore: [ ]
+    slot: 5
+    event: "no"
+  12:
+    material: RED_STAINED_GLASS_PANE
+    amount: 1
+    name: "&c&lNo"
+    lore: [ ]
+    slot: 6
+    event: "no"
+  13:
+    material: RED_STAINED_GLASS_PANE
+    amount: 1
+    name: "&c&lNo"
+    lore: [ ]
+    slot: 7
+    event: "no"
+  14:
+    material: RED_STAINED_GLASS_PANE
+    amount: 1
+    name: "&c&lNo"
+    lore: [ ]
+    slot: 14
+    event: "no"
+  15:
+    material: RED_STAINED_GLASS_PANE
+    amount: 1
+    name: "&c&lNo"
+    lore: [ ]
+    slot: 15
+    event: "no"
+  16:
+    material: RED_STAINED_GLASS_PANE
+    amount: 1
+    name: "&c&lNo"
+    lore: [ ]
+    slot: 16
+    event: "no"
+  17:
+    material: RED_STAINED_GLASS_PANE
+    amount: 1
+    name: "&c&lNo"
+    lore: [ ]
+    slot: 23
+    event: "no"
+  18:
+    material: RED_STAINED_GLASS_PANE
+    amount: 1
+    name: "&c&lNo"
+    lore: [ ]
+    slot: 24
+    event: "no"
+  19:
+    material: RED_STAINED_GLASS_PANE
+    amount: 1
+    name: "&c&lNo"
+    lore: [ ]
+    slot: 25
+    event: "no"

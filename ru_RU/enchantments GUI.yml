@@ -1,0 +1,124 @@
+main:
+  size: 54
+  title: "&7Enchantments"
+  contents:
+    1:
+      item: GRAY_STAINED_GLASS_PANE
+      name: " "
+      #See the full list here: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/inventory/ItemFlag.html
+      item-flags:
+        - "HIDE_ATTRIBUTES"
+      #-1 means all slots will be filled with this item.
+      slot: -1
+    2:
+      item: BOOK
+      name: "&f&l%player%"
+      lore:
+        - ""
+        - "&6&lStatistics"
+        - " &6&l▎ &7Level: &f%level%"
+        - " &6&l▎ &7Experience: &f%exp%"
+        - " &6&l▎ &7Free Enchants: &f%free-enchants%"
+        - " &6&l▎ &7Booster: &f%booster%"
+      slot: 5
+    3:
+      item: BARRIER
+      name: "&cClose"
+      item-flags:
+        - "HIDE_ATTRIBUTES"
+        - "HIDE_ENCHANTS"
+      slot: 50
+      type: "Close"
+  enchantment-slots:
+    - 9
+    - 10
+    - 11
+    - 12
+    - 13
+    - 14
+    - 15
+    - 16
+    - 17
+    - 18
+    - 19
+    - 20
+    - 21
+    - 22
+    - 23
+    - 24
+    - 25
+    - 26
+    - 27
+    - 28
+    - 29
+    - 30
+    - 31
+    - 32
+    - 33
+    - 34
+    - 35
+    - 36
+    - 37
+    - 38
+    - 39
+    - 40
+    - 41
+    - 42
+    - 43
+    - 44
+  no-item:
+    item: RED_STAINED_GLASS_PANE
+    name: " "
+enchantment:
+  size: 45
+  title: "&7%item%"
+  contents:
+    1:
+      item: GRAY_STAINED_GLASS_PANE
+      name: " "
+      item-flags:
+        - "HIDE_ATTRIBUTES"
+      slot: -1
+    2:
+      item: BARRIER
+      name: "&cClose"
+      item-flags:
+        - "HIDE_ATTRIBUTES"
+        - "HIDE_ENCHANTS"
+      slot: 41
+      type: "Close"
+    3:
+      item: BOOK
+      name: "&f&l%player%"
+      lore:
+        - ""
+        - "&6&lStatistics"
+        - " &6&l▎ &7Level: &f%level%"
+        - " &6&l▎ &7Experience: &f%exp%"
+        - " &6&l▎ &7Free Enchants: &f%free-enchants%"
+        - " &6&l▎ &7Booster: &f%booster%"
+      slot: 45
+  #Whatever item you select will be put in this slot.
+  selected-item-slot: 5
+  enchantment-slots:
+    - 10
+    - 11
+    - 12
+    - 13
+    - 14
+    - 15
+    - 16
+    - 19
+    - 20
+    - 21
+    - 22
+    - 23
+    - 24
+    - 25
+    - 28
+    - 29
+    - 30
+    - 31
+    - 32
+    - 33
+    - 34

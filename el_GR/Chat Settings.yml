@@ -1,0 +1,26 @@
+#This is a list of commands that players can not perform.
+Blocked-Commands:
+  - "/bukkit:"
+  - /?
+  - /help
+  - /ver
+  - /version
+  - /pl
+  - /plugins
+  - /minecraft:help
+  - /minecraft:me
+  - /me
+#Send the player a message when they try to use a blocked command.
+Blocked-Command-Message: true
+Anti-Spam-Delay: 5
+#Settings for chat pings
+Chat-Pings:
+  disabled-worlds: [ ]
+  color: "@a"
+  sound: "ENTITY_VILLAGER_YES" #pre 1.13 use ( VILLAGER_YES )
+  sound-volume: 1.2
+  sound-pitch: 0.5
+#Block certain words from being said in chat
+Chat-Filter:
+  - faggot
+  - dick

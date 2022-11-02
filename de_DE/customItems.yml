@@ -1,0 +1,28 @@
+#######################################################################################
+#In here you can change what the items will look like inside the gui.
+#All text does support color codes follow the link below for more information:
+#[ https://www.digminecraft.com/lists/color_list_pc.php ]
+#######################################################################################
+background:
+  material: GRAY_STAINED_GLASS_PANE
+  name: "&7"
+  lore: [ ]
+close-button:
+  material: BARRIER
+  name: "&c&lClose"
+  lore: [ ]
+refresh-button:
+  material: CLOCK
+  name: "&eRefresh"
+  lore:
+    - "&8Click to refresh the menu."
+next-page-button:
+  material: ARROW
+  name: "&7&lNext Page"
+  lore:
+    - "&8Click to go to the next page."
+previous-page-button:
+  material: ARROW
+  name: "&7&lPrevious Page"
+  lore:
+    - "&8Click to go to the previous page."
