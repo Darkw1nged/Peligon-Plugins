@@ -13,4 +13,12 @@ files:
       - Peligon-Teams
       - Peligon-Staff
       - Peligon-Core
+      - worth.yml
+      - signs.yml
+      - pouches.yml
+      - coupons.yml
+      - Inventories
+      - cache.yml
+      - customItems.yml
+      - items.yml
     translation: /%original_path%/%locale_with_underscore%
