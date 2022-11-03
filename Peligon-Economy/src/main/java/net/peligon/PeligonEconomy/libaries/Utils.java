@@ -130,15 +130,15 @@ public class Utils {
                     try {
                         amount = Double.parseDouble(strings[result]);
                     } catch (Exception e) {
-                        player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("invalid-amount")));
+                        player.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("invalid-amount")));
                         return false;
                     }
                     if (amount < 0) {
-                        player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("invalid-amount")));
+                        player.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("invalid-amount")));
                         return false;
                     }
                     if (!plugin.Economy.hasAccount(player)) {
-                        player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("account-error")
+                        player.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("account-error")
                                 .replaceAll("%player%", player.getName())
                                 .replaceAll("%target%", player.getName())));
                         return true;
@@ -146,11 +146,11 @@ public class Utils {
 
                     if (objective.equals("deposit")) {
                         if (!plugin.Economy.hasEnoughCash(player, amount)) {
-                            player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("not-enough-money")));
+                            player.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("not-enough-money")));
                             return false;
                         }
 
-                        player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") + plugin.fileMessage.getConfig().getString("deposited-money"), amount));
+                        player.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("prefix") + plugin.languageFile.getConfig().getString("deposited-money"), amount));
                         plugin.Economy.removeAccount(player, amount);
                         plugin.Economy.addBankAccount(player, amount);
 
@@ -159,11 +159,11 @@ public class Utils {
 
                     } else if (objective.equals("withdraw")) {
                         if (!plugin.Economy.hasEnoughBank(player, amount)) {
-                            player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("not-enough-money")));
+                            player.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("not-enough-money")));
                             return false;
                         }
 
-                        player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") + plugin.fileMessage.getConfig().getString("withdrawn-money"), amount));
+                        player.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("prefix") + plugin.languageFile.getConfig().getString("withdrawn-money"), amount));
                         plugin.Economy.addAccount(player, amount);
                         plugin.Economy.removeBankAccount(player, amount);
 

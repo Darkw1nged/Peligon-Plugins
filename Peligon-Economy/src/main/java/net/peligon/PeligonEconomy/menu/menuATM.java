@@ -4,7 +4,6 @@ import net.peligon.PeligonEconomy.Main;
 import net.peligon.PeligonEconomy.libaries.Utils;
 import net.peligon.PeligonEconomy.libaries.struts.Menu;
 import net.peligon.PeligonEconomy.libaries.struts.MenuOwnerUtil;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -45,10 +44,10 @@ public class menuATM extends Menu {
                 if (plugin.fileATM.getConfig().contains("atm-inventory.contents." + key + ".event")) {
                     switch (plugin.fileATM.getConfig().getString("atm-inventory.contents." + key + ".event").toLowerCase()) {
                         case "deposit":
-                            player.openInventory(new menuDeposit(new MenuOwnerUtil(player)).getInventory());
+                            new menuDeposit(new MenuOwnerUtil(player)).open();
                             return;
                         case "withdraw":
-                            player.openInventory(new menuWithdraw(new MenuOwnerUtil(player)).getInventory());
+                            new menuWithdraw(new MenuOwnerUtil(player)).open();
                             return;
                         case "close":
                             player.closeInventory();
@@ -81,7 +80,7 @@ public class menuATM extends Menu {
             if (plugin.fileATM.getConfig().contains("atm-inventory.contents." + key + ".lore")) {
                 ArrayList<String> lore = new ArrayList<>();
 
-                String limit = plugin.fileMessage.getConfig().getString("no-bank-limit");
+                String limit = plugin.languageFile.getConfig().getString("no-bank-limit");
                 if (plugin.fileATM.getConfig().getInt("Options.bank-limit") != -1) {
                     limit = getBracket(plugin.fileATM.getConfig().getInt("Options.bank-limit"), 0);
                 }
@@ -109,7 +108,7 @@ public class menuATM extends Menu {
                                     .replaceAll("%cash%", formatted(plugin.Economy.getAccount(player)))
                                     .replaceAll("%bank%", formatted(plugin.Economy.getBank(player)))
                                     .replaceAll("%bank_limit%", limit)
-                                    .replaceAll("%transactions%", Utils.chatColor(plugin.fileMessage.getConfig().getString("no-transactions")))
+                                    .replaceAll("%transactions%", Utils.chatColor(plugin.languageFile.getConfig().getString("no-transactions")))
                                     .replaceAll("%interest%", "" + plugin.fileATM.getConfig().getInt("Options.interest.percentage"))
                                     .replaceAll("%interest_cash%", Utils.formatAmount(plugin.fileATM.getConfig().getInt("Options.interest.cash")))
                                     .replaceAll("%raw_time%", plugin.fileATM.getConfig().getString("Options.interest.time"))

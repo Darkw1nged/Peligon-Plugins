@@ -1,4 +1,4 @@
-package net.peligon.PeligonEconomy.libaries;
+package net.peligon.PeligonEconomy.libaries.storage;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;

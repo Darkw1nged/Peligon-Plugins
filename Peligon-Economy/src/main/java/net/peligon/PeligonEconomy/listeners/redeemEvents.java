@@ -16,7 +16,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 public class redeemEvents implements Listener {
 
@@ -59,7 +58,7 @@ public class redeemEvents implements Listener {
                     }
 
                     if (amount <= 0) {
-                        player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-items")));
+                        player.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("no-items")));
                         return;
                     }
 
@@ -83,8 +82,8 @@ public class redeemEvents implements Listener {
                         return;
                     }
 
-                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
-                            plugin.fileMessage.getConfig().getString("sold-items"), amount));
+                    player.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("prefix") +
+                            plugin.languageFile.getConfig().getString("sold-items"), amount));
                     plugin.Economy.addAccount(player, amount);
                 }
             }

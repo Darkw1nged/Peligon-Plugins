@@ -22,7 +22,7 @@ public class cmdPouches implements CommandExecutor {
         if (cmd.getName().equalsIgnoreCase("pouches")) {
             if (sender.hasPermission("Peligon.Economy.Pouches.Give") || sender.hasPermission("Peligon.Economy.*")) {
                 if (args.length < 2) {
-                    sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("pouches-usage")));
+                    sender.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("pouches-usage")));
                     return true;
                 }
                 if (args[0].equalsIgnoreCase("give")) {
@@ -31,12 +31,12 @@ public class cmdPouches implements CommandExecutor {
                         if (sender instanceof Player) {
                             target = (Player) sender;
                         } else {
-                            sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-player-found")));
+                            sender.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("no-player-found")));
                             return true;
                         }
                     }
                     if (target.getInventory().firstEmpty() == -1) {
-                        sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("not-enough-space")));
+                        sender.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("not-enough-space")));
                         return true;
                     }
                     String type = args[2];
@@ -99,7 +99,7 @@ public class cmdPouches implements CommandExecutor {
                     }
                 }
             } else {
-                sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-permission")));
+                sender.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("no-permission")));
             }
         }
         return false;

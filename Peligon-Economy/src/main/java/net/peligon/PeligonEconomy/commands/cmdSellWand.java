@@ -22,7 +22,7 @@ public class cmdSellWand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String string, String[] args) {
         if (cmd.getName().equalsIgnoreCase("sellwand")) {
             if (args.length < 1) {
-                sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("sellwand-usage")));
+                sender.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("sellwand-usage")));
                 return true;
             }
             if (sender.hasPermission("Peligon.Economy.Sellwand") || sender.hasPermission("Peligon.Economy.*")) {
@@ -30,7 +30,7 @@ public class cmdSellWand implements CommandExecutor {
                 try {
                     amount = Integer.parseInt(args[0]);
                 } catch (Exception e) {
-                    sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("invalid-amount")));
+                    sender.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("invalid-amount")));
                     return true;
                 }
 
@@ -52,32 +52,32 @@ public class cmdSellWand implements CommandExecutor {
                     if (args.length == 2) {
                         Player target = Bukkit.getPlayer(args[1]);
                         if (target == null) {
-                            sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-player-found")
+                            sender.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("no-player-found")
                                     .replaceAll("%player%", args[1])
                                     .replaceAll("%target%", args[1])));
                             return true;
                         }
-                        sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") + plugin.fileMessage.getConfig().getString("sellwand-given")
+                        sender.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("prefix") + plugin.languageFile.getConfig().getString("sellwand-given")
                                 .replaceAll("%player%", target.getName())
                                 .replaceAll("%uses%", "" + amount)));
                         target.getInventory().addItem(item);
                     } else {
-                        sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("specify-player")));
+                        sender.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("specify-player")));
                     }
                 }
                 Player player = (Player) sender;
                 if (args.length == 2) {
                     Player target = Bukkit.getPlayer(args[1]);
                     if (target == null) {
-                        sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-player-found").replaceAll("%player%", args[0])));
+                        sender.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("no-player-found").replaceAll("%player%", args[0])));
                         return true;
                     }
-                    sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") + plugin.fileMessage.getConfig().getString("sellwand-given")
+                    sender.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("prefix") + plugin.languageFile.getConfig().getString("sellwand-given")
                             .replaceAll("%player%", target.getName())
                             .replaceAll("%uses%", "" + amount)));
                     target.getInventory().addItem(item);
                 } else {
-                    sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") + plugin.fileMessage.getConfig().getString("sellwand-given")
+                    sender.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("prefix") + plugin.languageFile.getConfig().getString("sellwand-given")
                             .replaceAll("%player%", player.getName())
                             .replaceAll("%uses%", "" + amount)));
                     // ---- [ Adding item to inventory ] ----
@@ -85,7 +85,7 @@ public class cmdSellWand implements CommandExecutor {
                 }
 
 
-            } else sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-permission")));
+            } else sender.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("no-permission")));
         }
         return false;
     }

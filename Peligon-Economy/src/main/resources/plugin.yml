@@ -9,6 +9,12 @@ softdepend: [PlaceholderAPI, ProtocolLib]
 load: STARTUP
 loadbefore: [Vault]
 commands:
+  peligon:
+    aliases:
+      - pel
+    description: Allows admins to view all available peligon plugins.
+
+
   economy:
     aliases:
       - eco

@@ -20,7 +20,7 @@ public class cmdSellChest implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String string, String[] args) {
         if (cmd.getName().equalsIgnoreCase("chestsell")) {
             if (!(sender instanceof Player)) {
-                sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("console")));
+                sender.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("console")));
                 return true;
             }
             Player player = (Player) sender;
@@ -40,15 +40,15 @@ public class cmdSellChest implements CommandExecutor {
                         }
                     }
                     if (amount <= 0) {
-                        player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-items")));
+                        player.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("no-items")));
                         return true;
                     }
-                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
-                            plugin.fileMessage.getConfig().getString("sold-items"), amount));
+                    player.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("prefix") +
+                            plugin.languageFile.getConfig().getString("sold-items"), amount));
                     plugin.Economy.addAccount(player, amount);
                 }
             } else {
-                player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-permission")));
+                player.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("no-permission")));
                 return true;
             }
 

@@ -15,7 +15,7 @@ public class cmdReload implements CommandExecutor {
             if (sender.hasPermission("Peligon.Economy.Reload") || sender.hasPermission("Peligon.Economy.*")) {
 
                 plugin.reloadConfig();
-                plugin.fileMessage.reloadConfig();
+                plugin.languageFile.reloadConfig();
                 plugin.fileWorth.reloadConfig();
                 plugin.filePouches.reloadConfig();
                 plugin.fileSigns.reloadConfig();
@@ -24,7 +24,7 @@ public class cmdReload implements CommandExecutor {
                 plugin.fileSellGUI.reloadConfig();
                 plugin.fileBoxGUI.reloadConfig();
 
-                sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("admin-reload")));
+                sender.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("admin-reload")));
             }
 
         }

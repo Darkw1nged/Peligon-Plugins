@@ -16,15 +16,14 @@ public class cmdDaily implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("daily")) {
             if (!(sender instanceof Player)) {
-                sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-console")));
+                sender.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("no-console")));
                 return true;
             }
             Player player = (Player) sender;
             if (player.hasPermission("Peligon.Economy.Daily") || player.hasPermission("Peligon.Economy.*")) {
-                menuDaily daily = new menuDaily(new MenuOwnerUtil(player));
-                player.openInventory(daily.getInventory());
+                new menuDaily(new MenuOwnerUtil(player)).open();
             } else {
-                player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-permission")));
+                player.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("no-permission")));
             }
         }
         return false;

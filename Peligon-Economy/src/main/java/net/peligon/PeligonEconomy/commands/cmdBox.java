@@ -15,7 +15,7 @@ public class cmdBox implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String string, String[] args) {
         if (cmd.getName().equalsIgnoreCase("box")) {
             if (!(sender instanceof Player)) {
-                sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("console")));
+                sender.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("console")));
                 return true;
             }
             Player player = (Player) sender;
@@ -23,7 +23,7 @@ public class cmdBox implements CommandExecutor {
                 menuBox menu = new menuBox(player);
                 player.openInventory(menu.getInventory());
             } else {
-                player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-permission")));
+                player.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("no-permission")));
             }
         }
         return false;

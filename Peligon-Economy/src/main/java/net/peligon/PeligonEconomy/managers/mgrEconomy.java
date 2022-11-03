@@ -2,7 +2,8 @@ package net.peligon.PeligonEconomy.managers;
 
 import net.peligon.PeligonEconomy.Main;
 import net.peligon.PeligonEconomy.libaries.storage.SQLibrary;
-import net.peligon.PeligonEconomy.libaries.storage.SQLiteLibary;
+import net.peligon.PeligonEconomy.libaries.storage.SQLiteLibrary;
+import net.peligon.PeligonEconomy.libaries.systemUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -31,9 +32,9 @@ public class mgrEconomy {
     public boolean hasAccount(OfflinePlayer player) {
         if (plugin.storageType.equalsIgnoreCase("sqlite")) {
             String uuid = String.valueOf(player.getUniqueId());
-            String query = "SELECT 1 FROM plg_money WHERE uuid='" + uuid + "';";
+            String query = "SELECT 1 FROM peligonEconomy WHERE uuid='" + uuid + "';";
             try {
-                PreparedStatement statement = SQLiteLibary.connection.prepareStatement(query);
+                PreparedStatement statement = SQLiteLibrary.connection.prepareStatement(query);
                 ResultSet rs = statement.executeQuery();
                 return rs.next();
             } catch (SQLException throwables) {
@@ -41,9 +42,9 @@ public class mgrEconomy {
             }
         } else if (plugin.storageType.equalsIgnoreCase("mysql")) {
             String uuid = String.valueOf(player.getUniqueId());
-            String query = "SELECT 1 FROM accounts WHERE uuid='" + uuid + "';";
+            String query = "SELECT 1 FROM peligonEconomy WHERE uuid='" + uuid + "';";
             try {
-                PreparedStatement statement = plugin.sqlLibrary.getConnection().prepareStatement(query);
+                PreparedStatement statement = systemUtils.getSQLibrary().getConnection().prepareStatement(query);
                 ResultSet rs = statement.executeQuery();
                 return rs.next();
             } catch (SQLException throwables) {
@@ -64,18 +65,18 @@ public class mgrEconomy {
         if (balance < 0) return;
         if (plugin.storageType.equalsIgnoreCase("sqlite")) {
             String uuid = String.valueOf(player.getUniqueId());
-            String query = "INSERT INTO plg_money values('" + uuid + "', " + balance + ", 0.0);";
+            String query = "INSERT INTO peligonEconomy values('" + uuid + "', " + balance + ", 0.0);";
             try {
-                Statement statement = SQLiteLibary.connection.createStatement();
+                Statement statement = SQLiteLibrary.connection.createStatement();
                 statement.execute(query);
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
         } else if (plugin.storageType.equalsIgnoreCase("mysql")) {
             String uuid = String.valueOf(player.getUniqueId());
-            String query = "INSERT INTO accounts values('" + uuid + "', " + balance + ", 0.0);";
+            String query = "INSERT INTO peligonEconomy values('" + uuid + "', " + balance + ", 0.0);";
             try {
-                Statement statement = plugin.sqlLibrary.getConnection().createStatement();
+                Statement statement = systemUtils.getSQLibrary().getConnection().createStatement();
                 statement.execute(query);
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
@@ -95,18 +96,18 @@ public class mgrEconomy {
         if (balance < 0 || bank < 0) return;
         if (plugin.storageType.equalsIgnoreCase("sqlite")) {
             String uuid = String.valueOf(player.getUniqueId());
-            String query = "INSERT INTO plg_money values('" + uuid + "'," + balance + "," + bank + ");";
+            String query = "INSERT INTO peligonEconomy values('" + uuid + "'," + balance + "," + bank + ");";
             try {
-                Statement statement = SQLiteLibary.connection.createStatement();
+                Statement statement = SQLiteLibrary.connection.createStatement();
                 statement.execute(query);
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
         } else if (plugin.storageType.equalsIgnoreCase("mysql")) {
             String uuid = String.valueOf(player.getUniqueId());
-            String query = "INSERT INTO accounts values('" + uuid + "'," + balance + "," + bank + ");";
+            String query = "INSERT INTO peligonEconomy values('" + uuid + "'," + balance + "," + bank + ");";
             try {
-                Statement statement = plugin.sqlLibrary.getConnection().createStatement();
+                Statement statement = systemUtils.getSQLibrary().getConnection().createStatement();
                 statement.execute(query);
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
@@ -124,18 +125,18 @@ public class mgrEconomy {
         if (amount < 0) return;
         if (plugin.storageType.equalsIgnoreCase("sqlite")) {
             String uuid = String.valueOf(player.getUniqueId());
-            String query = "UPDATE plg_money SET cash=" + amount + " WHERE uuid='" + uuid + "';";
+            String query = "UPDATE peligonEconomy SET cash=" + amount + " WHERE uuid='" + uuid + "';";
             try {
-                Statement statement = SQLiteLibary.connection.createStatement();
+                Statement statement = SQLiteLibrary.connection.createStatement();
                 statement.execute(query);
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
         } else if (plugin.storageType.equalsIgnoreCase("mysql")) {
             String uuid = String.valueOf(player.getUniqueId());
-            String query = "UPDATE accounts SET cash=" + amount + " WHERE uuid='" + uuid + "';";
+            String query = "UPDATE peligonEconomy SET cash=" + amount + " WHERE uuid='" + uuid + "';";
             try {
-                Statement statement = plugin.sqlLibrary.getConnection().createStatement();
+                Statement statement = systemUtils.getSQLibrary().getConnection().createStatement();
                 statement.execute(query);
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
@@ -153,18 +154,18 @@ public class mgrEconomy {
         if (amount < 0) return;
         if (plugin.storageType.equalsIgnoreCase("sqlite")) {
             String uuid = String.valueOf(player.getUniqueId());
-            String query = "UPDATE plg_money SET bank=" + amount + " WHERE uuid='" + uuid + "';";
+            String query = "UPDATE peligonEconomy SET bank=" + amount + " WHERE uuid='" + uuid + "';";
             try {
-                Statement statement = SQLiteLibary.connection.createStatement();
+                Statement statement = SQLiteLibrary.connection.createStatement();
                 statement.execute(query);
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
         } else if (plugin.storageType.equalsIgnoreCase("mysql")) {
             String uuid = String.valueOf(player.getUniqueId());
-            String query = "UPDATE accounts SET bank=" + amount + " WHERE uuid='" + uuid + "';";
+            String query = "UPDATE peligonEconomy SET bank=" + amount + " WHERE uuid='" + uuid + "';";
             try {
-                Statement statement = plugin.sqlLibrary.getConnection().createStatement();
+                Statement statement = systemUtils.getSQLibrary().getConnection().createStatement();
                 statement.execute(query);
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
@@ -183,18 +184,18 @@ public class mgrEconomy {
         if (amount < 0) return;
         if (plugin.storageType.equalsIgnoreCase("sqlite")) {
             String uuid = String.valueOf(player.getUniqueId());
-            String query = "UPDATE plg_money SET cash = (SELECT cash FROM plg_money WHERE uuid='" + uuid + "') +" + amount + " WHERE uuid= '" + uuid + "';";
+            String query = "UPDATE peligonEconomy SET cash = (SELECT cash FROM peligonEconomy WHERE uuid='" + uuid + "') +" + amount + " WHERE uuid= '" + uuid + "';";
             try {
-                Statement statement = SQLiteLibary.connection.createStatement();
+                Statement statement = SQLiteLibrary.connection.createStatement();
                 statement.execute(query);
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
         } else if (plugin.storageType.equalsIgnoreCase("mysql")) {
             String uuid = String.valueOf(player.getUniqueId());
-            String query = "UPDATE accounts SET cash = (SELECT cash FROM accounts WHERE uuid='" + uuid + "') +" + amount + " WHERE uuid= '" + uuid + "';";
+            String query = "UPDATE peligonEconomy SET cash = (SELECT cash FROM peligonEconomy WHERE uuid='" + uuid + "') +" + amount + " WHERE uuid= '" + uuid + "';";
             try {
-                Statement statement = plugin.sqlLibrary.getConnection().createStatement();
+                Statement statement = systemUtils.getSQLibrary().getConnection().createStatement();
                 statement.execute(query);
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
@@ -213,18 +214,18 @@ public class mgrEconomy {
         if (amount < 0) return;
         if (plugin.storageType.equalsIgnoreCase("sqlite")) {
             String uuid = String.valueOf(player.getUniqueId());
-            String query = "UPDATE plg_money SET bank = (SELECT bank FROM plg_money WHERE uuid='" + uuid + "') +" + amount + " WHERE uuid= '" + uuid + "';";
+            String query = "UPDATE peligonEconomy SET bank = (SELECT bank FROM peligonEconomy WHERE uuid='" + uuid + "') +" + amount + " WHERE uuid= '" + uuid + "';";
             try {
-                Statement statement = SQLiteLibary.connection.createStatement();
+                Statement statement = SQLiteLibrary.connection.createStatement();
                 statement.execute(query);
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
         } else if (plugin.storageType.equalsIgnoreCase("mysql")) {
             String uuid = String.valueOf(player.getUniqueId());
-            String query = "UPDATE accounts SET bank = (SELECT bank FROM accounts WHERE uuid='" + uuid + "') +" + amount + " WHERE uuid= '" + uuid + "';";
+            String query = "UPDATE peligonEconomy SET bank = (SELECT bank FROM peligonEconomy WHERE uuid='" + uuid + "') +" + amount + " WHERE uuid= '" + uuid + "';";
             try {
-                Statement statement = plugin.sqlLibrary.getConnection().createStatement();
+                Statement statement = systemUtils.getSQLibrary().getConnection().createStatement();
                 statement.execute(query);
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
@@ -243,18 +244,18 @@ public class mgrEconomy {
         if (amount < 0) return;
         if (plugin.storageType.equalsIgnoreCase("sqlite")) {
             String uuid = String.valueOf(player.getUniqueId());
-            String query = "UPDATE plg_money SET cash = (SELECT cash FROM plg_money WHERE uuid='" + uuid + "') -" + amount + " WHERE uuid= '" + uuid + "';";
+            String query = "UPDATE peligonEconomy SET cash = (SELECT cash FROM peligonEconomy WHERE uuid='" + uuid + "') -" + amount + " WHERE uuid= '" + uuid + "';";
             try {
-                Statement statement = SQLiteLibary.connection.createStatement();
+                Statement statement = SQLiteLibrary.connection.createStatement();
                 statement.execute(query);
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
         } else if (plugin.storageType.equalsIgnoreCase("mysql")) {
             String uuid = String.valueOf(player.getUniqueId());
-            String query = "UPDATE accounts SET cash = (SELECT cash FROM accounts WHERE uuid='" + uuid + "') -" + amount + " WHERE uuid= '" + uuid + "';";
+            String query = "UPDATE peligonEconomy SET cash = (SELECT cash FROM peligonEconomy WHERE uuid='" + uuid + "') -" + amount + " WHERE uuid= '" + uuid + "';";
             try {
-                Statement statement = plugin.sqlLibrary.getConnection().createStatement();
+                Statement statement = systemUtils.getSQLibrary().getConnection().createStatement();
                 statement.execute(query);
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
@@ -273,18 +274,18 @@ public class mgrEconomy {
         if (amount < 0) return;
         if (plugin.storageType.equalsIgnoreCase("sqlite")) {
             String uuid = String.valueOf(player.getUniqueId());
-            String query = "UPDATE plg_money SET bank = (SELECT bank FROM plg_money WHERE uuid='" + uuid + "') -" + amount + " WHERE uuid= '" + uuid + "';";
+            String query = "UPDATE peligonEconomy SET bank = (SELECT bank FROM peligonEconomy WHERE uuid='" + uuid + "') -" + amount + " WHERE uuid= '" + uuid + "';";
             try {
-                Statement statement = SQLiteLibary.connection.createStatement();
+                Statement statement = SQLiteLibrary.connection.createStatement();
                 statement.execute(query);
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
         } else if (plugin.storageType.equalsIgnoreCase("mysql")) {
             String uuid = String.valueOf(player.getUniqueId());
-            String query = "UPDATE accounts SET bank = (SELECT bank FROM accounts WHERE uuid='" + uuid + "') -" + amount + " WHERE uuid= '" + uuid + "';";
+            String query = "UPDATE peligonEconomy SET bank = (SELECT bank FROM peligonEconomy WHERE uuid='" + uuid + "') -" + amount + " WHERE uuid= '" + uuid + "';";
             try {
-                Statement statement = plugin.sqlLibrary.getConnection().createStatement();
+                Statement statement = systemUtils.getSQLibrary().getConnection().createStatement();
                 statement.execute(query);
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
@@ -302,10 +303,10 @@ public class mgrEconomy {
         if (!hasAccount(player)) return 0.0;
         if (plugin.storageType.equalsIgnoreCase("sqlite")) {
             String uuid = String.valueOf(player.getUniqueId());
-            String query = "SELECT * FROM plg_money WHERE uuid='" + uuid + "';";
+            String query = "SELECT * FROM peligonEconomy WHERE uuid='" + uuid + "';";
             try {
 
-                PreparedStatement statement = SQLiteLibary.connection.prepareStatement(query);
+                PreparedStatement statement = SQLiteLibrary.connection.prepareStatement(query);
                 ResultSet rs = statement.executeQuery();
                 rs.next();
                 return rs.getDouble("cash");
@@ -314,10 +315,10 @@ public class mgrEconomy {
             }
         } else if (plugin.storageType.equalsIgnoreCase("mysql")) {
             String uuid = String.valueOf(player.getUniqueId());
-            String query = "SELECT * FROM accounts WHERE uuid='" + uuid + "';";
+            String query = "SELECT * FROM peligonEconomy WHERE uuid='" + uuid + "';";
             try {
 
-                PreparedStatement statement = plugin.sqlLibrary.getConnection().prepareStatement(query);
+                PreparedStatement statement = systemUtils.getSQLibrary().getConnection().prepareStatement(query);
                 ResultSet rs = statement.executeQuery();
                 rs.next();
                 return rs.getDouble("cash");
@@ -338,10 +339,10 @@ public class mgrEconomy {
         if (!hasAccount(player)) return 0.0;
         if (plugin.storageType.equalsIgnoreCase("sqlite")) {
             String uuid = String.valueOf(player.getUniqueId());
-            String query = "SELECT * FROM plg_money WHERE uuid='" + uuid + "';";
+            String query = "SELECT * FROM peligonEconomy WHERE uuid='" + uuid + "';";
             try {
 
-                PreparedStatement statement = SQLiteLibary.connection.prepareStatement(query);
+                PreparedStatement statement = SQLiteLibrary.connection.prepareStatement(query);
                 ResultSet rs = statement.executeQuery();
                 rs.next();
                 return rs.getDouble("bank");
@@ -350,10 +351,10 @@ public class mgrEconomy {
             }
         } else if (plugin.storageType.equalsIgnoreCase("mysql")) {
             String uuid = String.valueOf(player.getUniqueId());
-            String query = "SELECT * FROM accounts WHERE uuid='" + uuid + "';";
+            String query = "SELECT * FROM peligonEconomy WHERE uuid='" + uuid + "';";
             try {
 
-                PreparedStatement statement = plugin.sqlLibrary.getConnection().prepareStatement(query);
+                PreparedStatement statement = systemUtils.getSQLibrary().getConnection().prepareStatement(query);
                 ResultSet rs = statement.executeQuery();
                 rs.next();
                 return rs.getDouble("bank");
@@ -375,9 +376,9 @@ public class mgrEconomy {
         if (!hasAccount(player)) return false;
         if (plugin.storageType.equalsIgnoreCase("sqlite")) {
             String uuid = String.valueOf(player.getUniqueId());
-            String query = "SELECT cash FROM plg_money WHERE uuid='" + uuid + "';";
+            String query = "SELECT cash FROM peligonEconomy WHERE uuid='" + uuid + "';";
             try {
-                PreparedStatement statement = SQLiteLibary.connection.prepareStatement(query);
+                PreparedStatement statement = SQLiteLibrary.connection.prepareStatement(query);
                 ResultSet rs = statement.executeQuery();
                 rs.next();
                 return hasAccount(player) && rs.getDouble("cash") >= amount;
@@ -386,9 +387,9 @@ public class mgrEconomy {
             }
         } else if (plugin.storageType.equalsIgnoreCase("mysql")) {
             String uuid = String.valueOf(player.getUniqueId());
-            String query = "SELECT cash FROM accounts WHERE uuid='" + uuid + "';";
+            String query = "SELECT cash FROM peligonEconomy WHERE uuid='" + uuid + "';";
             try {
-                PreparedStatement statement = plugin.sqlLibrary.getConnection().prepareStatement(query);
+                PreparedStatement statement = systemUtils.getSQLibrary().getConnection().prepareStatement(query);
                 ResultSet rs = statement.executeQuery();
                 rs.next();
                 return hasAccount(player) && rs.getDouble("cash") >= amount;
@@ -410,9 +411,9 @@ public class mgrEconomy {
         if (!hasAccount(player)) return false;
         if (plugin.storageType.equalsIgnoreCase("sqlite")) {
             String uuid = String.valueOf(player.getUniqueId());
-            String query = "SELECT bank FROM plg_money WHERE uuid='" + uuid + "';";
+            String query = "SELECT bank FROM peligonEconomy WHERE uuid='" + uuid + "';";
             try {
-                PreparedStatement statement = SQLiteLibary.connection.prepareStatement(query);
+                PreparedStatement statement = SQLiteLibrary.connection.prepareStatement(query);
                 ResultSet rs = statement.executeQuery();
                 rs.next();
                 return hasAccount(player) && rs.getDouble("bank") >= amount;
@@ -421,9 +422,9 @@ public class mgrEconomy {
             }
         } else if (plugin.storageType.equalsIgnoreCase("mysql")) {
             String uuid = String.valueOf(player.getUniqueId());
-            String query = "SELECT bank FROM accounts WHERE uuid='" + uuid + "';";
+            String query = "SELECT bank FROM peligonEconomy WHERE uuid='" + uuid + "';";
             try {
-                PreparedStatement statement = plugin.sqlLibrary.getConnection().prepareStatement(query);
+                PreparedStatement statement = systemUtils.getSQLibrary().getConnection().prepareStatement(query);
                 ResultSet rs = statement.executeQuery();
                 rs.next();
                 return hasAccount(player) && rs.getDouble("bank") >= amount;
@@ -442,18 +443,18 @@ public class mgrEconomy {
      */
     public boolean hasAccount(UUID uuid) {
         if (plugin.storageType.equalsIgnoreCase("sqlite")) {
-            String query = "SELECT 1 FROM plg_money WHERE uuid='" + uuid + "';";
+            String query = "SELECT 1 FROM peligonEconomy WHERE uuid='" + uuid + "';";
             try {
-                PreparedStatement statement = SQLiteLibary.connection.prepareStatement(query);
+                PreparedStatement statement = SQLiteLibrary.connection.prepareStatement(query);
                 ResultSet rs = statement.executeQuery();
                 return rs.next();
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
         } else if (plugin.storageType.equalsIgnoreCase("mysql")) {
-            String query = "SELECT 1 FROM accounts WHERE uuid='" + uuid + "';";
+            String query = "SELECT 1 FROM peligonEconomy WHERE uuid='" + uuid + "';";
             try {
-                PreparedStatement statement = plugin.sqlLibrary.getConnection().prepareStatement(query);
+                PreparedStatement statement = systemUtils.getSQLibrary().getConnection().prepareStatement(query);
                 ResultSet rs = statement.executeQuery();
                 return rs.next();
             } catch (SQLException throwables) {
@@ -473,17 +474,17 @@ public class mgrEconomy {
         if (!hasAccount(uuid)) return;
         if (amount < 0) return;
         if (plugin.storageType.equalsIgnoreCase("sqlite")) {
-            String query = "UPDATE plg_money SET bank = (SELECT bank FROM plg_money WHERE uuid='" + uuid + "') +" + amount + " WHERE uuid= '" + uuid + "';";
+            String query = "UPDATE peligonEconomy SET bank = (SELECT bank FROM peligonEconomy WHERE uuid='" + uuid + "') +" + amount + " WHERE uuid= '" + uuid + "';";
             try {
-                Statement statement = SQLiteLibary.connection.createStatement();
+                Statement statement = SQLiteLibrary.connection.createStatement();
                 statement.execute(query);
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
         } else if (plugin.storageType.equalsIgnoreCase("mysql")) {
-            String query = "UPDATE accounts SET bank = (SELECT bank FROM accounts WHERE uuid='" + uuid + "') +" + amount + " WHERE uuid= '" + uuid + "';";
+            String query = "UPDATE peligonEconomy SET bank = (SELECT bank FROM peligonEconomy WHERE uuid='" + uuid + "') +" + amount + " WHERE uuid= '" + uuid + "';";
             try {
-                Statement statement = plugin.sqlLibrary.getConnection().createStatement();
+                Statement statement = systemUtils.getSQLibrary().getConnection().createStatement();
                 statement.execute(query);
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
@@ -502,9 +503,9 @@ public class mgrEconomy {
     public Double getAccount(UUID uuid) {
         if (!hasAccount(uuid)) return 0.0;
         if (plugin.storageType.equalsIgnoreCase("sqlite")) {
-            String query = "SELECT * FROM plg_money WHERE uuid='" + uuid + "';";
+            String query = "SELECT * FROM peligonEconomy WHERE uuid='" + uuid + "';";
             try {
-                PreparedStatement statement = SQLiteLibary.connection.prepareStatement(query);
+                PreparedStatement statement = SQLiteLibrary.connection.prepareStatement(query);
                 ResultSet rs = statement.executeQuery();
                 rs.next();
                 return rs.getDouble("cash");
@@ -512,9 +513,9 @@ public class mgrEconomy {
                 throwables.printStackTrace();
             }
         } else if (plugin.storageType.equalsIgnoreCase("mysql")) {
-            String query = "SELECT * FROM accounts WHERE uuid='" + uuid + "';";
+            String query = "SELECT * FROM peligonEconomy WHERE uuid='" + uuid + "';";
             try {
-                PreparedStatement statement = plugin.sqlLibrary.getConnection().prepareStatement(query);
+                PreparedStatement statement = systemUtils.getSQLibrary().getConnection().prepareStatement(query);
                 ResultSet rs = statement.executeQuery();
                 rs.next();
                 return rs.getDouble("cash");
@@ -534,10 +535,10 @@ public class mgrEconomy {
     public Double getBank(UUID uuid) {
         if (!hasAccount(uuid)) return 0.0;
         if (plugin.storageType.equalsIgnoreCase("sqlite")) {
-            String query = "SELECT * FROM plg_money WHERE uuid='" + uuid + "';";
+            String query = "SELECT * FROM peligonEconomy WHERE uuid='" + uuid + "';";
             try {
 
-                PreparedStatement statement = SQLiteLibary.connection.prepareStatement(query);
+                PreparedStatement statement = SQLiteLibrary.connection.prepareStatement(query);
                 ResultSet rs = statement.executeQuery();
                 rs.next();
                 return rs.getDouble("bank");
@@ -545,10 +546,10 @@ public class mgrEconomy {
                 throwables.printStackTrace();
             }
         } else if (plugin.storageType.equalsIgnoreCase("mysql")) {
-            String query = "SELECT * FROM accounts WHERE uuid='" + uuid + "';";
+            String query = "SELECT * FROM peligonEconomy WHERE uuid='" + uuid + "';";
             try {
 
-                PreparedStatement statement = plugin.sqlLibrary.getConnection().prepareStatement(query);
+                PreparedStatement statement = systemUtils.getSQLibrary().getConnection().prepareStatement(query);
                 ResultSet rs = statement.executeQuery();
                 rs.next();
                 return rs.getDouble("bank");
@@ -566,9 +567,9 @@ public class mgrEconomy {
      */
     public HashMap<UUID, Double> getCashLeaderboard() {
         if (plugin.storageType.equalsIgnoreCase("sqlite")) {
-            String query = "SELECT uuid, cash FROM plg_money ORDER BY cash DESC;";
+            String query = "SELECT uuid, cash FROM peligonEconomy ORDER BY cash DESC;";
             try {
-                PreparedStatement statement = SQLiteLibary.connection.prepareStatement(query);
+                PreparedStatement statement = SQLiteLibrary.connection.prepareStatement(query);
                 ResultSet rs = statement.executeQuery();
                 HashMap<UUID, Double> leaderboard = new HashMap<>();
 
@@ -581,9 +582,9 @@ public class mgrEconomy {
                 throwables.printStackTrace();
             }
         } else if (plugin.storageType.equalsIgnoreCase("mysql")) {
-            String query = "SELECT uuid, cash FROM accounts ORDER BY cash DESC;";
+            String query = "SELECT uuid, cash FROM peligonEconomy ORDER BY cash DESC;";
             try {
-                PreparedStatement statement = plugin.sqlLibrary.getConnection().prepareStatement(query);
+                PreparedStatement statement = systemUtils.getSQLibrary().getConnection().prepareStatement(query);
                 ResultSet rs = statement.executeQuery();
                 HashMap<UUID, Double> leaderboard = new HashMap<>();
 
@@ -606,9 +607,9 @@ public class mgrEconomy {
      */
     public HashMap<UUID, Double> getBankLeaderboard() {
         if (plugin.storageType.equalsIgnoreCase("sqlite")) {
-            String query = "SELECT uuid, bank FROM plg_money ORDER BY bank DESC;";
+            String query = "SELECT uuid, bank FROM peligonEconomy ORDER BY bank DESC;";
             try {
-                PreparedStatement statement = SQLiteLibary.connection.prepareStatement(query);
+                PreparedStatement statement = SQLiteLibrary.connection.prepareStatement(query);
                 ResultSet rs = statement.executeQuery();
                 HashMap<UUID, Double> leaderboard = new HashMap<>();
 
@@ -621,9 +622,9 @@ public class mgrEconomy {
                 throwables.printStackTrace();
             }
         } else if (plugin.storageType.equalsIgnoreCase("mysql")) {
-            String query = "SELECT uuid, bank FROM accounts ORDER BY bank DESC;";
+            String query = "SELECT uuid, bank FROM peligonEconomy ORDER BY bank DESC;";
             try {
-                PreparedStatement statement = plugin.sqlLibrary.getConnection().prepareStatement(query);
+                PreparedStatement statement = systemUtils.getSQLibrary().getConnection().prepareStatement(query);
                 ResultSet rs = statement.executeQuery();
                 HashMap<UUID, Double> leaderboard = new HashMap<>();
 
@@ -646,9 +647,9 @@ public class mgrEconomy {
      */
     public Double getServerTotalCash() {
         if (plugin.storageType.equalsIgnoreCase("sqlite")) {
-            String query = "SELECT cash FROM plg_money;";
+            String query = "SELECT cash FROM peligonEconomy;";
             try {
-                PreparedStatement statement = SQLiteLibary.connection.prepareStatement(query);
+                PreparedStatement statement = SQLiteLibrary.connection.prepareStatement(query);
                 ResultSet rs = statement.executeQuery();
                 double total = 0.0;
 
@@ -661,9 +662,9 @@ public class mgrEconomy {
                 throwables.printStackTrace();
             }
         } else if (plugin.storageType.equalsIgnoreCase("mysql")) {
-            String query = "SELECT cash FROM accounts;";
+            String query = "SELECT cash FROM peligonEconomy;";
             try {
-                PreparedStatement statement = plugin.sqlLibrary.getConnection().prepareStatement(query);
+                PreparedStatement statement = systemUtils.getSQLibrary().getConnection().prepareStatement(query);
                 ResultSet rs = statement.executeQuery();
                 double total = 0.0;
 
@@ -686,9 +687,9 @@ public class mgrEconomy {
      */
     public Double getServerTotalBank() {
         if (plugin.storageType.equalsIgnoreCase("sqlite")) {
-            String query = "SELECT bank FROM plg_money;";
+            String query = "SELECT bank FROM peligonEconomy;";
             try {
-                PreparedStatement statement = SQLiteLibary.connection.prepareStatement(query);
+                PreparedStatement statement = SQLiteLibrary.connection.prepareStatement(query);
                 ResultSet rs = statement.executeQuery();
                 double total = 0.0;
 
@@ -701,9 +702,9 @@ public class mgrEconomy {
                 throwables.printStackTrace();
             }
         } else if (plugin.storageType.equalsIgnoreCase("mysql")) {
-            String query = "SELECT bank FROM accounts;";
+            String query = "SELECT bank FROM peligonEconomy;";
             try {
-                PreparedStatement statement = plugin.sqlLibrary.getConnection().prepareStatement(query);
+                PreparedStatement statement = systemUtils.getSQLibrary().getConnection().prepareStatement(query);
                 ResultSet rs = statement.executeQuery();
                 double total = 0.0;
 
@@ -726,9 +727,9 @@ public class mgrEconomy {
      */
     public Map<UUID, Double> getAllBanks() {
         if (plugin.storageType.equalsIgnoreCase("sqlite")) {
-            String query = "SELECT uuid, bank FROM plg_money;";
+            String query = "SELECT uuid, bank FROM peligonEconomy;";
             try {
-                PreparedStatement statement = SQLiteLibary.connection.prepareStatement(query);
+                PreparedStatement statement = SQLiteLibrary.connection.prepareStatement(query);
                 ResultSet rs = statement.executeQuery();
 
                 HashMap<UUID, Double> temp = new HashMap<>();
@@ -742,9 +743,9 @@ public class mgrEconomy {
                 throwables.printStackTrace();
             }
         } else if (plugin.storageType.equalsIgnoreCase("mysql")) {
-            String query = "SELECT uuid, bank FROM accounts;";
+            String query = "SELECT uuid, bank FROM peligonEconomy;";
             try {
-                PreparedStatement statement = plugin.sqlLibrary.getConnection().prepareStatement(query);
+                PreparedStatement statement = systemUtils.getSQLibrary().getConnection().prepareStatement(query);
                 ResultSet rs = statement.executeQuery();
 
                 HashMap<UUID, Double> temp = new HashMap<>();

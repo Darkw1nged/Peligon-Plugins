@@ -8,7 +8,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
@@ -26,13 +25,13 @@ public class cmdWithdraw implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String string, String[] args) {
         if (cmd.getName().equalsIgnoreCase("withdraw")) {
             if (!(sender instanceof Player)) {
-                sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("console")));
+                sender.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("console")));
                 return true;
             }
             Player player = (Player)sender;
             if (player.hasPermission("Peligon.Economy.Withdraw") || player.hasPermission("Peligon.Economy.*")) {
                 if (args.length < 1) {
-                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("withdraw-usage")));
+                    player.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("withdraw-usage")));
                     return true;
                 }
                 double amount;
@@ -40,23 +39,23 @@ public class cmdWithdraw implements CommandExecutor {
                 try {
                     amount = Double.parseDouble(args[0]);
                 } catch (Exception e) {
-                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("invalid-amount")));
+                    player.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("invalid-amount")));
                     return true;
                 }
                 if (amount < 0) {
-                    sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("invalid-amount")));
+                    sender.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("invalid-amount")));
                     return true;
                 }
 
                 // ---- [ Checking accounts of players ] ----
                 if (!plugin.Economy.hasAccount(player)) {
-                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("account-error")
+                    player.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("account-error")
                             .replaceAll("%player%", player.getName())
                             .replaceAll("%target%", player.getName())));
                     return true;
                 }
                 if (!plugin.Economy.hasEnoughCash(player, amount)) {
-                    sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("not-enough-money")));
+                    sender.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("not-enough-money")));
                     return true;
                 }
 
@@ -86,7 +85,7 @@ public class cmdWithdraw implements CommandExecutor {
                 // ---- [ Removing money ] ----
                 plugin.Economy.removeAccount(player, amount);
             } else {
-                player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-permission")));
+                player.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("no-permission")));
                 return true;
             }
         }

@@ -8,8 +8,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.event.entity.ExpBottleEvent;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
@@ -27,13 +25,13 @@ public class cmdWithdrawBottle implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String string, String[] args) {
         if (cmd.getName().equalsIgnoreCase("experiencebottle")) {
             if (!(sender instanceof Player)) {
-                sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("console")));
+                sender.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("console")));
                 return true;
             }
             Player player = (Player)sender;
             if (player.hasPermission("Peligon.Economy.Bottle") || player.hasPermission("Peligon.Economy.*")) {
                 if (args.length < 1) {
-                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("experience-bottle-usage")));
+                    player.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("experience-bottle-usage")));
                     return true;
                 }
                 int amount;
@@ -41,17 +39,17 @@ public class cmdWithdrawBottle implements CommandExecutor {
                 try {
                     amount = Integer.parseInt(args[0]);
                 } catch (Exception e) {
-                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("invalid-amount")));
+                    player.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("invalid-amount")));
                     return true;
                 }
                 if (amount < 0) {
-                    sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("invalid-amount")));
+                    sender.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("invalid-amount")));
                     return true;
                 }
 
                 // ---- [ Checking if player has enough ] ----
                 if (Utils.getPlayerExp(player) < amount) {
-                    sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("not-enough-experience")));
+                    sender.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("not-enough-experience")));
                     return true;
                 }
 
@@ -82,7 +80,7 @@ public class cmdWithdrawBottle implements CommandExecutor {
                 // ---- [ Removing experience ] ----
                 Utils.removePlayerExp(player, amount);
             } else {
-                player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-permission")));
+                player.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("no-permission")));
                 return true;
             }
         }

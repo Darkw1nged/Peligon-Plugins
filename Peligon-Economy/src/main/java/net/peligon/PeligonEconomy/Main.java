@@ -2,30 +2,26 @@ package net.peligon.PeligonEconomy;
 
 import net.peligon.PeligonEconomy.commands.*;
 import net.peligon.PeligonEconomy.libaries.*;
-import net.peligon.PeligonEconomy.libaries.storage.SQLibrary;
-import net.peligon.PeligonEconomy.libaries.storage.SQLiteLibary;
+import net.peligon.PeligonEconomy.libaries.storage.CustomConfig;
 import net.peligon.PeligonEconomy.listeners.*;
 import net.peligon.PeligonEconomy.managers.mgrEconomy;
 import net.peligon.PeligonEconomy.managers.mgrPlaceholders;
 import net.peligon.PeligonEconomy.managers.mgrSignFactory;
+import net.peligon.Plugins.commands.peligonPluginsMenuCommand;
+import net.peligon.Plugins.listeners.PeligonPluginMenuEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.sql.SQLException;
 import java.util.Arrays;
 
 @SuppressWarnings("ALL")
 public final class Main extends JavaPlugin {
 
+    // Create an instance of the main class
     public static Main getInstance;
-    private VaultHook vaultHook;
-    public mgrEconomy Economy;
-    public PeligonEconomy peligonEconomy;
-    public mgrSignFactory signFactory;
 
-    public SQLibrary sqlLibrary;
-    public String storageType = "SQLite";
-
+    // Creating instances of customConfig files
+    public CustomConfig languageFile;
     public CustomConfig fileWorth = new CustomConfig(this, "worth", true);
     public CustomConfig fileSigns = new CustomConfig(this, "signs", true);
     public CustomConfig filePouches = new CustomConfig(this, "pouches", true);
@@ -34,15 +30,21 @@ public final class Main extends JavaPlugin {
     public CustomConfig fileSellGUI = new CustomConfig(this, "Inventories/sellGUI", true);
     public CustomConfig fileBoxGUI = new CustomConfig(this, "Inventories/box", true);
     public CustomConfig filedailyTaskGUI = new CustomConfig(this, "Inventories/daily-tasks", true);
-    public CustomConfig fileMessage;
+
+    // Getting vault hook.
+    private VaultHook vaultHook;
+
+    // Storage type; File, MySQL, SQLite
+    public String storageType = "file";
+
 
     public void onEnable() {
-        // ---- [ Initializing instance of main class ] ----
+        // Initializing instance of main class.
         getInstance = this;
 
-        // ---- [ Loading Commands | Loading Events | Loading YML Files ] ----
-        loadCommands();
-        loadEvents();
+        // Loading customConfig files.
+        saveDefaultConfig();
+        // TODO -------- Subject to removeal --------
         fileWorth.saveDefaultConfig();
         fileSigns.saveDefaultConfig();
         filePouches.saveDefaultConfig();
@@ -51,56 +53,113 @@ public final class Main extends JavaPlugin {
         filedailyTaskGUI.saveDefaultConfig();
         fileSellGUI.saveDefaultConfig();
         fileBoxGUI.saveDefaultConfig();
-        saveDefaultConfig();
+        // TODO -------- Subject to removeal --------
 
-        // ---- [ Loading lang file ] ----
-        fileMessage = new CustomConfig(this, "lang/" + this.getConfig().getString("Storage.Language File"), true);
-        fileMessage.saveDefaultConfig();
-
-        // ---- [ Checking if the server has the dependencies, if not disable ] ----
+        // Check for vault dependency.
         if (Bukkit.getPluginManager().getPlugin("Vault") == null) {
-            getServer().getConsoleSender().sendMessage(Utils.chatColor(this.fileMessage.getConfig().getString("no-plugin-dependency")));
+            // Vault not found, disabling plugin.
+            getServer().getConsoleSender().sendMessage(Utils.chatColor(this.languageFile.getConfig().getString("no-plugin-dependency")));
             getServer().getPluginManager().disablePlugin(this);
         }
 
+        // Hooking into vault.
+        vaultHook = new VaultHook();
+        vaultHook.hook();
+
+        // TODO -------- Subject to removeal --------
         if (Bukkit.getPluginManager().getPlugin("ProtocolLib") == null) {
-            getServer().getConsoleSender().sendMessage(Utils.chatColor(this.fileMessage.getConfig().getString("no-protocolLib")));
+            getServer().getConsoleSender().sendMessage(Utils.chatColor(this.languageFile.getConfig().getString("no-protocolLib")));
         } else {
             signFactory = new mgrSignFactory(this);
         }
 
-        // ---- [ Initializing instance of manager classes | register placeholder ] ----
         Economy = new mgrEconomy();
         peligonEconomy = new PeligonEconomy();
-        vaultHook = new VaultHook();
-        vaultHook.hook();
         if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
             new mgrPlaceholders().register();
         }
 
-        // ---- [ Setting up databases ] ----
-        setupStorage();
-
         // ---- [ Calling repeating tasks ] ----
         new InterestTimer().runTaskTimerAsynchronously(this, 20 * 2, 20 * 2);
+        // TODO -------- Subject to removeal --------
 
-        // ---- [ Startup message ] ----
-        getServer().getConsoleSender().sendMessage(Utils.chatColor(this.fileMessage.getConfig().getString("startup")));
+        // Initializing lang file and saving the default version.
+        languageFile = new CustomConfig(this, "lang/" + this.getConfig().getString("Storage.lang"), true);
+        languageFile.saveDefaultConfig();
 
-        // ---- [ Check if server has most updated version ] ----
-        if (getConfig().getBoolean("check-for-updates", true)) {
-            versionChecker();
-        }
+        // Getting storage type from config
+        if (getConfig().contains("Storage.database") && getConfig().getString("Storage.database").equalsIgnoreCase("File") ||
+                getConfig().getString("Storage.database").equalsIgnoreCase("MySQL") ||
+                getConfig().getString("Storage.database").equalsIgnoreCase("SQLite"))
+            storageType = getConfig().getString("Storage.database").toLowerCase();
+
+        // Setting up and checking storage.
+        systemUtils.createDatabase();
+
+        // Loading all commands and events.
+        loadEvents();
+        loadCommands();
+
+        // Checking for updates.
+        if (getConfig().getBoolean("check-for-updates", true)) versionChecker();
+
+        // Sending startup message to console.
+        if (this.languageFile != null)
+            getServer().getConsoleSender().sendMessage(Utils.chatColor(this.languageFile.getConfig().getString("startup")));
     }
 
     public void onDisable() {
+        // Unhooking from Vault
         vaultHook.unhook();
 
-        // ---- [ shutdown message ] ----
-        getServer().getConsoleSender().sendMessage(Utils.chatColor(this.fileMessage.getConfig().getString("shutdown")));
+        // Sending plugin shutdown message if messages file is not null
+        if (this.languageFile != null)
+            getServer().getConsoleSender().sendMessage(Utils.chatColor(this.languageFile.getConfig().getString("shutdown")));
     }
 
+    // Getting the version from https://www.spigot.org and comparing the version to current version.
+    private void versionChecker() {
+        new UpdateChecker(this, 100259).getVersion(version -> {
+            // If spigot version does not equal than the current plugin version then send console a message
+            // saving that new version is available along with the link to it.
+            if (!version.equals(this.getDescription().getVersion())) {
+                getServer().getConsoleSender().sendMessage(Utils.chatColor(languageFile.getConfig().getString("plugin-outdated")));
+                getServer().getConsoleSender().sendMessage(Utils.chatColor(languageFile.getConfig().getString("plugin-link")));
+            }
+        });
+    }
+
+    // Registering all events.
+    public void loadEvents() {
+        Arrays.asList(
+                // Listener for peligon plugin menu.
+                new PeligonPluginMenuEvent(),
+
+                // Other listeners.
+                new accountSetup(),
+                new menuListener(),
+                new bountyEvents(),
+                new redeemEvents(),
+                new signEvents(),
+                new mobMoneyEvent(),
+                new deathPenaltyEvent(),
+                new grassScavengeEvents(),
+                new miningRewardsEvents(),
+                new luckyBlockEvents(),
+                new sellGUIEvents(),
+                new globalInventoryEvents(),
+                new experienceBottleEvent(),
+                new bankNotesEvents(),
+                new pouchesEvent()
+        ).forEach(listener -> getServer().getPluginManager().registerEvents(listener, this));
+    }
+
+    // Registering all commands : Can ignore capitals.
     public void loadCommands() {
+        // Command for peligon plugin menu.
+        getCommand("peligon").setExecutor(new peligonPluginsMenuCommand());
+
+        // Other commands.
         getCommand("economy").setExecutor(new cmdEconomy());
         getCommand("pelecon").setExecutor(new cmdReload());
         getCommand("balance").setExecutor(new cmdBalance());
@@ -122,61 +181,22 @@ public final class Main extends JavaPlugin {
         getCommand("pouches").setExecutor(new cmdPouches());
     }
 
-    public void loadEvents() {
-        Arrays.asList(
-                new accountSetup(),
-                new menuListener(),
-                new bountyEvents(),
-                new redeemEvents(),
-                new signEvents(),
-                new mobMoneyEvent(),
-                new deathPenaltyEvent(),
-                new grassScavengeEvents(),
-                new miningRewardsEvents(),
-                new luckyBlockEvents(),
-                new sellGUIEvents(),
-                new globalInventoryEvents(),
-                new experienceBottleEvent(),
-                new bankNotesEvents(),
-                new pouchesEvent()
-        ).forEach(listener -> getServer().getPluginManager().registerEvents(listener, this));
-    }
 
-    private void versionChecker() {
-        new UpdateChecker(this, 100259).getVersion(version -> {
-            if (!version.equals(this.getDescription().getVersion())) {
-                getServer().getConsoleSender().sendMessage(Utils.chatColor(fileMessage.getConfig().getString("plugin-outdated")));
-                getServer().getConsoleSender().sendMessage(Utils.chatColor(fileMessage.getConfig().getString("plugin-link")));
-            }
-        });
-    }
 
-    private void setupStorage() {
-        if (getConfig().getString("Storage.database", "SQLite").equalsIgnoreCase("sqlite")) {
-            SQLiteLibary sqlLite = new SQLiteLibary();
-            sqlLite.loadTables();
-            this.storageType = "SQLite";
-        } else if (getConfig().getString("Storage.database", "SQLite").equalsIgnoreCase("MYSQL")) {
-            sqlLibrary = new SQLibrary(getConfig().getString("Storage.MySQL.host"),
-                    getConfig().getInt("Storage.MySQL.port"),
-                    getConfig().getString("Storage.MySQL.database"),
-                    getConfig().getString("Storage.MySQL.username"),
-                    getConfig().getString("Storage.MySQL.password"));
 
-            if (sqlLibrary.getConnection() == null) {
-                System.out.println("Unable to establish a connection to MySQL.");
-                return;
-            }
 
-            try {
-                sqlLibrary.getConnection().prepareStatement("CREATE TABLE IF NOT EXISTS accounts" +
-                        " (uuid VARCHAR(36) NOT NULL, cash INT(16) DEFAULT 0, bank INT(16) DEFAULT 0, PRIMARY KEY (uuid));").executeUpdate();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
 
-            this.storageType = "MySQL";
-        }
-    }
+
+
+
+
+
+
+
+
+
+    public mgrEconomy Economy;
+    public PeligonEconomy peligonEconomy;
+    public mgrSignFactory signFactory;
 
 }

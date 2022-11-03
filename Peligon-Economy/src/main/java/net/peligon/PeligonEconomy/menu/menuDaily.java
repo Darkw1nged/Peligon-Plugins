@@ -48,7 +48,7 @@ public class menuDaily extends Menu {
                                     Utils.dailyCooldown.put(player.getUniqueId(), System.currentTimeMillis());
                                 }
                             } else {
-                                player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("daily-already-claimed")));
+                                player.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("daily-already-claimed")));
                             }
                             event.setCancelled(true);
                             return;

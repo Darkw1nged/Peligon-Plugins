@@ -18,12 +18,12 @@ public class deathPenaltyEvent implements Listener {
             double amountToRemove = plugin.getConfig().getDouble("Death-Penalty.amount", 100);
             if (plugin.Economy.hasEnoughCash(player, amountToRemove)) {
                 plugin.Economy.removeAccount(player, amountToRemove);
-                player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
-                        plugin.fileMessage.getConfig().getString("death-penalty-issued"), amountToRemove));
+                player.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("prefix") +
+                        plugin.languageFile.getConfig().getString("death-penalty-issued"), amountToRemove));
             } else if (plugin.Economy.hasEnoughBank(player, amountToRemove)) {
                 plugin.Economy.removeBankAccount(player, amountToRemove);
-                player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
-                        plugin.fileMessage.getConfig().getString("death-penalty-issued"), amountToRemove));
+                player.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("prefix") +
+                        plugin.languageFile.getConfig().getString("death-penalty-issued"), amountToRemove));
             }
         }
     }

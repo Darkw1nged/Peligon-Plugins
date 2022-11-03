@@ -54,7 +54,7 @@ public class Main extends JavaPlugin {
 
     public void onDisable() {
         // Sending plugin shutdown message if messages file is not null
-        if (this.languageFile == null)
+        if (this.languageFile != null)
             getServer().getConsoleSender().sendMessage(Utils.chatColor(this.languageFile.getConfig().getString("shutdown")));
     }
 

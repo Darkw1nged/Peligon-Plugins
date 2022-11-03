@@ -22,7 +22,7 @@ public class cmdBounty implements CommandExecutor {
                         Player target = Bukkit.getPlayer(args[1]);
                         double amount;
                         if (target == null) {
-                            sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-player-found")
+                            sender.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("no-player-found")
                                     .replaceAll("%player%", args[1])
                                     .replaceAll("%target%", args[1])));
                             return true;
@@ -30,17 +30,17 @@ public class cmdBounty implements CommandExecutor {
                         try {
                             amount = Double.parseDouble(args[2]);
                         } catch (Exception e) {
-                            sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("invalid-amount")));
+                            sender.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("invalid-amount")));
                             return true;
                         }
                         if (amount < 0) {
-                            sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("invalid-amount")));
+                            sender.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("invalid-amount")));
                             return true;
                         }
                         if (sender instanceof Player) {
                             Player player = (Player) sender;
                             if (!plugin.Economy.hasEnoughCash(player, amount)) {
-                                sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("not-enough-money")));
+                                sender.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("not-enough-money")));
                                 return true;
                             }
                         }
@@ -53,17 +53,17 @@ public class cmdBounty implements CommandExecutor {
                         } else {
                             Utils.bounties.put(target.getUniqueId(), amount);
                         }
-                        sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
-                                        plugin.fileMessage.getConfig().getString("bounty-added"), amount)
+                        sender.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("prefix") +
+                                        plugin.languageFile.getConfig().getString("bounty-added"), amount)
                                 .replaceAll("%player%", target.getName())
                                 .replaceAll("%target%", target.getName()));
 
-                    } else sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-permission")));
+                    } else sender.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("no-permission")));
                 } else if (args.length == 2 && args[0].equalsIgnoreCase("view")) {
                     if (sender.hasPermission("Peligon.Economy.Bounties") || sender.hasPermission("peligon.Economy.*")) {
                         Player target = Bukkit.getPlayer(args[1]);
                         if (target == null) {
-                            sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-player-found")
+                            sender.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("no-player-found")
                                     .replaceAll("%player%", args[1])
                                     .replaceAll("%target%", args[1])));
                             return true;
@@ -72,12 +72,12 @@ public class cmdBounty implements CommandExecutor {
                         if (Utils.bounties.containsKey(target.getUniqueId())) {
                             bounty = Utils.bounties.get(target.getUniqueId());
                         }
-                        sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("current-bounty"), bounty)
+                        sender.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("current-bounty"), bounty)
                                 .replaceAll("%player%", target.getName()));
 
-                    } else sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-permission")));
-                } else sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("bounty-usage")));
-            } else sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("command-disabled")));
+                    } else sender.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("no-permission")));
+                } else sender.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("bounty-usage")));
+            } else sender.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("command-disabled")));
         }
         return false;
     }

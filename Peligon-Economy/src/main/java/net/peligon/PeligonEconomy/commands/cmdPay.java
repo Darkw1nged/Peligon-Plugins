@@ -8,9 +8,6 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.text.NumberFormat;
-import java.util.Locale;
-
 public class cmdPay implements CommandExecutor {
 
     private final Main plugin = Main.getInstance;
@@ -18,13 +15,13 @@ public class cmdPay implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String string, String[] args) {
         if (cmd.getName().equalsIgnoreCase("pay")) {
             if (!(sender instanceof Player)) {
-                sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("console")));
+                sender.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("console")));
                 return true;
             }
             Player player = (Player) sender;
             if (player.hasPermission("Peligon.Economy.Pay") || player.hasPermission("Peligon.Economy.*")) {
                 if (args.length < 2) {
-                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("pay-usage")));
+                    player.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("pay-usage")));
                     return true;
                 }
                 Player target = Bukkit.getPlayer(args[0]);
@@ -32,13 +29,13 @@ public class cmdPay implements CommandExecutor {
 
                 // ---- [ Verifying target ] ----
                 if (target == null) {
-                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-player-found")
+                    player.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("no-player-found")
                             .replaceAll("%player%", args[1])
                             .replaceAll("%target%", args[1])));
                     return true;
                 }
                 if (target == player) {
-                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("specify-player")));
+                    player.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("specify-player")));
                     return true;
                 }
 
@@ -46,29 +43,29 @@ public class cmdPay implements CommandExecutor {
                 try {
                     amount = Double.parseDouble(args[1]);
                 } catch (Exception e) {
-                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("invalid-amount")));
+                    player.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("invalid-amount")));
                     return true;
                 }
                 if (amount < 0) {
-                    sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("invalid-amount")));
+                    sender.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("invalid-amount")));
                     return true;
                 }
 
                 // ---- [ Checking accounts of players ] ----
                 if (!plugin.Economy.hasAccount(player)) {
-                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("account-error")
+                    player.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("account-error")
                             .replaceAll("%player%", player.getName())
                             .replaceAll("%target%", player.getName())));
                     return true;
                 }
                 if (!plugin.Economy.hasAccount(target)) {
-                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("account-error")
+                    player.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("account-error")
                             .replaceAll("%player%", target.getName())
                             .replaceAll("%target%", target.getName())));
                     return true;
                 }
                 if (!plugin.Economy.hasEnoughCash(player, amount)) {
-                    sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("not-enough-money")));
+                    sender.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("not-enough-money")));
                     return true;
                 }
 
@@ -77,10 +74,10 @@ public class cmdPay implements CommandExecutor {
                 // ---- [ Adding money ] ----
                 plugin.Economy.addAccount(target, amount);
 
-                player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") + plugin.fileMessage.getConfig().getString("money-transferred"), amount).replaceAll("%player%", target.getName()));
-                target.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") + plugin.fileMessage.getConfig().getString("money-received"), amount).replaceAll("%player%", player.getName()));
+                player.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("prefix") + plugin.languageFile.getConfig().getString("money-transferred"), amount).replaceAll("%player%", target.getName()));
+                target.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("prefix") + plugin.languageFile.getConfig().getString("money-received"), amount).replaceAll("%player%", player.getName()));
             } else {
-                sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-permission")));
+                sender.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("no-permission")));
             }
 
         }

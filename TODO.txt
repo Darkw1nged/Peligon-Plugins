@@ -58,8 +58,6 @@ TODO -   -> Miners backpack (18 slots) *configurable:
 TODO -     -> Only allow for ores to be added inside it
 TODO -     -> Allow for auto pickup inside the backpack
 
----- { In Progress } ----
-
 TODO - Peligon Economy (Rewrite)
 TODO - -> Include PeligonPlugins into compile
 TODO - -> Storage types:
@@ -67,6 +65,10 @@ TODO -   -> File
 TODO -   -> SQLite
 TODO -   -> MySQL
 TODO - -> Add support for vault.
+
+---- { In Progress } ----
+
+TODO - Peligon Economy (Rewrite)
 TODO - -> Default coins currency.
 TODO - -> Allow for multiple currencies.
 TODO - -> Commands:

@@ -21,7 +21,7 @@ public class cmdSellAuto implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String string, String[] args) {
         if (cmd.getName().equalsIgnoreCase("autosell")) {
             if (!(sender instanceof Player)) {
-                sender.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("console")));
+                sender.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("console")));
                 return true;
             }
             Player player = (Player)sender;
@@ -29,25 +29,25 @@ public class cmdSellAuto implements CommandExecutor {
                 UUID uuid = player.getUniqueId();
                 if (cache.contains(uuid)) {
                     cache.remove(uuid);
-                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
-                            plugin.fileMessage.getConfig().getString("autosell-off")));
+                    player.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("prefix") +
+                            plugin.languageFile.getConfig().getString("autosell-off")));
                 } else {
                     cache.add(uuid);
-                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
-                            plugin.fileMessage.getConfig().getString("autosell-on")));
+                    player.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("prefix") +
+                            plugin.languageFile.getConfig().getString("autosell-on")));
                 }
                 Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
                     if (!cache.contains(uuid)) return;
                     Double amount = getSellableItems(player);
                     if (amount <= 0) return;
                     // message
-                    player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
-                            plugin.fileMessage.getConfig().getString("sold-items"), amount));
+                    player.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("prefix") +
+                            plugin.languageFile.getConfig().getString("sold-items"), amount));
                     plugin.Economy.addAccount(player, amount);
 
                 }, 0L, 20L);
             } else {
-                player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-permission")));
+                player.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("no-permission")));
                 return true;
             }
         }

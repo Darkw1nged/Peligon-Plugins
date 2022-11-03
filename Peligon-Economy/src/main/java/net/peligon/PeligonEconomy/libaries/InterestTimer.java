@@ -27,7 +27,7 @@ public class InterestTimer extends BukkitRunnable {
                 plugin.Economy.addBankAccount(uuid, toAdd);
                 Player player = Bukkit.getPlayer(uuid);
                 if (player == null) return;
-                player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") + plugin.fileMessage.getConfig().getString("interest-added"), toAdd));
+                player.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("prefix") + plugin.languageFile.getConfig().getString("interest-added"), toAdd));
 
                 Utils.InterestTimer = 0;
             }

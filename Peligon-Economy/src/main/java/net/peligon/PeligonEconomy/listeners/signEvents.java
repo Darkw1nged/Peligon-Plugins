@@ -106,11 +106,11 @@ public class signEvents implements Listener {
                             }
                         }
                         if (amount <= 0) {
-                            player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("no-items")));
+                            player.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("no-items")));
                             return;
                         }
-                        player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") +
-                                plugin.fileMessage.getConfig().getString("sold-items"), amount));
+                        player.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("prefix") +
+                                plugin.languageFile.getConfig().getString("sold-items"), amount));
                         plugin.Economy.addAccount(player, amount);
                     }
                 } else if (line0.contains(Utils.chatColor(plugin.fileSigns.getConfig().getString("Cash.line-1")))) {

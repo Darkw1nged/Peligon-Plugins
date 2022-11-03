@@ -7,10 +7,10 @@
 #######################################################################################
 
 Storage:
-  # Visit 'Plugins/PeligonEconomy/Lang/' to see the supported languages.
-  Language File: "en_US"
-  # Available options: "MySQL", "SQLite"
-  database: "SQLite"
+  # Visit 'Plugins/PeligonPlaytime/Lang/' to see the supported languages.
+  lang: "en_US"
+  # Available options: "File", "MySQL", "SQLite"
+  database: "File"
   MySQL:
     host: "localhost"
     port: 3306

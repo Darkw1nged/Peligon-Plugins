@@ -53,7 +53,7 @@ public class menuDeposit extends Menu {
                             plugin.Economy.removeAccount(player, amount);
                             plugin.Economy.addBankAccount(player, amount);
 
-                            player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") + plugin.fileMessage.getConfig().getString("deposited-money"), amount));
+                            player.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("prefix") + plugin.languageFile.getConfig().getString("deposited-money"), amount));
                             Utils.addTransaction(player, Utils.chatColor(plugin.fileATM.getConfig().getString("Options.transaction-add"), amount)
                                     .replaceAll("%player%", player.getName()));
 
@@ -65,7 +65,7 @@ public class menuDeposit extends Menu {
 
                             plugin.Economy.removeAccount(player, amount);
                             plugin.Economy.addBankAccount(player, amount);
-                            player.sendMessage(Utils.chatColor(plugin.fileMessage.getConfig().getString("prefix") + plugin.fileMessage.getConfig().getString("deposited-money"), amount));
+                            player.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("prefix") + plugin.languageFile.getConfig().getString("deposited-money"), amount));
                             Utils.addTransaction(player, Utils.chatColor(plugin.fileATM.getConfig().getString("Options.transaction-add"), amount)
                                     .replaceAll("%player%", player.getName()));
 

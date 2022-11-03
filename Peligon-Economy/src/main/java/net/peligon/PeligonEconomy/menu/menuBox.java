@@ -1,13 +1,12 @@
 package net.peligon.PeligonEconomy.menu;
 
 import net.peligon.PeligonEconomy.Main;
-import net.peligon.PeligonEconomy.libaries.CustomConfig;
+import net.peligon.PeligonEconomy.libaries.storage.CustomConfig;
 import net.peligon.PeligonEconomy.libaries.Utils;
 import net.peligon.PeligonEconomy.managers.Menu;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.Inventory;
