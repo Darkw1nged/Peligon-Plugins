@@ -107,3 +107,44 @@ TODO - -> Alt checker.
 TODO -   -> Multiple accounts on the same IP.
 TODO - -> Alert for anyone who has not moved in over 5 minutes (configurable)
 TODO - -> Disable /server command
+
+
+TODO - Peligon Economy (Rewrite)
+TODO - -> Include PeligonPlugins into compile
+TODO - -> Storage types:
+TODO -   -> File
+TODO -   -> SQLite
+TODO -   -> MySQL
+TODO - -> Add support for vault.
+TODO - -> Default coins currency.
+TODO - -> Allow for multiple currencies.
+TODO - -> Commands:
+TODO -   -> /giveitem [player] [item] (amount): Permission (Peligon.Economy.GiveItem)
+TODO -   -> /balance (player*Optional) (currency*Optional) -> [bal | money] (Peligon.Economy.Balance : Peligon.Economy.Balance.Other)
+TODO -   -> /balancetop (currency*Optional) -> [baltop | moneytop] (Peligon.Economy.BalanceTop)\
+TODO -   -> /pay [player] (currency*Optional) [amount] -> (Peligon.Economy.Pay)
+TODO -   -> /economy [add|remove|set|reset] (currency*Optional) [player] [amount] -> [eco] (Peligon.Economy.Admin)
+TODO -   -> /economy [list] -> [eco] (Peligon.Economy.Admin)
+TODO -   -> /economy [create|delete] [currency] -> [eco] (Peligon.Economy.Admin)
+TODO -   -> /daily -> (Peligon.Economy.Daily)
+TODO -   -> /sell (hand*Optional) -> (Peligon.Economy.Sell)
+TODO -   -> /sellhand -> (Peligon.Economy.Sell)
+TODO -   -> /sellall -> (Peligon.Economy.Sell)
+TODO -   -> /sellchest -> (Peligon.Economy.Sell)
+TODO -   -> /withdraw (currency*Optional) [amount] -> (Peligon.Economy.Withdraw)
+TODO -   -> /experienceBottle -> [xpbottle | expbottle | bottle] (Peligon.Economy.Bottle)
+TODO -   -> /autosell -> (Peligon.Economy.AutoSell)
+TODO -   -> /bounties -> (Peligon.Economy.Bounties)
+TODO -   -> /bounty [player] [amount] -> (Peligon.Economy.Bounties)
+TODO - -> Death penalty
+TODO -   -> Allow for a percentage of coins to be taken from a player when they die.
+TODO -   -> Allow for this to be disabled in certain worlds.
+TODO - -> Mob money
+TODO -   -> Allow for a percentage of coins to be dropped when they kill a mob.
+TODO -   -> Allow for this to be disabled in certain worlds.
+TODO - -> Grass scavenge
+TODO -   -> Allow for players to find random items/coins when they break grass.
+TODO -   -> Allow for this to be disabled in certain worlds.
+TODO - -> Add personal and global multipliers.
+TODO - -> Add auction house.
+TODO - -> Add shop.

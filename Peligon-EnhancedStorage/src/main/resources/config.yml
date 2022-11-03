@@ -68,5 +68,7 @@ Backpacks:
       automatic-pickup: true
       keep-food-restocked: true
   miners-settings:
-    size: 18
-    title: "&6Miner Backpack"
+    inventory:
+      size: 18
+      title: "&6Miner Backpack"
+    automatic-pickup: true

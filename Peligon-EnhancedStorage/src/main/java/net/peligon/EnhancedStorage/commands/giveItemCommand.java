@@ -56,7 +56,7 @@ public class giveItemCommand implements CommandExecutor, TabCompleter {
                 }
 
                 // Checking if player has space in inventory.
-                if (Utils.hasSpace(target, item, amount)) {
+                if (Utils.hasSpace(target.getInventory(), item, amount)) {
                     // Sending a success message to sender.
                     sender.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("prefix") +
                             plugin.languageFile.getConfig().getString("giveitem-success")

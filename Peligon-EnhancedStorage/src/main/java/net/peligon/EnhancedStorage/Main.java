@@ -86,7 +86,8 @@ public class Main extends JavaPlugin {
                 new autoFill(),
                 new autoFillLapisLazuli(),
                 new fillBrewingStand(),
-                new backpackHandles()
+                new backpackHandles(),
+                new minerBackpackHandle()
         ).forEach(listener -> getServer().getPluginManager().registerEvents(listener, this));
     }
 

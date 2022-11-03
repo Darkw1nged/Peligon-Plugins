@@ -171,7 +171,7 @@ public class backpackHandles implements Listener {
         if (name.equals("normal-massive")) return Utils.chatColor(plugin.getConfig().getString("Backpacks.normal-settings.massive.title"));
         if (name.equals("adventure-beginner")) return Utils.chatColor(plugin.getConfig().getString("Backpacks.adventure-settings.beginner.inventory.title"));
         if (name.equals("adventure-experienced")) return Utils.chatColor(plugin.getConfig().getString("Backpacks.adventure-settings.experienced.inventory.title"));
-        if (name.equals("miners-backpack")) return Utils.chatColor(plugin.getConfig().getString("Backpacks.miners-settings.title"));
+        if (name.equals("miners-backpack")) return Utils.chatColor(plugin.getConfig().getString("Backpacks.miners-settings.inventory.title"));
         return Utils.chatColor("&eBackpack");
     }
 

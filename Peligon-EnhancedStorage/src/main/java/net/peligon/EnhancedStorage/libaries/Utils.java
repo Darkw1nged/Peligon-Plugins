@@ -29,10 +29,7 @@ public class Utils {
     public static Map<UUID, playerVault> openVaults = new HashMap<>();
 
     // Check if the player has enough space to add a new item.
-    public static boolean hasSpace(Player player, ItemStack targetItem, int amount) {
-        // Getting the players inventory.
-        Inventory inventory = player.getInventory();
-
+    public static boolean hasSpace(Inventory inventory, ItemStack targetItem, int amount) {
         // Looping through the players inventory.
         for (int i = 0; i < inventory.getSize(); i++) {
             // Check if i == 36, if so, break the loop.

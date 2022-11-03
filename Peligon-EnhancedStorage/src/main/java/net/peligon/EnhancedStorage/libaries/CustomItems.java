@@ -193,7 +193,9 @@ public class CustomItems {
         // Setting the backpack type.
         meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "backpackType"), PersistentDataType.STRING, "miners-backpack");
         // Setting the backpack size. Must be multiple of 9. Max 54.
-        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "backpackSize"), PersistentDataType.INTEGER, plugin.getConfig().getInt("Backpacks.miners-settings.size"));
+        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "backpackSize"), PersistentDataType.INTEGER, plugin.getConfig().getInt("Backpacks.miners-settings.inventory.size"));
+        // Get if automatic-pickup is enabled.
+        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "hasAutoPickup"), PersistentDataType.STRING, plugin.getConfig().getBoolean("Backpacks.miners-settings.automatic-pickup", true) ? "true" : "false");
 
         // Setting the item meta.
         item.setItemMeta(meta);
