@@ -32,19 +32,7 @@ Once your suggestion has been approved and seems like a good enhancement. Your t
 
 **:exclamation: If you have fixed any bugs locally you can make a pull request anytime to apply the changes. That is if it has not already been fixed.**
 
-## :earth_africa: 4. Pull Requests: Translations
-Another great way to contribute to the prokect is by working on translations for the project.
-Peligon Plugins' translation is available on [Crowdin](https://crowdin.com/project/peligon-plugins).
-Just find a language you are fluent in and translate away. But make sure to submit a "Review Request" when you are done.
-One of our Language Moderators will review the changes and submit a Pull Request to the project for you.
-
-#### Language Moderation
-Very active community translators will have the option to become a "Language Moderator". 
-Language Moderators are responsible for proof-reading any new translations for their designated language and correct it when they see a mistake.
-
-For more info on how or what to translate, check out our article on [How to translate the Peligon Project](https://github.com/Darkw1nged/Peligon-Plugins/wiki/Translating-Peligon-Plugins).
-
-## :scroll: 5. Pull Requests: Wiki contributions
+## :scroll: 4. Pull Requests: Wiki contributions
 Peligon Plugins will become large project with a wide range of different plugins and might be quite intimidating for new users.
 That's why good documentation is always nice and helpful.
 If you have used any of the plugins for a while and gotten yourself familiar with how things work, please consider contributing your experiences and knowledge to others via the wiki!
