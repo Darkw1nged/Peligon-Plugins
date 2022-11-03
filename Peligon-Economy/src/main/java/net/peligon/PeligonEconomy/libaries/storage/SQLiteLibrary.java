@@ -16,7 +16,13 @@ public class SQLiteLibrary {
     private final Main plugin = Main.getInstance;
 
     public void getSQLConnection() throws SQLException {
-        File dbFolder = new File(plugin.getDataFolder(), "peligon.db");
+        File dbFolder = new File(plugin.getDataFolder() + "/data", "peligon.db");
+
+        // Checking if data folder
+        if (!dbFolder.exists()) {
+            dbFolder.getParentFile().mkdirs();
+        }
+
         connection = DriverManager.getConnection("jdbc:sqlite:" + dbFolder);
 
         try {

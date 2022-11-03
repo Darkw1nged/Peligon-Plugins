@@ -17,11 +17,14 @@ Storage:
     database: "minecraft"
     username: "root"
     password: ""
+  # Allow players to have an extra way to store money.
   banks: true
+  # Should cash be treated as a physical item?
+  physical: false
 
 Account-Setup:
   cash: 100.0
-  # !! Only works if "banks" is enabled.
+  # Will only be used if 'banks' is set to true.
   bank: 0.0
 
 Economy-Leaderboard:

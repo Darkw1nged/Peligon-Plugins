@@ -6,12 +6,27 @@ plugin-outdated: "There is a new version of Peligon Economy available."
 plugin-link: "Updated version: https://www.spigotmc.org/resources/peligon-economy.100259/"
 no-protocolLib: "ProtocolLib was not found and some features may not work."
 
+balance: "&ePeligon >> &fYour balance is &2$%amount%"
+balance-other: "&ePeligon >> &f%player%'s balance is &2$%amount%"
+
+error-console: "&cError! You are not allowed to perform this inside of the console."
+error-no-permission: "&cError! You do not have permission to use this command."
+error-no-player-found: "&cError! That player could not be found."
+error-no-player-data: "&cError! There is no data for that player."
+
+usage-balance: "&cIncorrect Command Usage: &f/balance (bank?) (player)"
+
+
+
+
+
+
+
+
 prefix: "&ePeligon >> "
 admin-reload: "&eAll configuration files have been reloaded."
 admin-money-updated: "&fYou have updated &e%player% &fbalance."
 admin-money-reset: "&fYou have reset &e%player% &fbalance."
-balance: "&ePeligon >> &fYour balance is &2$%amount%"
-balance-other: "&ePeligon >> &f%player%'s balance is &2$%amount%"
 experience: "&ePeligon >> &fYour experience is &2%amount%"
 experience-other: "&ePeligon >> &f%player%'s experience is &2%amount%"
 balance-top: "&e------{ &6Balance Top &e| &aTop %number% &e}------"
@@ -32,9 +47,7 @@ interest-added: "&fYou have received &2$%amount% &fin interest"
 death-penalty-issued: "&fYou have lost &2$%amount% &fdue to dying."
 gift-sent: "&fYou have successfully sent &e%player% &fa gift."
 
-console: "&cError! You are not allowed to perform this inside of the console."
-no-permission: "&cError! You do not have permission to use this command."
-no-player-found: "&cError! That player could not be found."
+
 command-disabled: "&cError! The current command is disabled on the server."
 specify-player: "&cError! Please specify a player."
 not-enough-money: "&cError! You do not have enough money for this."
@@ -42,7 +55,6 @@ not-enough-experience: "&cError! You do not have enough experience for this."
 not-enough-space: "&cError! You do not have enough space for this item."
 invalid-amount: "&cError! Invalid Amount."
 no-items: "&cError! No items could be found."
-account-error: "&cError! %player% dont seem to have a bank account."
 no-item-in-hand: "&cError! You must be holding an item in your hand."
 daily-already-claimed: "&cError! You have already claimed your daily reward."
 

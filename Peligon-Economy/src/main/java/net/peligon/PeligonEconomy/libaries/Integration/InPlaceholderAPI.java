@@ -1,4 +1,4 @@
-package net.peligon.PeligonEconomy.managers;
+package net.peligon.PeligonEconomy.libaries.Integration;
 
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import net.peligon.PeligonEconomy.Main;
@@ -6,12 +6,13 @@ import net.peligon.PeligonEconomy.libaries.Utils;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public class mgrPlaceholders extends PlaceholderExpansion {
+public class InPlaceholderAPI extends PlaceholderExpansion {
 
-    private Main plugin = Main.getInstance;
+    // Getting the instance of the main class.
+    private final Main plugin = Main.getInstance;
 
-    public static mgrPlaceholders getInstance;
-    public mgrPlaceholders() {
+    public static InPlaceholderAPI getInstance;
+    public InPlaceholderAPI() {
         getInstance = this;
     }
 

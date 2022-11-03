@@ -5,7 +5,7 @@ import net.peligon.PeligonEconomy.libaries.*;
 import net.peligon.PeligonEconomy.libaries.storage.CustomConfig;
 import net.peligon.PeligonEconomy.listeners.*;
 import net.peligon.PeligonEconomy.managers.mgrEconomy;
-import net.peligon.PeligonEconomy.managers.mgrPlaceholders;
+import net.peligon.PeligonEconomy.libaries.Integration.InPlaceholderAPI;
 import net.peligon.PeligonEconomy.managers.mgrSignFactory;
 import net.peligon.Plugins.commands.peligonPluginsMenuCommand;
 import net.peligon.Plugins.listeners.PeligonPluginMenuEvent;
@@ -28,11 +28,16 @@ public final class Main extends JavaPlugin {
     public CustomConfig fileATM = new CustomConfig(this, "Inventories/ATM", true);
     public CustomConfig fileDailyReward = new CustomConfig(this, "Inventories/daily", true);
     public CustomConfig fileSellGUI = new CustomConfig(this, "Inventories/sellGUI", true);
-    public CustomConfig fileBoxGUI = new CustomConfig(this, "Inventories/box", true);
     public CustomConfig filedailyTaskGUI = new CustomConfig(this, "Inventories/daily-tasks", true);
 
-    // Getting vault hook.
+    // Getting Economy related classes
     private VaultHook vaultHook;
+    public mgrEconomy Economy;
+    public PeligonEconomy peligonEconomy;
+
+    // TODO ---- SUBJECT TO REMOVE ----
+    public mgrSignFactory signFactory;
+    // TODO ---- SUBJECT TO REMOVE ----
 
     // Storage type; File, MySQL, SQLite
     public String storageType = "file";
@@ -52,7 +57,6 @@ public final class Main extends JavaPlugin {
         fileDailyReward.saveDefaultConfig();
         filedailyTaskGUI.saveDefaultConfig();
         fileSellGUI.saveDefaultConfig();
-        fileBoxGUI.saveDefaultConfig();
         // TODO -------- Subject to removeal --------
 
         // Check for vault dependency.
@@ -62,21 +66,24 @@ public final class Main extends JavaPlugin {
             getServer().getPluginManager().disablePlugin(this);
         }
 
+        // Registering Economy classes.
+        Economy = new mgrEconomy();
+        peligonEconomy = new PeligonEconomy();
+
         // Hooking into vault.
         vaultHook = new VaultHook();
         vaultHook.hook();
+
+        // Register all placeholders. (If PlaceholderAPI is installed)
+        if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
+            new InPlaceholderAPI().register();
+        }
 
         // TODO -------- Subject to removeal --------
         if (Bukkit.getPluginManager().getPlugin("ProtocolLib") == null) {
             getServer().getConsoleSender().sendMessage(Utils.chatColor(this.languageFile.getConfig().getString("no-protocolLib")));
         } else {
             signFactory = new mgrSignFactory(this);
-        }
-
-        Economy = new mgrEconomy();
-        peligonEconomy = new PeligonEconomy();
-        if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
-            new mgrPlaceholders().register();
         }
 
         // ---- [ Calling repeating tasks ] ----
@@ -162,7 +169,7 @@ public final class Main extends JavaPlugin {
         // Other commands.
         getCommand("economy").setExecutor(new cmdEconomy());
         getCommand("pelecon").setExecutor(new cmdReload());
-        getCommand("balance").setExecutor(new cmdBalance());
+        getCommand("balance").setExecutor(new balanceCommand());
         getCommand("atm").setExecutor(new cmdATM());
         getCommand("balancetop").setExecutor(new cmdBalanceTop());
         getCommand("pay").setExecutor(new cmdPay());
@@ -177,26 +184,7 @@ public final class Main extends JavaPlugin {
         getCommand("bounty").setExecutor(new cmdBounty());
         getCommand("daily").setExecutor(new cmdDaily());
         getCommand("gift").setExecutor(new cmdGift());
-        getCommand("box").setExecutor(new cmdBox());
         getCommand("pouches").setExecutor(new cmdPouches());
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    public mgrEconomy Economy;
-    public PeligonEconomy peligonEconomy;
-    public mgrSignFactory signFactory;
 
 }

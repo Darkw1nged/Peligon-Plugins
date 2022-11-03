@@ -13,7 +13,12 @@ commands:
     aliases:
       - pel
     description: Allows admins to view all available peligon plugins.
-
+  balance:
+    aliases:
+      - bal
+      - money
+      - coins
+    description: Allows users to check their balance
 
   economy:
     aliases:
@@ -24,12 +29,6 @@ commands:
       - pecon
       - peconomy
     description: Allows admins to reload configuration files
-  balance:
-    aliases:
-      - bal
-      - money
-      - coins
-    description: Allows users to check their balance
   atm:
     aliases:
       - bank

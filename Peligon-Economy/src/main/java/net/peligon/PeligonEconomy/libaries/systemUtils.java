@@ -37,7 +37,7 @@ public class systemUtils {
                     String sqlQuery = "CREATE TABLE IF NOT EXISTS peligonEconomy (" +
                             "uuid VARCHAR(36) NOT NULL," +
                             "cash INT(16) NOT NULL," +
-                            "bank INT(16) NOT NULL," +
+                            "bankBalance INT(16) NOT NULL," +
                             "PRIMARY KEY (uuid)" +
                             ");";
 
@@ -64,7 +64,7 @@ public class systemUtils {
                     String sqlQuery = "CREATE TABLE IF NOT EXISTS peligonEconomy (" +
                             "uuid VARCHAR(36) NOT NULL," +
                             "cash INT(16) NOT NULL," +
-                            "bank INT(16) NOT NULL," +
+                            "bankBalance INT(16) NOT NULL," +
                             "PRIMARY KEY (uuid)" +
                             ");";
 

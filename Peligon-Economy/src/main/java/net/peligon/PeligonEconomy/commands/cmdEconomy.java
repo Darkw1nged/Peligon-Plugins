@@ -20,9 +20,7 @@ public class cmdEconomy implements CommandExecutor {
             }
             Player target = Bukkit.getPlayer(args[2]);
             if (target == null) {
-                sender.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("no-player-found")
-                        .replaceAll("%player%", args[2])
-                        .replaceAll("%target%", args[2])));
+                sender.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("error-no-player-found")));
                 return true;
             }
 
@@ -95,7 +93,7 @@ public class cmdEconomy implements CommandExecutor {
                             .replaceAll("%target%", target.getName())));
                 }
             }
-        } else sender.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("no-permission")));
+        } else sender.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("error-no-permission")));
         return true;
     }
 
