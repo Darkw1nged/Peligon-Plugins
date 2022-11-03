@@ -54,60 +54,11 @@ TODO -     -> Small (9 slots) *configurable
 TODO -     -> Medium (27 slots) *configurable
 TODO -     -> Large (36 slots) *configurable
 TODO -     -> Massive (54 slots) *configurable
-
----- { In Progress } ----
-
-TODO - Peligon EnhancedStorage (Rewrite)
-TODO - -> Backpacks:
-TODO -   -> Add recipes
 TODO -   -> Miners backpack (18 slots) *configurable:
 TODO -     -> Only allow for ores to be added inside it
 TODO -     -> Allow for auto pickup inside the backpack
-TODO -   -> Adventurers backpack:
-TODO -     -> Beginner (27 slots) *configurable:
-TODO -       -> Add Filtering
-TODO -       -> Allow for automatic pickup
-TODO -       -> Keep food restocked
-TODO -     -> Experienced (54 slots) *configurable:
-TODO -       -> Add Filtering
-TODO -       -> Allow for automatic pickup
-TODO -       -> Keep food restocked
-TODO - -> Iron Chests
-TODO -   -> This adds multiple new types of chests to the game
-TODO -   -> Types:
-TODO -     -> Iron chest - 54 [recipe - https://gyazo.com/bcb8e25f49f747a57e561c9ba4e0763b]
-TODO -     -> Gold chest - 54 (page 1) 27 (page 2) [recipe - https://gyazo.com/4a18b6577082bbba502f62611c0a6773]
-TODO -     -> Diamond chest - 54 (page 1) 54 (page 2) [recipe - https://gyazo.com/215666f5cac263632af65308ce133f4b]
-TODO -     -> Obsidian chest - 54 (page 1) 54 (page 2) [recipe - https://gyazo.com/08b101b28f9952cb35464ba2ac407655]
-TODO -       -> This chest can not be blown up or moved with anything, Only a player can destroy it.
-TODO - -> Chest Lock
-TODO - -> Death Chests
 
----- { Not Started } ----
-
-TODO - Peligon Polls (Update)
-TODO - -> Include PeligonPlugins into compile
-TODO - -> Allow for there to be no discord interaction.
-         -> Meaning plugin will not disable if the config is set up properly, discord integration is an option.
-TODO - -> Add support to create a poll inside of discord.
-TODO - -> Allow voting inside discord.
-
-
-TODO - Peligon Authentication (Rewrite)
-TODO - -> Include PeligonPlugins into compile
-TODO - -> Storage types:
-TODO -   -> File
-TODO -   -> SQLite
-TODO -   -> MySQL
-TODO - -> Allow for password login
-TODO - -> Allow for Google Authenticator login
-TODO - -> Allow for dispenser password login
-TODO - -> Allow for Authy login
-TODO - -> Alt checker.
-TODO -   -> Multiple accounts on the same IP.
-TODO - -> Alert for anyone who has not moved in over 5 minutes (configurable)
-TODO - -> Disable /server command
-
+---- { In Progress } ----
 
 TODO - Peligon Economy (Rewrite)
 TODO - -> Include PeligonPlugins into compile
@@ -148,3 +99,52 @@ TODO -   -> Allow for this to be disabled in certain worlds.
 TODO - -> Add personal and global multipliers.
 TODO - -> Add auction house.
 TODO - -> Add shop.
+
+---- { Not Started } ----
+
+TODO - Peligon Polls (Update)
+TODO - -> Include PeligonPlugins into compile
+TODO - -> Allow for there to be no discord interaction.
+         -> Meaning plugin will not disable if the config is set up properly, discord integration is an option.
+TODO - -> Add support to create a poll inside of discord.
+TODO - -> Allow voting inside discord.
+
+
+TODO - Peligon Authentication (Rewrite)
+TODO - -> Include PeligonPlugins into compile
+TODO - -> Storage types:
+TODO -   -> File
+TODO -   -> SQLite
+TODO -   -> MySQL
+TODO - -> Allow for password login
+TODO - -> Allow for Google Authenticator login
+TODO - -> Allow for dispenser password login
+TODO - -> Allow for Authy login
+TODO - -> Alt checker.
+TODO -   -> Multiple accounts on the same IP.
+TODO - -> Alert for anyone who has not moved in over 5 minutes (configurable)
+TODO - -> Disable /server command
+
+
+TODO - Peligon EnhancedStorage (Rewrite)
+TODO - -> Backpacks:
+TODO -   -> Add recipes
+TODO -   -> Adventurers backpack:
+TODO -     -> Beginner (27 slots) *configurable:
+TODO -       -> Add Filtering
+TODO -       -> Allow for automatic pickup
+TODO -       -> Keep food restocked
+TODO -     -> Experienced (54 slots) *configurable:
+TODO -       -> Add Filtering
+TODO -       -> Allow for automatic pickup
+TODO -       -> Keep food restocked
+TODO - -> Iron Chests
+TODO -   -> This adds multiple new types of chests to the game
+TODO -   -> Types:
+TODO -     -> Iron chest - 54 [recipe - https://gyazo.com/bcb8e25f49f747a57e561c9ba4e0763b]
+TODO -     -> Gold chest - 54 (page 1) 27 (page 2) [recipe - https://gyazo.com/4a18b6577082bbba502f62611c0a6773]
+TODO -     -> Diamond chest - 54 (page 1) 54 (page 2) [recipe - https://gyazo.com/215666f5cac263632af65308ce133f4b]
+TODO -     -> Obsidian chest - 54 (page 1) 54 (page 2) [recipe - https://gyazo.com/08b101b28f9952cb35464ba2ac407655]
+TODO -       -> This chest can not be blown up or moved with anything, Only a player can destroy it.
+TODO - -> Chest Lock
+TODO - -> Death Chests

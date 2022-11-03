@@ -9,14 +9,9 @@ import net.peligon.EnhancedStorage.libaries.Utils;
 import net.peligon.EnhancedStorage.listener.*;
 import net.peligon.Plugins.commands.peligonPluginsMenuCommand;
 import net.peligon.Plugins.listeners.PeligonPluginMenuEvent;
-import org.bukkit.Material;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.File;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.UUID;
 
 public class Main extends JavaPlugin {
 
@@ -101,58 +96,5 @@ public class Main extends JavaPlugin {
         getCommand("giveitem").setExecutor(new giveItemCommand());
         getCommand("playervault").setExecutor(new playerVaultCommand());
     }
-
-
-
-
-
-    // TODO --------------------------- Subject to be removed ---------------------------
-//    public void saveBackpacks() {
-//        for (Backpack backpack : Utils.backpacks.values()) {
-//            CustomConfig config = new CustomConfig(this, "backpack", "data/" + backpack.getOwner());
-//            YamlConfiguration yaml = config.getConfig();
-//
-//            yaml.set("Owner", backpack.getOwner().toString());
-//            yaml.set("MaximumStorageLevel", backpack.getMaximumStorageLevel());
-//            yaml.set("TypesAllowed", backpack.getTypesAllowed());
-//            int pos = 0;
-//            for (BackpackItem item : backpack.getContents()) {
-//                yaml.set("Contents." + pos + ".Material", item.getMaterial().name());
-//                yaml.set("Contents." + pos + ".Amount", item.getAmount());
-//                pos++;
-//            }
-//            config.saveConfig();
-//        }
-//    }
-
-    // TODO --------------------------- Subject to be removed ---------------------------
-//    public void loadBackpacks() {
-//        File folder = new File(this.getDataFolder() + "/data");
-//        if (!folder.exists()) return;
-//
-//        for (String file : new File(getDataFolder() + "/data").list()) {
-//            CustomConfig config = new CustomConfig(this, "backpack", "data/" + file);
-//            YamlConfiguration yaml = config.getConfig();
-//
-//            if (yaml.getString("Owner") == null) {
-//                continue;
-//            }
-//
-//            UUID owner = UUID.fromString(yaml.getString("Owner"));
-//            int maximumStorageLevel = yaml.getInt("MaximumStorageLevel");
-//            int typesAllowed = yaml.getInt("TypesAllowed");
-//
-//            List<BackpackItem> contents = new ArrayList<>();
-//            if (yaml.contains("Contents")) {
-//                for (String key : yaml.getConfigurationSection("Contents").getKeys(false)) {
-//                    contents.add(new BackpackItem(Material.valueOf(yaml.getString("Contents." + key + ".Material")),
-//                            yaml.getInt("Contents." + key + ".Amount")));
-//                }
-//            }
-//
-//            Backpack backpack = new Backpack(owner, maximumStorageLevel, typesAllowed, contents);
-//            Utils.backpacks.put(owner, backpack);
-//        }
-//    }
 
 }
