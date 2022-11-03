@@ -15,7 +15,6 @@ https://github.com/Darkw1nged/Peligon-Plugins/wiki
 * [What is the Peligon Project?](https://github.com/Darkw1nged/Peligon-Plugins/wiki/Peligon-Plugins-in-a-nutshelll)
 * [How to install our plugins](https://github.com/Darkw1nged/Peligon-Plugins/wiki/Installing-our-plugins)
 * [Help us expand the Wiki!](https://github.com/Darkw1nged/Peligon-Plugins/wiki/Expanding-the-Wikii)
-* [Help us translate Peligon plugins!](https://github.com/Darkw1nged/Peligon-Plugins/wiki/Translating-Peligon-Plugins)
 
 The wiki is entirely community-run, so if you find an article missing, feel free to write one and share it with others.
 
