@@ -23,9 +23,33 @@ Storage:
   physical: false
 
 Account-Setup:
-  cash: 100.0
-  # Will only be used if 'banks' is set to true.
-  bank: 0.0
+  cash-balance: 100.0
+  bank-balance: 0.0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 Economy-Leaderboard:
   cash:
@@ -48,15 +72,6 @@ Items:
   # %player% - Gets the players name.
   # %display_player% - Gets the players display name. e.g "[DEVELOPER] Peligon"
   # -----------------------------
-  withdraw-cash:
-    item: PAPER
-    name: "&2Bank Note"
-    lore:
-      - "&7(Right-Click) to redeem this &abanknote&7."
-      - "&7Withdrawn by &e%player%&7."
-      - ""
-      - "&7Value: &a$%amount%"
-      - "&7Transaction ID: &f%transaction%"
   withdraw-experience:
     item: EXPERIENCE_BOTTLE
     name: "&5Experience"

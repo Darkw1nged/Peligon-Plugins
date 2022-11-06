@@ -13,26 +13,33 @@ commands:
     aliases:
       - pel
     description: Allows admins to view all available peligon plugins.
+  peligoneconomy:
+    aliases:
+      - peleconomy
+      - pelecon
+    description: Allows admins to reload configuration files.
+  economy:
+    alaises:
+      - econ
+    description: Allows admins to control the economy.
   balance:
     aliases:
       - bal
       - money
       - coins
-    description: Allows users to check their balance
+    description: Allows users to check their balance.
+  withdraw:
+      aliases:
+          - withdraw
+          - wd
+      description: Allows users to withdraw money from their account.
+  bank:
+    aliases:
+      - atm
+    description: Allows users to check their bank balance.
 
-  economy:
-    aliases:
-      - eco
-    description: Allows admins manage player accounts
-  pelecon:
-    aliases:
-      - pecon
-      - peconomy
-    description: Allows admins to reload configuration files
-  atm:
-    aliases:
-      - bank
-    description: Allows users to manage their bank accounts
+
+
   balancetop:
     aliases:
       - baltop
@@ -54,8 +61,6 @@ commands:
     description: Allows users to sell items inside of chests with an item
   pay:
     description: Allows users to transfer money to each other
-  withdraw:
-    description: Allows users to withdraw money
   experience:
     aliases:
       - xp

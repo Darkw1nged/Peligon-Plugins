@@ -30,11 +30,11 @@ public class cmdBounty implements CommandExecutor {
                         try {
                             amount = Double.parseDouble(args[2]);
                         } catch (Exception e) {
-                            sender.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("invalid-amount")));
+                            sender.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("error-invalid-amount")));
                             return true;
                         }
                         if (amount < 0) {
-                            sender.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("invalid-amount")));
+                            sender.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("error-invalid-amount")));
                             return true;
                         }
                         if (sender instanceof Player) {

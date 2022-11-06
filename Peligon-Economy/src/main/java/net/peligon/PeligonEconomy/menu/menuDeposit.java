@@ -2,8 +2,8 @@ package net.peligon.PeligonEconomy.menu;
 
 import net.peligon.PeligonEconomy.Main;
 import net.peligon.PeligonEconomy.libaries.Utils;
+import net.peligon.PeligonEconomy.libaries.playerUtils;
 import net.peligon.PeligonEconomy.libaries.struts.Menu;
-import net.peligon.PeligonEconomy.libaries.struts.MenuOwnerUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -21,8 +21,8 @@ import java.util.Locale;
 public class menuDeposit extends Menu {
 
     private final Main plugin = Main.getInstance;
-    public menuDeposit(MenuOwnerUtil menuOwnerUtil) {
-        super(menuOwnerUtil);
+    public menuDeposit(Player player) {
+        super(player);
     }
 
     @Override
@@ -47,29 +47,29 @@ public class menuDeposit extends Menu {
                     double amount;
                     switch (plugin.fileATM.getConfig().getString("deposit-inventory.contents." + key + ".event").toLowerCase()) {
                         case "depositall":
-                            amount = plugin.Economy.getAccount(player);
+                            amount = playerUtils.getCash(player);
                             if (amount <= 0) event.setCancelled(true);
 
-                            plugin.Economy.removeAccount(player, amount);
-                            plugin.Economy.addBankAccount(player, amount);
+                            playerUtils.setCash(player, 0);
+                            playerUtils.setBankBalance(player, playerUtils.getBankBalance(player) + amount);
 
                             player.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("prefix") + plugin.languageFile.getConfig().getString("deposited-money"), amount));
                             Utils.addTransaction(player, Utils.chatColor(plugin.fileATM.getConfig().getString("Options.transaction-add"), amount)
                                     .replaceAll("%player%", player.getName()));
 
-                            player.openInventory(new menuATM(new MenuOwnerUtil(player)).getInventory());
+                            new menuATM(player).open();
                             return;
                         case "deposithalf":
-                            amount = (plugin.Economy.getAccount(player) * (50 / 100.0f));
+                            amount = (playerUtils.getCash(player) * (50 / 100.0f));
                             if (amount <= 0) event.setCancelled(true);
 
-                            plugin.Economy.removeAccount(player, amount);
-                            plugin.Economy.addBankAccount(player, amount);
+                            playerUtils.setCash(player, playerUtils.getCash(player) - amount);
+                            playerUtils.setBankBalance(player, playerUtils.getBankBalance(player) + amount);
                             player.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("prefix") + plugin.languageFile.getConfig().getString("deposited-money"), amount));
                             Utils.addTransaction(player, Utils.chatColor(plugin.fileATM.getConfig().getString("Options.transaction-add"), amount)
                                     .replaceAll("%player%", player.getName()));
 
-                            player.openInventory(new menuATM(new MenuOwnerUtil(player)).getInventory());
+                            new menuATM(player).open();
                             return;
                         case "depositspecific":
                             if (Bukkit.getPluginManager().getPlugin("ProtocolLib") == null) return;
@@ -78,11 +78,11 @@ public class menuDeposit extends Menu {
                             lines.add("^^^^^^^^^^^^^^^");
                             lines.add("Enter the amount");
                             lines.add("to deposit");
-                            Utils.openSign(player, 0, "deposit", lines);
+//                            Utils.openSign(player, 0, "deposit", lines);
                             event.setCancelled(true);
                             return;
                         case "goback":
-                            player.openInventory(new menuATM(new MenuOwnerUtil(player)).getInventory());
+                            new menuATM(player).open();
                             return;
                     }
                 } else {
@@ -95,7 +95,7 @@ public class menuDeposit extends Menu {
 
     @Override
     public void setMenuItems() {
-        Player player = menuOwnerUtil.getOwner();
+        Player player = owner;
 
         for (String key : plugin.fileATM.getConfig().getConfigurationSection("deposit-inventory.contents").getKeys(false)) {
             ItemStack item = new ItemStack(Material.getMaterial(plugin.fileATM.getConfig().getString("deposit-inventory.contents." + key + ".item").toUpperCase()));
@@ -109,8 +109,8 @@ public class menuDeposit extends Menu {
                 ArrayList<String> lore = new ArrayList<>();
                 for (String line : plugin.fileATM.getConfig().getStringList("deposit-inventory.contents." + key + ".lore")) {
                     lore.add(Utils.chatColor(line)
-                            .replaceAll("%cash%", formatted(plugin.Economy.getAccount(player)))
-                            .replaceAll("%bank%", formatted(plugin.Economy.getBank(player))));
+                            .replaceAll("%cash%", formatted(playerUtils.getCash(player)))
+                            .replaceAll("%bank%", formatted(playerUtils.getBankBalance(player))));
                 }
                 meta.setLore(lore);
             }

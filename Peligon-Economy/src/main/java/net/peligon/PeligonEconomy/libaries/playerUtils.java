@@ -25,8 +25,8 @@ public class playerUtils {
         switch (plugin.storageType) {
             case "file":
                 CustomConfig record = new CustomConfig(plugin, "data/" + player.getUniqueId(), false);
-                record.getConfig().set("cash", 0);
-                record.getConfig().set("bankBalance", System.currentTimeMillis());
+                record.getConfig().set("cash", plugin.getConfig().getDouble("Account-Setup.cash-balance"));
+                record.getConfig().set("bankBalance", plugin.getConfig().getDouble("Account-Setup.bank-balance"));
                 record.saveConfig();
                 break;
             case "mysql":
@@ -56,7 +56,7 @@ public class playerUtils {
         switch (plugin.storageType) {
             case "file":
                 CustomConfig record = new CustomConfig(plugin, "data/" + player.getUniqueId(), false);
-                return record.getConfig().contains("playtime");
+                return record.getConfig().contains("cash");
             case "mysql":
                 try {
                     PreparedStatement statement = systemUtils.getSQLibrary().getConnection().prepareStatement(SQLQuery);
@@ -139,6 +139,76 @@ public class playerUtils {
                 break;
         }
         return 0;
+    }
+
+    // Set players cash balance
+    public static void setCash(OfflinePlayer player, double amount) {
+        // Setting up the query for SQL
+        String SQLQuery = "UPDATE peligonEconomy SET cash=" + amount + " WHERE uuid='" + player.getUniqueId() + "';";
+
+        switch (plugin.storageType) {
+            case "file":
+                CustomConfig record = new CustomConfig(plugin, "data/" + player.getUniqueId(), false);
+                record.getConfig().set("cash", amount);
+                record.saveConfig();
+                break;
+            case "mysql":
+                try {
+                    PreparedStatement statement = systemUtils.getSQLibrary().getConnection().prepareStatement(SQLQuery);
+                    statement.execute();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case "sqlite":
+                try {
+                    PreparedStatement statement = SQLiteLibrary.connection.prepareStatement(SQLQuery);
+                    statement.execute();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                break;
+        }
+    }
+
+    // Set players bank balance
+    public static void setBankBalance(OfflinePlayer player, double amount) {
+        // Setting up the query for SQL
+        String SQLQuery = "UPDATE peligonEconomy SET bankBalance=" + amount + " WHERE uuid='" + player.getUniqueId() + "';";
+
+        switch (plugin.storageType) {
+            case "file":
+                CustomConfig record = new CustomConfig(plugin, "data/" + player.getUniqueId(), false);
+                record.getConfig().set("bankBalance", amount);
+                record.saveConfig();
+                break;
+            case "mysql":
+                try {
+                    PreparedStatement statement = systemUtils.getSQLibrary().getConnection().prepareStatement(SQLQuery);
+                    statement.execute();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case "sqlite":
+                try {
+                    PreparedStatement statement = SQLiteLibrary.connection.prepareStatement(SQLQuery);
+                    statement.execute();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                break;
+        }
+    }
+
+    // Check if player has enough cash
+    public static boolean hasEnoughCash(OfflinePlayer player, double amount) {
+        return getCash(player) >= amount;
+    }
+
+    // Check if player has enough bank balance
+    public static boolean hasEnoughBankBalance(OfflinePlayer player, double amount) {
+        return getBankBalance(player) >= amount;
     }
 
 }

@@ -2,6 +2,7 @@ package net.peligon.PeligonEconomy.libaries.struts;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
@@ -14,15 +15,15 @@ public abstract class Menu implements InventoryHolder {
 
     //Protected values that can be accessed in the menus
     protected boolean navigation;
-    protected MenuOwnerUtil menuOwnerUtil;
+    protected Player owner;
     protected Inventory inventory;
     protected ItemStack FILLER_GLASS = makeItem(Material.GRAY_STAINED_GLASS_PANE, " ");
 
-    public Menu(MenuOwnerUtil menuOwnerUtil) {
-        this.menuOwnerUtil = menuOwnerUtil;
+    public Menu(Player owner) {
+        this.owner = owner;
     }
-    public Menu(MenuOwnerUtil menuOwnerUtil, boolean hasNavigation) {
-        this.menuOwnerUtil = menuOwnerUtil;
+    public Menu(Player owner, boolean hasNavigation) {
+        this.owner = owner;
         this.navigation = hasNavigation;
     }
     public abstract String getMenuName();
@@ -33,7 +34,7 @@ public abstract class Menu implements InventoryHolder {
     public void open() {
         inventory = Bukkit.createInventory(this, getSlots(), getMenuName());
         this.setMenuItems();
-        menuOwnerUtil.getOwner().openInventory(inventory);
+        owner.openInventory(inventory);
     }
 
     @Override

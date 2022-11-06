@@ -6,15 +6,28 @@ plugin-outdated: "There is a new version of Peligon Economy available."
 plugin-link: "Updated version: https://www.spigotmc.org/resources/peligon-economy.100259/"
 no-protocolLib: "ProtocolLib was not found and some features may not work."
 
-balance: "&ePeligon >> &fYour balance is &2$%amount%"
-balance-other: "&ePeligon >> &f%player%'s balance is &2$%amount%"
+prefix: "&ePeligon >> "
+balance: "&ePeligon >> &fYour balance is &2$%balance%"
+balance-other: "&ePeligon >> &f%player%'s balance is &2$%balance%"
+success-account-update: "&ePeligon >> &fSuccessfully updated %player%'s account."
+success-deposit: "&fSuccessfully deposited &2$%amount%&f into your account."
+success-withdraw: "&fSuccessfully withdrew &2$%amount%&f from your account."
+failed-withdraw: "&cFailed to withdraw &2$%amount%&c from your account."
+money-note-claimed: "&fSuccessfully claimed &2$%amount%&f from a bank note."
+
+admin-reload: "&ePeligon >> &fSuccessfully reloaded the configuration files."
 
 error-console: "&cError! You are not allowed to perform this inside of the console."
 error-no-permission: "&cError! You do not have permission to use this command."
 error-no-player-found: "&cError! That player could not be found."
 error-no-player-data: "&cError! There is no data for that player."
+error-inalid-amount: "&cError! That is not a valid amount."
+error-negative-amount: "&cError! You cannot use a negative amount."
+error-not-enough-money: "&cError! You do not have enough money."
 
+usage-economy: "&cIncorrect Command Usage: &f/economy [add|remove|set|reset] (bank?) [player] [amount]"
 usage-balance: "&cIncorrect Command Usage: &f/balance (bank?) (player)"
+uasge-withdraw: "&cIncorrect Command Usage: &f/withdraw [amount]"
 
 
 
@@ -23,10 +36,8 @@ usage-balance: "&cIncorrect Command Usage: &f/balance (bank?) (player)"
 
 
 
-prefix: "&ePeligon >> "
-admin-reload: "&eAll configuration files have been reloaded."
-admin-money-updated: "&fYou have updated &e%player% &fbalance."
-admin-money-reset: "&fYou have reset &e%player% &fbalance."
+
+
 experience: "&ePeligon >> &fYour experience is &2%amount%"
 experience-other: "&ePeligon >> &f%player%'s experience is &2%amount%"
 balance-top: "&e------{ &6Balance Top &e| &aTop %number% &e}------"
@@ -36,8 +47,6 @@ autosell-on: "&fYou have enabled autosell"
 sold-items: "&fYou have successfully sold items and made &2$%amount%"
 money-transferred: "&fYou transferred &2$%amount% &fto %player%"
 money-received: "&fYou received &2$%amount% &ffrom %player%"
-deposited-money: "&fYou have deposited &2$%amount%"
-withdrawn-money: "&fYou have withdrawn &2$%amount%"
 bounty-added: "&fAdded &2$%amount% &fto &e%player%'s &fbounty"
 current-bounty: "&ePeligon >> &e%player%'s &fcurrent bounty is &2$%amount%"
 sellwand-given: "&fYou have given a sellwand to %player% that has %uses% uses"
@@ -53,7 +62,6 @@ specify-player: "&cError! Please specify a player."
 not-enough-money: "&cError! You do not have enough money for this."
 not-enough-experience: "&cError! You do not have enough experience for this."
 not-enough-space: "&cError! You do not have enough space for this item."
-invalid-amount: "&cError! Invalid Amount."
 no-items: "&cError! No items could be found."
 no-item-in-hand: "&cError! You must be holding an item in your hand."
 daily-already-claimed: "&cError! You have already claimed your daily reward."

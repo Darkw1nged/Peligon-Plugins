@@ -1,7 +1,6 @@
 package net.peligon.PeligonEconomy.libaries;
 
 import net.peligon.PeligonEconomy.Main;
-import net.peligon.PeligonEconomy.libaries.struts.MenuOwnerUtil;
 import net.peligon.PeligonEconomy.managers.mgrSignFactory;
 import net.peligon.PeligonEconomy.menu.menuATM;
 import org.bukkit.ChatColor;
@@ -9,6 +8,7 @@ import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -22,12 +22,12 @@ public class Utils {
 
     private static final Main plugin = Main.getInstance;
 
-    // ---- [ Managing chat color within the plugin ] ----
+    // Manage all ChatColor within the plugin
     public static String chatColor(String s) {
         return ChatColor.translateAlternateColorCodes('&', s);
     }
 
-    // ---- [ Managing chat color within the plugin | Supports Amount ] ----
+    // Manage all ChatColor within the plugin, formats doubles
     public static String chatColor(String s, Double amount) {
         NumberFormat nf = NumberFormat.getInstance(new Locale("en", "US"));
         String converted = nf.format(amount);
@@ -35,16 +35,216 @@ public class Utils {
                 .replaceAll("%amount%", converted);
     }
 
-    // ---- [ Format numbers ] ----
+    // Format a double to a string in the correct format
     public static String format(Double amount) {
         NumberFormat nf = NumberFormat.getInstance(new Locale("en", "US"));
         return nf.format(amount);
     }
 
+    // Format a int to a string in the correct format
     public static String format(Integer amount) {
         NumberFormat nf = NumberFormat.getInstance(new Locale("en", "US"));
         return nf.format(amount);
     }
+
+    // Get abbreviation from a string and convert it to a double
+    public static Double getAbbreviation(String s) {
+        double amount = 0;
+        if (s.toLowerCase().endsWith("k")) {
+            amount = Double.parseDouble(s.substring(0, s.length() - 1)) * 1000;
+        } else if (s.toLowerCase().endsWith("m")) {
+            amount = Double.parseDouble(s.substring(0, s.length() - 1)) * 1000000;
+        } else if (s.toLowerCase().endsWith("b")) {
+            amount = Double.parseDouble(s.substring(0, s.length() - 1)) * 1000000000;
+        } else if (s.toLowerCase().endsWith("t")) {
+            amount = Double.parseDouble(s.substring(0, s.length() - 1)) * 1000000000000.0;
+        } else {
+            amount = Double.parseDouble(s);
+        }
+        return amount;
+    }
+
+    // Check if the player has enough space to add a new item.
+    public static boolean hasSpace(Inventory inventory, ItemStack targetItem, int amount) {
+        // Looping through the players inventory.
+        for (int i = 0; i < inventory.getSize(); i++) {
+            // Check if i == 36, if so, break the loop.
+            if (i == 36) break;
+
+            // Checking if the item is null.
+            if (inventory.getItem(i) == null) {
+                // Adding the item to the inventory.
+                inventory.setItem(i, targetItem);
+                // Mining 1 from the amount.
+                amount--;
+
+                // Checking if the amount is greater than 0.
+                if (amount > 0) {
+                    // Set the amount to either amount + 1 or max stack size.
+                    inventory.getItem(i).setAmount(inventory.getItem(i).getAmount() + Math.min(amount, (targetItem.getMaxStackSize() - inventory.getItem(i).getAmount())));
+                    // Updating the amount.
+                    amount -= (inventory.getItem(i).getAmount() - 1);
+
+                    // If amount is greater than 0, continue the loop.
+                    if (amount > 0) {
+                        continue;
+                    }
+                }
+                // return true if the amount is 0.
+                return true;
+            } else {
+                // Checking if the item type is the same as the target item type.
+                if (inventory.getItem(i).getType() == targetItem.getType()) {
+                    // Checking if both items have the same meta data.
+                    if (inventory.getItem(i).hasItemMeta() && targetItem.hasItemMeta()) {
+                        if (inventory.getItem(i).getItemMeta().getDisplayName().equals(targetItem.getItemMeta().getDisplayName()) &&
+                                inventory.getItem(i).getItemMeta().getLore().equals(targetItem.getItemMeta().getLore())) {
+                            // Check if the item is at max stack size.
+                            if (inventory.getItem(i).getAmount() == inventory.getItem(i).getMaxStackSize()) continue;
+
+                            // Getting the amount of the item.
+                            int itemAmountBefore = inventory.getItem(i).getAmount();
+
+                            // Updating item amount.
+                            inventory.getItem(i).setAmount(inventory.getItem(i).getAmount() + Math.min(amount, (targetItem.getMaxStackSize() - inventory.getItem(i).getAmount())));
+
+                            // Updating the amount.
+                            amount -= (inventory.getItem(i).getAmount() - itemAmountBefore);
+
+                            // If amount is greater than 0, continue the loop.
+                            if (amount > 0) {
+                                continue;
+                            }
+                            // return true if the amount is 0.
+                            return true;
+                        }
+                    } else {
+                        /// Check if the item is at max stack size.
+                        if (inventory.getItem(i).getAmount() == inventory.getItem(i).getMaxStackSize()) continue;
+
+                        // Getting the amount of the item.
+                        int itemAmountBefore = inventory.getItem(i).getAmount();
+
+                        // Updating item amount.
+                        inventory.getItem(i).setAmount(inventory.getItem(i).getAmount() + Math.min(amount, (targetItem.getMaxStackSize() - inventory.getItem(i).getAmount())));
+
+                        // Updating the amount.
+                        amount -= (inventory.getItem(i).getAmount() - itemAmountBefore);
+
+                        // If amount is greater than 0, continue the loop.
+                        if (amount > 0) {
+                            continue;
+                        }
+                        // return true if the amount is 0.
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+
+    // TODO ---- SUBJECT FOR REMOVAL ----
+    // Open an editable sign
+//    public static void openSign(Player target, int result, String objective, List<String> lines) {
+//        mgrSignFactory.Menu menu = plugin.signFactory.newMenu(lines)
+//                .reopenIfFail(true)
+//                .response((player, strings) -> {
+//                    if (strings[result].equals("") || strings[result].equals("0")) return true;
+//
+//                    try {
+//                        // Get the amount from the sign
+//                        double amount = getAbbreviation(strings[result]);
+//
+//                        // Check if amount is negative
+//                        if (amount < 0) {
+//                            player.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("error-invalid-amount")));
+//                            return true;
+//                        }
+//
+//                        // Check if the player has data.
+//                        if (!playerUtils.hasData(player)) {
+//                            player.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("error-no-player-data")));
+//                            return true;
+//                        }
+//
+//                        // Check the objective
+//                        if (objective.equalsIgnoreCase("deposit")) {
+//                            // Check if the player has enough cash.
+//                            if (!playerUtils.hasEnoughCash(player, amount)) {
+//                                player.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("error-not-enough-cash")));
+//                                return true;
+//                            }
+//
+//                            // Deposit the cash
+//                            playerUtils.setBankBalance(player, playerUtils.getBankBalance(player) + amount);
+//                            // Remove the cash
+//                            playerUtils.setCash(player, playerUtils.getCash(player) - amount);
+//
+//                            // Send the player a message
+//                            player.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("prefix") + plugin.languageFile.getConfig().getString("success-deposit"), amount));
+//
+//                            // Add transaction
+//                            Utils.addTransaction(player, Utils.chatColor(plugin.fileATM.getConfig().getString("Options.transaction-add"), amount)
+//                                    .replaceAll("%player%", player.getName()));
+//                        } else if (objective.equalsIgnoreCase("withdraw")) {
+//                            // Check if the player has enough money in their bank.
+//                            if (!playerUtils.hasEnoughBankBalance(player, amount)) {
+//                                player.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("error-not-enough-bank")));
+//                                return true;
+//                            }
+//
+//                            // Withdraw the cash
+//                            playerUtils.setBankBalance(player, playerUtils.getBankBalance(player) - amount);
+//                            // Add the cash
+//                            playerUtils.setCash(player, playerUtils.getCash(player) + amount);
+//
+//                            // Send the player a message
+//                            player.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("prefix") + plugin.languageFile.getConfig().getString("success-withdraw"), amount));
+//
+//                            // Add transaction
+//                            Utils.addTransaction(player, Utils.chatColor(plugin.fileATM.getConfig().getString("Options.transaction-remove"), amount)
+//                                    .replaceAll("%player%", player.getName()));
+//                        }
+//                    } catch (NumberFormatException e) {
+//                        player.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("error-invalid-amount")));
+//                        return true;
+//                    }
+//                    new menuATM(player).open();
+//                    return true;
+//                });
+//
+//        menu.open(target);
+//    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // ---- [ Managing holograms for small amount of features ] ----
     public static void moveUpHologram(String name, Location loc, int length) {
@@ -88,24 +288,6 @@ public class Utils {
         return newList;
     }
 
-    // ---- [ Available space ] ----
-    public static boolean hasSpace(Player player, ItemStack targetItem) {
-        for (ItemStack item : player.getInventory().getContents()) {
-            if (item == null) continue;
-            if (item.getType() == targetItem.getType()) {
-                if (item.getAmount() != item.getMaxStackSize()) {
-                    item.setAmount(item.getAmount() + 1);
-                    return true;
-                }
-            }
-        }
-        if (player.getInventory().firstEmpty() != -1) {
-            player.getInventory().addItem(targetItem);
-            return true;
-        }
-        return false;
-    }
-
     // ---- [ Add transactions ] ----
     public static void addTransaction(Player player, String transaction) {
         Map<LocalDateTime, String> list = new HashMap<>();
@@ -118,64 +300,6 @@ public class Utils {
             list.put(LocalDateTime.now(), transaction);
         }
         transactions.put(player.getUniqueId(), list);
-    }
-
-    // ---- [ Open Sign Editor ] ----
-    public static void openSign(Player target, int result, String objective, List<String> lines) {
-        mgrSignFactory.Menu menu = plugin.signFactory.newMenu(lines)
-                .reopenIfFail(true)
-                .response((player, strings) -> {
-                    if (strings[result].equals("") || strings[result].equals("0")) return true;
-                    double amount;
-                    try {
-                        amount = Double.parseDouble(strings[result]);
-                    } catch (Exception e) {
-                        player.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("invalid-amount")));
-                        return false;
-                    }
-                    if (amount < 0) {
-                        player.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("invalid-amount")));
-                        return false;
-                    }
-                    if (!plugin.Economy.hasAccount(player)) {
-                        player.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("account-error")
-                                .replaceAll("%player%", player.getName())
-                                .replaceAll("%target%", player.getName())));
-                        return true;
-                    }
-
-                    if (objective.equals("deposit")) {
-                        if (!plugin.Economy.hasEnoughCash(player, amount)) {
-                            player.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("not-enough-money")));
-                            return false;
-                        }
-
-                        player.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("prefix") + plugin.languageFile.getConfig().getString("deposited-money"), amount));
-                        plugin.Economy.removeAccount(player, amount);
-                        plugin.Economy.addBankAccount(player, amount);
-
-                        Utils.addTransaction(player, Utils.chatColor(plugin.fileATM.getConfig().getString("Options.transaction-add"), amount)
-                                .replaceAll("%player%", player.getName()));
-
-                    } else if (objective.equals("withdraw")) {
-                        if (!plugin.Economy.hasEnoughBank(player, amount)) {
-                            player.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("not-enough-money")));
-                            return false;
-                        }
-
-                        player.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("prefix") + plugin.languageFile.getConfig().getString("withdrawn-money"), amount));
-                        plugin.Economy.addAccount(player, amount);
-                        plugin.Economy.removeBankAccount(player, amount);
-
-                        Utils.addTransaction(player, Utils.chatColor(plugin.fileATM.getConfig().getString("Options.transaction-remove"), amount)
-                                .replaceAll("%player%", player.getName()));
-
-                    }
-                    player.openInventory(new menuATM(new MenuOwnerUtil(player)).getInventory());
-                    return true;
-                });
-
-        menu.open(target);
     }
 
     /// --- [ Formatting Objects ] ----

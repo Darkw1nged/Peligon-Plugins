@@ -14,7 +14,7 @@ public class balanceCommand implements CommandExecutor {
     // Getting the instance of the main class.
     private final Main plugin = Main.getInstance;
 
-    public boolean onCommand(CommandSender sender, Command cmd, String string, String[] args) {
+    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("balance")) {
             // Check if console sent the command.
             if (!(sender instanceof Player)) {
@@ -75,9 +75,8 @@ public class balanceCommand implements CommandExecutor {
             // We can safely assume that the sender is a player.
             Player player = (Player) sender;
 
-            // Check if args is greater than 2.
-            if (args.length >= 2) {
-                // Check if the player has permission to use the command.
+            if (args.length > 1) {
+                // Check if the player has permission to check other players balance.
                 if (player.hasPermission("Peligon.Economy.Balance.Other") || player.hasPermission("Peligon.Economy.*")) {
                     if (args[0].equalsIgnoreCase("bank")) {
                         // Get the target player from the args.
@@ -102,29 +101,26 @@ public class balanceCommand implements CommandExecutor {
                 } else {
                     player.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("error-no-permission")));
                 }
+                return true;
             }
 
             if (args.length == 1) {
-                if (player.hasPermission("Peligon.Economy.Balance") || player.hasPermission("Peligon.Economy.*")) {
-                    if (args[0].equalsIgnoreCase("bank")) {
-                        // Check if the target player has data.
-                        if (!playerUtils.hasData(player)) {
-                            player.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("error-no-player-data")));
-                            return true;
-                        }
-
-                        // Send the player the balance of the target player.
+                // Check if argument 1 is bank.
+                if (args[0].equalsIgnoreCase("bank")) {
+                    // Check if the player has permission to check their bank balance.
+                    if (player.hasPermission("Peligon.Economy.Balance") || player.hasPermission("Peligon.Economy.*")) {
+                        // Send the player their bank balance.
                         player.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("balance")
-
                                 .replaceAll("%balance%", Utils.format(playerUtils.getBankBalance(player)))));
+                    } else {
+                        player.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("error-no-permission")));
                     }
                     return true;
-                } else {
-                    player.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("error-no-permission")));
                 }
 
-                // Check if the player has permission to use the command.
+                // Check if the player has permission to check other players balance.
                 if (player.hasPermission("Peligon.Economy.Balance.Other") || player.hasPermission("Peligon.Economy.*")) {
+                    // Get the target player from the args.
                     Player target = Bukkit.getPlayer(args[0]);
                     // Check if the target player is null.
                     if (target == null) {

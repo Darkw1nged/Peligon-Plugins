@@ -2,7 +2,6 @@ package net.peligon.PeligonEconomy.commands;
 
 import net.peligon.PeligonEconomy.Main;
 import net.peligon.PeligonEconomy.libaries.Utils;
-import net.peligon.PeligonEconomy.libaries.struts.MenuOwnerUtil;
 import net.peligon.PeligonEconomy.menu.menuDaily;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -21,7 +20,7 @@ public class cmdDaily implements CommandExecutor {
             }
             Player player = (Player) sender;
             if (player.hasPermission("Peligon.Economy.Daily") || player.hasPermission("Peligon.Economy.*")) {
-                new menuDaily(new MenuOwnerUtil(player)).open();
+                new menuDaily(player).open();
             } else {
                 player.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("no-permission")));
             }

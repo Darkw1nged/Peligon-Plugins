@@ -96,8 +96,7 @@ public class PeligonEconomy implements Economy {
     @Override
     public boolean hasAccount(String playerName) {
         Player player = Bukkit.getPlayer(playerName);
-        if (player == null) return false;
-        return plugin.Economy.hasAccount(player);
+        return player != null && playerUtils.hasData(player);
     }
 
     /**
@@ -121,8 +120,7 @@ public class PeligonEconomy implements Economy {
     @Override
     public boolean hasAccount(String playerName, String worldName) {
         Player player = Bukkit.getPlayer(playerName);
-        if (player == null) return false;
-        return plugin.Economy.hasAccount(player);
+        return player != null && playerUtils.hasData(player);
     }
 
     /**
@@ -136,7 +134,7 @@ public class PeligonEconomy implements Economy {
      */
     @Override
     public boolean hasAccount(OfflinePlayer player, String worldName) {
-        return plugin.Economy.hasAccount(player);
+        return playerUtils.hasData(player);
     }
 
     /**
@@ -146,8 +144,7 @@ public class PeligonEconomy implements Economy {
     @Override
     public double getBalance(String playerName) {
         Player player = Bukkit.getPlayer(playerName);
-        if (player == null) return 0;
-        return plugin.Economy.getAccount(player);
+        return player == null ? 0 : playerUtils.getCash(player);
     }
 
     /**
@@ -158,9 +155,7 @@ public class PeligonEconomy implements Economy {
      */
     @Override
     public double getBalance(OfflinePlayer player) {
-        if (plugin.Economy.hasAccount(player)) {
-            return plugin.Economy.getAccount(player);
-        } else return 0;
+        return playerUtils.hasData(player) ? playerUtils.getCash(player) : 0;
     }
 
     /**
@@ -171,8 +166,7 @@ public class PeligonEconomy implements Economy {
     @Override
     public double getBalance(String playerName, String world) {
         Player player = Bukkit.getPlayer(playerName);
-        if (player == null) return 0;
-        return plugin.Economy.getAccount(player);
+        return player == null ? 0 : playerUtils.getCash(player);
     }
 
     /**
@@ -185,7 +179,7 @@ public class PeligonEconomy implements Economy {
      */
     @Override
     public double getBalance(OfflinePlayer player, String world) {
-        return plugin.Economy.getAccount(player);
+        return playerUtils.hasData(player) ? playerUtils.getCash(player) : 0;
     }
 
     /**
@@ -196,8 +190,7 @@ public class PeligonEconomy implements Economy {
     @Override
     public boolean has(String playerName, double amount) {
         Player player = Bukkit.getPlayer(playerName);
-        if (player == null) return false;
-        return plugin.Economy.hasEnoughCash(player, amount);
+        return player != null & playerUtils.hasEnoughCash(player, amount);
     }
 
     /**
@@ -221,8 +214,7 @@ public class PeligonEconomy implements Economy {
     @Override
     public boolean has(String playerName, String worldName, double amount) {
         Player player = Bukkit.getPlayer(playerName);
-        if (player == null) return false;
-        return plugin.Economy.hasEnoughCash(player, amount);
+        return player != null & playerUtils.hasEnoughCash(player, amount);
     }
 
     /**
@@ -236,7 +228,7 @@ public class PeligonEconomy implements Economy {
      */
     @Override
     public boolean has(OfflinePlayer player, String worldName, double amount) {
-        return plugin.Economy.hasEnoughCash(player, amount);
+        return playerUtils.hasEnoughCash(player, amount);
     }
 
     /**
@@ -247,11 +239,14 @@ public class PeligonEconomy implements Economy {
     @Override
     public EconomyResponse withdrawPlayer(String playerName, double amount) {
         Player player = Bukkit.getPlayer(playerName);
+        if (player == null)
+            return new EconomyResponse(0, 0, EconomyResponse.ResponseType.FAILURE, "Player not found");
+
         if (amount < 0)
             return new EconomyResponse(0, 0, EconomyResponse.ResponseType.FAILURE, "Cannot withdraw negative funds");
 
         if (has(player, amount)) {
-            plugin.Economy.removeAccount(player, amount);
+            playerUtils.setCash(player, playerUtils.getCash(player) - amount);
             return new EconomyResponse(amount, getBalance(player), EconomyResponse.ResponseType.SUCCESS, null);
         } else {
             return new EconomyResponse(0, getBalance(player), EconomyResponse.ResponseType.FAILURE, "Insufficient funds");
@@ -271,7 +266,7 @@ public class PeligonEconomy implements Economy {
             return new EconomyResponse(0, 0, EconomyResponse.ResponseType.FAILURE, "Cannot withdraw negative funds");
 
         if (has(player, amount)) {
-            plugin.Economy.removeAccount(player, amount);
+            playerUtils.setCash(player, playerUtils.getCash(player) - amount);
             return new EconomyResponse(amount, getBalance(player), EconomyResponse.ResponseType.SUCCESS, null);
         } else {
             return new EconomyResponse(0, getBalance(player), EconomyResponse.ResponseType.FAILURE, "Insufficient funds");
@@ -287,11 +282,14 @@ public class PeligonEconomy implements Economy {
     @Override
     public EconomyResponse withdrawPlayer(String playerName, String worldName, double amount) {
         Player player = Bukkit.getPlayer(playerName);
+        if (player == null)
+            return new EconomyResponse(0, 0, EconomyResponse.ResponseType.FAILURE, "Player not found");
+
         if (amount < 0)
             return new EconomyResponse(0, 0, EconomyResponse.ResponseType.FAILURE, "Cannot withdraw negative funds");
 
         if (has(player, amount)) {
-            plugin.Economy.removeAccount(player, amount);
+            playerUtils.setCash(player, playerUtils.getCash(player) - amount);
             return new EconomyResponse(amount, getBalance(player), EconomyResponse.ResponseType.SUCCESS, null);
         } else {
             return new EconomyResponse(0, getBalance(player), EconomyResponse.ResponseType.FAILURE, "Insufficient funds");
@@ -313,7 +311,7 @@ public class PeligonEconomy implements Economy {
             return new EconomyResponse(0, 0, EconomyResponse.ResponseType.FAILURE, "Cannot withdraw negative funds");
 
         if (has(player, amount)) {
-            plugin.Economy.removeAccount(player, amount);
+            playerUtils.setCash(player, playerUtils.getCash(player) - amount);
             return new EconomyResponse(amount, getBalance(player), EconomyResponse.ResponseType.SUCCESS, null);
         } else {
             return new EconomyResponse(0, getBalance(player), EconomyResponse.ResponseType.FAILURE, "Insufficient funds");
@@ -328,7 +326,13 @@ public class PeligonEconomy implements Economy {
     @Override
     public EconomyResponse depositPlayer(String playerName, double amount) {
         Player player = Bukkit.getPlayer(playerName);
-        plugin.Economy.addAccount(player, amount);
+        if (player == null)
+            return new EconomyResponse(0, 0, EconomyResponse.ResponseType.FAILURE, "Player not found");
+
+        if (amount < 0)
+            return new EconomyResponse(0, 0, EconomyResponse.ResponseType.FAILURE, "Cannot deposit negative funds");
+
+        playerUtils.setCash(player, playerUtils.getCash(player) + amount);
         return new EconomyResponse(amount, getBalance(player), EconomyResponse.ResponseType.SUCCESS, null);
     }
 
@@ -341,7 +345,10 @@ public class PeligonEconomy implements Economy {
      */
     @Override
     public EconomyResponse depositPlayer(OfflinePlayer player, double amount) {
-        plugin.Economy.addAccount(player, amount);
+        if (amount < 0)
+            return new EconomyResponse(0, 0, EconomyResponse.ResponseType.FAILURE, "Cannot deposit negative funds");
+
+        playerUtils.setCash(player, playerUtils.getCash(player) + amount);
         return new EconomyResponse(amount, getBalance(player), EconomyResponse.ResponseType.SUCCESS, null);
     }
 
@@ -354,7 +361,13 @@ public class PeligonEconomy implements Economy {
     @Override
     public EconomyResponse depositPlayer(String playerName, String worldName, double amount) {
         Player player = Bukkit.getPlayer(playerName);
-        plugin.Economy.addAccount(player, amount);
+        if (player == null)
+            return new EconomyResponse(0, 0, EconomyResponse.ResponseType.FAILURE, "Player not found");
+
+        if (amount < 0)
+            return new EconomyResponse(0, 0, EconomyResponse.ResponseType.FAILURE, "Cannot deposit negative funds");
+
+        playerUtils.setCash(player, playerUtils.getCash(player) + amount);
         return new EconomyResponse(amount, getBalance(player), EconomyResponse.ResponseType.SUCCESS, null);
     }
 
@@ -369,7 +382,10 @@ public class PeligonEconomy implements Economy {
      */
     @Override
     public EconomyResponse depositPlayer(OfflinePlayer player, String worldName, double amount) {
-        plugin.Economy.addAccount(player, amount);
+        if (amount < 0)
+            return new EconomyResponse(0, 0, EconomyResponse.ResponseType.FAILURE, "Cannot deposit negative funds");
+
+        playerUtils.setCash(player, playerUtils.getCash(player) + amount);
         return new EconomyResponse(amount, getBalance(player), EconomyResponse.ResponseType.SUCCESS, null);
     }
 
@@ -439,11 +455,14 @@ public class PeligonEconomy implements Economy {
     @Override
     public EconomyResponse bankWithdraw(String name, double amount) {
         Player player = Bukkit.getPlayer(name);
+        if (player == null)
+            return new EconomyResponse(0, 0, EconomyResponse.ResponseType.FAILURE, "Player not found");
+
         if (amount < 0)
             return new EconomyResponse(0, 0, EconomyResponse.ResponseType.FAILURE, "Cannot withdraw negative funds");
 
-        if(has(player, amount)) {
-            plugin.Economy.removeAccount(player, amount);
+        if(playerUtils.hasEnoughBankBalance(player, amount)) {
+            playerUtils.setBankBalance(player, playerUtils.getBankBalance(player) - amount);
             return new EconomyResponse(amount, getBalance(player), EconomyResponse.ResponseType.SUCCESS, null);
         } else {
             return new EconomyResponse(0, getBalance(player), EconomyResponse.ResponseType.FAILURE, "Insufficient funds");
@@ -460,11 +479,14 @@ public class PeligonEconomy implements Economy {
     @Override
     public EconomyResponse bankDeposit(String name, double amount) {
         Player player = Bukkit.getPlayer(name);
+        if (player == null)
+            return new EconomyResponse(0, 0, EconomyResponse.ResponseType.FAILURE, "Player not found");
+
         if (amount < 0)
             return new EconomyResponse(0, 0, EconomyResponse.ResponseType.FAILURE, "Cannot deposit negative funds");
 
-        if(has(player, amount)) {
-            plugin.Economy.addAccount(player, amount);
+        if(playerUtils.hasEnoughCash(player, amount)) {
+            playerUtils.setBankBalance(player, playerUtils.getBankBalance(player) + amount);
             return new EconomyResponse(amount, getBalance(player), EconomyResponse.ResponseType.SUCCESS, null);
         } else {
             return new EconomyResponse(0, getBalance(player), EconomyResponse.ResponseType.FAILURE, "Insufficient funds");

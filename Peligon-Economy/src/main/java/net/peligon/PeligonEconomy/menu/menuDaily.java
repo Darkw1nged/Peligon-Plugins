@@ -3,7 +3,6 @@ package net.peligon.PeligonEconomy.menu;
 import net.peligon.PeligonEconomy.Main;
 import net.peligon.PeligonEconomy.libaries.Utils;
 import net.peligon.PeligonEconomy.libaries.struts.Menu;
-import net.peligon.PeligonEconomy.libaries.struts.MenuOwnerUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -17,8 +16,8 @@ import java.util.ArrayList;
 public class menuDaily extends Menu {
 
     private final Main plugin = Main.getInstance;
-    public menuDaily(MenuOwnerUtil menuOwnerUtil) {
-        super(menuOwnerUtil);
+    public menuDaily(Player player) {
+        super(player);
     }
 
     @Override

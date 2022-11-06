@@ -6,7 +6,6 @@ import net.peligon.PeligonEconomy.libaries.storage.CustomConfig;
 import net.peligon.PeligonEconomy.listeners.*;
 import net.peligon.PeligonEconomy.managers.mgrEconomy;
 import net.peligon.PeligonEconomy.libaries.Integration.InPlaceholderAPI;
-import net.peligon.PeligonEconomy.managers.mgrSignFactory;
 import net.peligon.Plugins.commands.peligonPluginsMenuCommand;
 import net.peligon.Plugins.listeners.PeligonPluginMenuEvent;
 import org.bukkit.Bukkit;
@@ -22,6 +21,11 @@ public final class Main extends JavaPlugin {
 
     // Creating instances of customConfig files
     public CustomConfig languageFile;
+    public CustomConfig custonItemsFile = new CustomConfig(this, "customItems", true);
+
+
+
+    // TODO ------ Subject to change ------
     public CustomConfig fileWorth = new CustomConfig(this, "worth", true);
     public CustomConfig fileSigns = new CustomConfig(this, "signs", true);
     public CustomConfig filePouches = new CustomConfig(this, "pouches", true);
@@ -29,15 +33,12 @@ public final class Main extends JavaPlugin {
     public CustomConfig fileDailyReward = new CustomConfig(this, "Inventories/daily", true);
     public CustomConfig fileSellGUI = new CustomConfig(this, "Inventories/sellGUI", true);
     public CustomConfig filedailyTaskGUI = new CustomConfig(this, "Inventories/daily-tasks", true);
+    // TODO ------ Subject to change ------
 
     // Getting Economy related classes
     private VaultHook vaultHook;
     public mgrEconomy Economy;
     public PeligonEconomy peligonEconomy;
-
-    // TODO ---- SUBJECT TO REMOVE ----
-    public mgrSignFactory signFactory;
-    // TODO ---- SUBJECT TO REMOVE ----
 
     // Storage type; File, MySQL, SQLite
     public String storageType = "file";
@@ -49,6 +50,7 @@ public final class Main extends JavaPlugin {
 
         // Loading customConfig files.
         saveDefaultConfig();
+        custonItemsFile.saveDefaultConfig();
         // TODO -------- Subject to removeal --------
         fileWorth.saveDefaultConfig();
         fileSigns.saveDefaultConfig();
@@ -80,12 +82,6 @@ public final class Main extends JavaPlugin {
         }
 
         // TODO -------- Subject to removeal --------
-        if (Bukkit.getPluginManager().getPlugin("ProtocolLib") == null) {
-            getServer().getConsoleSender().sendMessage(Utils.chatColor(this.languageFile.getConfig().getString("no-protocolLib")));
-        } else {
-            signFactory = new mgrSignFactory(this);
-        }
-
         // ---- [ Calling repeating tasks ] ----
         new InterestTimer().runTaskTimerAsynchronously(this, 20 * 2, 20 * 2);
         // TODO -------- Subject to removeal --------
@@ -144,6 +140,10 @@ public final class Main extends JavaPlugin {
 
                 // Other listeners.
                 new accountSetup(),
+                new customItemsEvents(),
+
+
+                // TODO - rewrite these listeners
                 new menuListener(),
                 new bountyEvents(),
                 new redeemEvents(),
@@ -156,7 +156,7 @@ public final class Main extends JavaPlugin {
                 new sellGUIEvents(),
                 new globalInventoryEvents(),
                 new experienceBottleEvent(),
-                new bankNotesEvents(),
+                new customItemsEvents(),
                 new pouchesEvent()
         ).forEach(listener -> getServer().getPluginManager().registerEvents(listener, this));
     }
@@ -167,13 +167,17 @@ public final class Main extends JavaPlugin {
         getCommand("peligon").setExecutor(new peligonPluginsMenuCommand());
 
         // Other commands.
-        getCommand("economy").setExecutor(new cmdEconomy());
-        getCommand("pelecon").setExecutor(new cmdReload());
+        getCommand("peligoneconomy").setExecutor(new reloadCommand());
+        getCommand("economy").setExecutor(new economyCommand());
         getCommand("balance").setExecutor(new balanceCommand());
-        getCommand("atm").setExecutor(new cmdATM());
+        getCommand("withdraw").setExecutor(new withdrawCommand());
+        getCommand("bank").setExecutor(new bankCommand());
+
+        // TODO - rewrite these commands
+
         getCommand("balancetop").setExecutor(new cmdBalanceTop());
         getCommand("pay").setExecutor(new cmdPay());
-        getCommand("withdraw").setExecutor(new cmdWithdraw());
+
         getCommand("experience").setExecutor(new cmdExperience());
         getCommand("experienceBottle").setExecutor(new cmdWithdrawBottle());
         getCommand("sell").setExecutor(new cmdSell());

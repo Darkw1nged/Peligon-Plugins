@@ -2,8 +2,8 @@ package net.peligon.PeligonEconomy.menu;
 
 import net.peligon.PeligonEconomy.Main;
 import net.peligon.PeligonEconomy.libaries.Utils;
+import net.peligon.PeligonEconomy.libaries.playerUtils;
 import net.peligon.PeligonEconomy.libaries.struts.Menu;
-import net.peligon.PeligonEconomy.libaries.struts.MenuOwnerUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -21,8 +21,8 @@ import java.util.Locale;
 public class menuWithdraw extends Menu {
 
     private final Main plugin = Main.getInstance;
-    public menuWithdraw(MenuOwnerUtil menuOwnerUtil) {
-        super(menuOwnerUtil);
+    public menuWithdraw(Player player) {
+        super(player);
     }
 
     @Override
@@ -47,43 +47,43 @@ public class menuWithdraw extends Menu {
                     double amount;
                     switch (plugin.fileATM.getConfig().getString("withdraw-inventory.contents." + key + ".event").toLowerCase()) {
                         case "withdrawall":
-                            amount = plugin.Economy.getBank(player);
+                            amount = playerUtils.getBankBalance(player);
                             if (amount <= 0) event.setCancelled(true);
 
-                            plugin.Economy.addAccount(player, amount);
-                            plugin.Economy.removeBankAccount(player, amount);
+                            playerUtils.setCash(player, playerUtils.getCash(player) + amount);
+                            playerUtils.setBankBalance(player, 0);
                             player.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("prefix") + plugin.languageFile.getConfig().getString("withdrawn-money"), amount));
 
                             Utils.addTransaction(player, Utils.chatColor(plugin.fileATM.getConfig().getString("Options.transaction-remove"), amount)
                                     .replaceAll("%player%", player.getName()));
 
-                            player.openInventory(new menuATM(new MenuOwnerUtil(player)).getInventory());
+                            new menuATM(player).open();
                             return;
                         case "withdrawhalf":
-                            amount = (plugin.Economy.getBank(player) * (50 / 100.0f));
+                            amount = (playerUtils.getBankBalance(player) * (50 / 100.0f));
                             if (amount <= 0) event.setCancelled(true);
 
-                            plugin.Economy.addAccount(player, amount);
-                            plugin.Economy.removeBankAccount(player, amount);
+                            playerUtils.setCash(player, playerUtils.getCash(player) + amount);
+                            playerUtils.setBankBalance(player, playerUtils.getBankBalance(player) - amount);
                             player.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("prefix") + plugin.languageFile.getConfig().getString("withdrawn-money"), amount));
 
                             Utils.addTransaction(player, Utils.chatColor(plugin.fileATM.getConfig().getString("Options.transaction-remove"), amount)
                                     .replaceAll("%player%", player.getName()));
 
-                            player.openInventory(new menuATM(new MenuOwnerUtil(player)).getInventory());
+                            new menuATM(player).open();
                             return;
                         case "withdraw20":
-                            amount = (plugin.Economy.getBank(player) * (20 / 100.0f));
+                            amount = (playerUtils.getBankBalance(player) * (20 / 100.0f));
                             if (amount <= 0) event.setCancelled(true);
 
-                            plugin.Economy.addAccount(player, amount);
-                            plugin.Economy.removeBankAccount(player, amount);
+                            playerUtils.setCash(player, playerUtils.getCash(player) + amount);
+                            playerUtils.setBankBalance(player, playerUtils.getBankBalance(player) - amount);
                             player.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("prefix") + plugin.languageFile.getConfig().getString("withdrawn-money"), amount));
 
                             Utils.addTransaction(player, Utils.chatColor(plugin.fileATM.getConfig().getString("Options.transaction-remove"), amount)
                                     .replaceAll("%player%", player.getName()));
 
-                            player.openInventory(new menuATM(new MenuOwnerUtil(player)).getInventory());
+                            new menuATM(player).open();
                             return;
                         case "withdrawspecific":
                             if (Bukkit.getPluginManager().getPlugin("ProtocolLib") == null) return;
@@ -92,11 +92,11 @@ public class menuWithdraw extends Menu {
                             lines.add("^^^^^^^^^^^^^^^");
                             lines.add("Enter the amount");
                             lines.add("to withdraw");
-                            Utils.openSign(player, 0, "withdraw", lines);
+//                            Utils.openSign(player, 0, "withdraw", lines);
                             event.setCancelled(true);
                             return;
                         case "goback":
-                            player.openInventory(new menuATM(new MenuOwnerUtil(player)).getInventory());
+                            new menuATM(player).open();
                             return;
                     }
                 } else {
@@ -109,7 +109,7 @@ public class menuWithdraw extends Menu {
 
     @Override
     public void setMenuItems() {
-        Player player = menuOwnerUtil.getOwner();
+        Player player = owner;
 
         for (String key : plugin.fileATM.getConfig().getConfigurationSection("withdraw-inventory.contents").getKeys(false)) {
             ItemStack item = new ItemStack(Material.getMaterial(plugin.fileATM.getConfig().getString("withdraw-inventory.contents." + key + ".item").toUpperCase()));
@@ -123,8 +123,8 @@ public class menuWithdraw extends Menu {
                 ArrayList<String> lore = new ArrayList<>();
                 for (String line : plugin.fileATM.getConfig().getStringList("withdraw-inventory.contents." + key + ".lore")) {
                     lore.add(Utils.chatColor(line)
-                            .replaceAll("%cash%", formatted(plugin.Economy.getAccount(player)))
-                            .replaceAll("%bank%", formatted(plugin.Economy.getBank(player))));
+                            .replaceAll("%cash%", Utils.format(playerUtils.getCash(player)))
+                            .replaceAll("%bank%", Utils.format(playerUtils.getBankBalance(player))));
                 }
                 meta.setLore(lore);
             }
@@ -152,11 +152,6 @@ public class menuWithdraw extends Menu {
                 inventory.setItem(plugin.fileATM.getConfig().getInt("withdraw-inventory.contents." + key + ".slot") - 1, item);
             }
         }
-    }
-
-    private String formatted(double amount) {
-        NumberFormat nf = NumberFormat.getInstance(new Locale("en", "US"));
-        return nf.format(amount);
     }
 
 }

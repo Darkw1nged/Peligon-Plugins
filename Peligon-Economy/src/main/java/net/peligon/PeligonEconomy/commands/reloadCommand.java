@@ -1,28 +1,28 @@
-package net.peligon.Playtime.commands;
+package net.peligon.PeligonEconomy.commands;
 
-import net.peligon.Playtime.Main;
-import net.peligon.Playtime.libaries.Utils;
+import net.peligon.PeligonEconomy.Main;
+import net.peligon.PeligonEconomy.libaries.Utils;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
 public class reloadCommand implements CommandExecutor {
 
-    // Creating an instance of the main class
     private final Main plugin = Main.getInstance;
 
-    public boolean onCommand(CommandSender sender, Command cmd, String string, String[] args) {
-        if (cmd.getName().equalsIgnoreCase("peligonplaytime")) {
-            // Check if sender has permission to use the command.
-            if (sender.hasPermission("Peligon.Playtime.Reload") || sender.hasPermission("Peligon.Playtime.*")) {
+    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+        if (cmd.getName().equalsIgnoreCase("peligoneconomy")) {
+            if (sender.hasPermission("Peligon.Economy.Admin") || sender.hasPermission("Peligon.Economy.*")) {
 
                 plugin.reloadConfig();
                 plugin.languageFile.reloadConfig();
+                plugin.custonItemsFile.reloadConfig();
 
                 sender.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("admin-reload")));
             } else {
                 sender.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("error-no-permission")));
             }
+
         }
         return false;
     }

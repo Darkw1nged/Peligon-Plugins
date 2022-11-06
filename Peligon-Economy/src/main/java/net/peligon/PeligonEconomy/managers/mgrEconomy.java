@@ -1,12 +1,9 @@
 package net.peligon.PeligonEconomy.managers;
 
 import net.peligon.PeligonEconomy.Main;
-import net.peligon.PeligonEconomy.libaries.storage.SQLibrary;
 import net.peligon.PeligonEconomy.libaries.storage.SQLiteLibrary;
 import net.peligon.PeligonEconomy.libaries.systemUtils;
-import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.entity.Player;
 
 import java.sql.*;
 import java.util.*;
@@ -14,8 +11,6 @@ import java.util.*;
 public class mgrEconomy {
 
     private final Main plugin = Main.getInstance;
-    private Map<UUID, Double> cash = new HashMap<>();
-    private Map<UUID, Double> bank = new HashMap<>();
 
     public static mgrEconomy getInstance;
 
@@ -52,125 +47,6 @@ public class mgrEconomy {
             }
         }
         return false;
-    }
-
-    /**
-     * Creates an account for the user if they do not already have one.
-     *
-     * @param player  of the player
-     * @param balance Amount to open account with
-     */
-    public void createAccount(OfflinePlayer player, double balance) {
-        if (hasAccount(player)) return;
-        if (balance < 0) return;
-        if (plugin.storageType.equalsIgnoreCase("sqlite")) {
-            String uuid = String.valueOf(player.getUniqueId());
-            String query = "INSERT INTO peligonEconomy values('" + uuid + "', " + balance + ", 0.0);";
-            try {
-                Statement statement = SQLiteLibrary.connection.createStatement();
-                statement.execute(query);
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
-        } else if (plugin.storageType.equalsIgnoreCase("mysql")) {
-            String uuid = String.valueOf(player.getUniqueId());
-            String query = "INSERT INTO peligonEconomy values('" + uuid + "', " + balance + ", 0.0);";
-            try {
-                Statement statement = systemUtils.getSQLibrary().getConnection().createStatement();
-                statement.execute(query);
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
-        }
-    }
-
-    /**
-     * Creates an account for the user if they do not already have one.
-     *
-     * @param player  of the player
-     * @param balance Amount to open account with
-     * @param bank    Amount to open bank account with
-     */
-    public void createAccount(OfflinePlayer player, double balance, double bank) {
-        if (hasAccount(player)) return;
-        if (balance < 0 || bank < 0) return;
-        if (plugin.storageType.equalsIgnoreCase("sqlite")) {
-            String uuid = String.valueOf(player.getUniqueId());
-            String query = "INSERT INTO peligonEconomy values('" + uuid + "'," + balance + "," + bank + ");";
-            try {
-                Statement statement = SQLiteLibrary.connection.createStatement();
-                statement.execute(query);
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
-        } else if (plugin.storageType.equalsIgnoreCase("mysql")) {
-            String uuid = String.valueOf(player.getUniqueId());
-            String query = "INSERT INTO peligonEconomy values('" + uuid + "'," + balance + "," + bank + ");";
-            try {
-                Statement statement = systemUtils.getSQLibrary().getConnection().createStatement();
-                statement.execute(query);
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
-        }
-    }
-
-    /**
-     * Set a players balance - DO NOT USE NEGATIVE AMOUNTS
-     *
-     * @param player of the player
-     * @param amount Amount to set
-     */
-    public void setAccount(OfflinePlayer player, double amount) {
-        if (amount < 0) return;
-        if (plugin.storageType.equalsIgnoreCase("sqlite")) {
-            String uuid = String.valueOf(player.getUniqueId());
-            String query = "UPDATE peligonEconomy SET cash=" + amount + " WHERE uuid='" + uuid + "';";
-            try {
-                Statement statement = SQLiteLibrary.connection.createStatement();
-                statement.execute(query);
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
-        } else if (plugin.storageType.equalsIgnoreCase("mysql")) {
-            String uuid = String.valueOf(player.getUniqueId());
-            String query = "UPDATE peligonEconomy SET cash=" + amount + " WHERE uuid='" + uuid + "';";
-            try {
-                Statement statement = systemUtils.getSQLibrary().getConnection().createStatement();
-                statement.execute(query);
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
-        }
-    }
-
-    /**
-     * Set a players balance - DO NOT USE NEGATIVE AMOUNTS
-     *
-     * @param player of the player
-     * @param amount Amount to set
-     */
-    public void setBankAccount(OfflinePlayer player, double amount) {
-        if (amount < 0) return;
-        if (plugin.storageType.equalsIgnoreCase("sqlite")) {
-            String uuid = String.valueOf(player.getUniqueId());
-            String query = "UPDATE peligonEconomy SET bank=" + amount + " WHERE uuid='" + uuid + "';";
-            try {
-                Statement statement = SQLiteLibrary.connection.createStatement();
-                statement.execute(query);
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
-        } else if (plugin.storageType.equalsIgnoreCase("mysql")) {
-            String uuid = String.valueOf(player.getUniqueId());
-            String query = "UPDATE peligonEconomy SET bank=" + amount + " WHERE uuid='" + uuid + "';";
-            try {
-                Statement statement = systemUtils.getSQLibrary().getConnection().createStatement();
-                statement.execute(query);
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
-        }
     }
 
     /**
@@ -558,46 +434,6 @@ public class mgrEconomy {
             }
         }
         return 0.0;
-    }
-
-    /**
-     * Gets all players cash from the database in descending order
-     *
-     * @return List of cash going from lowest to largest
-     */
-    public HashMap<UUID, Double> getCashLeaderboard() {
-        if (plugin.storageType.equalsIgnoreCase("sqlite")) {
-            String query = "SELECT uuid, cash FROM peligonEconomy ORDER BY cash DESC;";
-            try {
-                PreparedStatement statement = SQLiteLibrary.connection.prepareStatement(query);
-                ResultSet rs = statement.executeQuery();
-                HashMap<UUID, Double> leaderboard = new HashMap<>();
-
-                while (rs.next()) {
-                    leaderboard.put(UUID.fromString(rs.getString("uuid")), rs.getDouble("cash"));
-                }
-                rs.close();
-                return leaderboard;
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
-        } else if (plugin.storageType.equalsIgnoreCase("mysql")) {
-            String query = "SELECT uuid, cash FROM peligonEconomy ORDER BY cash DESC;";
-            try {
-                PreparedStatement statement = systemUtils.getSQLibrary().getConnection().prepareStatement(query);
-                ResultSet rs = statement.executeQuery();
-                HashMap<UUID, Double> leaderboard = new HashMap<>();
-
-                while (rs.next()) {
-                    leaderboard.put(UUID.fromString(rs.getString("uuid")), rs.getDouble("cash"));
-                }
-                rs.close();
-                return leaderboard;
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
-        }
-        return new HashMap<>();
     }
 
     /**

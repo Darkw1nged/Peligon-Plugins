@@ -67,6 +67,9 @@ TODO -   -> MySQL
 TODO - -> Add support for vault.
 TODO - -> Commands:
 TODO -   -> /balance (player*Optional)-> [bal | money | coins] (Peligon.Economy.Balance : Peligon.Economy.Balance.Other)
+TODO -   -> /economy [add|remove|set|reset] (bank*Optional) [player] [amount] -> [eco] (Peligon.Economy.Admin)
+TODO -   -> /peligoneconomy -> [peleconomy | pelecon] (Peligon.Economy.Admin)
+TODO -   -> /withdraw [amount] -> (Peligon.Economy.Withdraw)
 
 ---- { In Progress } ----
 
@@ -77,15 +80,11 @@ TODO - -> Commands:
 TODO -   -> /giveitem [player] [item] (amount): Permission (Peligon.Economy.GiveItem)
 TODO -   -> /balancetop -> [baltop | moneytop] (Peligon.Economy.BalanceTop)\
 TODO -   -> /pay [player] [amount] -> (Peligon.Economy.Pay)
-TODO -   -> /economy [add|remove|set|reset] [player] [amount] -> [eco] (Peligon.Economy.Admin)
-TODO -   -> /economy [list] -> [eco] (Peligon.Economy.Admin)
-TODO -   -> /economy [create|delete] [currency] -> [eco] (Peligon.Economy.Admin)
 TODO -   -> /daily -> (Peligon.Economy.Daily)
 TODO -   -> /sell (hand*Optional) -> (Peligon.Economy.Sell)
 TODO -   -> /sellhand -> (Peligon.Economy.Sell)
 TODO -   -> /sellall -> (Peligon.Economy.Sell)
 TODO -   -> /sellchest -> (Peligon.Economy.Sell)
-TODO -   -> /withdraw [amount] -> (Peligon.Economy.Withdraw)
 TODO -   -> /experienceBottle -> [xpbottle | expbottle | bottle] (Peligon.Economy.Bottle)
 TODO -   -> /autosell -> (Peligon.Economy.AutoSell)
 TODO -   -> /bounties -> (Peligon.Economy.Bounties)

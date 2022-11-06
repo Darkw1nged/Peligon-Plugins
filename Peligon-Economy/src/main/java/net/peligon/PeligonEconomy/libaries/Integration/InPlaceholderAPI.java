@@ -11,11 +11,6 @@ public class InPlaceholderAPI extends PlaceholderExpansion {
     // Getting the instance of the main class.
     private final Main plugin = Main.getInstance;
 
-    public static InPlaceholderAPI getInstance;
-    public InPlaceholderAPI() {
-        getInstance = this;
-    }
-
     /**
      * The placeholder identifier of this expansion. May not contain {@literal %},
      * {@literal {}} or _
@@ -24,7 +19,7 @@ public class InPlaceholderAPI extends PlaceholderExpansion {
      */
     @Override
     public @NotNull String getIdentifier() {
-        return "Peligon";
+        return "peligon";
     }
 
     /**

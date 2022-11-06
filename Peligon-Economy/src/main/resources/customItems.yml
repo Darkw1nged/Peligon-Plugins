@@ -1,0 +1,15 @@
+# Placeholder Key -------------
+# %amount% - Shows how much the item holds.
+# %transaction% - Not required. Generates a random ID.
+# %player% - Gets the players name.
+# %display_player% - Gets the players display name. e.g "[DEVELOPER] Peligon"
+# -----------------------------
+money-note:
+  item: PAPER
+  name: "&2Bank Note"
+  lore:
+    - "&7(Right-Click) to redeem this &abanknote&7."
+    - "&7Withdrawn by &e%player%&7."
+    - ""
+    - "&7Value: &a$%amount%"
+    - "&7Transaction ID: &f%transaction%"

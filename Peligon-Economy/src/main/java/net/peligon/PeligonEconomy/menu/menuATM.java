@@ -2,8 +2,8 @@ package net.peligon.PeligonEconomy.menu;
 
 import net.peligon.PeligonEconomy.Main;
 import net.peligon.PeligonEconomy.libaries.Utils;
+import net.peligon.PeligonEconomy.libaries.playerUtils;
 import net.peligon.PeligonEconomy.libaries.struts.Menu;
-import net.peligon.PeligonEconomy.libaries.struts.MenuOwnerUtil;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -12,15 +12,14 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.text.NumberFormat;
 import java.time.LocalDateTime;
 import java.util.*;
 
 public class menuATM extends Menu {
 
     private final Main plugin = Main.getInstance;
-    public menuATM(MenuOwnerUtil menuOwnerUtil) {
-        super(menuOwnerUtil);
+    public menuATM(Player player) {
+        super(player);
     }
 
     @Override
@@ -44,10 +43,10 @@ public class menuATM extends Menu {
                 if (plugin.fileATM.getConfig().contains("atm-inventory.contents." + key + ".event")) {
                     switch (plugin.fileATM.getConfig().getString("atm-inventory.contents." + key + ".event").toLowerCase()) {
                         case "deposit":
-                            new menuDeposit(new MenuOwnerUtil(player)).open();
+                            new menuDeposit(player).open();
                             return;
                         case "withdraw":
-                            new menuWithdraw(new MenuOwnerUtil(player)).open();
+                            new menuWithdraw(player).open();
                             return;
                         case "close":
                             player.closeInventory();
@@ -67,7 +66,7 @@ public class menuATM extends Menu {
 
     @Override
     public void setMenuItems() {
-        Player player = menuOwnerUtil.getOwner();
+        Player player = owner;
 
         for (String key : plugin.fileATM.getConfig().getConfigurationSection("atm-inventory.contents").getKeys(false)) {
             ItemStack item = new ItemStack(Material.getMaterial(plugin.fileATM.getConfig().getString("atm-inventory.contents." + key + ".item").toUpperCase()));
@@ -91,8 +90,8 @@ public class menuATM extends Menu {
                         for (String line : plugin.fileATM.getConfig().getStringList("atm-inventory.contents." + key + ".lore")) {
                             if (line.contains("%transactions%")) continue;
                             lore.add(Utils.chatColor(line)
-                                    .replaceAll("%cash%", formatted(plugin.Economy.getAccount(player)))
-                                    .replaceAll("%bank%", formatted(plugin.Economy.getBank(player)))
+                                    .replaceAll("%cash%", Utils.format(playerUtils.getCash(player)))
+                                    .replaceAll("%bank%", Utils.format(playerUtils.getBankBalance(player)))
                                     .replaceAll("%bank_limit%", limit));
 
                         }
@@ -105,8 +104,8 @@ public class menuATM extends Menu {
                     } else {
                         for (String line : plugin.fileATM.getConfig().getStringList("atm-inventory.contents." + key + ".lore")) {
                             lore.add(Utils.chatColor(line)
-                                    .replaceAll("%cash%", formatted(plugin.Economy.getAccount(player)))
-                                    .replaceAll("%bank%", formatted(plugin.Economy.getBank(player)))
+                                    .replaceAll("%cash%", Utils.format(playerUtils.getCash(player)))
+                                    .replaceAll("%bank%", Utils.format(playerUtils.getBankBalance(player)))
                                     .replaceAll("%bank_limit%", limit)
                                     .replaceAll("%transactions%", Utils.chatColor(plugin.languageFile.getConfig().getString("no-transactions")))
                                     .replaceAll("%interest%", "" + plugin.fileATM.getConfig().getInt("Options.interest.percentage"))
@@ -119,8 +118,8 @@ public class menuATM extends Menu {
                 } else {
                     for (String line : plugin.fileATM.getConfig().getStringList("atm-inventory.contents." + key + ".lore")) {
                         lore.add(Utils.chatColor(line)
-                                .replaceAll("%cash%", formatted(plugin.Economy.getAccount(player)))
-                                .replaceAll("%bank%", formatted(plugin.Economy.getBank(player)))
+                                .replaceAll("%cash%", Utils.format(playerUtils.getCash(player)))
+                                .replaceAll("%bank%", Utils.format(playerUtils.getBankBalance(player)))
                                 .replaceAll("%bank_limit%", limit)
                                 .replaceAll("%interest%", "" + plugin.fileATM.getConfig().getInt("Options.interest.percentage"))
                                 .replaceAll("%interest_cash%", Utils.formatAmount(plugin.fileATM.getConfig().getInt("Options.interest.cash")))
@@ -155,11 +154,6 @@ public class menuATM extends Menu {
                 inventory.setItem(plugin.fileATM.getConfig().getInt("atm-inventory.contents." + key + ".slot") - 1, item);
             }
         }
-    }
-
-    private String formatted(double amount) {
-        NumberFormat nf = NumberFormat.getInstance(new Locale("en", "US"));
-        return nf.format(amount);
     }
 
     private String getBracket(double n, int iteration) {

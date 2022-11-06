@@ -43,11 +43,11 @@ public class cmdPay implements CommandExecutor {
                 try {
                     amount = Double.parseDouble(args[1]);
                 } catch (Exception e) {
-                    player.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("invalid-amount")));
+                    player.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("error-invalid-amount")));
                     return true;
                 }
                 if (amount < 0) {
-                    sender.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("invalid-amount")));
+                    sender.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("error-invalid-amount")));
                     return true;
                 }
 

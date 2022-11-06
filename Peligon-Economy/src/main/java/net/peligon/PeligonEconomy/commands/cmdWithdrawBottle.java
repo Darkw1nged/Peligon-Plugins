@@ -39,11 +39,11 @@ public class cmdWithdrawBottle implements CommandExecutor {
                 try {
                     amount = Integer.parseInt(args[0]);
                 } catch (Exception e) {
-                    player.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("invalid-amount")));
+                    player.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("error-invalid-amount")));
                     return true;
                 }
                 if (amount < 0) {
-                    sender.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("invalid-amount")));
+                    sender.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("error-invalid-amount")));
                     return true;
                 }
 

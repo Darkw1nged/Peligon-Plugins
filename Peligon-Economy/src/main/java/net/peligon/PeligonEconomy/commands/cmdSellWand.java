@@ -30,7 +30,7 @@ public class cmdSellWand implements CommandExecutor {
                 try {
                     amount = Integer.parseInt(args[0]);
                 } catch (Exception e) {
-                    sender.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("invalid-amount")));
+                    sender.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("error-invalid-amount")));
                     return true;
                 }
 
