@@ -14,6 +14,7 @@ success-deposit: "&fSuccessfully deposited &2$%amount%&f into your account."
 success-withdraw: "&fSuccessfully withdrew &2$%amount%&f from your account."
 failed-withdraw: "&cFailed to withdraw &2$%amount%&c from your account."
 money-note-claimed: "&fSuccessfully claimed &2$%amount%&f from a bank note."
+experience-bottle-claimed: "&fSuccessfully claimed &6%amount%&f experience from an experience bottle."
 
 admin-reload: "&ePeligon >> &fSuccessfully reloaded the configuration files."
 
@@ -28,6 +29,7 @@ error-not-enough-money: "&cError! You do not have enough money."
 usage-economy: "&cIncorrect Command Usage: &f/economy [add|remove|set|reset] (bank?) [player] [amount]"
 usage-balance: "&cIncorrect Command Usage: &f/balance (bank?) (player)"
 uasge-withdraw: "&cIncorrect Command Usage: &f/withdraw [amount]"
+usage-withdraw-experience: "&cIncorrect Command Usage: &f/bottle [amount]"
 
 
 
@@ -66,10 +68,8 @@ no-items: "&cError! No items could be found."
 no-item-in-hand: "&cError! You must be holding an item in your hand."
 daily-already-claimed: "&cError! You have already claimed your daily reward."
 
-economy-usage: "&cIncorrect Command Usage: &f/economy [add|remove|set|reset] [cash|bank] [player] [amount]"
 bounty-usage: "&cIncorrect Command Usage: &f/bounty [set|view] [player] [amount]"
 pay-usage: "&cIncorrect Command Usage: &f/pay [player] [amount]"
-withdraw-usage: "&cIncorrect Command Usage: &f/withdraw [amount]"
 sellwand-usage: "&cIncorrect Command Usage: &f/sellwand [uses] [player]"
 experience-bottle-usage: "&cIncorrect Command Usage: &f/bottle [amount]"
 pouches-usage: "&cIncorrect Command Usage: &f/pouches give [player] [money|exp] [name] [amount]"

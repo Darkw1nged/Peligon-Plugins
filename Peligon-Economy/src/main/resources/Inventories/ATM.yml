@@ -1,17 +1,3 @@
-Options:
-  # How much money the bank can hold.
-  # !! -1 means that there is no limit
-  bank-limit: -1
-  transaction-add: "&a+ &6$%amount%&7, &e%time% ago &7by &e%player%"
-  transaction-remove: "&c- &6$%amount%&7, &e%time% ago &7by &e%player%"
-  interest:
-    percentage: 2
-    # The maximum amount of money the interest will affect
-    cash: 1000000
-    # Time before the interest applies
-    # !! Days - d | Hours - h | Minutes - m | Seconds - s
-    time: "24h"
-
 atm-inventory:
   title: "&7Bank Account"
   # !! Must be multiples of 9 | Maximum is 54

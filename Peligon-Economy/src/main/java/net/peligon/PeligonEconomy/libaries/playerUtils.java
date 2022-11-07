@@ -4,6 +4,7 @@ import net.peligon.PeligonEconomy.Main;
 import net.peligon.PeligonEconomy.libaries.storage.CustomConfig;
 import net.peligon.PeligonEconomy.libaries.storage.SQLiteLibrary;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Player;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,13 +21,15 @@ public class playerUtils {
         if (hasData(player)) return;
 
         // Setting up the query for SQL
-        String SQLQuery = "INSERT INTO peligonEconomy values('" + player.getUniqueId() + "'," + 0 + ", " + System.currentTimeMillis() + ", 0, 0);";
+        String SQLQuery = "INSERT INTO peligonEconomy values('" + player.getUniqueId() + "',"
+                + plugin.getConfig().getDouble("Accounts.new-accounts.starting-cash-balance", 100.0) + ", "
+                + plugin.getConfig().getDouble("Accounts.new-accounts.starting-bank-balance", 0.0) + ");";
 
         switch (plugin.storageType) {
             case "file":
                 CustomConfig record = new CustomConfig(plugin, "data/" + player.getUniqueId(), false);
-                record.getConfig().set("cash", plugin.getConfig().getDouble("Account-Setup.cash-balance"));
-                record.getConfig().set("bankBalance", plugin.getConfig().getDouble("Account-Setup.bank-balance"));
+                record.getConfig().set("cash", plugin.getConfig().getDouble("Accounts.new-accounts.starting-cash-balance", 100.0));
+                record.getConfig().set("bankBalance", plugin.getConfig().getDouble("Accounts.new-accounts.starting-bank-balance", 0.0));
                 record.saveConfig();
                 break;
             case "mysql":
@@ -209,6 +212,73 @@ public class playerUtils {
     // Check if player has enough bank balance
     public static boolean hasEnoughBankBalance(OfflinePlayer player, double amount) {
         return getBankBalance(player) >= amount;
+    }
+
+    // Get the amount of experience a player needs to level up.
+    public static int getExpToLevelUp(int level) {
+        if (level <= 15) {
+            return 2 * level + 7;
+        } else if (level <= 30) {
+            return 5 * level - 38;
+        } else {
+            return 9 * level - 158;
+        }
+    }
+
+    // Get the amount of experience at a certain level.
+    public static int getExpAtLevel(int level) {
+        if (level <= 16) {
+            return (int) (Math.pow(level, 2) + 6 * level);
+        } else if (level <= 31) {
+            return (int) (2.5 * Math.pow(level, 2) - 40.5 * level + 360.0);
+        } else {
+            return (int) (4.5 * Math.pow(level, 2) - 162.5 * level + 2220.0);
+        }
+    }
+
+    // Get the amount of experience a player has.
+    public static int getPlayerExp(Player player) {
+        int exp = 0;
+        int level = player.getLevel();
+
+        exp += getExpAtLevel(level);
+
+        exp += Math.round(getExpToLevelUp(level) * player.getExp());
+
+        return exp;
+    }
+
+    // Remove experience from a player.
+    public static void removePlayerExp(Player player, int exp) {
+        // Get player's current exp
+        int currentExp = getPlayerExp(player);
+
+        // Reset player's current exp to 0
+        player.setExp(0);
+        player.setLevel(0);
+
+        // Give the player their exp back, with the difference
+        int newExp = currentExp - exp;
+        player.giveExp(newExp);
+    }
+
+    // Add experience to a player.
+    public static void addPlayerExp(Player player, int exp) {
+        // Get player's current exp
+        int currentExp = getPlayerExp(player);
+
+        // Reset player's current exp to 0
+        player.setExp(0);
+        player.setLevel(0);
+
+        // Give the player their exp back, with the difference
+        int newExp = currentExp + exp;
+        player.giveExp(newExp);
+    }
+
+    // Check if player has enough experience
+    public static boolean hasEnoughExp(Player player, int exp) {
+        return getPlayerExp(player) >= exp;
     }
 
 }

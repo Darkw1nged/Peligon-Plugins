@@ -141,10 +141,10 @@ public final class Main extends JavaPlugin {
                 // Other listeners.
                 new accountSetup(),
                 new customItemsEvents(),
+                new menuListener(),
 
 
                 // TODO - rewrite these listeners
-                new menuListener(),
                 new bountyEvents(),
                 new redeemEvents(),
                 new signEvents(),
@@ -155,7 +155,6 @@ public final class Main extends JavaPlugin {
                 new luckyBlockEvents(),
                 new sellGUIEvents(),
                 new globalInventoryEvents(),
-                new experienceBottleEvent(),
                 new customItemsEvents(),
                 new pouchesEvent()
         ).forEach(listener -> getServer().getPluginManager().registerEvents(listener, this));
@@ -171,15 +170,15 @@ public final class Main extends JavaPlugin {
         getCommand("economy").setExecutor(new economyCommand());
         getCommand("balance").setExecutor(new balanceCommand());
         getCommand("withdraw").setExecutor(new withdrawCommand());
+        getCommand("expbottle").setExecutor(new experienceBottleCommand());
         getCommand("bank").setExecutor(new bankCommand());
 
         // TODO - rewrite these commands
-
         getCommand("balancetop").setExecutor(new cmdBalanceTop());
         getCommand("pay").setExecutor(new cmdPay());
 
         getCommand("experience").setExecutor(new cmdExperience());
-        getCommand("experienceBottle").setExecutor(new cmdWithdrawBottle());
+
         getCommand("sell").setExecutor(new cmdSell());
         getCommand("sellhand").setExecutor(new cmdSellHand());
         getCommand("autosell").setExecutor(new cmdSellAuto());

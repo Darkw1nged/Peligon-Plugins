@@ -119,6 +119,7 @@ public class withdrawCommand implements CommandExecutor {
         return false;
     }
 
+    // Generate a random transaction ID.
     private String getTransactionID() {
         return UUID.randomUUID().toString().split("-")[0] + "-" + UUID.randomUUID().toString().split("-")[3];
     }

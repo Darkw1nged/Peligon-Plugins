@@ -53,4 +53,34 @@ public class customItemsEvents implements Listener {
         player.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("prefix") +
                 plugin.languageFile.getConfig().getString("money-note-claimed"), amount));
     }
+
+    @EventHandler
+    public void experienceBottleClaimed(PlayerInteractEvent event) {
+        Player player = event.getPlayer();
+        ItemStack itemInMainHand = player.getInventory().getItemInMainHand();
+
+        // Check if the player is right-clicking with the item in their main hand.
+        if (event.getHand() != null && event.getHand().equals(EquipmentSlot.OFF_HAND)) return;
+
+        // Check if itemInMainHand equals air. If so return.
+        if (itemInMainHand.getType().equals(Material.AIR)) return;
+
+        // Return if itemInMainHand does not have PersistentDataContainer
+        if (!itemInMainHand.hasItemMeta() || !itemInMainHand.getItemMeta().getPersistentDataContainer().has(new NamespacedKey(plugin, "experience-bottle"), PersistentDataType.STRING)) return;
+
+        // Checking if item contains amount in PersistentDataContainer
+        if (!itemInMainHand.getItemMeta().getPersistentDataContainer().has(new NamespacedKey(plugin, "amount"), PersistentDataType.INTEGER)) return;
+
+        // Getting the amount of money from the item.
+        int amount = itemInMainHand.getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "amount"), PersistentDataType.INTEGER);
+
+        // Adding the money to the player's bank account.
+        player.giveExp(amount);
+
+        // Remove 1 from the item amount
+        itemInMainHand.setAmount(itemInMainHand.getAmount() - 1);
+        // Send the player a confirmation message.
+        player.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("prefix") +
+                plugin.languageFile.getConfig().getString("experience-bottle-claimed").replaceAll("%amount%", Utils.format(amount))));
+    }
 }

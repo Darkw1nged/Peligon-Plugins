@@ -1,8 +1,6 @@
 package net.peligon.PeligonEconomy.libaries;
 
 import net.peligon.PeligonEconomy.Main;
-import net.peligon.PeligonEconomy.managers.mgrSignFactory;
-import net.peligon.PeligonEconomy.menu.menuATM;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -49,7 +47,7 @@ public class Utils {
 
     // Get abbreviation from a string and convert it to a double
     public static Double getAbbreviation(String s) {
-        double amount = 0;
+        double amount;
         if (s.toLowerCase().endsWith("k")) {
             amount = Double.parseDouble(s.substring(0, s.length() - 1)) * 1000;
         } else if (s.toLowerCase().endsWith("m")) {
@@ -60,6 +58,21 @@ public class Utils {
             amount = Double.parseDouble(s.substring(0, s.length() - 1)) * 1000000000000.0;
         } else {
             amount = Double.parseDouble(s);
+        }
+        return amount;
+    }
+
+    // Get abbreviation from a string and convert it to an int
+    public static Integer getAbbreviationInt(String s) {
+        int amount = 0;
+        if (s.toLowerCase().endsWith("k")) {
+            amount = Integer.parseInt(s.substring(0, s.length() - 1)) * 1000;
+        } else if (s.toLowerCase().endsWith("m")) {
+            amount = Integer.parseInt(s.substring(0, s.length() - 1)) * 1000000;
+        } else if (s.toLowerCase().endsWith("b")) {
+            amount = Integer.parseInt(s.substring(0, s.length() - 1)) * 1000000000;
+        } else {
+            amount = Integer.parseInt(s);
         }
         return amount;
     }
@@ -374,63 +387,6 @@ public class Utils {
 
     public static int InterestTimer = 0;
 
-    public static int getExpToLevelUp(int level){
-        if(level <= 15){
-            return 2 * level + 7;
-        } else if(level <= 30){
-            return 5 * level - 38;
-        } else {
-            return 9 * level - 158;
-        }
-    }
-
-    public static int getExpAtLevel(int level){
-        if(level <= 16){
-            return (int) (Math.pow(level,2) + 6*level);
-        } else if(level <= 31){
-            return (int) (2.5*Math.pow(level,2) - 40.5*level + 360.0);
-        } else {
-            return (int) (4.5*Math.pow(level,2) - 162.5*level + 2220.0);
-        }
-    }
-
-    public static int getPlayerExp(Player player){
-        int exp = 0;
-        int level = player.getLevel();
-
-        exp += getExpAtLevel(level);
-
-        exp += Math.round(getExpToLevelUp(level) * player.getExp());
-
-        return exp;
-    }
-
-    public static void removePlayerExp(Player player, int exp){
-        // Get player's current exp
-        int currentExp = getPlayerExp(player);
-
-        // Reset player's current exp to 0
-        player.setExp(0);
-        player.setLevel(0);
-
-        // Give the player their exp back, with the difference
-        int newExp = currentExp - exp;
-        player.giveExp(newExp);
-    }
-
-    public static void addPlayerExp(Player player, int exp){
-        // Get player's current exp
-        int currentExp = getPlayerExp(player);
-
-        // Reset player's current exp to 0
-        player.setExp(0);
-        player.setLevel(0);
-
-        // Give the player their exp back, with the difference
-        int newExp = currentExp + exp;
-        player.giveExp(newExp);
-    }
-
     public static void sendPlayerMovingMessage(Player player, Double amount, String title, Boolean isEconomy) {
         String sign = "&2$";
         String magic = "&k";
@@ -445,7 +401,7 @@ public class Utils {
                     if (isEconomy) {
                         plugin.Economy.addAccount(player, amount);
                     } else {
-                        addPlayerExp(player, amount.intValue());
+                        playerUtils.addPlayerExp(player, amount.intValue());
                     }
                 }
                 if (isEconomy) {
@@ -475,7 +431,7 @@ public class Utils {
                     if (isEconomy) {
                         plugin.Economy.addAccount(player, amount);
                     } else {
-                        addPlayerExp(player, amount.intValue());
+                        playerUtils.addPlayerExp(player, amount.intValue());
                     }
                 }
                 if (isEconomy) {
