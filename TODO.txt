@@ -70,25 +70,26 @@ TODO -   -> /balance (player*Optional)-> [bal | money | coins] (Peligon.Economy.
 TODO -   -> /economy [add|remove|set|reset] (bank*Optional) [player] [amount] -> [eco] (Peligon.Economy.Admin)
 TODO -   -> /peligoneconomy -> [peleconomy | pelecon] (Peligon.Economy.Admin)
 TODO -   -> /withdraw [amount] -> (Peligon.Economy.Withdraw)
+TODO -   -> /experienceBottle -> [xpbottle | expbottle | bottle] (Peligon.Economy.Bottle)
+TODO -   -> /experience -> [xp | exp] (Peligon.Economy.Experience : Peligon.Economy.Experience.Other)
 
 ---- { In Progress } ----
 
 TODO - Peligon Economy (Rewrite)
 TODO - -> Default coins currency.
-TODO - -> Allow for multiple currencies.
 TODO - -> Commands:
-TODO -   -> /giveitem [player] [item] (amount): Permission (Peligon.Economy.GiveItem)
-TODO -   -> /balancetop -> [baltop | moneytop] (Peligon.Economy.BalanceTop)\
+TODO -   -> /giveitem [player] [item] (amount): Permission (Peligon.Economy.Admin)
+TODO -   -> /balancetop -> [baltop | moneytop] (Peligon.Economy.BalanceTop)
 TODO -   -> /pay [player] [amount] -> (Peligon.Economy.Pay)
 TODO -   -> /daily -> (Peligon.Economy.Daily)
 TODO -   -> /sell (hand*Optional) -> (Peligon.Economy.Sell)
 TODO -   -> /sellhand -> (Peligon.Economy.Sell)
 TODO -   -> /sellall -> (Peligon.Economy.Sell)
 TODO -   -> /sellchest -> (Peligon.Economy.Sell)
-TODO -   -> /experienceBottle -> [xpbottle | expbottle | bottle] (Peligon.Economy.Bottle)
 TODO -   -> /autosell -> (Peligon.Economy.AutoSell)
 TODO -   -> /bounties -> (Peligon.Economy.Bounties)
 TODO -   -> /bounty [player] [amount] -> (Peligon.Economy.Bounties)
+TODO -   -> /bank -> [atm] (Peligon.Economy.ATM | Peligon.Economy.access.ATM)
 TODO - -> Death penalty
 TODO -   -> Allow for a percentage of coins to be taken from a player when they die.
 TODO -   -> Allow for this to be disabled in certain worlds.
@@ -101,6 +102,8 @@ TODO -   -> Allow for this to be disabled in certain worlds.
 TODO - -> Add personal and global multipliers.
 TODO - -> Add auction house.
 TODO - -> Add shop.
+TODO - -> Add jobs.
+TODO - -> completely change atm system.
 
 ---- { Not Started } ----
 

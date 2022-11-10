@@ -45,6 +45,69 @@ public class Utils {
         return nf.format(amount);
     }
 
+    // Format time to a string in the correct format
+    public static String formatTime(String time) {
+        // Defining the time format
+        int days = 0;
+        int hours = 0;
+        int minutes = 0;
+        int seconds = 0;
+
+        // Splitting the time into days, hours, minutes, and seconds
+        String[] split = time.split(", ");
+        for (String s : split) {
+            if (s.contains("d")) {
+                days = Integer.parseInt(s.replace("d", ""));
+            } else if (s.contains("h")) {
+                hours = Integer.parseInt(s.replace("h", ""));
+            } else if (s.contains("m")) {
+                minutes = Integer.parseInt(s.replace("m", ""));
+            } else if (s.contains("s")) {
+                seconds = Integer.parseInt(s.replace("s", ""));
+            }
+        }
+
+        // Formatting the time
+        String formatted = "";
+        if (days > 0) {
+            formatted += days + "d ";
+        }
+        if (hours > 0) {
+            formatted += hours + "h ";
+        }
+        if (minutes > 0) {
+            formatted += minutes + "m ";
+        }
+        if (seconds > 0) {
+            formatted += seconds + "s ";
+        }
+
+        // Returning the formatted time
+        return formatted.trim();
+    }
+
+    // Format time using date to a string in the correct format
+    public static String formatTime(Date date) {
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime then = LocalDateTime.ofInstant(date.toInstant(), TimeZone.getDefault().toZoneId());
+        Duration duration = Duration.between(then, now);
+
+        String formatted = "";
+        if (duration.toDays() != 0) {
+            formatted += duration.toDays() + "d, ";
+        }
+        if (duration.toHours() != 0) {
+            formatted += duration.toHours() % 24 + "h, ";
+        }
+        if (duration.toMinutes() != 0) {
+            formatted += duration.toMinutes() % 60 + "m, ";
+        }
+        if (duration.getSeconds() != 0) {
+            formatted += duration.getSeconds() % 60 + "s, ";
+        }
+        return formatted;
+    }
+
     // Get abbreviation from a string and convert it to a double
     public static Double getAbbreviation(String s) {
         double amount;
@@ -232,33 +295,6 @@ public class Utils {
 //    }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     // ---- [ Managing holograms for small amount of features ] ----
     public static void moveUpHologram(String name, Location loc, int length) {
         ArmorStand holo = loc.getWorld().spawn(loc, ArmorStand.class);
@@ -340,14 +376,6 @@ public class Utils {
         }
     }
 
-    public static String formatTime(String time) {
-        return time
-                .replaceAll("d", "")
-                .replaceAll("h", "")
-                .replaceAll("m", "")
-                .replaceAll("s", "");
-    }
-
     public static String formatAmount(int amount) {
         return Math.abs(amount) >= 1e+9 ? String.format("%.0f", (Math.abs(amount) / 1e+9)) + " Billion"
                 : Math.abs(amount) >= 1e+6 ? String.format("%.0f", (Math.abs(amount) / 1e+6)) + " Million"
@@ -372,18 +400,19 @@ public class Utils {
 
     // ---- [ Global values ] ----
     public static int RawInterestTimer;
-    static {
-        String path = plugin.fileATM.getConfig().getString("Options.interest.time");
-        if (path.contains("d")) {
-            RawInterestTimer = Integer.parseInt(Utils.formatTime(path)) * 24 * 60 * 60;
-        } else if (path.contains("h")) {
-            RawInterestTimer = Integer.parseInt(Utils.formatTime(path)) * 60 * 60;
-        } else if (path.contains("m")) {
-            RawInterestTimer = Integer.parseInt(Utils.formatTime(path)) * 60;
-        } else {
-            RawInterestTimer = Integer.parseInt(Utils.formatTime(path));
-        }
-    }
+
+//    static {
+//        String path = plugin.getConfig().getString("Accounts.banks.options.interest.time");
+//        if (path.contains("d")) {
+//            RawInterestTimer = Integer.parseInt(Utils.formatTime(path)) * 24 * 60 * 60;
+//        } else if (path.contains("h")) {
+//            RawInterestTimer = Integer.parseInt(Utils.formatTime(path)) * 60 * 60;
+//        } else if (path.contains("m")) {
+//            RawInterestTimer = Integer.parseInt(Utils.formatTime(path)) * 60;
+//        } else {
+//            RawInterestTimer = Integer.parseInt(Utils.formatTime(path));
+//        }
+//    }
 
     public static int InterestTimer = 0;
 
@@ -395,6 +424,7 @@ public class Utils {
 
         new BukkitRunnable() {
             int pos = 0;
+
             public void run() {
                 if (pos == formatted.length()) {
                     cancel();
@@ -414,7 +444,7 @@ public class Utils {
 
                 pos += 1;
             }
-        }.runTaskTimer(Main.getInstance,0, 20);
+        }.runTaskTimer(Main.getInstance, 0, 20);
     }
 
     public static void sendPlayerMovingMessage(Player player, Integer amount, String title, Boolean isEconomy) {
@@ -425,6 +455,7 @@ public class Utils {
 
         new BukkitRunnable() {
             int pos = 0;
+
             public void run() {
                 if (pos == formatted.length()) {
                     cancel();
@@ -443,7 +474,7 @@ public class Utils {
                 }
                 pos += 1;
             }
-        }.runTaskTimer(Main.getInstance,0, 20);
+        }.runTaskTimer(Main.getInstance, 0, 20);
     }
 
 }

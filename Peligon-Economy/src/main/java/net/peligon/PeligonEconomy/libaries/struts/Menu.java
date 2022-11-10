@@ -1,5 +1,6 @@
 package net.peligon.PeligonEconomy.libaries.struts;
 
+import net.peligon.PeligonEconomy.libaries.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -32,7 +33,7 @@ public abstract class Menu implements InventoryHolder {
     public abstract void setMenuItems();
 
     public void open() {
-        inventory = Bukkit.createInventory(this, getSlots(), getMenuName());
+        inventory = Bukkit.createInventory(this, getSlots(), Utils.chatColor(getMenuName()));
         this.setMenuItems();
         owner.openInventory(inventory);
     }

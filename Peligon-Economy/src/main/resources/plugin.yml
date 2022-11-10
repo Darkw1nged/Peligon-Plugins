@@ -28,6 +28,11 @@ commands:
       - money
       - coins
     description: Allows users to check their balance.
+  experience:
+    aliases:
+      - xp
+      - exp
+    description: Allows users to check their experience.
   withdraw:
     aliases:
       - withdraw
@@ -38,7 +43,7 @@ commands:
       - experiencebottle
       - bottle
       - xpbottle
-      description: Allows users to put their experience into a bottle.
+    description: Allows users to put their experience into a bottle.
   bank:
     aliases:
       - atm
@@ -67,12 +72,6 @@ commands:
     description: Allows users to sell items inside of chests with an item
   pay:
     description: Allows users to transfer money to each other
-  experience:
-    aliases:
-      - xp
-      - exp
-    description: Allows users to see how much experience they have
-    description: Allows users to withdraw experience
   daily:
     description: Allows users to get a daily reward
   gift:

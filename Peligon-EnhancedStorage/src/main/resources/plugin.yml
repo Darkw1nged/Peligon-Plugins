@@ -19,6 +19,6 @@ commands:
     description: Allows admins to give items to players.
   playervault:
     aliases:
-      - pv
       - vault
-    description: Allows players to store items in a private vault.
+      - pv
+    description: Allows players to open private vault.

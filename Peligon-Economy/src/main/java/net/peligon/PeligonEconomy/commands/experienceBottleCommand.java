@@ -21,6 +21,7 @@ import java.util.UUID;
 
 public class experienceBottleCommand implements CommandExecutor {
 
+    // Get the instance of the main class.
     private final Main plugin = Main.getInstance;
 
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -53,7 +54,7 @@ public class experienceBottleCommand implements CommandExecutor {
 
                     // Check if the player has enough money in their bank account.
                     if (!playerUtils.hasEnoughExp(player, amount)) {
-                        player.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("error-not-enough-money")));
+                        player.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("error-not-enough-experience")));
                         return true;
                     }
 
@@ -89,18 +90,18 @@ public class experienceBottleCommand implements CommandExecutor {
                     // Try and add the note to the players inventory.
                     if (Utils.hasSpace(player.getInventory(), item, 1)) {
                         // Remove the money from the players bank account.
-                        playerUtils.setBankBalance(player, playerUtils.getBankBalance(player) - amount);
+                        playerUtils.removePlayerExp(player, amount);
 
                         // Send player a confirmation message.
                         player.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("prefix") +
-                                plugin.languageFile.getConfig().getString("success-withdraw").replaceAll("%amount%", Utils.format(amount))));
+                                plugin.languageFile.getConfig().getString("success-experience-withdraw").replaceAll("%amount%", Utils.format(amount))));
                         return true;
                     }
 
                     // We can assume the player does not have enough space in their inventory.
                     // So we don't remove any money and just send them a failure message.
                     player.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("prefix") +
-                            plugin.languageFile.getConfig().getString("failed-withdraw").replaceAll("%amount%", Utils.format(amount))));
+                            plugin.languageFile.getConfig().getString("failed-experience-withdraw").replaceAll("%amount%", Utils.format(amount))));
                 } catch (NumberFormatException e) {
                     player.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("error-invalid-amount")));
                     return true;

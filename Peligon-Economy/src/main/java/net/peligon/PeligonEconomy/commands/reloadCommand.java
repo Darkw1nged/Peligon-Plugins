@@ -17,6 +17,7 @@ public class reloadCommand implements CommandExecutor {
                 plugin.reloadConfig();
                 plugin.languageFile.reloadConfig();
                 plugin.custonItemsFile.reloadConfig();
+                plugin.bankAccountInventoryFile.reloadConfig();
 
                 sender.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("admin-reload")));
             } else {

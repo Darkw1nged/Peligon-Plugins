@@ -27,17 +27,19 @@ Accounts:
       # Set a limit on how much money can be stored in a bank.
       bank-limit: -1
       transaction-log:
-        add: "&a+ &6$%amount%&7, &e%time% ago &7by &e%player%"
-        remove: "&c- &6$%amount%&7, &e%time% ago &7by &e%player%"
+        add: "&a+ &6$%amount%&7, &e%recorded% ago &7by &e%player%"
+        remove: "&c- &6$%amount%&7, &e%recorded% ago &7by &e%player%"
       interest:
         # Set the interest rate for banks.
-        percentage: 2
+        percentage: 2.0
         # The maximum amount of money the interest will affect
         # Abbreviations: K = Thousand, M = Million, B = Billion, T = Trillion
-        maximum: 1M
+        maximum: "1M"
         # Time before the interest applies
         # Details: s = Seconds, m = Minutes, h = Hours, d = Days
         time: "24h"
+        #time: "15d, 12h, 30m, 30s"
+
   new-accounts:
     # Set the starting balance for new accounts.
     starting-cash-balance: 100.0

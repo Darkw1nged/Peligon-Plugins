@@ -1,0 +1,483 @@
+#######################################################################################
+#
+#       In here you can change what the bank account inventory will look like.
+#       All items do support color codes and item-flags,
+#       check the two lines below for more information:
+#       [ https://www.digminecraft.com/lists/color_list_pc.php ]
+#       [ https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/inventory/ItemFlag.html ]
+#
+#######################################################################################
+bank-inventory:
+  # What should the title of the inventory be?
+  title: "&eBank Account"
+  # What size should the inventory be? (Must be a multiple of 9) (Max: 54)
+  size: 27
+  # What should be inside the inventory?
+  contents:
+    1:
+      # The item that will be placed in the inventory.
+      item: BLACK_STAINED_GLASS_PANE
+      # The name of the item that will be placed in the inventory.
+      name: "&0"
+      # The lore of the item that will be placed in the inventory.
+      lore: [ ]
+      # The slot that the item will be placed in. (-1 = whole inventory)
+      slot: -1
+    2:
+      item: CHEST
+      name: "&aDeposit Cash"
+      lore:
+        - "&7Current Cash Balance: &2$%cash%"
+        - "&7Current Bank Balance: &2$%bank%"
+        - ""
+        - "&7Store cash in the bank to keep"
+        - "&7them safe while you go on"
+        - "&7adventures!"
+        - ""
+        - "&7You will earn &b%interest%% &7interest every"
+        - "&7day for your first &6%interest_cash%"
+        - "&7banked cash."
+        - ""
+        - "&7Until Interest: &b%raw_time%"
+        - ""
+        - "&eClick to make a deposit!"
+      slot: 11
+      # Available events: Deposit, Withdraw, Transactions
+      event: "Deposit"
+    3:
+      item: DROPPER
+      name: "&aWithdraw Cash"
+      lore:
+        - "&7Current Cash Balance: &2$%cash%"
+        - "&7Current Bank Balance: &2$%bank%"
+        - ""
+        - "&7Take your cash out of the bank"
+        - "&7in order to spend them."
+        - ""
+        - "&eClick to withdraw cash!"
+      slot: 13
+      event: "Withdraw"
+    4:
+      item: MAP
+      name: "&aRecent Transactions"
+      lore:
+        - "%transactions%"
+      slot: 15
+      event: "Transactions"
+    5:
+      item: BARRIER
+      name: "&cClose"
+      slot: 18
+      event: "Close"
+    6:
+      item: REDSTONE_TORCH
+      name: "&aInformation"
+      lore:
+        - "&7Keep your cash safe in the bank!"
+        - ""
+        - "&7Bank limit: &6%bank_limit%"
+        - ""
+        - "&7The banker rewards you every %time%"
+        - "&7hours with interest for the cash"
+        - "&7in your bank balance."
+        - ""
+        - "&7Until Interest: &b%raw_time%"
+      slot: 26
+
+deposit-inventory:
+  title: "&eBank Deposit"
+  # Rules: Must be a multiple of 9. (Max: 54)
+  size: 54
+  contents:
+    1:
+      item: BLACK_STAINED_GLASS_PANE
+      name: " "
+      # See the full list here: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/inventory/ItemFlag.html
+      item-flags:
+        - "HIDE_ATTRIBUTES"
+      # -1 means all slots will be filled with this item.
+      slot: -1
+    2:
+      item: PAPER
+      name: "&aCheque"
+      lore:
+        - "&e&lAccount Details"
+        - " &e&l▎ &fCash: &2$%cash%"
+        - " &e&l▎ &fBank: &2$%bank%"
+        - ""
+        - "&f&lTransaction Details"
+        - " &f&l▎ &7Amount to deposit: &2$%amount%"
+        - " &f&l▎ &7Potential Bank Balance: &a$%new_bank%"
+        - " &f&l▎ &7Potential Cash Balance: &a$%new_cash%"
+        - ""
+        - "&eClick to deposit!"
+      slot: 14
+      # Available events: Deposit100%, Deposit50%, Deposit20%, DepositSpecific
+      # More events: GoBack, AddToDeposit, RemoveFromDeposit, Cheque
+      event: "Cheque"
+    3:
+      item: GREEN_STAINED_GLASS_PANE
+      name: "&aAdd &2$1"
+      lore:
+        - "&7This will add to the total cheque"
+        - "&7amount."
+        - ""
+        - "&eCheque will be updated."
+      slot: 21
+      event: "AddToDeposit"
+      # The amount that will be added to the deposit.
+      worth: 1
+    4:
+      item: GREEN_STAINED_GLASS_PANE
+      name: "&aAdd &2$10"
+      lore:
+        - "&7This will add to the total cheque"
+        - "&7amount."
+        - ""
+        - "&eCheque will be updated."
+      slot: 22
+      event: "AddToDeposit"
+      worth: 10
+    5:
+      item: GREEN_STAINED_GLASS_PANE
+      name: "&aAdd &2$100"
+      lore:
+        - "&7This will add to the total cheque"
+        - "&7amount."
+        - ""
+        - "&eCheque will be updated."
+      slot: 23
+      event: "AddToDeposit"
+      worth: 100
+    6:
+      item: GREEN_STAINED_GLASS_PANE
+      name: "&aAdd &2$1,000"
+      lore:
+        - "&7This will add to the total cheque"
+        - "&7amount."
+        - ""
+        - "&eCheque will be updated."
+      slot: 24
+      event: "AddToDeposit"
+      worth: 1000
+    7:
+      item: GREEN_STAINED_GLASS_PANE
+      name: "&aAdd &2$10,000"
+      lore:
+        - "&7This will add to the total cheque"
+        - "&7amount."
+        - ""
+        - "&eCheque will be updated."
+      slot: 25
+      event: "AddToDeposit"
+      worth: 10000
+    8:
+      item: RED_STAINED_GLASS_PANE
+      name: "&cRemove &2$1"
+      lore:
+        - "&7This will remove from the total cheque"
+        - "&7amount."
+        - ""
+        - "&eCheque will be updated."
+      slot: 30
+      event: "RemoveFromDeposit"
+      worth: 1
+    9:
+      item: RED_STAINED_GLASS_PANE
+      name: "&cRemove &2$10"
+      lore:
+        - "&7This will remove from the total cheque"
+        - "&7amount."
+        - ""
+        - "&eCheque will be updated."
+      slot: 31
+      event: "RemoveFromDeposit"
+      worth: 10
+    10:
+      item: RED_STAINED_GLASS_PANE
+      name: "&cRemove &2$100"
+      lore:
+        - "&7This will remove from the total cheque"
+        - "&7amount."
+        - ""
+        - "&eCheque will be updated."
+      slot: 32
+      event: "RemoveFromDeposit"
+      worth: 100
+    11:
+      item: RED_STAINED_GLASS_PANE
+      name: "&cRemove &2$1,000"
+      lore:
+        - "&7This will remove from the total cheque"
+        - "&7amount."
+        - ""
+        - "&eCheque will be updated."
+      slot: 33
+      event: "RemoveFromDeposit"
+      worth: 1000
+    12:
+        item: RED_STAINED_GLASS_PANE
+        name: "&cRemove &2$10,000"
+        lore:
+            - "&7This will remove from the total cheque"
+            - "&7amount."
+            - ""
+            - "&eCheque will be updated."
+        slot: 34
+        event: "RemoveFromDeposit"
+        worth: 10000
+    13:
+      item: CHEST
+      name: "&aYour whole cash"
+      amount: 64
+      lore:
+        - "&8Bank deposit"
+        - ""
+        - "&7Current Cash Balance: &6$%cash%"
+        - "&7Current Bank Balance: &6$%bank%"
+        - ""
+        - "&eClick to deposit cash!"
+      slot: 10
+      event: "Deposit100%"
+    14:
+      item: CHEST
+      name: "&aHalf your cash"
+      amount: 32
+      lore:
+        - "&8Bank deposit"
+        - ""
+        - "&7Current Cash Balance: &6$%cash%"
+        - "&7Current Bank Balance: &6$%bank%"
+        - ""
+        - "&eClick to deposit cash!"
+      slot: 19
+      event: "Deposit50%"
+    15:
+      item: CHEST
+      name: "&a20% of your cash"
+      amount: 20
+      lore:
+        - "&8Bank deposit"
+        - ""
+        - "&7Current Cash Balance: &6$%cash%"
+        - "&7Current Bank Balance: &6$%bank%"
+        - ""
+        - "&eClick to deposit cash!"
+      slot: 28
+      event: "Deposit20%"
+    16:
+      item: OAK_SIGN
+      name: "&aSpecific amount"
+      lore:
+        - "&7Current Cash Balance: &6$%cash%"
+        - "&7Current Bank Balance: &6$%bank%"
+        - ""
+        - "&eClick to deposit Coins!"
+      slot: 37
+      event: "DepositSpecific"
+    17:
+      item: ARROW
+      name: "&aGo Back"
+      lore:
+        - "&7To Bank Account"
+      slot: 49
+      event: "GoBack"
+
+withdraw-inventory:
+  title: "&eBank Withdrawal"
+  # Rules: Must be a multiple of 9. (Max: 54)
+  size: 54
+  contents:
+    1:
+      item: BLACK_STAINED_GLASS_PANE
+      name: " "
+      # See the full list here: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/inventory/ItemFlag.html
+      item-flags:
+        - "HIDE_ATTRIBUTES"
+      # -1 means all slots will be filled with this item.
+      slot: -1
+    2:
+      item: PAPER
+      name: "&aCheque"
+      lore:
+        - "&e&lAccount Details"
+        - " &e&l▎ &fCash: &2$%cash%"
+        - " &e&l▎ &fBank: &2$%bank%"
+        - ""
+        - "&f&lTransaction Details"
+        - " &f&l▎ &7Amount to withdraw: &2$%amount%"
+        - " &f&l▎ &7Potential Bank Balance: &a$%new_bank%"
+        - " &f&l▎ &7Potential Cash Balance: &a$%new_cash%"
+        - ""
+        - "&eClick to withdraw!"
+      slot: 14
+      # Available events: Withdraw100%, Withdraw50%, Withdraw20%, WithdrawSpecific
+      # More events: GoBack, AddToWithdraw, RemoveFromWithdraw, Cheque
+      event: "Cheque"
+    3:
+      item: GREEN_STAINED_GLASS_PANE
+      name: "&aAdd &2$1"
+      lore:
+        - "&7This will add to the total cheque"
+        - "&7amount."
+        - ""
+        - "&eCheque will be updated."
+      slot: 21
+      event: "AddToWithdraw"
+      # The amount that will be added to the withdraw.
+      worth: 1
+    4:
+      item: GREEN_STAINED_GLASS_PANE
+      name: "&aAdd &2$10"
+      lore:
+        - "&7This will add to the total cheque"
+        - "&7amount."
+        - ""
+        - "&eCheque will be updated."
+      slot: 22
+      event: "AddToWithdraw"
+      worth: 10
+    5:
+      item: GREEN_STAINED_GLASS_PANE
+      name: "&aAdd &2$100"
+      lore:
+        - "&7This will add to the total cheque"
+        - "&7amount."
+        - ""
+        - "&eCheque will be updated."
+      slot: 23
+      event: "AddToWithdraw"
+      worth: 100
+    6:
+      item: GREEN_STAINED_GLASS_PANE
+      name: "&aAdd &2$1,000"
+      lore:
+        - "&7This will add to the total cheque"
+        - "&7amount."
+        - ""
+        - "&eCheque will be updated."
+      slot: 24
+      event: "AddToWithdraw"
+      worth: 1000
+    7:
+      item: GREEN_STAINED_GLASS_PANE
+      name: "&aAdd &2$10,000"
+      lore:
+        - "&7This will add to the total cheque"
+        - "&7amount."
+        - ""
+        - "&eCheque will be updated."
+      slot: 25
+      event: "AddToWithdraw"
+      worth: 10000
+    8:
+      item: RED_STAINED_GLASS_PANE
+      name: "&cRemove &2$1"
+      lore:
+        - "&7This will remove from the total cheque"
+        - "&7amount."
+        - ""
+        - "&eCheque will be updated."
+      slot: 30
+      event: "RemoveFromWithdraw"
+      worth: 1
+    9:
+      item: RED_STAINED_GLASS_PANE
+      name: "&cRemove &2$10"
+      lore:
+        - "&7This will remove from the total cheque"
+        - "&7amount."
+        - ""
+        - "&eCheque will be updated."
+      slot: 31
+      event: "RemoveFromWithdraw"
+      worth: 10
+    10:
+      item: RED_STAINED_GLASS_PANE
+      name: "&cRemove &2$100"
+      lore:
+        - "&7This will remove from the total cheque"
+        - "&7amount."
+        - ""
+        - "&eCheque will be updated."
+      slot: 32
+      event: "RemoveFromWithdraw"
+      worth: 100
+    11:
+      item: RED_STAINED_GLASS_PANE
+      name: "&cRemove &2$1,000"
+      lore:
+        - "&7This will remove from the total cheque"
+        - "&7amount."
+        - ""
+        - "&eCheque will be updated."
+      slot: 33
+      event: "RemoveFromWithdraw"
+      worth: 1000
+    12:
+      item: RED_STAINED_GLASS_PANE
+      name: "&cRemove &2$10,000"
+      lore:
+        - "&7This will remove from the total cheque"
+        - "&7amount."
+        - ""
+        - "&eCheque will be updated."
+      slot: 34
+      event: "RemoveFromWithdraw"
+      worth: 10000
+    13:
+      item: DROPPER
+      name: "&aYour whole cash"
+      amount: 64
+      lore:
+        - "&8Bank withdraw"
+        - ""
+        - "&7Current Cash Balance: &6$%cash%"
+        - "&7Current Bank Balance: &6$%bank%"
+        - ""
+        - "&eClick to withdraw cash!"
+      slot: 10
+      event: "Withdraw100%"
+    14:
+      item: DROPPER
+      name: "&aHalf your cash"
+      amount: 32
+      lore:
+        - "&8Bank withdraw"
+        - ""
+        - "&7Current Cash Balance: &6$%cash%"
+        - "&7Current Bank Balance: &6$%bank%"
+        - ""
+        - "&eClick to withdraw cash!"
+      slot: 19
+      event: "Withdraw50%"
+    15:
+      item: DROPPER
+      name: "&a20% of your cash"
+      amount: 20
+      lore:
+        - "&8Bank withdraw"
+        - ""
+        - "&7Current Cash Balance: &6$%cash%"
+        - "&7Current Bank Balance: &6$%bank%"
+        - ""
+        - "&eClick to withdraw cash!"
+      slot: 28
+      event: "Withdraw20%"
+    16:
+      item: OAK_SIGN
+      name: "&aSpecific amount"
+      lore:
+        - "&7Current Cash Balance: &6$%cash%"
+        - "&7Current Bank Balance: &6$%bank%"
+        - ""
+        - "&eClick to withdraw Coins!"
+      slot: 37
+      event: "WithdrawSpecific"
+    17:
+      item: ARROW
+      name: "&aGo Back"
+      lore:
+        - "&7To Bank Account"
+      slot: 49
+      event: "GoBack"

@@ -16,18 +16,18 @@ public class InterestTimer extends BukkitRunnable {
     public void run() {
         if (Utils.InterestTimer == Utils.RawInterestTimer) {
             for (UUID uuid : plugin.Economy.getAllBanks().keySet()) {
-                double amount = plugin.Economy.getBank(uuid);
-                double toAdd;
-                if (amount >= plugin.fileATM.getConfig().getInt("Options.interest.cash")) {
-                    toAdd =  plugin.fileATM.getConfig().getInt("Options.interest.cash") * (plugin.fileATM.getConfig().getInt("Options.interest.percentage") / 100.0f);
-                } else {
-                    toAdd = amount * (plugin.fileATM.getConfig().getInt("Options.interest.percentage") / 100.0f);
-                }
-
-                plugin.Economy.addBankAccount(uuid, toAdd);
-                Player player = Bukkit.getPlayer(uuid);
-                if (player == null) return;
-                player.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("prefix") + plugin.languageFile.getConfig().getString("interest-added"), toAdd));
+//                double amount = plugin.Economy.getBank(uuid);
+//                double toAdd;
+//                if (amount >= plugin.fileATM.getConfig().getInt("Options.interest.cash")) {
+//                    toAdd =  plugin.fileATM.getConfig().getInt("Options.interest.cash") * (plugin.fileATM.getConfig().getInt("Options.interest.percentage") / 100.0f);
+//                } else {
+//                    toAdd = amount * (plugin.fileATM.getConfig().getInt("Options.interest.percentage") / 100.0f);
+//                }
+//
+//                plugin.Economy.addBankAccount(uuid, toAdd);
+//                Player player = Bukkit.getPlayer(uuid);
+//                if (player == null) return;
+//                player.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("prefix") + plugin.languageFile.getConfig().getString("interest-added"), toAdd));
 
                 Utils.InterestTimer = 0;
             }

@@ -22,6 +22,7 @@ public final class Main extends JavaPlugin {
     // Creating instances of customConfig files
     public CustomConfig languageFile;
     public CustomConfig custonItemsFile = new CustomConfig(this, "customItems", true);
+    public CustomConfig bankAccountInventoryFile = new CustomConfig(this, "Inventories/bank-account", true);
 
 
 
@@ -29,7 +30,6 @@ public final class Main extends JavaPlugin {
     public CustomConfig fileWorth = new CustomConfig(this, "worth", true);
     public CustomConfig fileSigns = new CustomConfig(this, "signs", true);
     public CustomConfig filePouches = new CustomConfig(this, "pouches", true);
-    public CustomConfig fileATM = new CustomConfig(this, "Inventories/ATM", true);
     public CustomConfig fileDailyReward = new CustomConfig(this, "Inventories/daily", true);
     public CustomConfig fileSellGUI = new CustomConfig(this, "Inventories/sellGUI", true);
     public CustomConfig filedailyTaskGUI = new CustomConfig(this, "Inventories/daily-tasks", true);
@@ -51,11 +51,11 @@ public final class Main extends JavaPlugin {
         // Loading customConfig files.
         saveDefaultConfig();
         custonItemsFile.saveDefaultConfig();
+        bankAccountInventoryFile.saveDefaultConfig();
         // TODO -------- Subject to removeal --------
         fileWorth.saveDefaultConfig();
         fileSigns.saveDefaultConfig();
         filePouches.saveDefaultConfig();
-        fileATM.saveDefaultConfig();
         fileDailyReward.saveDefaultConfig();
         filedailyTaskGUI.saveDefaultConfig();
         fileSellGUI.saveDefaultConfig();
@@ -143,7 +143,6 @@ public final class Main extends JavaPlugin {
                 new customItemsEvents(),
                 new menuListener(),
 
-
                 // TODO - rewrite these listeners
                 new bountyEvents(),
                 new redeemEvents(),
@@ -169,6 +168,7 @@ public final class Main extends JavaPlugin {
         getCommand("peligoneconomy").setExecutor(new reloadCommand());
         getCommand("economy").setExecutor(new economyCommand());
         getCommand("balance").setExecutor(new balanceCommand());
+        getCommand("experience").setExecutor(new experienceCommand());
         getCommand("withdraw").setExecutor(new withdrawCommand());
         getCommand("expbottle").setExecutor(new experienceBottleCommand());
         getCommand("bank").setExecutor(new bankCommand());
@@ -176,9 +176,6 @@ public final class Main extends JavaPlugin {
         // TODO - rewrite these commands
         getCommand("balancetop").setExecutor(new cmdBalanceTop());
         getCommand("pay").setExecutor(new cmdPay());
-
-        getCommand("experience").setExecutor(new cmdExperience());
-
         getCommand("sell").setExecutor(new cmdSell());
         getCommand("sellhand").setExecutor(new cmdSellHand());
         getCommand("autosell").setExecutor(new cmdSellAuto());

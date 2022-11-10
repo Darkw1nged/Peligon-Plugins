@@ -3,6 +3,7 @@ package net.peligon.PeligonEconomy.libaries.Integration;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import net.peligon.PeligonEconomy.Main;
 import net.peligon.PeligonEconomy.libaries.Utils;
+import net.peligon.PeligonEconomy.libaries.playerUtils;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
@@ -63,7 +64,7 @@ public class InPlaceholderAPI extends PlaceholderExpansion {
         }
 
         if (identifier.equalsIgnoreCase("experience_points")) {
-            return String.valueOf(Utils.getPlayerExp(player));
+            return String.valueOf(playerUtils.getPlayerExp(player));
         }
         if (identifier.equalsIgnoreCase("experience_level")) {
             return String.valueOf(player.getLevel());
@@ -88,7 +89,7 @@ public class InPlaceholderAPI extends PlaceholderExpansion {
         }
 
         if (identifier.equalsIgnoreCase("formatted_experience_points")) {
-            return Utils.format(Utils.getPlayerExp(player));
+            return Utils.format(playerUtils.getPlayerExp(player));
         }
         if (identifier.equalsIgnoreCase("formatted_experience_level")) {
             return Utils.format(player.getLevel());

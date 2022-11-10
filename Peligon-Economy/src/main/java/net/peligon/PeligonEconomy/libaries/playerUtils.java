@@ -3,12 +3,18 @@ package net.peligon.PeligonEconomy.libaries;
 import net.peligon.PeligonEconomy.Main;
 import net.peligon.PeligonEconomy.libaries.storage.CustomConfig;
 import net.peligon.PeligonEconomy.libaries.storage.SQLiteLibrary;
+import net.peligon.PeligonEconomy.libaries.struts.Transaction;
+import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
 
 public class playerUtils {
 
@@ -174,6 +180,34 @@ public class playerUtils {
         }
     }
 
+    // Remove cash from players balance
+    public static boolean removeCash(OfflinePlayer player, double amount) {
+        // Checking if the player has enough cash
+        if (!hasEnoughCash(player, amount)) {
+            // Get amount of cash the player has
+            double cash = getCash(player);
+            // Get amount of cash in the bank
+            double bankBalance = getBankBalance(player);
+            // Get the amount of cash needed to be taken from the bank
+            double cashNeeded = amount - cash;
+
+            // Checking if the player has enough cash in the bank
+            if (bankBalance >= cashNeeded) {
+                // Removing the cash from the bank
+                setBankBalance(player, bankBalance - cashNeeded);
+                // Removing the cash from the players balance
+                setCash(player, 0);
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            // Removing the cash from the players balance
+            setCash(player, getCash(player) - amount);
+            return true;
+        }
+    }
+
     // Set players bank balance
     public static void setBankBalance(OfflinePlayer player, double amount) {
         // Setting up the query for SQL
@@ -202,6 +236,61 @@ public class playerUtils {
                 }
                 break;
         }
+    }
+
+    // Remove cash from players bank balance
+    public static boolean removeBankBalance(OfflinePlayer player, double amount) {
+        // Checking if the player has enough cash
+        if (!hasEnoughBankBalance(player, amount)) {
+            return false;
+        } else {
+            // Removing the cash from the players balance
+            setBankBalance(player, getBankBalance(player) - amount);
+            return true;
+        }
+    }
+
+    // Get all transactions for a player
+    public static List<Transaction> getTransactions(OfflinePlayer player) {
+        // Get player data file
+        CustomConfig record = new CustomConfig(plugin, "data/" + player.getUniqueId(), false);
+
+        // Check if the player has any transactions
+        if (!record.getConfig().contains("transactions")) return new ArrayList<>();
+
+        // Get the list of transactions
+        List<Transaction> transactions = new ArrayList<>();
+
+        // Loop through the transactions
+        for (String key : record.getConfig().getConfigurationSection("transactions").getKeys(false)) {
+            // Get all the data for the transaction
+            UUID transactionID = UUID.fromString(record.getConfig().getString("transactions." + key + ".transactionID"));
+            Transaction.TransactionOperation operation = Transaction.TransactionOperation.valueOf(record.getConfig().getString("transactions." + key + ".operation"));
+            double amount = record.getConfig().getDouble("transactions." + key + ".amount");
+            Date recorded = new Date(record.getConfig().getLong("transactions." + key + ".recorded"));
+            String logMessage = record.getConfig().getString("transactions." + key + ".logMessage");
+
+            // Create the transaction
+            Transaction transaction = new Transaction(transactionID, player.getPlayer(), operation, amount, recorded, logMessage);
+
+            // Add the transaction to the list
+            transactions.add(transaction);
+        }
+        // Return the list of transactions
+        return transactions;
+    }
+
+    // Add a transaction to a players record
+    public static void addTransaction(OfflinePlayer player, Transaction transaction) {
+        CustomConfig record = new CustomConfig(plugin, "data/" + player.getUniqueId(), false);
+
+        // Save the transaction
+        record.getConfig().set("transactions." + transaction.getTransactionID() + ".transactionID", transaction.getTransactionID().toString());
+        record.getConfig().set("transactions." + transaction.getTransactionID() + ".operation", transaction.getOperation().toString());
+        record.getConfig().set("transactions." + transaction.getTransactionID() + ".amount", transaction.getAmount());
+        record.getConfig().set("transactions." + transaction.getTransactionID() + ".recorded", transaction.getRecorded().getTime());
+        record.getConfig().set("transactions." + transaction.getTransactionID() + ".logMessage", transaction.getLogMessage());
+        record.saveConfig();
     }
 
     // Check if player has enough cash
