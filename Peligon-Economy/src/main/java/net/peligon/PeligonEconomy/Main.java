@@ -2,6 +2,7 @@ package net.peligon.PeligonEconomy;
 
 import net.peligon.PeligonEconomy.commands.*;
 import net.peligon.PeligonEconomy.libaries.*;
+import net.peligon.PeligonEconomy.libaries.Integration.InPeligonEconomy;
 import net.peligon.PeligonEconomy.libaries.storage.CustomConfig;
 import net.peligon.PeligonEconomy.listeners.*;
 import net.peligon.PeligonEconomy.managers.mgrEconomy;
@@ -38,7 +39,7 @@ public final class Main extends JavaPlugin {
     // Getting Economy related classes
     private VaultHook vaultHook;
     public mgrEconomy Economy;
-    public PeligonEconomy peligonEconomy;
+    public InPeligonEconomy peligonEconomy;
 
     // Storage type; File, MySQL, SQLite
     public String storageType = "file";
@@ -70,7 +71,7 @@ public final class Main extends JavaPlugin {
 
         // Registering Economy classes.
         Economy = new mgrEconomy();
-        peligonEconomy = new PeligonEconomy();
+        peligonEconomy = new InPeligonEconomy();
 
         // Hooking into vault.
         vaultHook = new VaultHook();

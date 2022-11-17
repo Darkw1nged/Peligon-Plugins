@@ -216,16 +216,16 @@ deposit-inventory:
       event: "RemoveFromDeposit"
       worth: 1000
     12:
-        item: RED_STAINED_GLASS_PANE
-        name: "&cRemove &2$10,000"
-        lore:
-            - "&7This will remove from the total cheque"
-            - "&7amount."
-            - ""
-            - "&eCheque will be updated."
-        slot: 34
-        event: "RemoveFromDeposit"
-        worth: 10000
+      item: RED_STAINED_GLASS_PANE
+      name: "&cRemove &2$10,000"
+      lore:
+          - "&7This will remove from the total cheque"
+          - "&7amount."
+          - ""
+          - "&eCheque will be updated."
+      slot: 34
+      event: "RemoveFromDeposit"
+      worth: 10000
     13:
       item: CHEST
       name: "&aYour whole cash"

@@ -21,6 +21,7 @@ commands:
   economy:
     alaises:
       - econ
+      - eco
     description: Allows admins to control the economy.
   balance:
     aliases:

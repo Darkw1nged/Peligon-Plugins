@@ -29,6 +29,8 @@ Accounts:
       transaction-log:
         add: "&a+ &6$%amount%&7, &e%recorded% ago &7by &e%player%"
         remove: "&c- &6$%amount%&7, &e%recorded% ago &7by &e%player%"
+        # Set a limit on how much can be shown at once.
+        limit: 5
       interest:
         # Set the interest rate for banks.
         percentage: 2.0

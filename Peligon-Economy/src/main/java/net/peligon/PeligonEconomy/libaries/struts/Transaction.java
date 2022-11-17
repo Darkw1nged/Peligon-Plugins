@@ -13,7 +13,6 @@ public class Transaction {
     private final TransactionOperation operation;
     private final double amount;
     private final Date recorded;
-
     private final String logMessage;
 
     public Transaction(UUID transactionID, Player player, TransactionOperation operation, double amount, Date recorded, String logMessage) {
@@ -50,8 +49,20 @@ public class Transaction {
                 .replaceAll("%transactionID%", this.transactionID.toString())
                 .replaceAll("%player%", this.player.getName())
                 .replaceAll("%operation%", this.operation.toString())
-                .replaceAll("%amount%", String.valueOf(this.amount))
-                .replaceAll("%recorded%", Utils.formatTime(this.recorded));
+                .replaceAll("%amount%", Utils.format(this.amount));
+//                .replaceAll("%recorded%", Utils.formatTime(this.recorded));
+    }
+
+    @Override
+    public String toString() {
+        return "Transaction{" +
+                "transactionID=" + transactionID +
+                ", player=" + player +
+                ", operation=" + operation +
+                ", amount=" + amount +
+                ", recorded=" + recorded +
+                ", logMessage='" + logMessage + '\'' +
+                '}';
     }
 
     public enum TransactionOperation {

@@ -88,24 +88,69 @@ public class Utils {
 
     // Format time using date to a string in the correct format
     public static String formatTime(Date date) {
-        LocalDateTime now = LocalDateTime.now();
-        LocalDateTime then = LocalDateTime.ofInstant(date.toInstant(), TimeZone.getDefault().toZoneId());
-        Duration duration = Duration.between(then, now);
+        // Get the current time
+        Date now = new Date();
 
+        // Get the difference between the current time and the date
+        Duration diff = Duration.between(date.toInstant(), now.toInstant());
+        //System.out.println("diff: " + diff);
+
+        // Defining the time format
+        long seconds = diff.getSeconds();
+        long minutes = seconds / 60;
+        long hours = minutes / 60;
+        long days = hours / 24;
+        //System.out.println("seconds: " + seconds + ", minutes: " + minutes + ", hours: " + hours + ", days: " + days);
+
+        // Formatting the time
         String formatted = "";
-        if (duration.toDays() != 0) {
-            formatted += duration.toDays() + "d, ";
+        if (days > 0) {
+            formatted += days + "d, ";
         }
-        if (duration.toHours() != 0) {
-            formatted += duration.toHours() % 24 + "h, ";
+        if (hours > 0) {
+            formatted += hours + "h, ";
         }
-        if (duration.toMinutes() != 0) {
-            formatted += duration.toMinutes() % 60 + "m, ";
+        if (minutes > 0) {
+            formatted += minutes + "m, ";
         }
-        if (duration.getSeconds() != 0) {
-            formatted += duration.getSeconds() % 60 + "s, ";
+        if (seconds > 0) {
+            formatted += seconds + "s";
         }
+        //System.out.println("formatted: " + formatted);
+
+        // Returning the formatted time
         return formatted;
+
+
+//        LocalDateTime now = LocalDateTime.now();
+//        LocalDateTime then = date.toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDateTime();
+//        Duration duration = Duration.between(then, now);
+//
+//        System.out.println("now: " + now);
+//        System.out.println("then: " + then);
+//        System.out.println("duration: " + duration);
+//
+//        String formatted = "";
+//        if (duration.toDays() != 0) {
+//            formatted += duration.toDays() + "d, ";
+//        }
+//        System.out.println("formatted: " + formatted);
+//
+//        if (duration.toHours() != 0) {
+//            formatted += duration.toHours() % 24 + "h, ";
+//        }
+//        System.out.println("formatted: " + formatted);
+//
+//        if (duration.toMinutes() != 0) {
+//            formatted += duration.toMinutes() % 60 + "m, ";
+//        }
+//        System.out.println("formatted: " + formatted);
+//
+//        if (duration.getSeconds() != 0) {
+//            formatted += duration.getSeconds() % 60 + "s";
+//        }
+//        System.out.println("formatted: " + formatted);
+//        return formatted;
     }
 
     // Get abbreviation from a string and convert it to a double

@@ -70,6 +70,9 @@ public class menuDeposit extends Menu {
                 // Create a new transaction.
                 Transaction transaction = new Transaction(UUID.randomUUID(), player, Transaction.TransactionOperation.deposit,
                         amount, new Date(), plugin.getConfig().getString("Accounts.banks.options.transaction-log.add"));
+
+                System.out.println(transaction.toString());
+
                 // Add transaction to transaction log.
                 playerUtils.addTransaction(player, transaction);
 
@@ -111,6 +114,8 @@ public class menuDeposit extends Menu {
                 amount = (playerUtils.getCash(player) * (20 / 100.0f));
                 // If amount is 0, return.
                 if (amount <= 0) return;
+                // Make sure amount is rounded to 2 decimal places.
+                amount = Math.round(amount * Math.pow(10, 2)) / Math.pow(10, 2);
 
                 // Deposit amount.
                 playerUtils.setBankBalance(player, playerUtils.getBankBalance(player) + amount);
@@ -183,6 +188,13 @@ public class menuDeposit extends Menu {
                 // Get cheque amount.
                 chequeAmount = cheque.getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "amountToDeposit"), PersistentDataType.DOUBLE);
 
+                // If amount is 0, return.
+                if (chequeAmount <= 0) {
+                    // Open Bank Account Inventory.
+                    new menuBankAccount(player).open();
+                    return;
+                }
+
                 // Deposit amount.
                 playerUtils.setBankBalance(player, playerUtils.getBankBalance(player) + chequeAmount);
 
@@ -224,6 +236,22 @@ public class menuDeposit extends Menu {
 
             // Get item meta.
             ItemMeta meta = item.getItemMeta();
+
+            // Check if meta is null.
+            if (meta == null) {
+                // Add item to inventory.
+                if (plugin.bankAccountInventoryFile.getConfig().getInt("bank-inventory.contents." + key + ".slot") == -1) {
+                    for (int i = 0; i < inventory.getSize(); i++) {
+                        inventory.setItem(i, item);
+                    }
+                } else {
+                    inventory.setItem(plugin.bankAccountInventoryFile.getConfig().getInt("bank-inventory.contents." + key + ".slot"), item);
+                }
+
+                // Continue to next item.
+                continue;
+            }
+
             // Set item name.
             meta.setDisplayName(Utils.chatColor(plugin.bankAccountInventoryFile.getConfig().getString("deposit-inventory.contents." + key + ".name")));
 

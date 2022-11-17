@@ -112,6 +112,8 @@ public class menuWithdraw extends Menu {
                 amount = (playerUtils.getBankBalance(player) * (20 / 100.0f));
                 // If amount is 0, return.
                 if (amount <= 0) return;
+                // Make sure amount is rounded to 2 decimal places.
+                amount = Math.round(amount * Math.pow(10, 2)) / Math.pow(10, 2);
 
                 // Withdraw amount.
                 playerUtils.setCash(player, playerUtils.getCash(player) + amount);
@@ -184,6 +186,13 @@ public class menuWithdraw extends Menu {
                 // Get cheque amount.
                 chequeAmount = cheque.getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "amountToWithdraw"), PersistentDataType.DOUBLE);
 
+                // If amount is 0, return.
+                if (chequeAmount <= 0) {
+                    // Open Bank Account Inventory.
+                    new menuBankAccount(player).open();
+                    return;
+                }
+
                 // Withdraw amount.
                 playerUtils.setCash(player, playerUtils.getCash(player) + chequeAmount);
 
@@ -225,6 +234,22 @@ public class menuWithdraw extends Menu {
 
             // Get item meta.
             ItemMeta meta = item.getItemMeta();
+
+            // Check if meta is null.
+            if (meta == null) {
+                // Add item to inventory.
+                if (plugin.bankAccountInventoryFile.getConfig().getInt("bank-inventory.contents." + key + ".slot") == -1) {
+                    for (int i = 0; i < inventory.getSize(); i++) {
+                        inventory.setItem(i, item);
+                    }
+                } else {
+                    inventory.setItem(plugin.bankAccountInventoryFile.getConfig().getInt("bank-inventory.contents." + key + ".slot"), item);
+                }
+
+                // Continue to next item.
+                continue;
+            }
+
             // Set item name.
             meta.setDisplayName(Utils.chatColor(plugin.bankAccountInventoryFile.getConfig().getString("withdraw-inventory.contents." + key + ".name")));
 

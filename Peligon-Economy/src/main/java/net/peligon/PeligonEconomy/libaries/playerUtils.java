@@ -293,6 +293,24 @@ public class playerUtils {
         record.saveConfig();
     }
 
+    // Check if player has enough cash (Used in vault)
+    public static boolean hasEnoughCashVault(OfflinePlayer player, double amount) {
+        // Get the players cash
+        double cash = getCash(player);
+
+        // If the player does not have enough cash, check if they have enough in the bank
+        if (cash < amount) {
+            // Get the amount of cash needed from the bank
+            double cashNeeded = amount - cash;
+            // Get the amount of cash in the bank
+            double bankBalance = getBankBalance(player);
+
+            // Check if the player has enough cash in the bank
+            return bankBalance >= cashNeeded;
+        }
+        return true;
+    }
+
     // Check if player has enough cash
     public static boolean hasEnoughCash(OfflinePlayer player, double amount) {
         return getCash(player) >= amount;

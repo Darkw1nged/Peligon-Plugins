@@ -77,6 +77,22 @@ public class menuBankAccount extends Menu {
             ItemStack item = new ItemStack(Material.getMaterial(plugin.bankAccountInventoryFile.getConfig().getString("bank-inventory.contents." + key + ".item").toUpperCase()));
             // Get item meta.
             ItemMeta meta = item.getItemMeta();
+
+            // Check if meta is null.
+            if (meta == null) {
+                // Add item to inventory.
+                if (plugin.bankAccountInventoryFile.getConfig().getInt("bank-inventory.contents." + key + ".slot") == -1) {
+                    for (int i = 0; i < inventory.getSize(); i++) {
+                        inventory.setItem(i, item);
+                    }
+                } else {
+                    inventory.setItem(plugin.bankAccountInventoryFile.getConfig().getInt("bank-inventory.contents." + key + ".slot"), item);
+                }
+
+                // Continue to next item.
+                continue;
+            }
+
             // Set item name.
             meta.setDisplayName(Utils.chatColor(plugin.bankAccountInventoryFile.getConfig().getString("bank-inventory.contents." + key + ".name")));
 
@@ -93,7 +109,22 @@ public class menuBankAccount extends Menu {
                 for (String line : plugin.bankAccountInventoryFile.getConfig().getStringList("bank-inventory.contents." + key + ".lore")) {
                     if (line.contains("%transactions%")) {
                         line.replaceAll("%transactions%", "");
-                        for (Transaction transaction : playerUtils.getTransactions(owner)) {
+
+                        // Get the limit of transactions to show.
+                        int transactionLimit = plugin.getConfig().getInt("Accounts.banks.options.transaction-log.limit");
+
+                        // Loop through all transactions. (Reverse order)
+                        for (int i = playerUtils.getTransactions(owner).size() - 1; i >= 0; i--) {
+                            // Get the transaction.
+                            Transaction transaction = playerUtils.getTransactions(owner).get(i);
+
+                            // Check if transaction is null.
+                            if (transaction == null) continue;
+
+                            // Check if transaction limit is reached.
+                            if (transactionLimit != -1 && i >= transactionLimit) break;
+
+                            // Add transaction to lore.
                             lore.add(Utils.chatColor(transaction.getLogMessage()));
                         }
                         continue;
