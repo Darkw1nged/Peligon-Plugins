@@ -69,11 +69,11 @@ public class economyCommand implements CommandExecutor {
 
                 // Check if operation is to add to cash balance.
                 if (args[0].equalsIgnoreCase("add")) {
-                    playerUtils.setCash(player, playerUtils.getCash(player) + amount);
+                    playerUtils.addCash(player, amount);
                 }
                 // Check if operation is to remove from cash balance.
                 else if (args[0].equalsIgnoreCase("remove")) {
-                    playerUtils.setCash(player, playerUtils.getCash(player) - amount);
+                    playerUtils.removeCashServer(player, amount);
                 }
                 // Check if operation is to set cash balance.
                 else if (args[0].equalsIgnoreCase("set")) {

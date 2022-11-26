@@ -3,10 +3,14 @@ package net.peligon.PeligonEconomy.libaries;
 import net.peligon.PeligonEconomy.Main;
 import net.peligon.PeligonEconomy.libaries.storage.CustomConfig;
 import net.peligon.PeligonEconomy.libaries.storage.SQLiteLibrary;
+import net.peligon.PeligonEconomy.libaries.storage.physicalNotes;
 import net.peligon.PeligonEconomy.libaries.struts.Transaction;
-import org.bukkit.Bukkit;
+import org.bukkit.NamespacedKey;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -90,6 +94,27 @@ public class playerUtils {
 
     // Get the players cash balance
     public static double getCash(OfflinePlayer player) {
+        // Check if physical cash is enabled
+        if (plugin.getConfig().getBoolean("Storage.physical", false)) {
+            // If player is not online, return.
+            if (!player.isOnline()) return 0.0;
+
+            // Initialize the cash variable
+            double cash = 0;
+
+            // Loop through the players inventory and add up the cash
+            for (int i = 0; i < player.getPlayer().getInventory().getSize(); i++) {
+                if (player.getPlayer().getInventory().getItem(i) != null) {
+                    // Check if the item has persistent data
+                    if (player.getPlayer().getInventory().getItem(i).getItemMeta().getPersistentDataContainer().has(new NamespacedKey(plugin, "cash-value"), PersistentDataType.DOUBLE)) {
+                        // Add the cash to the total
+                        cash += player.getPlayer().getInventory().getItem(i).getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "cash-value"), PersistentDataType.DOUBLE) * player.getPlayer().getInventory().getItem(i).getAmount();
+                    }
+                }
+            }
+            return cash;
+        }
+
         // Setting up the query for SQL
         String SQLQuery = "SELECT cash FROM peligonEconomy WHERE uuid='" + player.getUniqueId() + "';";
 
@@ -180,8 +205,168 @@ public class playerUtils {
         }
     }
 
+    // Add to players cash balance
+    public static void addCash(OfflinePlayer player, double amount) {
+        // Check if physical cash is enabled
+        if (plugin.getConfig().getBoolean("Storage.physical", false)) {
+            // Check if the player is online
+            if (!player.isOnline()) return;
+
+            // Amounts 0.01, 0.05, 0.10, 0.25, 1, 5, 10, 20, 50, 100 notes are available
+
+            // divide the amount by 100 to get the number of 100 notes
+            int hundreds = (int) (amount / 100);
+            // subtract the number of 100 notes from the amount
+            amount -= hundreds * 100;
+
+            // divide the amount by 50 to get the number of 50 notes
+            int fifties = (int) (amount / 50);
+            // subtract the number of 50 notes from the amount
+            amount -= fifties * 50;
+
+            // divide the amount by 20 to get the number of 20 notes
+            int twenties = (int) (amount / 20);
+            // subtract the number of 20 notes from the amount
+            amount -= twenties * 20;
+
+            // divide the amount by 10 to get the number of 10 notes
+            int tens = (int) (amount / 10);
+            // subtract the number of 10 notes from the amount
+            amount -= tens * 10;
+
+            // divide the amount by 5 to get the number of 5 notes
+            int fives = (int) (amount / 5);
+            // subtract the number of 5 notes from the amount
+            amount -= fives * 5;
+
+            // divide the amount by 1 to get the number of 1 notes
+            int ones = (int) (amount / 1);
+            // subtract the number of 1 notes from the amount
+            amount -= ones * 1;
+
+            // divide the amount by 0.25 to get the number of 0.25 coins
+            int quarters = (int) (amount / 0.25);
+            // subtract the number of 0.25 coins from the amount, round to 2 decimal places
+            amount = Math.round((amount - quarters * 0.25) * 100.0) / 100.0;
+
+            // divide the amount by 0.10 to get the number of 0.10 coins
+            int dimes = (int) (amount / 0.10);
+            // subtract the number of 0.10 coins from the amount, round to 2 decimal places
+            amount = Math.round((amount - dimes * 0.10) * 100.0) / 100.0;
+
+            // divide the amount by 0.05 to get the number of 0.05 coins
+            int nickels = (int) (amount / 0.05);
+            // subtract the number of 0.05 coins from the amount, round to 2 decimal places
+            amount = Math.round((amount - nickels * 0.05) * 100.0) / 100.0;
+
+            // divide the amount by 0.01 to get the number of 0.01 coins
+            int pennies = (int) (amount / 0.01);
+
+            // Get the players inventory
+            Inventory inventory = player.getPlayer().getInventory();
+
+            // Try and add the notes to the players inventory
+            Utils.hasSpace(inventory, physicalNotes.HundredDollar(), hundreds);
+            Utils.hasSpace(inventory, physicalNotes.FiftyDollar(), fifties);
+            Utils.hasSpace(inventory, physicalNotes.TwentyDollar(), twenties);
+            Utils.hasSpace(inventory, physicalNotes.TenDollar(), tens);
+            Utils.hasSpace(inventory, physicalNotes.FiveDollar(), fives);
+            Utils.hasSpace(inventory, physicalNotes.Dollar(), ones);
+            Utils.hasSpace(inventory, physicalNotes.Quarter(), quarters);
+            Utils.hasSpace(inventory, physicalNotes.Dime(), dimes);
+            Utils.hasSpace(inventory, physicalNotes.Nickel(), nickels);
+            Utils.hasSpace(inventory, physicalNotes.Penny(), pennies);
+            return;
+        }
+
+        // Setting up the query for SQL
+        String SQLQuery = "UPDATE peligonEconomy SET cash=cash+" + amount + " WHERE uuid='" + player.getUniqueId() + "';";
+
+        switch (plugin.storageType) {
+            case "file":
+                CustomConfig record = new CustomConfig(plugin, "data/" + player.getUniqueId(), false);
+                record.getConfig().set("cash", getCash(player) + amount);
+                record.saveConfig();
+                break;
+            case "mysql":
+                try {
+                    PreparedStatement statement = systemUtils.getSQLibrary().getConnection().prepareStatement(SQLQuery);
+                    statement.execute();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case "sqlite":
+                try {
+                    PreparedStatement statement = SQLiteLibrary.connection.prepareStatement(SQLQuery);
+                    statement.execute();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                break;
+        }
+    }
+
+    // Remove from players cash balance
+    public static void removeCashServer(OfflinePlayer player, double amount) {
+        if (plugin.getConfig().getBoolean("Storage.physical", false)) {
+            // Check if the player is online
+            if (!player.isOnline()) return;
+
+            // Get the players inventory
+            Inventory inventory = player.getPlayer().getInventory();
+
+            // Loop through the players inventory and remove the cash needed
+            for (int i = 0; i < inventory.getSize(); i++) {
+                if (inventory.getItem(i) != null) {
+                    // Check if the item has persistent data
+                    if (inventory.getItem(i).getItemMeta().getPersistentDataContainer().has(new NamespacedKey(plugin, "cash-value"), PersistentDataType.DOUBLE)) {
+                        double value = inventory.getItem(i).getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "cash-value"), PersistentDataType.DOUBLE) * inventory.getItem(i).getAmount();
+                        if (value > amount) {
+                            // Remove the amount of cash needed
+                            inventory.getItem(i).setAmount((int) (inventory.getItem(i).getAmount() - (amount / inventory.getItem(i).getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "cash-value"), PersistentDataType.DOUBLE))));
+                            return;
+                        } else {
+                            // Remove the item
+                            inventory.setItem(i, null);
+                            amount -= value;
+                        }
+                    }
+                }
+            }
+        }
+
+
+        // Setting up the query for SQL
+        String SQLQuery = "UPDATE peligonEconomy SET cash=cash-" + amount + " WHERE uuid='" + player.getUniqueId() + "';";
+
+        switch (plugin.storageType) {
+            case "file":
+                CustomConfig record = new CustomConfig(plugin, "data/" + player.getUniqueId(), false);
+                record.getConfig().set("cash", getCash(player) - amount);
+                record.saveConfig();
+                break;
+            case "mysql":
+                try {
+                    PreparedStatement statement = systemUtils.getSQLibrary().getConnection().prepareStatement(SQLQuery);
+                    statement.execute();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case "sqlite":
+                try {
+                    PreparedStatement statement = SQLiteLibrary.connection.prepareStatement(SQLQuery);
+                    statement.execute();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                break;
+        }
+    }
+
     // Remove cash from players balance
-    public static boolean removeCash(OfflinePlayer player, double amount) {
+    public static void removeCash(OfflinePlayer player, double amount) {
         // Checking if the player has enough cash
         if (!hasEnoughCash(player, amount)) {
             // Get amount of cash the player has
@@ -196,15 +381,11 @@ public class playerUtils {
                 // Removing the cash from the bank
                 setBankBalance(player, bankBalance - cashNeeded);
                 // Removing the cash from the players balance
-                setCash(player, 0);
-                return true;
-            } else {
-                return false;
+                removeCashServer(player, cash);
             }
         } else {
             // Removing the cash from the players balance
-            setCash(player, getCash(player) - amount);
-            return true;
+            removeCashServer(player, amount);
         }
     }
 

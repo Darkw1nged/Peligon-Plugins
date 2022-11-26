@@ -66,7 +66,7 @@ public class menuWithdraw extends Menu {
                 if (amount <= 0) return;
 
                 // withdraw amount.
-                playerUtils.setCash(player, playerUtils.getCash(player) + amount);
+                playerUtils.addCash(player, amount);
 
                 // Create a new transaction.
                 Transaction transaction = new Transaction(UUID.randomUUID(), player, Transaction.TransactionOperation.withdraw,
@@ -90,7 +90,7 @@ public class menuWithdraw extends Menu {
                 if (amount <= 0) return;
 
                 // Withdraw amount.
-                playerUtils.setCash(player, playerUtils.getCash(player) + amount);
+                playerUtils.addCash(player, amount);
 
                 // Create a new transaction.
                 transaction = new Transaction(UUID.randomUUID(), player, Transaction.TransactionOperation.withdraw,
@@ -116,7 +116,7 @@ public class menuWithdraw extends Menu {
                 amount = Math.round(amount * Math.pow(10, 2)) / Math.pow(10, 2);
 
                 // Withdraw amount.
-                playerUtils.setCash(player, playerUtils.getCash(player) + amount);
+                playerUtils.addCash(player, amount);
 
                 // Create a new transaction.
                 transaction = new Transaction(UUID.randomUUID(), player, Transaction.TransactionOperation.withdraw,

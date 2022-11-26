@@ -49,7 +49,7 @@ public class sellCommand implements CommandExecutor {
                 }
 
                 // Add the amount to the players account.
-                playerUtils.setCash(player, playerUtils.getCash(player) + amount);
+                playerUtils.addCash(player, amount);
 
                 // Send the player a message.
                 player.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("prefix") +

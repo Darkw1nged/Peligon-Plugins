@@ -129,8 +129,8 @@ public class signEvents implements Listener {
     private double getAmount(Chest chest, double amount, int i) {
         try {
             ItemStack item = chest.getInventory().getItem(i);
-            if (plugin.fileWorth.getConfig().contains("worth." + item.getType().name().toUpperCase())) {
-                amount += plugin.fileWorth.getConfig().getDouble("worth." + item.getType().name().toUpperCase()) * item.getAmount();
+            if (plugin.itemWorthFile.getConfig().contains("worth." + item.getType().name().toUpperCase())) {
+                amount += plugin.itemWorthFile.getConfig().getDouble("worth." + item.getType().name().toUpperCase()) * item.getAmount();
             }
             item.setAmount(0);
         } catch (Exception ignored) { }

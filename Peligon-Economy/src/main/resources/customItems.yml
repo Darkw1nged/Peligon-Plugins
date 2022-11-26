@@ -28,3 +28,105 @@ experience-bottle:
     - "&7Withdrawn by &e%player%&7."
     - ""
     - "&7Value: &a%amount%"
+
+# Physical Money ----------------
+Penny:
+  item: GOLD_NUGGET
+  name: "&6Penny"
+  lore:
+    - "&7Use coins to purchase items from"
+    - "&7players or the shop."
+    - ""
+    - "&7Value: &2$0.01"
+  worth: 0.01
+Nickel:
+  item: GOLD_NUGGET
+  name: "&6Nickel"
+  lore:
+    - "&7Use coins to purchase items from"
+    - "&7players or the shop."
+    - ""
+    - "&7Value: &2$0.05"
+  worth: 0.05
+Dime:
+  item: GOLD_NUGGET
+  name: "&6Dime"
+  lore:
+    - "&7Use coins to purchase items from"
+    - "&7players or the shop."
+    - ""
+    - "&7Value: &2$0.10"
+  # The amount of money the item holds.
+  worth: 0.10
+Quarter:
+  item: GOLD_NUGGET
+  name: "&6Quarter"
+  lore:
+    - "&7Use coins to purchase items from"
+    - "&7players or the shop."
+    - ""
+    - "&7Value: &2$0.25"
+  worth: 0.25
+Dollar:
+  item: GOLD_INGOT
+  name: "&6Dollar"
+  lore:
+    - "&7Use coins to purchase items from"
+    - "&7players or the shop."
+    - ""
+    - "&7Value: &2$1.00"
+  worth: 1.00
+Two-Dollar:
+  item: GOLD_INGOT
+  name: "&6Two-Dollar"
+  lore:
+    - "&7Use coins to purchase items from"
+    - "&7players or the shop."
+    - ""
+    - "&7Value: &2$2.00"
+  worth: 2.00
+Five-Dollar:
+  item: GOLD_INGOT
+  name: "&6Five Dollar"
+  lore:
+    - "&7Use coins to purchase items from"
+    - "&7players or the shop."
+    - ""
+    - "&7Value: &2$5.00"
+  worth: 5.00
+Ten-Dollar:
+  item: GOLD_INGOT
+  name: "&6Ten Dollar"
+  lore:
+    - "&7Use coins to purchase items from"
+    - "&7players or the shop."
+    - ""
+    - "&7Value: &2$10.00"
+  worth: 10.00
+Twenty-Dollar:
+  item: GOLD_INGOT
+  name: "&6Twenty Dollar"
+  lore:
+    - "&7Use coins to purchase items from"
+    - "&7players or the shop."
+    - ""
+    - "&7Value: &2$20.00"
+  worth: 20.00
+Fifty-Dollar:
+  item: GOLD_INGOT
+  name: "&6Fifty Dollar"
+  lore:
+    - "&7Use coins to purchase items from"
+    - "&7players or the shop."
+    - ""
+    - "&7Value: &2$50.00"
+  worth: 50.00
+Hundred-Dollar:
+  item: GOLD_INGOT
+  name: "&6Hundred Dollar"
+  lore:
+    - "&7Use coins to purchase items from"
+    - "&7players or the shop."
+    - ""
+    - "&7Value: &2$100.00"
+  worth: 100.00

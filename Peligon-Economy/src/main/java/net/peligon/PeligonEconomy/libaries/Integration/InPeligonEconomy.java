@@ -318,7 +318,7 @@ public class InPeligonEconomy implements Economy {
         if (amount < 0)
             return new EconomyResponse(0, 0, EconomyResponse.ResponseType.FAILURE, "Cannot deposit negative funds");
 
-        playerUtils.setCash(player, playerUtils.getCash(player) + amount);
+        playerUtils.addCash(player, amount);
         return new EconomyResponse(amount, getBalance(player), EconomyResponse.ResponseType.SUCCESS, null);
     }
 
@@ -334,7 +334,7 @@ public class InPeligonEconomy implements Economy {
         if (amount < 0)
             return new EconomyResponse(0, 0, EconomyResponse.ResponseType.FAILURE, "Cannot deposit negative funds");
 
-        playerUtils.setCash(player, playerUtils.getCash(player) + amount);
+        playerUtils.addCash(player, amount);
         return new EconomyResponse(amount, getBalance(player), EconomyResponse.ResponseType.SUCCESS, null);
     }
 
@@ -353,7 +353,7 @@ public class InPeligonEconomy implements Economy {
         if (amount < 0)
             return new EconomyResponse(0, 0, EconomyResponse.ResponseType.FAILURE, "Cannot deposit negative funds");
 
-        playerUtils.setCash(player, playerUtils.getCash(player) + amount);
+        playerUtils.addCash(player, amount);
         return new EconomyResponse(amount, getBalance(player), EconomyResponse.ResponseType.SUCCESS, null);
     }
 
@@ -371,7 +371,7 @@ public class InPeligonEconomy implements Economy {
         if (amount < 0)
             return new EconomyResponse(0, 0, EconomyResponse.ResponseType.FAILURE, "Cannot deposit negative funds");
 
-        playerUtils.setCash(player, playerUtils.getCash(player) + amount);
+        playerUtils.addCash(player, amount);
         return new EconomyResponse(amount, getBalance(player), EconomyResponse.ResponseType.SUCCESS, null);
     }
 

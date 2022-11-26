@@ -32,7 +32,6 @@ public final class Main extends JavaPlugin {
     public CustomConfig fileSigns = new CustomConfig(this, "signs", true);
     public CustomConfig filePouches = new CustomConfig(this, "pouches", true);
     public CustomConfig fileDailyReward = new CustomConfig(this, "Inventories/daily", true);
-
     public CustomConfig filedailyTaskGUI = new CustomConfig(this, "Inventories/daily-tasks", true);
     // TODO ------ Subject to change ------
 
@@ -143,6 +142,7 @@ public final class Main extends JavaPlugin {
                 new accountSetup(),
                 new customItemsEvents(),
                 new menuListener(),
+                new sellMenuCloseEvent(),
 
                 // TODO - rewrite these listeners
                 new bountyEvents(),
@@ -153,9 +153,6 @@ public final class Main extends JavaPlugin {
                 new grassScavengeEvents(),
                 new miningRewardsEvents(),
                 new luckyBlockEvents(),
-                new sellGUIEvents(),
-                new globalInventoryEvents(),
-                new customItemsEvents(),
                 new pouchesEvent()
         ).forEach(listener -> getServer().getPluginManager().registerEvents(listener, this));
     }
@@ -178,7 +175,6 @@ public final class Main extends JavaPlugin {
         getCommand("sellhand").setExecutor(new sellHandCommand());
         getCommand("autosell").setExecutor(new autoSellCommand());
         getCommand("chestsell").setExecutor(new chestSellCommand());
-
 
         // TODO - rewrite these commands
         getCommand("balancetop").setExecutor(new cmdBalanceTop());

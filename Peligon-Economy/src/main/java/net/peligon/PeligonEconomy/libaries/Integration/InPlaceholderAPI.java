@@ -47,10 +47,10 @@ public class InPlaceholderAPI extends PlaceholderExpansion {
     public String onPlaceholderRequest(Player player, String identifier) {
         // -- { Raw values } --
         if (identifier.equalsIgnoreCase("balance") || identifier.equalsIgnoreCase("cash")) {
-            return String.valueOf(plugin.Economy.getAccount(player));
+            return String.valueOf(playerUtils.getCash(player));
         }
         if (identifier.equalsIgnoreCase("bank")) {
-            return String.valueOf(plugin.Economy.getBank(player));
+            return String.valueOf(playerUtils.getBankBalance(player));
         }
 
         if (identifier.equalsIgnoreCase("server_balance") || identifier.equalsIgnoreCase("server_cash")) {
@@ -72,10 +72,10 @@ public class InPlaceholderAPI extends PlaceholderExpansion {
 
         // -- { Formatted values } --
         if (identifier.equalsIgnoreCase("formatted_balance") || identifier.equalsIgnoreCase("formatted_cash")) {
-            return Utils.format(plugin.Economy.getAccount(player));
+            return Utils.format(playerUtils.getCash(player));
         }
         if (identifier.equalsIgnoreCase("formatted_bank")) {
-            return Utils.format(plugin.Economy.getBank(player));
+            return Utils.format(playerUtils.getBankBalance(player));
         }
 
         if (identifier.equalsIgnoreCase("formatted_server_balance") || identifier.equalsIgnoreCase("formatted_server_cash")) {

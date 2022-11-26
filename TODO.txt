@@ -60,6 +60,7 @@ TODO -     -> Allow for auto pickup inside the backpack
 
 TODO - Peligon Economy (Rewrite)
 TODO - -> Include PeligonPlugins into compile
+TODO - -> Default coins currency.
 TODO - -> Storage types:
 TODO -   -> File
 TODO -   -> SQLite
@@ -72,24 +73,23 @@ TODO -   -> /peligoneconomy -> [peleconomy | pelecon] (Peligon.Economy.Admin)
 TODO -   -> /withdraw [amount] -> (Peligon.Economy.Withdraw)
 TODO -   -> /experienceBottle -> [xpbottle | expbottle | bottle] (Peligon.Economy.Bottle)
 TODO -   -> /experience -> [xp | exp] (Peligon.Economy.Experience : Peligon.Economy.Experience.Other)
+TODO -   -> /bank -> [atm] (Peligon.Economy.ATM | Peligon.Economy.access.ATM)
+TODO -   -> /sell (hand*Optional) -> (Peligon.Economy.Sell)
+TODO -   -> /sellhand -> (Peligon.Economy.Sell)
+TODO -   -> /sellchest -> (Peligon.Economy.Sell)
+TODO -   -> /autosell -> (Peligon.Economy.AutoSell)
+TODO -   -> /bounties -> (Peligon.Economy.Bounties)
+TODO -   -> /pay [player] [amount] -> (Peligon.Economy.Pay)
+TODO - -> Add support for physical notes.
 
 ---- { In Progress } ----
 
 TODO - Peligon Economy (Rewrite)
-TODO - -> Default coins currency.
 TODO - -> Commands:
 TODO -   -> /giveitem [player] [item] (amount): Permission (Peligon.Economy.Admin)
 TODO -   -> /balancetop -> [baltop | moneytop] (Peligon.Economy.BalanceTop)
-TODO -   -> /pay [player] [amount] -> (Peligon.Economy.Pay)
 TODO -   -> /daily -> (Peligon.Economy.Daily)
-TODO -   -> /sell (hand*Optional) -> (Peligon.Economy.Sell)
-TODO -   -> /sellhand -> (Peligon.Economy.Sell)
-TODO -   -> /sellall -> (Peligon.Economy.Sell)
-TODO -   -> /sellchest -> (Peligon.Economy.Sell)
-TODO -   -> /autosell -> (Peligon.Economy.AutoSell)
-TODO -   -> /bounties -> (Peligon.Economy.Bounties)
 TODO -   -> /bounty [player] [amount] -> (Peligon.Economy.Bounties)
-TODO -   -> /bank -> [atm] (Peligon.Economy.ATM | Peligon.Economy.access.ATM)
 TODO - -> Death penalty
 TODO -   -> Allow for a percentage of coins to be taken from a player when they die.
 TODO -   -> Allow for this to be disabled in certain worlds.
@@ -153,3 +153,215 @@ TODO -     -> Obsidian chest - 54 (page 1) 54 (page 2) [recipe - https://gyazo.c
 TODO -       -> This chest can not be blown up or moved with anything, Only a player can destroy it.
 TODO - -> Chest Lock
 TODO - -> Death Chests
+
+---- { Factions } ----
+TODO - Factions (New)
+TODO - -> Classes Available:
+TODO -   - Key:
+TODO -     -> [*] All booster rewards are faction booster rewards.
+TODO -     -> [+] Mana is used for abilities.
+TODO -     -> [+] Mana is gained by killing mobs.
+TODO -     -> [+] Mana is gained by killing players.
+TODO -     -> [+] Mana is gained by killing bosses.
+TODO -   -> Warrior
+TODO -     -> Max Rank: 75
+TODO -     - Ability
+TODO -       -> Strength{LEVEL DEPENDANT} for 5 seconds. [cooldown {LEVEL DEPENDANT}]
+TODO -       -> Dash{LEVEL DEPENDANT}. [cooldown {LEVEL DEPENDANT}]
+TODO -     - Level Rewards
+TODO -       -> [10] tier 2 money booster.
+TODO -       -> [25] Strength effect unlock
+TODO -       -> [40] Dash Unlock, tier 2 EXP Booster
+TODO -       -> [50] Strength 2 effect
+TODO -       -> [65] Strength 3 effect, tier 1 Mana Booster, tier 2 Money booster
+TODO -       -> [75] tier 1 EXP Booster, tier 1 Mana Booster
+TODO -   -> Miner
+TODO -     -> Max Rank: 75
+TODO -     - Ability
+TODO -       -> Haste{LEVEL DEPENDANT} for 5 seconds. [cooldown {LEVEL DEPENDANT}]
+TODO -       -> Jump{LEVEL DEPENDANT}. [cooldown {LEVEL DEPENDANT}]
+TODO -     - Level Rewards
+TODO -       -> [10] tier 2 money booster.
+TODO -       -> [25] Haste effect unlock
+TODO -       -> [40] tier 1 EXP Booster, tier 3 Luck Booster
+TODO -       -> [50] Haste 2 effect unlock
+TODO -       -> [65] Haste 3 effect unlock, tier 2 Mana Booster, tier 3 Money booster
+TODO -       -> [75] Haste 4 effect unlock, tier 1 EXP Booster, tier 1 Luck Booster
+TODO -   -> Scavenger
+TODO -     -> Max Rank: 75
+TODO -     - Ability
+TODO -       -> Speed{LEVEL DEPENDANT} for 3 seconds. [cooldown {LEVEL DEPENDANT}]
+TODO -       -> Double Experience{LEVEL DEPENDANT}. [cooldown {LEVEL DEPENDANT}]
+TODO -     - Level Rewards
+TODO -       -> [10] tier 2 experience booster.
+TODO -       -> [25] Speed effect unlock
+TODO -       -> [40] tier 1 EXP Booster, tier 3 Money Booster
+TODO -       -> [50] Double Experience unlock
+TODO -       -> [65] Speed 2 effect unlock, tier 2 Luck Booster, tier 2 Mana booster
+TODO -       -> [75] Speed 3 effect unlock, tier 1 EXP Booster, tier 1 Mana Booster
+TODO -   -> Medic
+TODO -     -> Max Rank: 100
+TODO -     - Ability
+TODO -       -> Faction Health Boost{LEVEL DEPENDANT} for 4 seconds. [cooldown {LEVEL DEPENDANT}]
+TODO -       -> Double damage hits{LEVEL DEPENDANT}. [cooldown {LEVEL DEPENDANT}]
+TODO -       -> Regeneration{LEVEL DEPENDANT}. [cooldown {LEVEL DEPENDANT}]
+TODO -     - Level Rewards
+TODO -       -> [10] tier 2 Mana booster.
+TODO -       -> [25] Faction Health Boost effect unlock
+TODO -       -> [40] tier 1 EXP Booster, tier 3 Mana Booster
+TODO -       -> [50] Double damage hits unlock
+TODO -       -> [65] Increased Faction Health Boost [2], tier 2 Mana Booster
+TODO -       -> [75] Regeneration unlock, tier 1 EXP Booster, tier 1 Mana Booster
+TODO -       -> [90] Increased Faction Health Boost [3], tier 1 EXP Booster, tier 1 Mana Booster
+TODO -       -> [100] Regeneration [+2] tier 1 Mana Booster
+TODO -   -> Cartographer
+TODO -     -> Max Rank: 50
+TODO -     - Ability
+TODO -       -> Highlight Nearby Enemies{LEVEL DEPENDANT}. [cooldown {LEVEL DEPENDANT}]
+TODO -       -> Highlight Nearby Meteors{LEVEL DEPENDANT}. [cooldown {LEVEL DEPENDANT}]
+TODO -       -> Highlight Nearby Chests{LEVEL DEPENDANT}. [cooldown {LEVEL DEPENDANT}]
+TODO -     - Level Rewards
+TODO -       -> [5] Highlight Nearby Enemies unlock : duration 3 seconds
+TODO -       -> [10] Highlight Nearby Enemies [+4 seconds], tier 2 Luck booster, tier 2 EXP booster
+TODO -       -> [12] Highlight Nearby Meteors unlock : duration 3 seconds
+TODO -       -> [15] Highlight Nearby Enemies [+3 seconds], tier 1 EXP booster
+TODO -       -> [25] Highlight Nearby Chests unlock : duration 3 seconds, Highlight Nearby Meteors [+4 seconds]
+TODO -       -> [30] Highlight Nearby Meteors [+3 seconds], tier 2 Luck booster, tier 2 EXP booster
+TODO -       -> [40] Highlight Nearby Chests [+4 seconds] tier 1 Luck booster
+TODO -       -> [50] tier 1 Luck booster, tier 1 EXP booster, tier 1 Mana booster, tier 1 Money booster
+TODO - -> Story Planets:
+TODO -   -> Marketplace:
+TODO -      -> Flags:
+TODO -        -> PVP Disabled.
+TODO -        -> Mob Spawning Disabled.
+TODO -        -> Mob Griefing Disabled.
+TODO -        -> No Damage taken.
+TODO -        -> Can't build.
+TODO -      -> Events:
+TODO -        -> Discounted prices in shops.
+TODO -   -> Seabed:
+TODO -      -> Flags:
+TODO -        -> PVP Disabled.
+TODO -        -> Mob Spawning Disabled.
+TODO -        -> Mob Griefing Disabled.
+TODO -        -> No Damage taken.
+TODO -        -> Can't build.
+TODO -      -> Events:
+TODO -        -> Crazy hour, Chance for rarer drops.
+TODO -      -> Loot:
+TODO -        -> Leather Boots
+TODO -        -> Glass Bottle
+TODO -        -> Pufferfish
+TODO -        -> Coins
+TODO -        -> Stone
+TODO -   -> Resource:
+TODO -      -> Flags:
+TODO -        -> PVP Disabled.
+TODO -        -> Mob Spawning Enabled.
+TODO -        -> Mob Griefing Disabled.
+TODO -        -> Damage taken.
+TODO -        -> Can't build.
+TODO -      -> Events:
+TODO -        -> Crazy hour, Chance for extra loot from mining and killing mobs.
+TODO -   -> Wilderness:
+TODO -      -> Flags:
+TODO -        -> PVP Enabled.
+TODO -        -> Mob Spawning Enabled.
+TODO -        -> Mob Griefing Enabled.
+TODO -        -> Damage taken.
+TODO -        -> Can build.
+TODO -      -> Events:
+TODO -        -> Meteor shower : Delay 60 minutes, 30 minutes for cleanup.
+TODO -        -> Crazy hour, Chance for extra loot from mining and killing mobs.
+TODO -        -> Crazy hour, Chance for rarer drops.
+TODO -   -> Warzone:
+TODO -      -> Flags:
+TODO -        -> PVP Enabled.
+TODO -        -> Mob Spawning Enabled.
+TODO -        -> Mob Griefing Disabled.
+TODO -        -> Damage taken.
+TODO -        -> Can't build.
+TODO -      -> Events:
+TODO -        -> Crazy hour, Chance for extra loot from killing mobs.
+TODO -        -> Crazy hour, Chance for rarer drops.
+TODO -        -> Meteor shower : Delay 60 minutes, 30 minutes for cleanup.
+TODO -        -> Outposts : Capture time, 5 minutes.
+TODO -        -> Outposts Types : Money, Experience.
+TODO - -> Gangs
+TODO -    ⬐―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――⬎
+TODO -    │                                                                                    │
+TODO -    │      ! Each faction has their own planet/world                                     │
+TODO -    │      ! Planet sizes are the same                                                   │
+TODO -    │      ! Planet will have their own distinct ID                                      │
+TODO -    │      ! When a gang has another planet, it can not be the same as their main        │
+TODO -    │        one.                                                                        │
+TODO -    │      ! Collections will be unique to each planets but some may stay the same.      │
+TODO -    │                                                                                    │
+TODO -    ⬑―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――⬏
+TODO -   -> Faction Planet Name
+TODO -     -> max-length: 15 characters
+TODO -     -> min-length: 3 characters
+TODO -   -> Faction Planet Description
+TODO -     -> max-length: 150 characters
+TODO -   -> Shield:
+TODO -     -> types: [2hr, 4hr, 8hr, 12hr, 24hr] : Stackable
+TODO -   -> Members:
+TODO -     -> max-member-size: 10
+TODO -     -> max-planets: 2
+TODO -   -> Faction Planet:
+TODO -     -> Desert
+TODO -     -> Adventure
+TODO -     -> Sky
+TODO -   -> Ranks:
+TODO -     -> President
+TODO -       -> Can disolve planet (Remove completely)
+TODO -       -> Can build
+TODO -       -> Can declare war
+TODO -       -> Can toggle friendly fire
+TODO -       -> Can toggle planet events
+TODO -       -> Can kick members
+TODO -       -> Can start quests
+TODO -       -> Can contribute to collections
+TODO -       -> Can edit members ranks
+TODO -     -> Vice President
+TODO -       -> Can build
+TODO -       -> Can declare war
+TODO -       -> Can toggle friendly fire
+TODO -       -> Can toggle planet events
+TODO -       -> Can kick members
+TODO -       -> Can start quests
+TODO -       -> Can contribute to collections
+TODO -       -> Can edit members ranks
+TODO -     -> Captain
+TODO -       -> Can build
+TODO -       -> Can declare war
+TODO -       -> Can toggle friendly fire
+TODO -       -> Can start quests
+TODO -       -> Can contribute to collections
+TODO -     -> Officer
+TODO -       -> Can build
+TODO -       -> Can declare war
+TODO -       -> Can contribute to collections
+TODO -     -> Member
+TODO -       -> Can build
+TODO -       -> Can contribute to collections
+TODO -   -> Levels:
+TODO -     -> 0:
+TODO -        - Planet unlocks
+TODO -        - Maximum members: 3
+TODO -        - Access to resource planet
+TODO -     -> 1:
+TODO -        - Planet EXP booster
+TODO -        - +$5000
+TODO -     -> 2:
+TODO -        - Unlocks quests
+TODO -        - Unlocks warzone planet.
+TODO -     -> 3:
+TODO -        - +$5000
+TODO -     -> 4:
+TODO -        - Planet money booster
+TODO -     -> 5:
+TODO -        - Unlocks raiding ability.
+TODO -        - Maximum members: 5
+TODO - * As faction level increases so will, money, experience gained, +0.25 per level. {After level 10}
+TODO - * Level 10 | Able to have 2 profiles per player.

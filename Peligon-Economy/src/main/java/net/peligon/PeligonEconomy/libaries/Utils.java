@@ -3,6 +3,7 @@ package net.peligon.PeligonEconomy.libaries;
 import net.peligon.PeligonEconomy.Main;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Item;
@@ -10,6 +11,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.text.NumberFormat;
@@ -157,6 +159,10 @@ public class Utils {
 
     // Check if the player has enough space to add a new item.
     public static boolean hasSpace(Inventory inventory, ItemStack targetItem, int amount) {
+        // If amount is 0, return true
+        if (amount == 0) return true;
+
+
         // Looping through the players inventory.
         for (int i = 0; i < inventory.getSize(); i++) {
             // Check if i == 36, if so, break the loop.
@@ -264,6 +270,8 @@ public class Utils {
         for (ItemStack itemStack : inventory.getStorageContents()) {
             // Check if the item is null.
             if (itemStack == null) continue;
+            // check if the item has cash-value in PersistentDataContainer
+            if (itemStack.hasItemMeta() && itemStack.getItemMeta().getPersistentDataContainer().has(new NamespacedKey(plugin, "cash-value"), PersistentDataType.DOUBLE)) continue;
 
             // Check if item is inside of worth.yml
             if (plugin.itemWorthFile.getConfig().contains("worth." + itemStack.getType().name().toUpperCase())) {
