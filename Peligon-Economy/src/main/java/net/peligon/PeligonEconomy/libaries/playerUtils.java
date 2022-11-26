@@ -318,40 +318,30 @@ public class playerUtils {
 
     // Check if player has enough bank balance
     public static boolean hasEnoughBankBalance(OfflinePlayer player, double amount) {
-        return getBankBalance(player) >= amount;
+        return plugin.getConfig().getBoolean("Accounts.banks.enabled", true) && getBankBalance(player) >= amount ? getBankBalance(player) >= amount : getCash(player) >= amount;
     }
 
     // Get the amount of experience a player needs to level up.
     public static int getExpToLevelUp(int level) {
-        if (level <= 15) {
-            return 2 * level + 7;
-        } else if (level <= 30) {
-            return 5 * level - 38;
-        } else {
-            return 9 * level - 158;
-        }
+        return (level <= 15) ? 2 * level + 7 : (level <= 30) ? 5 * level - 38 : 9 * level - 158;
     }
 
     // Get the amount of experience at a certain level.
     public static int getExpAtLevel(int level) {
-        if (level <= 16) {
-            return (int) (Math.pow(level, 2) + 6 * level);
-        } else if (level <= 31) {
-            return (int) (2.5 * Math.pow(level, 2) - 40.5 * level + 360.0);
-        } else {
-            return (int) (4.5 * Math.pow(level, 2) - 162.5 * level + 2220.0);
-        }
+        return (level <= 16) ? (int) Math.pow(level, 2) + 6 * level : (level <= 31) ? (int) (2.5 * Math.pow(level, 2) - 40.5 * level + 360) : (int) (4.5 * Math.pow(level, 2) - 162.5 * level + 2220);
     }
 
     // Get the amount of experience a player has.
     public static int getPlayerExp(Player player) {
+        // Setting experience to 0
         int exp = 0;
+        // Getting the players level
         int level = player.getLevel();
 
+        // Updating the experience variable
         exp += getExpAtLevel(level);
-
         exp += Math.round(getExpToLevelUp(level) * player.getExp());
-
+        // Returning the experience
         return exp;
     }
 

@@ -16,6 +16,12 @@ public class experienceCommand implements CommandExecutor {
 
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("experience")) {
+            // Check if the command is disabled.
+            if (plugin.getConfig().getStringList("disabled-commands").contains("experience")) {
+                sender.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("error-disabled-command")));
+                return true;
+            }
+
             // Check if console sent the command.
             if (!(sender instanceof Player)) {
                 // Check if all arguments are present.

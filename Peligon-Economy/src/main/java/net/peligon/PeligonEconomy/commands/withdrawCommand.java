@@ -26,6 +26,12 @@ public class withdrawCommand implements CommandExecutor {
 
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("withdraw")) {
+            // Check if the command is disabled.
+            if (plugin.getConfig().getStringList("disabled-commands").contains("withdraw")) {
+                sender.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("error-disabled-command")));
+                return true;
+            }
+
             // If sender is not a player. return a console error message.
             if (!(sender instanceof Player)) {
                 sender.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("error-console")));

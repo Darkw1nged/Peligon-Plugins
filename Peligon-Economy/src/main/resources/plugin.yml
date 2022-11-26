@@ -34,6 +34,8 @@ commands:
       - xp
       - exp
     description: Allows users to check their experience.
+  pay:
+    description: Allows users to transfer money to each other.
   withdraw:
     aliases:
       - withdraw
@@ -49,7 +51,16 @@ commands:
     aliases:
       - atm
     description: Allows users to check their bank balance.
-
+  sell:
+    aliases:
+      - sellall
+    description: Allows users to sell all items in their inventory.
+  sellhand:
+    description: Allows users to sell all items that is in thir hand.
+  autosell:
+    description: Allows users to toggle autosell.
+  chestsell:
+    description: Allows users to sell items in a chest.
 
 
   balancetop:
@@ -59,20 +70,8 @@ commands:
     description: Allow users to see who has the most money
   bounty:
     description: Allows users to set bounties on peoples head
-  sell:
-    aliases:
-      - sellall
-    description: Allows users to sell all items inside of their inventory
-  sellhand:
-    description: Allows users to sell all items that is in thir hand
-  autosell:
-    description: Allows users to automatically sell their items
-  chestsell:
-    description: Allows users to sell things inside of chests with a command
   sellwand:
     description: Allows users to sell items inside of chests with an item
-  pay:
-    description: Allows users to transfer money to each other
   daily:
     description: Allows users to get a daily reward
   gift:

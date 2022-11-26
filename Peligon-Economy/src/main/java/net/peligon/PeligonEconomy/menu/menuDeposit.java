@@ -216,7 +216,6 @@ public class menuDeposit extends Menu {
             case "goback":
                 new menuBankAccount(player).open();
                 event.setCancelled(true);
-                return;
         }
     }
 
@@ -240,12 +239,12 @@ public class menuDeposit extends Menu {
             // Check if meta is null.
             if (meta == null) {
                 // Add item to inventory.
-                if (plugin.bankAccountInventoryFile.getConfig().getInt("bank-inventory.contents." + key + ".slot") == -1) {
+                if (plugin.bankAccountInventoryFile.getConfig().getInt("deposit-inventory.contents." + key + ".slot") == -1) {
                     for (int i = 0; i < inventory.getSize(); i++) {
                         inventory.setItem(i, item);
                     }
                 } else {
-                    inventory.setItem(plugin.bankAccountInventoryFile.getConfig().getInt("bank-inventory.contents." + key + ".slot"), item);
+                    inventory.setItem(plugin.bankAccountInventoryFile.getConfig().getInt("deposit-inventory.contents." + key + ".slot"), item);
                 }
 
                 // Continue to next item.
@@ -257,16 +256,28 @@ public class menuDeposit extends Menu {
 
             // Getting the item lore.
             List<String> lore = new ArrayList<>();
-            // Loop through all lore in the config.
-            for (String loreLine : plugin.bankAccountInventoryFile.getConfig().getStringList("deposit-inventory.contents." + key + ".lore")) {
-                // Add lore to list.
-                lore.add(Utils.chatColor(loreLine)
-                        .replaceAll("%cash%", Utils.format(playerUtils.getCash(owner)))
-                        .replaceAll("%bank%", Utils.format(playerUtils.getBankBalance(owner))));
-            }
 
-            // Set item lore.
-            meta.setLore(lore);
+            System.out.println("key: " + key);
+            System.out.println("has lore?: " + plugin.bankAccountInventoryFile.getConfig().contains("deposit-inventory.contents." + key + ".lore"));
+            System.out.println("lore: " + plugin.bankAccountInventoryFile.getConfig().getStringList("deposit-inventory.contents." + key + ".lore"));
+
+            // Check item has a lore.
+            if (plugin.bankAccountInventoryFile.getConfig().contains("deposit-inventory.contents." + key + ".lore")) {
+                // Loop through all lore in the config.
+                for (String loreLine : plugin.bankAccountInventoryFile.getConfig().getStringList("deposit-inventory.contents." + key + ".lore")) {
+                    // Add lore to list.
+                    lore.add(Utils.chatColor(loreLine)
+                            .replaceAll("%cash%", Utils.format(playerUtils.getCash(owner)))
+                            .replaceAll("%bank%", Utils.format(playerUtils.getBankBalance(owner))));
+                }
+
+                // Set item lore.
+                meta.setLore(lore);
+                // Clear lore list.
+                lore.clear();
+            } else {
+                meta.setLore(new ArrayList<>());
+            }
 
             // Set item event.
             if (plugin.bankAccountInventoryFile.getConfig().contains("deposit-inventory.contents." + key + ".event")) {

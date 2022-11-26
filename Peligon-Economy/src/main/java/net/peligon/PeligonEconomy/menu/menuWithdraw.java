@@ -238,12 +238,12 @@ public class menuWithdraw extends Menu {
             // Check if meta is null.
             if (meta == null) {
                 // Add item to inventory.
-                if (plugin.bankAccountInventoryFile.getConfig().getInt("bank-inventory.contents." + key + ".slot") == -1) {
+                if (plugin.bankAccountInventoryFile.getConfig().getInt("withdraw-inventory.contents." + key + ".slot") == -1) {
                     for (int i = 0; i < inventory.getSize(); i++) {
                         inventory.setItem(i, item);
                     }
                 } else {
-                    inventory.setItem(plugin.bankAccountInventoryFile.getConfig().getInt("bank-inventory.contents." + key + ".slot"), item);
+                    inventory.setItem(plugin.bankAccountInventoryFile.getConfig().getInt("withdraw-inventory.contents." + key + ".slot"), item);
                 }
 
                 // Continue to next item.
@@ -265,6 +265,8 @@ public class menuWithdraw extends Menu {
 
             // Set item lore.
             meta.setLore(lore);
+            // Clear lore list.
+            lore.clear();
 
             // Set item event.
             if (plugin.bankAccountInventoryFile.getConfig().contains("withdraw-inventory.contents." + key + ".event")) {

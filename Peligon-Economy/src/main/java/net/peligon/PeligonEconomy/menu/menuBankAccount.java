@@ -154,6 +154,8 @@ public class menuBankAccount extends Menu {
 
             // Set item lore.
             meta.setLore(lore);
+            // Clear lore list.
+            lore.clear();
 
             // Set item event.
             if (plugin.bankAccountInventoryFile.getConfig().contains("bank-inventory.contents." + key + ".event")) {

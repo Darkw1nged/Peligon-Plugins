@@ -14,6 +14,13 @@ public class bankCommand implements CommandExecutor {
 
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("bank")) {
+            // Check if the command is disabled.
+            if (plugin.getConfig().getStringList("disabled-commands").contains("bank")) {
+                sender.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("error-disabled-command")));
+                return true;
+            }
+
+
             // We can not allow the console to use this command.
             if (!(sender instanceof Player)) {
                 sender.sendMessage(Utils.chatColor(plugin.languageFile.getConfig().getString("console")));

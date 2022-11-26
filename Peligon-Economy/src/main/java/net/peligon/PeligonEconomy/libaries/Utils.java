@@ -5,6 +5,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -120,37 +121,6 @@ public class Utils {
 
         // Returning the formatted time
         return formatted;
-
-
-//        LocalDateTime now = LocalDateTime.now();
-//        LocalDateTime then = date.toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDateTime();
-//        Duration duration = Duration.between(then, now);
-//
-//        System.out.println("now: " + now);
-//        System.out.println("then: " + then);
-//        System.out.println("duration: " + duration);
-//
-//        String formatted = "";
-//        if (duration.toDays() != 0) {
-//            formatted += duration.toDays() + "d, ";
-//        }
-//        System.out.println("formatted: " + formatted);
-//
-//        if (duration.toHours() != 0) {
-//            formatted += duration.toHours() % 24 + "h, ";
-//        }
-//        System.out.println("formatted: " + formatted);
-//
-//        if (duration.toMinutes() != 0) {
-//            formatted += duration.toMinutes() % 60 + "m, ";
-//        }
-//        System.out.println("formatted: " + formatted);
-//
-//        if (duration.getSeconds() != 0) {
-//            formatted += duration.getSeconds() % 60 + "s";
-//        }
-//        System.out.println("formatted: " + formatted);
-//        return formatted;
     }
 
     // Get abbreviation from a string and convert it to a double
@@ -264,6 +234,63 @@ public class Utils {
         }
         return false;
     }
+
+    // Getting the total amount an inventory is worth.
+    public static Double getInventoryValue(Inventory inventory) {
+        double value = 0;
+
+        // Looping through the inventory.
+        for (ItemStack item : inventory.getStorageContents()) {
+            // Check if the item is null.
+            if (item == null) continue;
+
+            // Check if item is inside of worth.yml
+            if (plugin.itemWorthFile.getConfig().contains("worth." + item.getType().name().toUpperCase())) {
+                // Adding the value of the item to the total value.
+                value += plugin.itemWorthFile.getConfig().getDouble("worth." + item.getType().name().toUpperCase()) * item.getAmount();
+                // Set the item amount to 0.
+                item.setAmount(0);
+            }
+        }
+        // Return the value.
+        return value;
+    }
+
+    // Getting the total amount of an item value in an inventory.
+    public static Double getInventoryItemValue(Inventory inventory, ItemStack item) {
+        double value = 0;
+
+        // Looping through the inventory.
+        for (ItemStack itemStack : inventory.getStorageContents()) {
+            // Check if the item is null.
+            if (itemStack == null) continue;
+
+            // Check if item is inside of worth.yml
+            if (plugin.itemWorthFile.getConfig().contains("worth." + itemStack.getType().name().toUpperCase())) {
+                // Check if the item is the same as the target item.
+                if (itemStack.getType() == item.getType()) {
+                    // Adding the value of the item to the total value.
+                    value += plugin.itemWorthFile.getConfig().getDouble("worth." + itemStack.getType().name().toUpperCase()) * itemStack.getAmount();
+                    // Set the item amount to 0.
+                    itemStack.setAmount(0);
+                }
+            }
+        }
+        // Return the value.
+        return value;
+    }
+
+
+    // Check if a string is a number.
+    public static boolean isNumber(String string) {
+        try {
+            Integer.parseInt(string);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
 
 
     // TODO ---- SUBJECT FOR REMOVAL ----

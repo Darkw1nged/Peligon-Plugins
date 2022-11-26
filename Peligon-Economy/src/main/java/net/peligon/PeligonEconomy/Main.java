@@ -24,15 +24,15 @@ public final class Main extends JavaPlugin {
     public CustomConfig languageFile;
     public CustomConfig custonItemsFile = new CustomConfig(this, "customItems", true);
     public CustomConfig bankAccountInventoryFile = new CustomConfig(this, "Inventories/bank-account", true);
-
+    public CustomConfig sellInventoryFile = new CustomConfig(this, "Inventories/sellGUI", true);
+    public CustomConfig itemWorthFile = new CustomConfig(this, "worth", true);
 
 
     // TODO ------ Subject to change ------
-    public CustomConfig fileWorth = new CustomConfig(this, "worth", true);
     public CustomConfig fileSigns = new CustomConfig(this, "signs", true);
     public CustomConfig filePouches = new CustomConfig(this, "pouches", true);
     public CustomConfig fileDailyReward = new CustomConfig(this, "Inventories/daily", true);
-    public CustomConfig fileSellGUI = new CustomConfig(this, "Inventories/sellGUI", true);
+
     public CustomConfig filedailyTaskGUI = new CustomConfig(this, "Inventories/daily-tasks", true);
     // TODO ------ Subject to change ------
 
@@ -53,13 +53,13 @@ public final class Main extends JavaPlugin {
         saveDefaultConfig();
         custonItemsFile.saveDefaultConfig();
         bankAccountInventoryFile.saveDefaultConfig();
+        sellInventoryFile.saveDefaultConfig();
+        itemWorthFile.saveDefaultConfig();
         // TODO -------- Subject to removeal --------
-        fileWorth.saveDefaultConfig();
         fileSigns.saveDefaultConfig();
         filePouches.saveDefaultConfig();
         fileDailyReward.saveDefaultConfig();
         filedailyTaskGUI.saveDefaultConfig();
-        fileSellGUI.saveDefaultConfig();
         // TODO -------- Subject to removeal --------
 
         // Check for vault dependency.
@@ -170,17 +170,18 @@ public final class Main extends JavaPlugin {
         getCommand("economy").setExecutor(new economyCommand());
         getCommand("balance").setExecutor(new balanceCommand());
         getCommand("experience").setExecutor(new experienceCommand());
+        getCommand("pay").setExecutor(new payCommand());
         getCommand("withdraw").setExecutor(new withdrawCommand());
         getCommand("expbottle").setExecutor(new experienceBottleCommand());
         getCommand("bank").setExecutor(new bankCommand());
+        getCommand("sell").setExecutor(new sellCommand());
+        getCommand("sellhand").setExecutor(new sellHandCommand());
+        getCommand("autosell").setExecutor(new autoSellCommand());
+        getCommand("chestsell").setExecutor(new chestSellCommand());
+
 
         // TODO - rewrite these commands
         getCommand("balancetop").setExecutor(new cmdBalanceTop());
-        getCommand("pay").setExecutor(new cmdPay());
-        getCommand("sell").setExecutor(new cmdSell());
-        getCommand("sellhand").setExecutor(new cmdSellHand());
-        getCommand("autosell").setExecutor(new cmdSellAuto());
-        getCommand("chestsell").setExecutor(new cmdSellChest());
         getCommand("sellwand").setExecutor(new cmdSellWand());
         getCommand("bounty").setExecutor(new cmdBounty());
         getCommand("daily").setExecutor(new cmdDaily());

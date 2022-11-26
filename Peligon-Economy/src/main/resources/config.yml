@@ -20,6 +20,9 @@ Storage:
   # Should cash be treated as a physical item?
   physical: false
 
+defaults:
+  sell-gui: true
+
 Accounts:
   banks:
     enabled: true
@@ -47,6 +50,19 @@ Accounts:
     starting-cash-balance: 100.0
     # Set the starting balance for new bank accounts.
     starting-bank-balance: 0
+
+# Get the list of disabled commands.
+disabled-commands:
+#  - balance
+#  - experience
+#  - bank
+#  - pay
+#  - withdraw
+#  - expbottle
+#  - sell
+#  - sellhand
+#  - chestsell
+#  - autosell
 
 # This will automatically check for updates
 check-for-updates: true
