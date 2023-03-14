@@ -15,10 +15,7 @@ import org.bukkit.persistence.PersistentDataType;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class playerUtils {
 
@@ -212,70 +209,34 @@ public class playerUtils {
             // Check if the player is online
             if (!player.isOnline()) return;
 
-            // Amounts 0.01, 0.05, 0.10, 0.25, 1, 5, 10, 20, 50, 100 notes are available
+            // Adding all cash types to a list
+            Map<ItemStack, Integer> cashTypes = new HashMap<>();
+            cashTypes.put(physicalNotes.Cash1(), 0);
+            cashTypes.put(physicalNotes.Cash2(), 0);
+            cashTypes.put(physicalNotes.Cash3(), 0);
+            cashTypes.put(physicalNotes.Cash4(), 0);
+            cashTypes.put(physicalNotes.Cash5(), 0);
+            cashTypes.put(physicalNotes.Cash6(), 0);
+            cashTypes.put(physicalNotes.Cash7(), 0);
+            cashTypes.put(physicalNotes.Cash8(), 0);
+            cashTypes.put(physicalNotes.Cash9(), 0);
+            cashTypes.put(physicalNotes.Cash10(), 0);
+            cashTypes.put(physicalNotes.Cash11(), 0);
 
-            // divide the amount by 100 to get the number of 100 notes
-            int hundreds = (int) (amount / 100);
-            // subtract the number of 100 notes from the amount
-            amount -= hundreds * 100;
+            // Looping through the cash types and updating the amount
+            for (ItemStack cashType : cashTypes.keySet()) {
+                while (amount >= cashType.getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "cash-value"), PersistentDataType.DOUBLE)) {
+                    amount = Math.round((amount - cashType.getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "cash-value"), PersistentDataType.DOUBLE)) * 100.0) / 100.0;
+                    cashTypes.put(cashType, cashTypes.get(cashType) + 1);
+                }
+            }
 
-            // divide the amount by 50 to get the number of 50 notes
-            int fifties = (int) (amount / 50);
-            // subtract the number of 50 notes from the amount
-            amount -= fifties * 50;
-
-            // divide the amount by 20 to get the number of 20 notes
-            int twenties = (int) (amount / 20);
-            // subtract the number of 20 notes from the amount
-            amount -= twenties * 20;
-
-            // divide the amount by 10 to get the number of 10 notes
-            int tens = (int) (amount / 10);
-            // subtract the number of 10 notes from the amount
-            amount -= tens * 10;
-
-            // divide the amount by 5 to get the number of 5 notes
-            int fives = (int) (amount / 5);
-            // subtract the number of 5 notes from the amount
-            amount -= fives * 5;
-
-            // divide the amount by 1 to get the number of 1 notes
-            int ones = (int) (amount / 1);
-            // subtract the number of 1 notes from the amount
-            amount -= ones * 1;
-
-            // divide the amount by 0.25 to get the number of 0.25 coins
-            int quarters = (int) (amount / 0.25);
-            // subtract the number of 0.25 coins from the amount, round to 2 decimal places
-            amount = Math.round((amount - quarters * 0.25) * 100.0) / 100.0;
-
-            // divide the amount by 0.10 to get the number of 0.10 coins
-            int dimes = (int) (amount / 0.10);
-            // subtract the number of 0.10 coins from the amount, round to 2 decimal places
-            amount = Math.round((amount - dimes * 0.10) * 100.0) / 100.0;
-
-            // divide the amount by 0.05 to get the number of 0.05 coins
-            int nickels = (int) (amount / 0.05);
-            // subtract the number of 0.05 coins from the amount, round to 2 decimal places
-            amount = Math.round((amount - nickels * 0.05) * 100.0) / 100.0;
-
-            // divide the amount by 0.01 to get the number of 0.01 coins
-            int pennies = (int) (amount / 0.01);
-
-            // Get the players inventory
-            Inventory inventory = player.getPlayer().getInventory();
-
-            // Try and add the notes to the players inventory
-            Utils.hasSpace(inventory, physicalNotes.HundredDollar(), hundreds);
-            Utils.hasSpace(inventory, physicalNotes.FiftyDollar(), fifties);
-            Utils.hasSpace(inventory, physicalNotes.TwentyDollar(), twenties);
-            Utils.hasSpace(inventory, physicalNotes.TenDollar(), tens);
-            Utils.hasSpace(inventory, physicalNotes.FiveDollar(), fives);
-            Utils.hasSpace(inventory, physicalNotes.Dollar(), ones);
-            Utils.hasSpace(inventory, physicalNotes.Quarter(), quarters);
-            Utils.hasSpace(inventory, physicalNotes.Dime(), dimes);
-            Utils.hasSpace(inventory, physicalNotes.Nickel(), nickels);
-            Utils.hasSpace(inventory, physicalNotes.Penny(), pennies);
+            // Looping through the cash types and adding them to the players inventory
+            for (ItemStack cashType : cashTypes.keySet()) {
+                if (cashTypes.get(cashType) > 0) {
+                    Utils.hasSpace(player.getPlayer().getInventory(), cashType, cashTypes.get(cashType));
+                }
+            }
             return;
         }
 

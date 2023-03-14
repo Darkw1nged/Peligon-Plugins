@@ -30,7 +30,7 @@ experience-bottle:
     - "&7Value: &a%amount%"
 
 # Physical Money ----------------
-Penny:
+cash-1:
   item: GOLD_NUGGET
   name: "&6Penny"
   lore:
@@ -39,7 +39,7 @@ Penny:
     - ""
     - "&7Value: &2$0.01"
   worth: 0.01
-Nickel:
+cash-2:
   item: GOLD_NUGGET
   name: "&6Nickel"
   lore:
@@ -48,7 +48,7 @@ Nickel:
     - ""
     - "&7Value: &2$0.05"
   worth: 0.05
-Dime:
+cash-3:
   item: GOLD_NUGGET
   name: "&6Dime"
   lore:
@@ -58,7 +58,7 @@ Dime:
     - "&7Value: &2$0.10"
   # The amount of money the item holds.
   worth: 0.10
-Quarter:
+cash-4:
   item: GOLD_NUGGET
   name: "&6Quarter"
   lore:
@@ -67,7 +67,7 @@ Quarter:
     - ""
     - "&7Value: &2$0.25"
   worth: 0.25
-Dollar:
+cash-5:
   item: GOLD_INGOT
   name: "&6Dollar"
   lore:
@@ -76,7 +76,7 @@ Dollar:
     - ""
     - "&7Value: &2$1.00"
   worth: 1.00
-Two-Dollar:
+cash-6:
   item: GOLD_INGOT
   name: "&6Two-Dollar"
   lore:
@@ -85,7 +85,7 @@ Two-Dollar:
     - ""
     - "&7Value: &2$2.00"
   worth: 2.00
-Five-Dollar:
+cash-7:
   item: GOLD_INGOT
   name: "&6Five Dollar"
   lore:
@@ -94,7 +94,7 @@ Five-Dollar:
     - ""
     - "&7Value: &2$5.00"
   worth: 5.00
-Ten-Dollar:
+cash-8:
   item: GOLD_INGOT
   name: "&6Ten Dollar"
   lore:
@@ -103,7 +103,7 @@ Ten-Dollar:
     - ""
     - "&7Value: &2$10.00"
   worth: 10.00
-Twenty-Dollar:
+cash-9:
   item: GOLD_INGOT
   name: "&6Twenty Dollar"
   lore:
@@ -112,7 +112,7 @@ Twenty-Dollar:
     - ""
     - "&7Value: &2$20.00"
   worth: 20.00
-Fifty-Dollar:
+cash-10:
   item: GOLD_INGOT
   name: "&6Fifty Dollar"
   lore:
@@ -121,7 +121,7 @@ Fifty-Dollar:
     - ""
     - "&7Value: &2$50.00"
   worth: 50.00
-Hundred-Dollar:
+cash-11:
   item: GOLD_INGOT
   name: "&6Hundred Dollar"
   lore:

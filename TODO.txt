@@ -110,7 +110,7 @@ TODO - -> completely change atm system.
 TODO - Peligon Polls (Update)
 TODO - -> Include PeligonPlugins into compile
 TODO - -> Allow for there to be no discord interaction.
-         -> Meaning plugin will not disable if the config is set up properly, discord integration is an option.
+        -> Meaning plugin will not disable if the config is set up properly, discord integration is an option.
 TODO - -> Add support to create a poll inside of discord.
 TODO - -> Allow voting inside discord.
 

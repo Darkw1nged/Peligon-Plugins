@@ -13,19 +13,19 @@ public class physicalNotes {
     // Getting the instance of the main class.
     private static final Main plugin = Main.getInstance;
 
-    public static ItemStack Dime() {
+    public static ItemStack Cash1() {
         // Getting the material from the config.
-        ItemStack item = new ItemStack(Material.valueOf(plugin.custonItemsFile.getConfig().getString("Dime.item")));
+        ItemStack item = new ItemStack(Material.valueOf(plugin.custonItemsFile.getConfig().getString("cash-1.item").toUpperCase()));
         // Creating the item meta.
         ItemMeta meta = item.getItemMeta();
 
         // Setting the display name.
-        meta.setDisplayName(Utils.chatColor(plugin.custonItemsFile.getConfig().getString("Dime.name")));
+        meta.setDisplayName(Utils.chatColor(plugin.custonItemsFile.getConfig().getString("cash-1.name")));
         // Setting the lore.
-        meta.setLore(Utils.getConvertedLore(plugin.custonItemsFile.getConfig(), "Dime"));
+        meta.setLore(Utils.getConvertedLore(plugin.custonItemsFile.getConfig(), "cash-1"));
 
         // Adding the value to the item.
-        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "cash-value"), PersistentDataType.DOUBLE, plugin.custonItemsFile.getConfig().getDouble("Dime.worth"));
+        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "cash-value"), PersistentDataType.DOUBLE, plugin.custonItemsFile.getConfig().getDouble("cash-1.worth"));
         // Setting the item meta.
         item.setItemMeta(meta);
 
@@ -33,19 +33,19 @@ public class physicalNotes {
         return item;
     }
 
-    public static ItemStack Nickel() {
+    public static ItemStack Cash2() {
         // Getting the material from the config.
-        ItemStack item = new ItemStack(Material.valueOf(plugin.custonItemsFile.getConfig().getString("Nickel.item")));
+        ItemStack item = new ItemStack(Material.valueOf(plugin.custonItemsFile.getConfig().getString("cash-2.item").toUpperCase()));
         // Creating the item meta.
         ItemMeta meta = item.getItemMeta();
 
         // Setting the display name.
-        meta.setDisplayName(Utils.chatColor(plugin.custonItemsFile.getConfig().getString("Nickel.name")));
+        meta.setDisplayName(Utils.chatColor(plugin.custonItemsFile.getConfig().getString("cash-2.name")));
         // Setting the lore.
-        meta.setLore(Utils.getConvertedLore(plugin.custonItemsFile.getConfig(), "Nickel"));
+        meta.setLore(Utils.getConvertedLore(plugin.custonItemsFile.getConfig(), "cash-2"));
 
         // Adding the value to the item.
-        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "cash-value"), PersistentDataType.DOUBLE, plugin.custonItemsFile.getConfig().getDouble("Nickel.worth"));
+        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "cash-value"), PersistentDataType.DOUBLE, plugin.custonItemsFile.getConfig().getDouble("cash-2.worth"));
         // Setting the item meta.
         item.setItemMeta(meta);
 
@@ -53,19 +53,19 @@ public class physicalNotes {
         return item;
     }
 
-    public static ItemStack Quarter() {
+    public static ItemStack Cash3() {
         // Getting the material from the config.
-        ItemStack item = new ItemStack(Material.valueOf(plugin.custonItemsFile.getConfig().getString("Quarter.item")));
+        ItemStack item = new ItemStack(Material.valueOf(plugin.custonItemsFile.getConfig().getString("cash-3.item").toUpperCase()));
         // Creating the item meta.
         ItemMeta meta = item.getItemMeta();
 
         // Setting the display name.
-        meta.setDisplayName(Utils.chatColor(plugin.custonItemsFile.getConfig().getString("Quarter.name")));
+        meta.setDisplayName(Utils.chatColor(plugin.custonItemsFile.getConfig().getString("cash-3.name")));
         // Setting the lore.
-        meta.setLore(Utils.getConvertedLore(plugin.custonItemsFile.getConfig(), "Quarter"));
+        meta.setLore(Utils.getConvertedLore(plugin.custonItemsFile.getConfig(), "cash-3"));
 
         // Adding the value to the item.
-        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "cash-value"), PersistentDataType.DOUBLE, plugin.custonItemsFile.getConfig().getDouble("Quarter.worth"));
+        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "cash-value"), PersistentDataType.DOUBLE, plugin.custonItemsFile.getConfig().getDouble("cash-3.worth"));
         // Setting the item meta.
         item.setItemMeta(meta);
 
@@ -73,19 +73,19 @@ public class physicalNotes {
         return item;
     }
 
-    public static ItemStack Penny() {
+    public static ItemStack Cash4() {
         // Getting the material from the config.
-        ItemStack item = new ItemStack(Material.valueOf(plugin.custonItemsFile.getConfig().getString("Penny.item")));
+        ItemStack item = new ItemStack(Material.valueOf(plugin.custonItemsFile.getConfig().getString("cash-4.item").toUpperCase()));
         // Creating the item meta.
         ItemMeta meta = item.getItemMeta();
 
         // Setting the display name.
-        meta.setDisplayName(Utils.chatColor(plugin.custonItemsFile.getConfig().getString("Penny.name")));
+        meta.setDisplayName(Utils.chatColor(plugin.custonItemsFile.getConfig().getString("cash-4.name")));
         // Setting the lore.
-        meta.setLore(Utils.getConvertedLore(plugin.custonItemsFile.getConfig(), "Penny"));
+        meta.setLore(Utils.getConvertedLore(plugin.custonItemsFile.getConfig(), "cash-4"));
 
         // Adding the value to the item.
-        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "cash-value"), PersistentDataType.DOUBLE, plugin.custonItemsFile.getConfig().getDouble("Penny.worth"));
+        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "cash-value"), PersistentDataType.DOUBLE, plugin.custonItemsFile.getConfig().getDouble("cash-4.worth"));
         // Setting the item meta.
         item.setItemMeta(meta);
 
@@ -93,19 +93,19 @@ public class physicalNotes {
         return item;
     }
 
-    public static ItemStack Dollar() {
+    public static ItemStack Cash5() {
         // Getting the material from the config.
-        ItemStack item = new ItemStack(Material.valueOf(plugin.custonItemsFile.getConfig().getString("Dollar.item")));
+        ItemStack item = new ItemStack(Material.valueOf(plugin.custonItemsFile.getConfig().getString("cash-5.item").toUpperCase()));
         // Creating the item meta.
         ItemMeta meta = item.getItemMeta();
 
         // Setting the display name.
-        meta.setDisplayName(Utils.chatColor(plugin.custonItemsFile.getConfig().getString("Dollar.name")));
+        meta.setDisplayName(Utils.chatColor(plugin.custonItemsFile.getConfig().getString("cash-5.name")));
         // Setting the lore.
-        meta.setLore(Utils.getConvertedLore(plugin.custonItemsFile.getConfig(), "Dollar"));
+        meta.setLore(Utils.getConvertedLore(plugin.custonItemsFile.getConfig(), "cash-5"));
 
         // Adding the value to the item.
-        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "cash-value"), PersistentDataType.DOUBLE, plugin.custonItemsFile.getConfig().getDouble("Dollar.worth"));
+        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "cash-value"), PersistentDataType.DOUBLE, plugin.custonItemsFile.getConfig().getDouble("cash-5.worth"));
         // Setting the item meta.
         item.setItemMeta(meta);
 
@@ -113,19 +113,19 @@ public class physicalNotes {
         return item;
     }
 
-    public static ItemStack TwoDollar() {
+    public static ItemStack Cash6() {
         // Getting the material from the config.
-        ItemStack item = new ItemStack(Material.valueOf(plugin.custonItemsFile.getConfig().getString("Two-Dollar.item")));
+        ItemStack item = new ItemStack(Material.valueOf(plugin.custonItemsFile.getConfig().getString("cash-6.item").toUpperCase()));
         // Creating the item meta.
         ItemMeta meta = item.getItemMeta();
 
         // Setting the display name.
-        meta.setDisplayName(Utils.chatColor(plugin.custonItemsFile.getConfig().getString("Two-Dollar.name")));
+        meta.setDisplayName(Utils.chatColor(plugin.custonItemsFile.getConfig().getString("cash-6.name")));
         // Setting the lore.
-        meta.setLore(Utils.getConvertedLore(plugin.custonItemsFile.getConfig(), "Two-Dollar"));
+        meta.setLore(Utils.getConvertedLore(plugin.custonItemsFile.getConfig(), "cash-6"));
 
         // Adding the value to the item.
-        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "cash-value"), PersistentDataType.DOUBLE, plugin.custonItemsFile.getConfig().getDouble("Two-Dollar.worth"));
+        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "cash-value"), PersistentDataType.DOUBLE, plugin.custonItemsFile.getConfig().getDouble("cash-6.worth"));
         // Setting the item meta.
         item.setItemMeta(meta);
 
@@ -133,19 +133,19 @@ public class physicalNotes {
         return item;
     }
 
-    public static ItemStack FiveDollar() {
+    public static ItemStack Cash7() {
         // Getting the material from the config.
-        ItemStack item = new ItemStack(Material.valueOf(plugin.custonItemsFile.getConfig().getString("Five-Dollar.item")));
+        ItemStack item = new ItemStack(Material.valueOf(plugin.custonItemsFile.getConfig().getString("cash-7.item").toUpperCase()));
         // Creating the item meta.
         ItemMeta meta = item.getItemMeta();
 
         // Setting the display name.
-        meta.setDisplayName(Utils.chatColor(plugin.custonItemsFile.getConfig().getString("Five-Dollar.name")));
+        meta.setDisplayName(Utils.chatColor(plugin.custonItemsFile.getConfig().getString("cash-7.name")));
         // Setting the lore.
-        meta.setLore(Utils.getConvertedLore(plugin.custonItemsFile.getConfig(), "Five-Dollar"));
+        meta.setLore(Utils.getConvertedLore(plugin.custonItemsFile.getConfig(), "cash-7"));
 
         // Adding the value to the item.
-        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "cash-value"), PersistentDataType.DOUBLE, plugin.custonItemsFile.getConfig().getDouble("Five-Dollar.worth"));
+        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "cash-value"), PersistentDataType.DOUBLE, plugin.custonItemsFile.getConfig().getDouble("cash-7.worth"));
         // Setting the item meta.
         item.setItemMeta(meta);
 
@@ -153,19 +153,19 @@ public class physicalNotes {
         return item;
     }
 
-    public static ItemStack TenDollar() {
+    public static ItemStack Cash8() {
         // Getting the material from the config.
-        ItemStack item = new ItemStack(Material.valueOf(plugin.custonItemsFile.getConfig().getString("Ten-Dollar.item")));
+        ItemStack item = new ItemStack(Material.valueOf(plugin.custonItemsFile.getConfig().getString("cash-8.item").toUpperCase()));
         // Creating the item meta.
         ItemMeta meta = item.getItemMeta();
 
         // Setting the display name.
-        meta.setDisplayName(Utils.chatColor(plugin.custonItemsFile.getConfig().getString("Ten-Dollar.name")));
+        meta.setDisplayName(Utils.chatColor(plugin.custonItemsFile.getConfig().getString("cash-8.name")));
         // Setting the lore.
-        meta.setLore(Utils.getConvertedLore(plugin.custonItemsFile.getConfig(), "Ten-Dollar"));
+        meta.setLore(Utils.getConvertedLore(plugin.custonItemsFile.getConfig(), "cash-8"));
 
         // Adding the value to the item.
-        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "cash-value"), PersistentDataType.DOUBLE, plugin.custonItemsFile.getConfig().getDouble("Ten-Dollar.worth"));
+        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "cash-value"), PersistentDataType.DOUBLE, plugin.custonItemsFile.getConfig().getDouble("cash-8.worth"));
         // Setting the item meta.
         item.setItemMeta(meta);
 
@@ -173,19 +173,19 @@ public class physicalNotes {
         return item;
     }
 
-    public static ItemStack TwentyDollar() {
+    public static ItemStack Cash9() {
         // Getting the material from the config.
-        ItemStack item = new ItemStack(Material.valueOf(plugin.custonItemsFile.getConfig().getString("Twenty-Dollar.item")));
+        ItemStack item = new ItemStack(Material.valueOf(plugin.custonItemsFile.getConfig().getString("cash-9.item").toUpperCase()));
         // Creating the item meta.
         ItemMeta meta = item.getItemMeta();
 
         // Setting the display name.
-        meta.setDisplayName(Utils.chatColor(plugin.custonItemsFile.getConfig().getString("Twenty-Dollar.name")));
+        meta.setDisplayName(Utils.chatColor(plugin.custonItemsFile.getConfig().getString("cash-9.name")));
         // Setting the lore.
-        meta.setLore(Utils.getConvertedLore(plugin.custonItemsFile.getConfig(), "Twenty-Dollar"));
+        meta.setLore(Utils.getConvertedLore(plugin.custonItemsFile.getConfig(), "cash-9"));
 
         // Adding the value to the item.
-        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "cash-value"), PersistentDataType.DOUBLE, plugin.custonItemsFile.getConfig().getDouble("Twenty-Dollar.worth"));
+        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "cash-value"), PersistentDataType.DOUBLE, plugin.custonItemsFile.getConfig().getDouble("cash-9.worth"));
         // Setting the item meta.
         item.setItemMeta(meta);
 
@@ -193,19 +193,19 @@ public class physicalNotes {
         return item;
     }
 
-    public static ItemStack FiftyDollar() {
+    public static ItemStack Cash10() {
         // Getting the material from the config.
-        ItemStack item = new ItemStack(Material.valueOf(plugin.custonItemsFile.getConfig().getString("Fifty-Dollar.item")));
+        ItemStack item = new ItemStack(Material.valueOf(plugin.custonItemsFile.getConfig().getString("cash-10.item").toUpperCase()));
         // Creating the item meta.
         ItemMeta meta = item.getItemMeta();
 
         // Setting the display name.
-        meta.setDisplayName(Utils.chatColor(plugin.custonItemsFile.getConfig().getString("Fifty-Dollar.name")));
+        meta.setDisplayName(Utils.chatColor(plugin.custonItemsFile.getConfig().getString("cash-10.name")));
         // Setting the lore.
-        meta.setLore(Utils.getConvertedLore(plugin.custonItemsFile.getConfig(), "Fifty-Dollar"));
+        meta.setLore(Utils.getConvertedLore(plugin.custonItemsFile.getConfig(), "cash-10"));
 
         // Adding the value to the item.
-        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "cash-value"), PersistentDataType.DOUBLE, plugin.custonItemsFile.getConfig().getDouble("Fifty-Dollar.worth"));
+        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "cash-value"), PersistentDataType.DOUBLE, plugin.custonItemsFile.getConfig().getDouble("cash-10.worth"));
         // Setting the item meta.
         item.setItemMeta(meta);
 
@@ -213,19 +213,19 @@ public class physicalNotes {
         return item;
     }
 
-    public static ItemStack HundredDollar() {
+    public static ItemStack Cash11() {
         // Getting the material from the config.
-        ItemStack item = new ItemStack(Material.valueOf(plugin.custonItemsFile.getConfig().getString("Hundred-Dollar.item")));
+        ItemStack item = new ItemStack(Material.valueOf(plugin.custonItemsFile.getConfig().getString("cash-11.item").toUpperCase()));
         // Creating the item meta.
         ItemMeta meta = item.getItemMeta();
 
         // Setting the display name.
-        meta.setDisplayName(Utils.chatColor(plugin.custonItemsFile.getConfig().getString("Hundred-Dollar.name")));
+        meta.setDisplayName(Utils.chatColor(plugin.custonItemsFile.getConfig().getString("cash-11.name")));
         // Setting the lore.
-        meta.setLore(Utils.getConvertedLore(plugin.custonItemsFile.getConfig(), "Hundred-Dollar"));
+        meta.setLore(Utils.getConvertedLore(plugin.custonItemsFile.getConfig(), "cash-11"));
 
         // Adding the value to the item.
-        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "cash-value"), PersistentDataType.DOUBLE, plugin.custonItemsFile.getConfig().getDouble("Hundred-Dollar.worth"));
+        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "cash-value"), PersistentDataType.DOUBLE, plugin.custonItemsFile.getConfig().getDouble("cash-11.worth"));
         // Setting the item meta.
         item.setItemMeta(meta);
 
